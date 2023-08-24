@@ -1,9 +1,6 @@
 import 'dart:ui';
 
-<<<<<<< HEAD
 const kWhiteColor = Color(0xffffffff);
-=======
->>>>>>> f73fab2bc552d00cf377d12af65b5f161bd5a8bd
 const kBlackColor = Color(0xff242424);
 
 const kVermelhaColor = Color(0xFFE0533D);
