@@ -3,6 +3,7 @@
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 
+import 'abbas/fontes_de_receitas.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
 import 'components/total_balance.dart';
@@ -26,6 +27,8 @@ class HomePage extends StatelessWidget {
                 TotalBalanceCard(),
                 SizedBox(height: kDefaultPadding),
                 EntradasESaidas(),
+                SizedBox(height: kDefaultPadding * 2),
+                FontesDeReceita(),
               ],
             ),
           ),
