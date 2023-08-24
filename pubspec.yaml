@@ -64,10 +64,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/imgs/profiles/
-<<<<<<< HEAD
     - assets/svgs/home_page/
-=======
->>>>>>> f73fab2bc552d00cf377d12af65b5f161bd5a8bd
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
