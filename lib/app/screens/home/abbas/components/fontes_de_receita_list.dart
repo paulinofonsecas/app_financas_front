@@ -48,16 +48,17 @@ class FontReceitaListItem extends StatelessWidget {
       child: Column(
         children: [
           CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 20,
-              child: Center(
-                child: Text(
-                  name.substring(0, 1),
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                  ),
+            backgroundColor: Colors.white,
+            radius: 20,
+            child: Center(
+              child: Text(
+                name.substring(0, 1),
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
                 ),
-              )),
+              ),
+            ),
+          ),
           const Spacer(),
           Column(
             children: [
