@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:app_financas/app/screens/adicionar_movimento/adicionar_movimentos.dart';
 import 'package:app_financas/app/screens/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +43,16 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kAzulColor,
+        onPressed: () {
+          Get.to(AdicionarMovimentos());
+        },
+        child: Icon(
+          CupertinoIcons.add,
+          color: Colors.white,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

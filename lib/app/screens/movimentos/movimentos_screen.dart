@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/app/components/movimento_item.dart';
 import 'package:app_financas/app/components/page_action_bar.dart';
 import 'package:app_financas/app/screens/home/abbas/movimentos.dart';
 import 'package:app_financas/app/screens/movimentos/components/combo_box_filter.dart';
@@ -37,7 +38,7 @@ class MovimentosScreen extends StatelessWidget {
                 itemBuilder: (_, index) => MovimentoItem(
                   asset: 'assets/svgs/categories/desktop.svg',
                   title: 'Adobe Photoshop',
-                  conta: 'Cartão do Bai',
+                  conta: 'Tecnologia',
                   valor: '-Kz 1.000,00',
                   avatarBgColor: kAmarelhoColor,
                 ),
