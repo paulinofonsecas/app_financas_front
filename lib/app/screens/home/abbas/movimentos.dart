@@ -10,19 +10,12 @@ import 'package:app_financas/constants.dart';
 import 'components/abba_header.dart';
 
 class Movimentos extends StatelessWidget {
-  Movimentos({super.key});
+  const Movimentos({
+    super.key,
+    required this.verMaisAction,
+  });
 
-  final categorias = [
-    {
-      'tecnologia': 'Alimentação',
-      'icon': 'assets/svgs/categories/desktop.svg'
-    },
-    {'compras': 'Educação', 'icon': 'assets/svgs/categories/Bag_alt.svg'},
-    {
-      'salário': 'Transporte',
-      'icon': 'assets/svgs/categories/Credit_card.svg'
-    },
-  ];
+  final GestureTapCallback? verMaisAction;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +24,7 @@ class Movimentos extends StatelessWidget {
       children: [
         AbbaHeader(
           title: 'Ultimos Movimentos',
-          verMaisAction: () {},
+          verMaisAction: verMaisAction,
         ),
         const SizedBox(height: kDefaultPadding),
         Text(
@@ -99,11 +92,12 @@ class MovimentoItem extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: avatarBgColor.withOpacity(.2),
+            backgroundColor: kBlackColor.withOpacity(.5),
             radius: 24,
             child: Center(
               child: SvgPicture.asset(
                 asset,
+                color: Colors.white,
               ),
             ),
           ),
@@ -112,11 +106,13 @@ class MovimentoItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(title,
-                  style: GoogleFonts.inter(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Text(
+                title,
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text(
                 conta,
                 style: GoogleFonts.inter(

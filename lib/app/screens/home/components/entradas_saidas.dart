@@ -38,7 +38,7 @@ class EntradasESaidas extends StatelessWidget {
             Expanded(
               child: EntradaOuSaidaWidget(
                 asset: 'assets/svgs/home_page/Arrow_up.svg',
-                title: 'Saida',
+                title: 'Saidas',
                 valor: '150.000',
               ),
             ),
