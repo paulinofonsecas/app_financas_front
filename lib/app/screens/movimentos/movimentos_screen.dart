@@ -24,10 +24,6 @@ class MovimentosScreen extends StatelessWidget {
             actionBack: () {
               Get.back();
             },
-            // rightWidget: IconButton(
-            //   onPressed: () {},
-            //   icon: Icon(Icons.add),
-            // ),
           ),
           _buildHeaderPage(),
           SizedBox(height: kDefaultPadding),
