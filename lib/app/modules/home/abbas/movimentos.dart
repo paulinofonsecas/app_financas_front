@@ -3,7 +3,6 @@
 
 import 'package:app_financas/app/components/movimento_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/constants.dart';

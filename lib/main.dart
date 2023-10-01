@@ -1,4 +1,5 @@
-import 'package:app_financas/app/screens/home/home_page.dart';
+import 'package:app_financas/app/bindings/init_bindings.dart';
+import 'package:app_financas/app/modules/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
+      initialBinding: InitBingings(),
       home: const HomePage(),
     );
   }

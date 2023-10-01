@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:app_financas/app/screens/adicionar_movimento/adicionar_movimentos.dart';
-import 'package:app_financas/app/screens/movimentos/movimentos_screen.dart';
+import 'package:app_financas/app/modules/adicionar_movimento/adicionar_movimentos.dart';
+import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

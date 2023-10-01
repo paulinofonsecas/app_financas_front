@@ -38,6 +38,7 @@ class MovimentoItem extends StatelessWidget {
             child: Center(
               child: SvgPicture.asset(
                 asset,
+                // ignore: deprecated_member_use
                 color: Colors.white,
               ),
             ),

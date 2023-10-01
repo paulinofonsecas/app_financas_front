@@ -2,7 +2,7 @@
 
 import 'package:app_financas/app/components/movimento_item.dart';
 import 'package:app_financas/app/components/page_action_bar.dart';
-import 'package:app_financas/app/screens/movimentos/components/combo_box_filter.dart';
+import 'package:app_financas/app/modules/movimentos/components/combo_box_filter.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
