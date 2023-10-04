@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:app_financas/app/modules/adicionar_movimento/adicionar_movimentos.dart';
+import 'package:app_financas/app/components/escolher_tipo_movimento.dart';
 import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +47,12 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kAzulColor,
         onPressed: () {
-          Get.to(AdicionarMovimentos());
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return BottomEscolherTipoMovimento();
+            },
+          );
         },
         child: Icon(
           CupertinoIcons.add,
