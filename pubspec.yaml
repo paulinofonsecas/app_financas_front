@@ -41,6 +41,7 @@ dependencies:
   dio: ^5.3.3
   http_mock_adapter: ^0.6.0
   dartz: ^0.10.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -9,10 +9,17 @@ import 'package:get/get.dart';
 class InitBingings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<Dio>(() => makeDefaultDio());
-    Get.lazyPut<IMovimentoProvider>(() => HttpMovimentoProvider(Get.find()));
+    Get.lazyPut<Dio>(
+      () => makeDefaultDio(),
+      fenix: true,
+    );
+    Get.lazyPut<IMovimentoProvider>(
+      () => HttpMovimentoProvider(Get.find()),
+      fenix: true,
+    );
     Get.lazyPut<IMovimentoService>(
       () => MovimentoService(provider: Get.find()),
+      fenix: true,
     );
   }
 }
