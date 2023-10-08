@@ -1,2 +1,2 @@
 const authToken =
-    '2|laravel_sanctum_FzaJUQWg45uYopURBrVKFwbPGlEf7xRYdIBHoEOC87ca4496';
+    '1|laravel_sanctum_waOIqEnQxedQaiwSbgIx0a818AjD8xv2t652hPiua1c21b52';

@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class IMovimentoProvider {
   Future<Either<Failure, List<Movimento>>> listMovimentos();
+  Future<Either<Failure, Movimento>> saveMovimento(Movimento movimento);
 }

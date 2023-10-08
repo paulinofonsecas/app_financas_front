@@ -2,8 +2,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/app/components/movimento_item.dart';
+import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
 import 'package:app_financas/constants.dart';
 
@@ -12,9 +13,11 @@ import 'components/abba_header.dart';
 class Movimentos extends StatelessWidget {
   const Movimentos({
     super.key,
+    required this.movimentos,
     required this.verMaisAction,
   });
 
+  final List<Movimento> movimentos;
   final GestureTapCallback? verMaisAction;
 
   @override
@@ -26,41 +29,19 @@ class Movimentos extends StatelessWidget {
           title: 'Ultimos Movimentos',
           verMaisAction: verMaisAction,
         ),
-        const SizedBox(height: kDefaultPadding),
-        Text(
-          'Hoje',
-          style: GoogleFonts.inter(
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(height: 12),
+        Gutter(),
         Column(
-          children: [
-            MovimentoItem(
-              asset: 'assets/svgs/categories/desktop.svg',
-              title: 'Adobe Photoshop',
-              conta: 'Cartão do Bai',
-              valor: 1000,
-              avatarBgColor: kAmarelhoColor,
-              tipoMovimentoId: 1,
-            ),
-            MovimentoItem(
-              asset: 'assets/svgs/categories/desktop.svg',
-              title: 'Adobe Photoshop',
-              conta: 'Cartão do Bai',
-              valor: 1000,
-              avatarBgColor: kAmarelhoColor,
-              tipoMovimentoId: 1,
-            ),
-            MovimentoItem(
-              asset: 'assets/svgs/categories/Credit_card.svg',
-              title: 'Adobe Photoshop',
-              conta: 'Cartão do Bai',
-              valor: 1000,
-              avatarBgColor: kVerdeAccentColor,
-              tipoMovimentoId: 1,
-            ),
-          ],
+          children: movimentos
+              .map((movimento) => MovimentoItem(
+                    movimento: movimento,
+                    asset: 'assets/svgs/categories/desktop.svg',
+                    title: movimento.descricao,
+                    conta: 'Tecnologia',
+                    valor: movimento.valor,
+                    tipoMovimentoId: movimento.tipoMovimentoId,
+                    avatarBgColor: kAmarelhoColor,
+                  ))
+              .toList(),
         )
       ],
     );

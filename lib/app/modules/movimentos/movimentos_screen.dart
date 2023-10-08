@@ -71,6 +71,7 @@ class MovimentosScreen extends StatelessWidget {
                         itemBuilder: (_, index) {
                           var movimento = movimentos[index];
                           return MovimentoItem(
+                            movimento: movimento,
                             asset: 'assets/svgs/categories/desktop.svg',
                             title: movimento.descricao,
                             conta: 'Tecnologia',

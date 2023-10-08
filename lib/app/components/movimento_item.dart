@@ -1,15 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:app_financas/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class MovimentoItem extends StatelessWidget {
   const MovimentoItem({
     Key? key,
+    required this.movimento,
     required this.asset,
     required this.title,
     required this.conta,
@@ -18,6 +21,7 @@ class MovimentoItem extends StatelessWidget {
     required this.tipoMovimentoId,
   }) : super(key: key);
 
+  final Movimento movimento;
   final int tipoMovimentoId;
   final Color avatarBgColor;
   final String asset;
@@ -69,16 +73,19 @@ class MovimentoItem extends StatelessWidget {
           ),
           Spacer(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                dateFormat.format(DateTime.now()),
+                movimento.data.day == DateTime.now().day
+                    ? 'Hoje ${DateFormat('h:mm a').format(movimento.data)}'
+                    : dateFormat.format(movimento.data),
               ),
               Text(
                 tipoMovimentoId == 1
                     ? numberFormat.format(valor)
                     : '- ${numberFormat.format(valor)}',
                 style: GoogleFonts.inter(
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color:
                       tipoMovimentoId == 1 ? kVerdeAccentColor : kVermelhaColor,

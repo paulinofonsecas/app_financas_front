@@ -33,7 +33,6 @@ class Movimento {
     required double valor,
     required DateTime data,
     required String descricao,
-    required int userId,
     required int cartaoId,
     required int tipoMovimentoId,
     required int categoriaMovimentoId,
@@ -46,13 +45,29 @@ class Movimento {
       valor: valor,
       data: data,
       descricao: descricao,
-      userId: userId,
+      userId: -1,
       cartaoId: cartaoId,
       tipoMovimentoId: tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
       createdAt: createdAt ?? DateTime.now(),
       updatedAt: updatedAt ?? DateTime.now(),
+    );
+  }
+
+  factory Movimento.fake() {
+    return Movimento(
+      id: -1,
+      valor: 0,
+      data: DateTime.now(),
+      descricao: '',
+      userId: -1,
+      cartaoId: -1,
+      tipoMovimentoId: -1,
+      categoriaMovimentoId: -1,
+      obsMovimento: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
   }
 
@@ -110,7 +125,7 @@ class Movimento {
       cartaoId: map['cartao_id'] as int,
       tipoMovimentoId: map['tipo_movimento_id'] as int,
       categoriaMovimentoId: map['categoria_movimento_id'] as int,
-      obsMovimento: map['obs_movimento'] as String,
+      obsMovimento: map['obs_movimento'] ?? '',
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),
     );

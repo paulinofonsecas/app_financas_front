@@ -1,13 +1,16 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/helders/format_helpers.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-class RegistarEntradaController extends GetxController {
+class RegistarSaidaController extends GetxController {
+  late final IMovimentoService movimentoService;
+
   late final TextEditingController descricaoTextController;
   late final TextEditingController dateTextController;
   late final TextEditingController valorTextController;
@@ -16,6 +19,8 @@ class RegistarEntradaController extends GetxController {
   var date = DateTime.now();
   late int categoriaMovimentoId;
   late int cartaoId;
+  var salvandoMovimento = false.obs;
+  var salvo = false;
 
   @override
   void onInit() {
@@ -24,6 +29,8 @@ class RegistarEntradaController extends GetxController {
   }
 
   void _init() {
+    movimentoService = Get.find();
+
     descricaoTextController = TextEditingController();
     dateTextController = TextEditingController();
     valorTextController = TextEditingController();
@@ -98,25 +105,80 @@ class RegistarEntradaController extends GetxController {
     return 1;
   }
 
-  void finalizarMovimento() {
+  Future<void> finalizarMovimento() async {
+    salvandoMovimento.value = true;
+    var valor = valorTextController.text;
+    if (valor.isEmpty) {
+      valor = '0';
+    }
+
     var descricaoMovimento = descricaoTextController.text;
     var dateMovimento = date;
-    var valorMovimento = double.parse(valorTextController.text);
+    var valorMovimento = double.parse(valor);
     var obsMovimento = obsTextController.text;
+
+    if (descricaoMovimento.isEmpty) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Erro',
+          message: 'Preencha a descrição do movimento',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+          isDismissible: true,
+        ),
+      );
+      salvandoMovimento.value = false;
+      return;
+    }
+
+    if (valorMovimento <= 0) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Erro',
+          message: 'Preencha o valor do movimento',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+          isDismissible: true,
+        ),
+      );
+      salvandoMovimento.value = false;
+      return;
+    }
 
     var movimento = Movimento.make(
       valor: valorMovimento,
       data: dateMovimento,
       descricao: descricaoMovimento,
-      userId: _getUserId(),
       cartaoId: cartaoId,
       tipoMovimentoId: 2,
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
     );
 
-    if (kDebugMode) {
-      print(movimento);
+    var result = await movimentoService.saveMovimento(movimento);
+    
+    if (result is Right) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Sucesso',
+          message: 'Movimento registrado com sucesso',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.green,
+          isDismissible: true,
+        ),
+      );
+      salvo = true;
+    } else {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Erro',
+          message: 'Erro ao registrar movimento',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red,
+          isDismissible: true,
+        ),
+      );
     }
+    salvandoMovimento.value = false;
   }
 }

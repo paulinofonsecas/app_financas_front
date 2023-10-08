@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import '../controllers/registar_entrada_controller.dart';
+import '../controllers/registar_saida_controller.dart';
 
 class SelectDateComponent extends StatelessWidget {
   const SelectDateComponent({
@@ -10,7 +10,7 @@ class SelectDateComponent extends StatelessWidget {
     required this.controller,
   });
 
-  final RegistarEntradaController controller;
+  final RegistarSaidaController controller;
 
   @override
   Widget build(BuildContext context) {

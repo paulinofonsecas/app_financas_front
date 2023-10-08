@@ -14,4 +14,21 @@ void main() {
     expect(result, isA<Right>());
     expect(result.getOrElse(() => []), isA<List<Movimento>>());
   });
+
+  test('Deve salvar um movimento e retornar o objeto salvo', () async {
+    var movimento = Movimento.make(
+      valor: 15000,
+      data: DateTime.now(),
+      descricao: 'Compra de auriculares',
+      cartaoId: 1,
+      tipoMovimentoId: 2,
+      categoriaMovimentoId: 1,
+      obsMovimento: 'Silva porto',
+    );
+    var result = await httpProvider.saveMovimento(movimento);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => Movimento.fake()), isA<Movimento>());
+    print(result.getOrElse(() => Movimento.fake()));
+  });
 }

@@ -8,7 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 class BottomEscolherTipoMovimento extends StatelessWidget {
   const BottomEscolherTipoMovimento({
     super.key,
+    required this.cloused,
   });
+
+  final Function cloused;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +35,12 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      Get.to(
-                        const RegistarSaida(),
-                        arguments: TipoMovimento.entrada,
-                      );
+                      // Get.back();
+
+                      // Get.to(
+                      //   const RegistarSaida(),
+                      //   arguments: TipoMovimento.entrada,
+                      // );
                     },
                   ),
                 ),
@@ -45,10 +50,14 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Saida',
                     color: kVermelhaColor,
                     onTap: () {
-                      // Get.to(
-                      //   const AdicionarMovimentos(),
-                      //   arguments: TipoMovimento.saida,
-                      // );
+                      // Get.back();
+
+                      Get.to(
+                        const RegistarSaida(),
+                        arguments: TipoMovimento.entrada,
+                      )?.then((value) {
+                        cloused();
+                      });
                     },
                   ),
                 ),

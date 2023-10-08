@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'components/select_date_component.dart';
-import 'controllers/registar_entrada_controller.dart';
+import 'controllers/registar_saida_controller.dart';
 
 class RegistarSaida extends StatelessWidget {
   const RegistarSaida({super.key});
@@ -17,7 +17,7 @@ class RegistarSaida extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var tipoMovimento = Get.arguments as TipoMovimento;
-    var controller = Get.put(RegistarEntradaController());
+    var controller = Get.put(RegistarSaidaController());
 
     return Scaffold(
       backgroundColor: Color(0xffF3F3F3),
@@ -155,15 +155,18 @@ class RegistarSaida extends StatelessWidget {
 }
 
 Widget buildButtonsWidget() {
-  var controller = Get.find<RegistarEntradaController>();
+  var controller = Get.find<RegistarSaidaController>();
   return Align(
     alignment: Alignment.topCenter,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         OutlinedButton(
-          onPressed: () {
-            controller.finalizarMovimento();
+          onPressed: () async {
+            await controller.finalizarMovimento();
+            if (controller.salvo) {
+              Get.back(closeOverlays: true);
+            }
           },
           style: OutlinedButton.styleFrom(
             padding: EdgeInsets.symmetric(
