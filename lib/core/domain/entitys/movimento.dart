@@ -10,6 +10,7 @@ class Movimento {
   final int cartaoId;
   final int tipoMovimentoId;
   final int categoriaMovimentoId;
+  final String obsMovimento;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -22,9 +23,38 @@ class Movimento {
     required this.cartaoId,
     required this.tipoMovimentoId,
     required this.categoriaMovimentoId,
+    required this.obsMovimento,
     required this.createdAt,
     required this.updatedAt,
   });
+
+  factory Movimento.make({
+    int? id,
+    required double valor,
+    required DateTime data,
+    required String descricao,
+    required int userId,
+    required int cartaoId,
+    required int tipoMovimentoId,
+    required int categoriaMovimentoId,
+    required String obsMovimento,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Movimento(
+      id: -1,
+      valor: valor,
+      data: data,
+      descricao: descricao,
+      userId: userId,
+      cartaoId: cartaoId,
+      tipoMovimentoId: tipoMovimentoId,
+      categoriaMovimentoId: categoriaMovimentoId,
+      obsMovimento: obsMovimento,
+      createdAt: createdAt ?? DateTime.now(),
+      updatedAt: updatedAt ?? DateTime.now(),
+    );
+  }
 
   Movimento copyWith({
     int? id,
@@ -35,6 +65,7 @@ class Movimento {
     int? cartaoId,
     int? tipoMovimentoId,
     int? categoriaMovimentoId,
+    String? obsMovimento,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -47,6 +78,7 @@ class Movimento {
       cartaoId: cartaoId ?? this.cartaoId,
       tipoMovimentoId: tipoMovimentoId ?? this.tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId ?? this.categoriaMovimentoId,
+      obsMovimento: obsMovimento ?? this.obsMovimento,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -62,6 +94,7 @@ class Movimento {
       'cartao_id': cartaoId,
       'tipo_movimento_id': tipoMovimentoId,
       'categoria_movimento_id': categoriaMovimentoId,
+      'obs_movimento': obsMovimento,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
     };
@@ -77,6 +110,7 @@ class Movimento {
       cartaoId: map['cartao_id'] as int,
       tipoMovimentoId: map['tipo_movimento_id'] as int,
       categoriaMovimentoId: map['categoria_movimento_id'] as int,
+      obsMovimento: map['obs_movimento'] as String,
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),
     );
@@ -89,7 +123,10 @@ class Movimento {
 
   @override
   String toString() {
-    return 'Movimento(id: $id, valor: $valor, data: $data, descricao: $descricao, userId: $userId, cartaoId: $cartaoId, tipoMovimentoId: $tipoMovimentoId, categoriaMovimentoId: $categoriaMovimentoId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Movimento(id: $id, valor: $valor, data: $data, descricao: $descricao,'
+        ' userId: $userId, cartaoId: $cartaoId, tipoMovimentoId: $tipoMovimentoId,'
+        ' categoriaMovimentoId: $categoriaMovimentoId, obsMovimento: $obsMovimento,'
+        ' createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -104,6 +141,7 @@ class Movimento {
         other.cartaoId == cartaoId &&
         other.tipoMovimentoId == tipoMovimentoId &&
         other.categoriaMovimentoId == categoriaMovimentoId &&
+        other.obsMovimento == obsMovimento &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -118,6 +156,7 @@ class Movimento {
         cartaoId.hashCode ^
         tipoMovimentoId.hashCode ^
         categoriaMovimentoId.hashCode ^
+        obsMovimento.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode;
   }

@@ -42,6 +42,10 @@ dependencies:
   http_mock_adapter: ^0.6.0
   dartz: ^0.10.1
   intl: ^0.18.1
+  flutter_gutter: ^1.0.0
+  omni_datetime_picker:
+    git:
+      url: https://github.com/paulinofonsecas/OmniDateTimePicker
 
 dev_dependencies:
   flutter_test:
