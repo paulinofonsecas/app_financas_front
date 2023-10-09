@@ -23,7 +23,7 @@ class ButtonGoToCarteira extends StatelessWidget {
           ),
           const SizedBox(width: kDefaultPadding / 2),
           Container(
-            padding: const EdgeInsets.all(kDefaultPadding / 1.3),
+            padding: const EdgeInsets.all(kDefaultPadding / 1.7),
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: kWhiteColor,

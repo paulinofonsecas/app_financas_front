@@ -1,5 +1,5 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/helders/format_helpers.dart';
@@ -82,16 +82,16 @@ class RegistarSaidaController extends GetxController {
     ];
   }
 
-  List<Conta> getCards() {
+  List<Cartao> getCards() {
     return [
-      Conta(
+      Cartao(
         id: 1,
         nome: 'Bai',
         numero: '001',
         saldo: 1000,
         bancoId: 1,
       ),
-      Conta(
+      Cartao(
         id: 2,
         nome: 'Yetu',
         numero: '002',
@@ -156,7 +156,7 @@ class RegistarSaidaController extends GetxController {
     );
 
     var result = await movimentoService.saveMovimento(movimento);
-    
+
     if (result is Right) {
       Get.showSnackbar(
         const GetSnackBar(
