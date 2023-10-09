@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../controllers/home_page_controller.dart';
 import 'button_go_to_carteira.dart';
 import 'info_balance.dart';
 
@@ -16,6 +17,8 @@ class TotalBalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(HomePageController());
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -47,17 +50,29 @@ class TotalBalanceCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(kDefaultPadding * 1.3),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InfoBalance(),
-                  Spacer(),
-                  ButtonGoToCarteira(),
-                ],
-              ),
+            FutureBuilder<double>(
+              future: controller.getSaldoDisponivel(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var valor = snapshot.data ?? 0;
+                  return Padding(
+                    padding: const EdgeInsets.all(kDefaultPadding * 1.3),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InfoBalance(
+                          saldo: valor,
+                        ),
+                        Spacer(),
+                        ButtonGoToCarteira(),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           ],
         ),

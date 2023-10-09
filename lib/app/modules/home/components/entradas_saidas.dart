@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ class EntradasESaidas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(HomePageController());
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -25,10 +28,19 @@ class EntradasESaidas extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: EntradaOuSaidaWidget(
-                asset: 'assets/svgs/home_page/Arrow_down.svg',
-                title: 'Entradas',
-                valor: '53.000',
+              child: FutureBuilder<double>(
+                future: controller.getEntradasDoMes(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return EntradaOuSaidaWidget(
+                      asset: 'assets/svgs/home_page/Arrow_down.svg',
+                      title: 'Entradas',
+                      valor: snapshot.data ?? 0,
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
             ),
             Padding(
@@ -36,10 +48,19 @@ class EntradasESaidas extends StatelessWidget {
               child: VerticalDivider(),
             ),
             Expanded(
-              child: EntradaOuSaidaWidget(
-                asset: 'assets/svgs/home_page/Arrow_up.svg',
-                title: 'Saidas',
-                valor: '150.000',
+              child: FutureBuilder<double>(
+                future: controller.getSaidasDoMes(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return EntradaOuSaidaWidget(
+                      asset: 'assets/svgs/home_page/Arrow_up.svg',
+                      title: 'Saidas',
+                      valor: snapshot.data ?? 0,
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
             ),
           ],
@@ -59,7 +80,7 @@ class EntradaOuSaidaWidget extends StatelessWidget {
 
   final String asset;
   final String title;
-  final String valor;
+  final double valor;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +103,7 @@ class EntradaOuSaidaWidget extends StatelessWidget {
               ),
             ),
             Text(
-              'Kz $valor',
+              numberFormat.format(valor),
               style: GoogleFonts.inter(
                 fontSize: 22,
                 color: Colors.white,

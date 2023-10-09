@@ -1,8 +1,11 @@
+import 'package:app_financas/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InfoBalance extends StatelessWidget {
-  const InfoBalance({super.key});
+  const InfoBalance({super.key, required this.saldo});
+
+  final double saldo;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class InfoBalance extends StatelessWidget {
           ),
         ),
         Text(
-          'Kz 650.000,00',
+          numberFormat.format(saldo),
           style: GoogleFonts.plusJakartaSans(
             color: Colors.white,
             fontSize: 38,
