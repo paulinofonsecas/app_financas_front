@@ -12,7 +12,8 @@ void main() {
     var result = await httpProvider.setup();
 
     expect(result, isA<Right>());
-    expect(result.getOrElse(() => SetupConfiguration.zero()), isA<SetupConfiguration>());
+    var setup = result.getOrElse(() => SetupConfiguration.zero());
+    expect(setup.categorias, isNotEmpty);
+    expect(setup.cartoes, isNotEmpty);
   });
-
 }
