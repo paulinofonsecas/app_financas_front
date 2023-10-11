@@ -1,6 +1,7 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -10,6 +11,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class RegistarSaidaController extends GetxController {
   late final IMovimentoService movimentoService;
+  late final SetupConfiguration setupConfiguration;
 
   late final TextEditingController descricaoTextController;
   late final TextEditingController dateTextController;
@@ -30,6 +32,7 @@ class RegistarSaidaController extends GetxController {
 
   void _init() {
     movimentoService = Get.find();
+    setupConfiguration = Get.find();
 
     descricaoTextController = TextEditingController();
     dateTextController = TextEditingController();
@@ -62,43 +65,11 @@ class RegistarSaidaController extends GetxController {
   }
 
   List<CategoriaMovimento> getCategories() {
-    return [
-      CategoriaMovimento(
-        id: 1,
-        name: 'compras',
-      ),
-      CategoriaMovimento(
-        id: 2,
-        name: 'casa',
-      ),
-      CategoriaMovimento(
-        id: 3,
-        name: 'trabalho',
-      ),
-      CategoriaMovimento(
-        id: 4,
-        name: 'cafe',
-      ),
-    ];
+    return setupConfiguration.categorias;
   }
 
   List<Cartao> getCards() {
-    return [
-      Cartao(
-        id: 1,
-        nome: 'Bai',
-        numero: '001',
-        saldo: 1000,
-        bancoId: 1,
-      ),
-      Cartao(
-        id: 2,
-        nome: 'Yetu',
-        numero: '002',
-        saldo: 10000,
-        bancoId: 2,
-      ),
-    ];
+    return setupConfiguration.cartoes;
   }
 
   int _getUserId() {
