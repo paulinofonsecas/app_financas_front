@@ -5,7 +5,6 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:app_financas/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
