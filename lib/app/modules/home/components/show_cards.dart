@@ -13,7 +13,7 @@ class ShowCards extends StatefulWidget {
 
 class _ShowCardsState extends State<ShowCards> {
   var pageController = PageController(
-    initialPage: 1,
+    initialPage: 0,
     viewportFraction: 0.9,
   );
 
