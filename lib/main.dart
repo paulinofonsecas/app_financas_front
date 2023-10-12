@@ -1,5 +1,4 @@
 import 'package:app_financas/app/bindings/init_bindings.dart';
-import 'package:app_financas/app/modules/home/home_page.dart';
 import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

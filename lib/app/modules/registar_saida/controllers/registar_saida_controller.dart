@@ -72,9 +72,6 @@ class RegistarSaidaController extends GetxController {
     return setupConfiguration.cartoes;
   }
 
-  int _getUserId() {
-    return 1;
-  }
 
   Future<void> finalizarMovimento() async {
     salvandoMovimento.value = true;

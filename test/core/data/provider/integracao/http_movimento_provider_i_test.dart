@@ -2,6 +2,7 @@ import 'package:app_financas/core/data/provider/http_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -29,6 +30,8 @@ void main() {
 
     expect(result, isA<Right>());
     expect(result.getOrElse(() => Movimento.fake()), isA<Movimento>());
-    print(result.getOrElse(() => Movimento.fake()));
+    if (kDebugMode) {
+      print(result.getOrElse(() => Movimento.fake()));
+    }
   });
 }
