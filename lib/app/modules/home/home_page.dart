@@ -4,6 +4,7 @@ import 'package:app_financas/app/components/escolher_tipo_movimento.dart';
 import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,37 +33,41 @@ class _HomePageState extends State<HomePage> {
         children: [
           ActionBar(),
           SizedBox(height: kDefaultPadding),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TotalBalanceCard(),
-                SizedBox(height: kDefaultPadding),
-                EntradasESaidas(),
-                SizedBox(height: kDefaultPadding * 2),
-                FutureBuilder<List<Movimento>>(
-                  future: controller.listMovimentosDoDia(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Movimentos(
-                        movimentos: snapshot.data ?? [],
-                        verMaisAction: () {
-                          Get.to(MovimentosScreen());
-                        },
-                      );
-                    } else {
-                      return Align(
-                        alignment: Alignment.topCenter,
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ShowCards(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: kDefaultPadding),
+                    EntradasESaidas(),
+                    SizedBox(height: kDefaultPadding * 2),
+                    FutureBuilder<List<Movimento>>(
+                      future: controller.listMovimentosDoDia(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Movimentos(
+                            movimentos: snapshot.data ?? [],
+                            verMaisAction: () {
+                              Get.to(MovimentosScreen());
+                            },
+                          );
+                        } else {
+                          return Align(
+                            alignment: Alignment.topCenter,
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -75,6 +80,7 @@ class _HomePageState extends State<HomePage> {
               return BottomEscolherTipoMovimento(
                 cloused: () {
                   Get.back();
+                  controller.update();
                   setState(() {});
                 },
               );
@@ -116,6 +122,55 @@ class _HomePageState extends State<HomePage> {
             label: 'Perfil',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ShowCards extends StatefulWidget {
+  const ShowCards({super.key});
+
+  @override
+  State<ShowCards> createState() => _ShowCardsState();
+}
+
+class _ShowCardsState extends State<ShowCards> {
+  var pageController = PageController(
+    initialPage: 1,
+    viewportFraction: 0.9,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    var controller = Get.put(HomePageController());
+    var size = MediaQuery.of(context).size;
+    var cartoes = controller.getCartoes();
+
+    return SizedBox(
+      width: size.width,
+      height: size.height * 0.23,
+      child: PageView.builder(
+        controller: pageController,
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(
+          decelerationRate: ScrollDecelerationRate.fast,
+        ),
+        itemCount: cartoes.length,
+        itemBuilder: (context, index) {
+          var cartao = cartoes[index];
+          return LayoutBuilder(
+            builder: (c, constraines) => Container(
+              margin: EdgeInsets.only(right: kDefaultPadding),
+              child: CardWidget(
+                width: size.width * 0.85,
+                height: index == 0
+                    ? constraines.maxHeight
+                    : constraines.maxHeight * 0.75,
+                cartao: cartao,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

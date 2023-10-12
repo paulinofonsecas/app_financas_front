@@ -85,6 +85,7 @@ class EntradaOuSaidaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(HomePageController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,12 +113,16 @@ class EntradaOuSaidaWidget extends StatelessWidget {
           ],
         ),
         GutterTiny(),
-        Text(
-          numberFormat.format(valor),
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+        Obx(
+          () => Text(
+            controller.showMoneyOnCards.value
+                ? numberFormat.format(valor)
+                : '********',
+            style: GoogleFonts.inter(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

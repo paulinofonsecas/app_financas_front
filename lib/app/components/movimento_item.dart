@@ -33,7 +33,7 @@ class MovimentoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(14),
-      margin: EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

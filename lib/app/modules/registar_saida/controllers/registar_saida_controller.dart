@@ -61,7 +61,7 @@ class RegistarSaidaController extends GetxController {
   }
 
   String getSelectedDate() {
-    return dateFormat.format(date);
+    return verboseDateFormat.format(date);
   }
 
   List<CategoriaMovimento> getCategories() {

@@ -1,4 +1,6 @@
+import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:dartz/dartz.dart';
@@ -7,12 +9,19 @@ import 'package:get/get.dart';
 class HomePageController extends GetxController {
   late final IMovimentoService movimentoService;
   late final ISaldosService saldosService;
+  late final SetupConfiguration setupConfiguration;
+  var showMoneyOnCards = false.obs;
 
   @override
   void onInit() {
+    setupConfiguration = Get.find();
     movimentoService = Get.find();
     saldosService = Get.find();
     super.onInit();
+  }
+
+  void changeViewManyCards() {
+    showMoneyOnCards.value = !showMoneyOnCards.value;
   }
 
   Future<double> getSaldoDisponivel() async {
@@ -55,6 +64,10 @@ class HomePageController extends GetxController {
     } else {
       return [];
     }
+  }
+
+  List<Cartao> getCartoes() {
+    return setupConfiguration.cartoes;
   }
 
 }

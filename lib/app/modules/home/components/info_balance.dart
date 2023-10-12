@@ -12,24 +12,9 @@ class InfoBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Saldo disponivel',
-          style: GoogleFonts.inter(
-            fontSize: 18,
-            color: Colors.white,
-          ),
-        ),
-        const Gutter(),
-        Text(
-          numberFormat.format(saldo),
-          style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        
       ],
     );
   }

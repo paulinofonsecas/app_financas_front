@@ -40,7 +40,7 @@ class SelectDateComponent extends StatelessWidget {
           onPressed: () {
             controller.selecionarDateTime(context);
           },
-          child: Text('Selecionar data'),
+          child: const Text('Selecionar data'),
         ),
       ],
     );
