@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'abbas/movimentos.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
-import 'components/total_balance.dart';
+import 'components/show_cards.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               ShowCards(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   children: [
                     SizedBox(height: kDefaultPadding),
@@ -121,55 +121,6 @@ class _HomePageState extends State<HomePage> {
             label: 'Perfil',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ShowCards extends StatefulWidget {
-  const ShowCards({super.key});
-
-  @override
-  State<ShowCards> createState() => _ShowCardsState();
-}
-
-class _ShowCardsState extends State<ShowCards> {
-  var pageController = PageController(
-    initialPage: 1,
-    viewportFraction: 0.9,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
-    var size = MediaQuery.of(context).size;
-    var cartoes = controller.getCartoes();
-
-    return SizedBox(
-      width: size.width,
-      height: size.height * 0.23,
-      child: PageView.builder(
-        controller: pageController,
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(
-          decelerationRate: ScrollDecelerationRate.fast,
-        ),
-        itemCount: cartoes.length,
-        itemBuilder: (context, index) {
-          var cartao = cartoes[index];
-          return LayoutBuilder(
-            builder: (c, constraines) => Container(
-              margin: EdgeInsets.only(right: kDefaultPadding),
-              child: CardWidget(
-                width: size.width * 0.85,
-                height: index == 0
-                    ? constraines.maxHeight
-                    : constraines.maxHeight * 0.75,
-                cartao: cartao,
-              ),
-            ),
-          );
-        },
       ),
     );
   }
