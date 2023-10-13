@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AbbaHeader extends StatelessWidget {
@@ -31,7 +32,7 @@ class AbbaHeader extends StatelessWidget {
             'Ver mais',
             style: GoogleFonts.inter(
               fontSize: 22,
-              color: kAzulColor,
+              color: Get.theme.colorScheme.onBackground,
             ),
           ),
         ),

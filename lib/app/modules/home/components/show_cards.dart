@@ -48,6 +48,27 @@ class _ShowCardsState extends State<ShowCards> {
 
                   var cartoes = snapshot.data ?? [];
 
+                  if (cartoes.isEmpty) {
+                    return const Center(
+                      child: Text('Nenhum cartão cadastrado'),
+                    );
+                  }
+
+                  cartoes.insert(
+                    0,
+                    Cartao(
+                      id: 0,
+                      nome: 'Saldo disponivel',
+                      numero: '0001',
+                      saldo: cartoes.fold(
+                        0,
+                        (previousValue, element) =>
+                            previousValue + element.saldo,
+                      ),
+                      bancoId: 0,
+                    ),
+                  );
+
                   return PageView.builder(
                     controller: pageController,
                     scrollDirection: Axis.horizontal,
@@ -61,11 +82,12 @@ class _ShowCardsState extends State<ShowCards> {
                         builder: (c, constraines) => Container(
                           margin: const EdgeInsets.only(right: kDefaultPadding),
                           child: CardWidget(
+                            index: index,
+                            cartao: cartao,
                             width: size.width * 0.85,
                             height: index == 0
                                 ? constraines.maxHeight
                                 : constraines.maxHeight * 0.75,
-                            cartao: cartao,
                           ),
                         ),
                       );

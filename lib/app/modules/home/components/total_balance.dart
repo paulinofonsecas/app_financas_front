@@ -1,24 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
-import 'package:app_financas/helders/format_helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/helders/format_helpers.dart';
+
 import '../controllers/home_page_controller.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({
-    super.key,
+    Key? key,
+    required this.index,
     required this.cartao,
     required this.width,
     required this.height,
-  });
+  }) : super(key: key);
 
+  final int index;
   final Cartao cartao;
   final double width;
   final double height;
@@ -38,7 +42,7 @@ class CardWidget extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Background(),
+            Background(index: index),
             Padding(
               padding: const EdgeInsets.all(kDefaultPadding * 1.3),
               child: Column(
@@ -91,12 +95,17 @@ class CardWidget extends StatelessWidget {
 }
 
 class Background extends StatelessWidget {
-  const Background({super.key});
+  const Background({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: index == 0 ? Get.theme.primaryColor : Colors.black,
     );
   }
 }

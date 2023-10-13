@@ -50,13 +50,18 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       } else if (result.statusCode == 400) {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       } else {
-        return Left(HttpException('Erro ao cadastrar movimento'));
+        return Left(HttpException('Erro ao cadastrar movimento \n ${result.data}'));
       }
     } on DioException catch (e) {
       if (kDebugMode) {
         print(e.error);
       }
-      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}'));
+
+      if (e.response?.statusCode == 400) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
+      }
+
+      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}', error: e.error));
     }
   }
 }

@@ -4,7 +4,8 @@ class Failure implements Exception {
 }
 
 class HttpException extends Failure {
-  HttpException(super.message);
+  Object? error;
+  HttpException(super.message, {this.error});
 }
 
 class SaldoInsuficiente extends Failure {

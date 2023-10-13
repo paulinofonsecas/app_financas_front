@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: kAzulColor,
+        backgroundColor: Get.theme.primaryColor,
         onPressed: () {
           showModalBottomSheet(
             context: context,

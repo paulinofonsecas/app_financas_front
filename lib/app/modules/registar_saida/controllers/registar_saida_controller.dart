@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
+import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,6 @@ class RegistarSaidaController extends GetxController {
     return setupConfiguration.cartoes;
   }
 
-
   Future<void> finalizarMovimento() async {
     salvandoMovimento.value = true;
     var valor = valorTextController.text;
@@ -137,16 +137,31 @@ class RegistarSaidaController extends GetxController {
       );
       salvo = true;
     } else {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Erro',
-          message: 'Erro ao registrar movimento',
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-        ),
-      );
+      if (result is Left &&
+          result.swap().getOrElse(() => HttpException('message'))
+              is SaldoInsuficiente) {
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Saldo insuficiente',
+            message:
+                'O saldo do cartão é insuficiente para realizar o movimento',
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+            isDismissible: true,
+          ),
+        );
+      } else {
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Erro',
+            message: 'Erro ao registrar movimento',
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+            isDismissible: true,
+          ),
+        );
+      }
+      salvandoMovimento.value = false;
     }
-    salvandoMovimento.value = false;
   }
 }
