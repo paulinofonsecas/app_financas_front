@@ -47,6 +47,8 @@ class HttpMovimentoProvider implements IMovimentoProvider {
         dynamic movimento0 = result.data['movimento'];
         movimento0 = Movimento.fromMap(movimento0);
         return Right(movimento0 as Movimento);
+      } else if (result.statusCode == 400) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
       } else {
         return Left(HttpException('Erro ao cadastrar movimento'));
       }

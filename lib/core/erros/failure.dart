@@ -6,3 +6,7 @@ class Failure implements Exception {
 class HttpException extends Failure {
   HttpException(super.message);
 }
+
+class SaldoInsuficiente extends Failure {
+  SaldoInsuficiente(super.message);
+}
