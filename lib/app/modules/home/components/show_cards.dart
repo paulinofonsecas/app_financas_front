@@ -1,6 +1,7 @@
 import 'package:app_financas/app/modules/home/components/total_balance.dart';
 import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,43 +13,66 @@ class ShowCards extends StatefulWidget {
 }
 
 class _ShowCardsState extends State<ShowCards> {
+  late final HomePageController controller;
   var pageController = PageController(
     initialPage: 0,
     viewportFraction: 0.9,
   );
 
   @override
-  Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
-    var size = MediaQuery.of(context).size;
-    var cartoes = controller.getCartoes();
+  void initState() {
+    controller = Get.put(HomePageController());
+    controller.getCartoes;
+    super.initState();
+  }
 
-    return SizedBox(
-      width: size.width,
-      height: size.height * 0.23,
-      child: PageView.builder(
-        controller: pageController,
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(
-          decelerationRate: ScrollDecelerationRate.fast,
-        ),
-        itemCount: cartoes.length,
-        itemBuilder: (context, index) {
-          var cartao = cartoes[index];
-          return LayoutBuilder(
-            builder: (c, constraines) => Container(
-              margin: const EdgeInsets.only(right: kDefaultPadding),
-              child: CardWidget(
-                width: size.width * 0.85,
-                height: index == 0
-                    ? constraines.maxHeight
-                    : constraines.maxHeight * 0.75,
-                cartao: cartao,
-              ),
-            ),
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    return GetBuilder(
+        init: controller,
+        id: 'cards',
+        builder: (context) {
+          return SizedBox(
+            width: size.width,
+            height: size.height * 0.23,
+            child: FutureBuilder<List<Cartao>>(
+                future: controller.getCartoes(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  var cartoes = snapshot.data ?? [];
+
+                  return PageView.builder(
+                    controller: pageController,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(
+                      decelerationRate: ScrollDecelerationRate.fast,
+                    ),
+                    itemCount: cartoes.length,
+                    itemBuilder: (context, index) {
+                      var cartao = cartoes[index];
+                      return LayoutBuilder(
+                        builder: (c, constraines) => Container(
+                          margin: const EdgeInsets.only(right: kDefaultPadding),
+                          child: CardWidget(
+                            width: size.width * 0.85,
+                            height: index == 0
+                                ? constraines.maxHeight
+                                : constraines.maxHeight * 0.75,
+                            cartao: cartao,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }),
           );
-        },
-      ),
-    );
+        });
   }
 }

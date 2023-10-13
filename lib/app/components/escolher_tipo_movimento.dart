@@ -1,3 +1,4 @@
+import 'package:app_financas/app/modules/registar_entrada/registar_entrada.dart';
 import 'package:app_financas/app/modules/registar_saida/registar_saida.dart';
 import 'package:app_financas/app/utils.dart';
 import 'package:app_financas/constants.dart';
@@ -35,12 +36,11 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      // Get.back();
-
-                      // Get.to(
-                      //   const RegistarSaida(),
-                      //   arguments: TipoMovimento.entrada,
-                      // );
+                      Get.to(
+                        const RegistarEntrada(),
+                      )?.then((value) {
+                        cloused();
+                      });
                     },
                   ),
                 ),
@@ -50,8 +50,6 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Saida',
                     color: kVermelhaColor,
                     onTap: () {
-                      // Get.back();
-
                       Get.to(
                         const RegistarSaida(),
                         arguments: TipoMovimento.entrada,

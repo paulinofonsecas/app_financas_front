@@ -3,14 +3,16 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
+import 'package:app_financas/core/domain/services/i_setup_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
   late final IMovimentoService movimentoService;
   late final ISaldosService saldosService;
-  late final SetupConfiguration setupConfiguration;
+  late SetupConfiguration setupConfiguration;
   var showMoneyOnCards = false.obs;
+  var cartoes = <Cartao>[];
 
   @override
   void onInit() {
@@ -66,8 +68,21 @@ class HomePageController extends GetxController {
     }
   }
 
-  List<Cartao> getCartoes() {
-    return setupConfiguration.cartoes;
+  Future<List<Cartao>> getCartoes() async {
+    var setupService = Get.find<ISetupService>();
+    var result = await setupService.setup();
+    if (result is Right) {
+      setupConfiguration = result.getOrElse(() => SetupConfiguration.zero());
+      Get.put(setupConfiguration);
+      cartoes = setupConfiguration.cartoes;
+      return cartoes;
+    } else {
+      return [];
+    }
   }
 
+  Future<void> refreshSaldosDeCartoes() async {
+    await getCartoes();
+    update();
+  }
 }

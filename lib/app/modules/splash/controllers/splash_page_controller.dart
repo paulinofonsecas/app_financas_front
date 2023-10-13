@@ -31,7 +31,7 @@ class SplashPageController extends GetxController {
         showErrorSnackBar();
       } else {
         isLoading.value = false;
-        Get.put(setupConfig);
+        Get.put(setupConfig, permanent: true);
         Get.off(const HomePage());
       }
     } else {
