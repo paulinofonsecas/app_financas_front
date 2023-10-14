@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Get.theme.primaryColor,
         onPressed: () {

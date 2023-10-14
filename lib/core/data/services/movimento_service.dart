@@ -19,4 +19,9 @@ class MovimentoService implements IMovimentoService {
   Future<Either<Failure, Movimento>> saveMovimento(Movimento movimento) {
     return provider.saveMovimento(movimento);
   }
+  
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosAt(DateTime date) {
+    return provider.listMovimentosAt(date);
+  }
 }

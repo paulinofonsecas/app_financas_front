@@ -50,7 +50,8 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       } else if (result.statusCode == 400) {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       } else {
-        return Left(HttpException('Erro ao cadastrar movimento \n ${result.data}'));
+        return Left(
+            HttpException('Erro ao cadastrar movimento \n ${result.data}'));
       }
     } on DioException catch (e) {
       if (kDebugMode) {
@@ -61,7 +62,27 @@ class HttpMovimentoProvider implements IMovimentoProvider {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
-      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}', error: e.error));
+      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}',
+          error: e.error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosAt(
+      DateTime date) async {
+    try {
+      var result = await dio.get('/movimento', data: {
+        'date': date.toString(),
+      });
+      List<dynamic> movimentos = result.data['data']
+          .map<Movimento>((e) => Movimento.fromMap(e))
+          .toList();
+      return Right(movimentos as List<Movimento>);
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.error);
+      }
+      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}'));
     }
   }
 }
