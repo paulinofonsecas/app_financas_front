@@ -5,6 +5,7 @@ import 'package:app_financas/app/modules/home/controllers/home_page_controller.d
 import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                       future: controller.listMovimentosDoDia(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Movimentos(
+                          return MovimentosAtHomePage(
                             movimentos: snapshot.data ?? [],
                             verMaisAction: () {
                               Get.to(MovimentosScreen());
@@ -74,17 +75,17 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Get.theme.primaryColor,
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return BottomEscolherTipoMovimento(
-                cloused: () {
-                  Get.back(closeOverlays: true);
-                  controller.update();
-                  setState(() {});
-                },
-              );
-            },
+          customShowModalBottomSheet(
+            context,
+            isScrollControlled: false,
+            constraints: BoxConstraints.tightFor(),
+            child: BottomEscolherTipoMovimento(
+              cloused: () {
+                Get.back(closeOverlays: true);
+                controller.update();
+                setState(() {});
+              },
+            ),
           );
         },
         child: Icon(

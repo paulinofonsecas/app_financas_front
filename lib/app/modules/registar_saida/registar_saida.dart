@@ -124,6 +124,7 @@ class RegistarSaida extends StatelessWidget {
                   ),
                   Gutter(),
                   TextField(
+                    controller: controller.obsTextController,
                     maxLines: 4,
                     textAlign: TextAlign.start,
                     textAlignVertical: TextAlignVertical.top,
