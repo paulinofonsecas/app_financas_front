@@ -2,7 +2,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/app/components/movimento_item.dart';
-import 'package:app_financas/app/modules/show_despesa_transaction/controller/show_despesa_transaction_controller.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
