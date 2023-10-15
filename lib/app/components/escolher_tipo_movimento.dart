@@ -1,6 +1,4 @@
-import 'package:app_financas/app/modules/registar_entrada/registar_entrada.dart';
 import 'package:app_financas/app/modules/registar_saida/registar_saida.dart';
-import 'package:app_financas/app/utils.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,9 +34,8 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      Get.to(
-                        const RegistarEntrada(),
-                      )?.then((value) {
+                      Get.to(const RegistarTransacao(movimentoType: 1))
+                          ?.then((value) {
                         cloused();
                       });
                     },
@@ -50,10 +47,8 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Saida',
                     color: kVermelhaColor,
                     onTap: () {
-                      Get.to(
-                        const RegistarSaida(),
-                        arguments: TipoMovimento.entrada,
-                      )?.then((value) {
+                      Get.to(const RegistarTransacao(movimentoType: 2))
+                          ?.then((value) {
                         cloused();
                       });
                     },

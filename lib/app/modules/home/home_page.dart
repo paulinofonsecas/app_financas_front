@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     var controller = Get.put(HomePageController());
 
     return Scaffold(
-      backgroundColor: Color(0xffF3F3F3),
+      backgroundColor: Color(0xffECF3FB),
       body: ListView(
         children: [
           ActionBar(),
@@ -49,6 +49,9 @@ class _HomePageState extends State<HomePage> {
                     FutureBuilder<List<Movimento>>(
                       future: controller.listMovimentosDoDia(),
                       builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
                         if (snapshot.hasData) {
                           return MovimentosAtHomePage(
                             movimentos: snapshot.data ?? [],

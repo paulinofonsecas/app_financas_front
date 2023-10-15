@@ -40,6 +40,7 @@ class HttpMovimentoProvider implements IMovimentoProvider {
           'tipo_movimento_id': movimento.tipoMovimentoId,
           'categoria_movimento_id': movimento.categoriaMovimentoId,
           'obs_movimento': movimento.obsMovimento,
+          'confirmado': movimento.confirmado,
           'data': movimento.data.toString(),
         },
       );

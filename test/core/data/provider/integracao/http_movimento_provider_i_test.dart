@@ -25,6 +25,7 @@ void main() {
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',
+      confirmado: true,
     );
     var result = await httpProvider.saveMovimento(movimento);
 

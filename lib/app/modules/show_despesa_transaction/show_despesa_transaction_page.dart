@@ -4,6 +4,7 @@ import 'package:app_financas/app/components/custom_bottom_sheet.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/format_helpers.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -33,7 +34,9 @@ class ShowDespesaTransactionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const _HeaderInfo(),
+              _HeaderInfo(
+                movimento: movimento,
+              ),
               const GutterTiny(),
               Divider(
                 color: Colors.grey[100],
@@ -67,11 +70,10 @@ class ShowDespesaTransactionPage extends StatelessWidget {
                       ),
                       Gutter(),
                       InfoWidget(
-                        desc: 'Categoria',
-                        value: controller
-                            .getCategoryName(movimento.categoriaMovimentoId),
+                        desc: 'Conta',
+                        value: controller.getAccountName(movimento.cartaoId),
                         icon: Icon(
-                          Icons.category_outlined,
+                          Icons.wallet,
                           color: Colors.black,
                           size: 20,
                         ),
@@ -92,10 +94,11 @@ class ShowDespesaTransactionPage extends StatelessWidget {
                       ),
                       Gutter(),
                       InfoWidget(
-                        desc: 'Conta',
-                        value: controller.getAccountName(movimento.cartaoId),
+                        desc: 'Categoria',
+                        value: controller
+                            .getCategoryName(movimento.categoriaMovimentoId),
                         icon: Icon(
-                          Icons.wallet,
+                          Icons.category_outlined,
                           color: Colors.black,
                           size: 20,
                         ),
@@ -121,30 +124,42 @@ class ShowDespesaTransactionPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: kVermelhaColor,
+                        backgroundColor: movimento.tipoMovimentoId == 1
+                            ? kVerdeForteColor
+                            : kVermelhaForteColor,
                         foregroundColor: Colors.white,
                         minimumSize: Size(Get.size.width / 2.5, 45),
                       ),
-                      child: Text('Editar receita'),
+                      child: Text(
+                        movimento.tipoMovimentoId == 1
+                            ? 'Editar receita'
+                            : 'Editar despesa',
+                      ),
                     ),
                     GutterSmall(),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: Size(Get.size.width / 2.5, 45),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: kDefaultPadding * 3,
-                          vertical: kDefaultPadding,
+                    if (!movimento.confirmado)
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size(Get.size.width / 2.5, 45),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: kDefaultPadding * 3,
+                            vertical: kDefaultPadding,
+                          ),
+                          side: BorderSide(
+                            color: movimento.tipoMovimentoId == 1
+                                ? kVerdeForteColor
+                                : kVermelhaForteColor,
+                            width: 2,
+                          ),
+                          foregroundColor: movimento.tipoMovimentoId == 1
+                              ? kVerdeForteColor
+                              : kVermelhaForteColor,
                         ),
-                        side: BorderSide(
-                          color: kVermelhaColor,
+                        child: Text(
+                          movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
                         ),
-                        foregroundColor: kVermelhaColor,
                       ),
-                      child: Text(
-                        'Pagar',
-                      ),
-                    ),
                     GutterLarge(),
                   ],
                 ),
@@ -240,7 +255,9 @@ class ExpandedInfoWidget extends StatelessWidget {
 }
 
 class _HeaderInfo extends StatelessWidget {
-  const _HeaderInfo();
+  const _HeaderInfo({required this.movimento});
+
+  final Movimento movimento;
 
   @override
   Widget build(BuildContext context) {
@@ -249,19 +266,31 @@ class _HeaderInfo extends StatelessWidget {
       children: [
         CircleInfo(
           icon: Icon(
-            CupertinoIcons.pin,
+            movimento.confirmado
+                ? CupertinoIcons.checkmark_alt
+                : CupertinoIcons.pin,
             color: Colors.white,
           ),
-          backgroundColor: kVermelhaColor,
-          title: 'Não foi pago',
+          backgroundColor:
+              movimento.confirmado ? kVerdeAccentColor : kVermelhaColor,
+          title: isReceita(movimento.tipoMovimentoId)
+              ? movimento.confirmado
+                  ? 'Recebido'
+                  : 'Não foi recebido'
+              : movimento.confirmado
+                  ? 'Pago'
+                  : 'Não foi pago',
         ),
         CircleInfo(
           icon: Icon(
-            CupertinoIcons.arrow_down,
+            movimento.tipoMovimentoId == 1
+                ? CupertinoIcons.arrow_up
+                : CupertinoIcons.arrow_down,
             color: Colors.white,
           ),
-          backgroundColor: kVermelhaColor,
-          title: 'Despesa',
+          backgroundColor:
+              movimento.tipoMovimentoId == 1 ? kVerdeColor : kVermelhaColor,
+          title: movimento.tipoMovimentoId == 1 ? 'Receita' : 'Despesa',
         ),
         CircleInfo(
           icon: Icon(

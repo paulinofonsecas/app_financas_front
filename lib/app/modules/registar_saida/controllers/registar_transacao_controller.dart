@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-class RegistarSaidaController extends GetxController {
+class RegistarTransacaoController extends GetxController {
   late final IMovimentoService movimentoService;
   late final SetupConfiguration setupConfiguration;
 
@@ -18,12 +18,16 @@ class RegistarSaidaController extends GetxController {
   late final TextEditingController dateTextController;
   late final TextEditingController valorTextController;
   late final TextEditingController obsTextController;
+  int movimentoType;
+  var confirmado = true.obs;
 
   var date = DateTime.now();
   late int categoriaMovimentoId;
   late int cartaoId;
   var salvandoMovimento = false.obs;
   var salvo = false;
+
+  RegistarTransacaoController({required this.movimentoType});
 
   @override
   void onInit() {
@@ -118,9 +122,10 @@ class RegistarSaidaController extends GetxController {
       data: dateMovimento,
       descricao: descricaoMovimento,
       cartaoId: cartaoId,
-      tipoMovimentoId: 2,
+      tipoMovimentoId: movimentoType,
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
+      confirmado: confirmado.value,
     );
 
     var result = await movimentoService.saveMovimento(movimento);
@@ -163,5 +168,10 @@ class RegistarSaidaController extends GetxController {
       }
       salvandoMovimento.value = false;
     }
+  }
+
+  void switchTransactionType() {
+    movimentoType = movimentoType == 1 ? 2 : 1;
+    update(['geral']);
   }
 }

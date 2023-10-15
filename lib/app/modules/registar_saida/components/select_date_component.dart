@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/registar_saida_controller.dart';
+import '../controllers/registar_transacao_controller.dart';
 
 class SelectDateComponent extends StatelessWidget {
   const SelectDateComponent({
@@ -10,7 +11,7 @@ class SelectDateComponent extends StatelessWidget {
     required this.controller,
   });
 
-  final RegistarSaidaController controller;
+  final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,12 @@ class SelectDateComponent extends StatelessWidget {
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: controller.getSelectedDate(),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  hintStyle: GoogleFonts.inter().copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
                   ),
+                  border: InputBorder.none,
                 ),
               ),
             );

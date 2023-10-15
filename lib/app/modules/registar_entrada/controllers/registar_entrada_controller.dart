@@ -143,6 +143,7 @@ class RegistarEntradaController extends GetxController {
       tipoMovimentoId: 1,
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
+      confirmado: true,
     );
 
     var result = await movimentoService.saveMovimento(movimento);

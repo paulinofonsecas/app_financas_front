@@ -41,9 +41,7 @@ class MovimentosAtHomePage extends StatelessWidget {
                   onTap: () {
                     customShowModalBottomSheet(
                       context,
-                      child: movimento.tipoMovimentoId == 1
-                          ? ShowIncomingTransactionPage(movimento: movimento)
-                          : ShowDespesaTransactionPage(movimento: movimento),
+                      child: ShowDespesaTransactionPage(movimento: movimento),
                     ).then((value) {
                       Get.delete(
                           tag: 'ShowDespesaTransactionController', force: true);

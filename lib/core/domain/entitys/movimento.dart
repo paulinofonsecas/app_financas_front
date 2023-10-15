@@ -11,6 +11,7 @@ class Movimento {
   final int tipoMovimentoId;
   final int categoriaMovimentoId;
   final String obsMovimento;
+  final bool confirmado;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -24,6 +25,7 @@ class Movimento {
     required this.tipoMovimentoId,
     required this.categoriaMovimentoId,
     required this.obsMovimento,
+    required this.confirmado,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -37,6 +39,7 @@ class Movimento {
     required int tipoMovimentoId,
     required int categoriaMovimentoId,
     required String obsMovimento,
+    required bool confirmado,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -50,6 +53,7 @@ class Movimento {
       tipoMovimentoId: tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
+      confirmado: confirmado,
       createdAt: createdAt ?? DateTime.now(),
       updatedAt: updatedAt ?? DateTime.now(),
     );
@@ -66,6 +70,7 @@ class Movimento {
       tipoMovimentoId: -1,
       categoriaMovimentoId: -1,
       obsMovimento: '',
+      confirmado: false,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -81,6 +86,7 @@ class Movimento {
     int? tipoMovimentoId,
     int? categoriaMovimentoId,
     String? obsMovimento,
+    bool? confirmado,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -94,6 +100,7 @@ class Movimento {
       tipoMovimentoId: tipoMovimentoId ?? this.tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId ?? this.categoriaMovimentoId,
       obsMovimento: obsMovimento ?? this.obsMovimento,
+      confirmado: confirmado ?? this.confirmado,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -110,6 +117,7 @@ class Movimento {
       'tipo_movimento_id': tipoMovimentoId,
       'categoria_movimento_id': categoriaMovimentoId,
       'obs_movimento': obsMovimento,
+      'confirmado': confirmado,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
     };
@@ -126,6 +134,7 @@ class Movimento {
       tipoMovimentoId: map['tipo_movimento_id'] as int,
       categoriaMovimentoId: map['categoria_movimento_id'] as int,
       obsMovimento: map['obs_movimento'] ?? '',
+      confirmado: map['confirmado'] == 1 ? true : false,
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),
     );
@@ -141,6 +150,7 @@ class Movimento {
     return 'Movimento(id: $id, valor: $valor, data: $data, descricao: $descricao,'
         ' userId: $userId, cartaoId: $cartaoId, tipoMovimentoId: $tipoMovimentoId,'
         ' categoriaMovimentoId: $categoriaMovimentoId, obsMovimento: $obsMovimento,'
+        ' confirmado: $confirmado, '
         ' createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
@@ -157,6 +167,7 @@ class Movimento {
         other.tipoMovimentoId == tipoMovimentoId &&
         other.categoriaMovimentoId == categoriaMovimentoId &&
         other.obsMovimento == obsMovimento &&
+        other.confirmado == confirmado &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -172,6 +183,7 @@ class Movimento {
         tipoMovimentoId.hashCode ^
         categoriaMovimentoId.hashCode ^
         obsMovimento.hashCode ^
+        confirmado.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode;
   }
