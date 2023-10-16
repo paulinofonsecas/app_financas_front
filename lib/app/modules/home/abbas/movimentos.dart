@@ -10,7 +10,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:app_financas/constants.dart';
 import 'package:get/get.dart';
 
-import '../../show_despesa_transaction/show_despesa_transaction_page.dart';
+import '../../show_transaction/show_transaction_page.dart';
 import 'components/abba_header.dart';
 
 class MovimentosAtHomePage extends StatelessWidget {
@@ -40,10 +40,9 @@ class MovimentosAtHomePage extends StatelessWidget {
                   onTap: () {
                     customShowModalBottomSheet(
                       context,
-                      child: ShowDespesaTransactionPage(movimento: movimento),
+                      child: ShowTransactionPage(movimento: movimento),
                     ).then((value) {
-                      Get.delete(
-                          tag: 'ShowDespesaTransactionController', force: true);
+                      Get.delete(tag: 'EditTransactionController', force: true);
                       Get.delete(
                           tag: 'ShowReceitaTransactionController', force: true);
                     });

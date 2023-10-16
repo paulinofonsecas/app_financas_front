@@ -11,10 +11,10 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'controller/show_despesa_transaction_controller.dart';
+import 'controller/show_transaction_controller.dart';
 
-class ShowDespesaTransactionPage extends StatelessWidget {
-  const ShowDespesaTransactionPage({
+class ShowTransactionPage extends StatelessWidget {
+  const ShowTransactionPage({
     super.key,
     required this.movimento,
   });
@@ -23,8 +23,8 @@ class ShowDespesaTransactionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(ShowDespesaTransactionController(),
-        tag: 'ShowDespesaTransactionController');
+    var controller =
+        Get.put(ShowTransactionController(), tag: 'EditTransactionController');
     return CustomBottomSheet(
       child: Container(
         color: Colors.white,

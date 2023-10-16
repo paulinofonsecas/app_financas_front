@@ -1,7 +1,7 @@
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:get/get.dart';
 
-class ShowDespesaTransactionController extends GetxController {
+class EditTransactionController extends GetxController {
   late final SetupConfiguration setupConfiguration;
 
   @override
