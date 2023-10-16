@@ -1,19 +1,19 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:app_financas/app/components/custom_bottom_sheet.dart';
+import 'package:app_financas/app/modules/edit_transaction/edit_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/helders/format_helpers.dart';
-import 'package:app_financas/helders/helpers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import 'components/expanded_info.dart';
+import 'components/header_info.dart';
+import 'components/info.dart';
 import 'controller/show_transaction_controller.dart';
 
-class ShowTransactionPage extends StatelessWidget {
+class ShowTransactionPage extends StatefulWidget {
   const ShowTransactionPage({
     super.key,
     required this.movimento,
@@ -22,9 +22,16 @@ class ShowTransactionPage extends StatelessWidget {
   final Movimento movimento;
 
   @override
+  State<ShowTransactionPage> createState() => _ShowTransactionPageState();
+}
+
+class _ShowTransactionPageState extends State<ShowTransactionPage> {
+  @override
   Widget build(BuildContext context) {
-    var controller =
-        Get.put(ShowTransactionController(), tag: 'EditTransactionController');
+    var controller = Get.put(
+      ShowTransactionController(),
+      tag: 'EditTransactionController',
+    );
     return CustomBottomSheet(
       child: Container(
         color: Colors.white,
@@ -34,13 +41,9 @@ class ShowTransactionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              _HeaderInfo(
-                movimento: movimento,
-              ),
+              HeaderInfo(movimento: widget.movimento),
               const GutterTiny(),
-              Divider(
-                color: Colors.grey[100],
-              ),
+              Divider(color: Colors.grey[100]),
               const GutterTiny(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,118 +52,36 @@ class ShowTransactionPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InfoWidget(
-                        desc: 'Descrição',
-                        value: movimento.descricao,
-                        icon: Icon(
-                          Icons.create_outlined,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ),
-                      Gutter(),
-                      InfoWidget(
-                        desc: 'Data',
-                        value: dateFormat.format(movimento.data),
-                        icon: Icon(
-                          Icons.calendar_month,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ),
-                      Gutter(),
-                      InfoWidget(
-                        desc: 'Conta',
-                        value: controller.getAccountName(movimento.cartaoId),
-                        icon: Icon(
-                          Icons.wallet,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ),
+                      _buildDescricaoInput(),
+                      const Gutter(),
+                      _buildDataInput(),
+                      const Gutter(),
+                      _buildContaInput(controller),
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InfoWidget(
-                        desc: 'Valor',
-                        value: numberFormat.format(movimento.valor),
-                        icon: Icon(
-                          Icons.monetization_on,
-                          color: kVerdeAccentColor,
-                          size: 20,
-                        ),
-                      ),
-                      Gutter(),
-                      InfoWidget(
-                        desc: 'Categoria',
-                        value: controller
-                            .getCategoryName(movimento.categoriaMovimentoId),
-                        icon: Icon(
-                          Icons.category_outlined,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                      ),
+                      _buildValorInput(),
+                      const Gutter(),
+                      _buildCategoriaInput(controller),
                     ],
                   ),
-                  SizedBox(),
+                  const SizedBox(),
                 ],
               ),
               const Gutter(),
-              ExpandedInfoWidget(
-                desc: 'Observações',
-                value: movimento.obsMovimento,
-                icon: Icon(
-                  Icons.create_sharp,
-                ),
-              ),
-              Spacer(),
+              _buildObservacoesInput(),
+              const Spacer(),
               Align(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: movimento.tipoMovimentoId == 1
-                            ? kVerdeForteColor
-                            : kVermelhaForteColor,
-                        foregroundColor: Colors.white,
-                        minimumSize: Size(Get.size.width / 2.5, 45),
-                      ),
-                      child: Text(
-                        movimento.tipoMovimentoId == 1
-                            ? 'Editar receita'
-                            : 'Editar despesa',
-                      ),
-                    ),
-                    GutterSmall(),
-                    if (!movimento.confirmado)
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: Size(Get.size.width / 2.5, 45),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding * 3,
-                            vertical: kDefaultPadding,
-                          ),
-                          side: BorderSide(
-                            color: movimento.tipoMovimentoId == 1
-                                ? kVerdeForteColor
-                                : kVermelhaForteColor,
-                            width: 2,
-                          ),
-                          foregroundColor: movimento.tipoMovimentoId == 1
-                              ? kVerdeForteColor
-                              : kVermelhaForteColor,
-                        ),
-                        child: Text(
-                          movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
-                        ),
-                      ),
-                    GutterLarge(),
+                    _buildActionButton(),
+                    const GutterSmall(),
+                    if (!widget.movimento.confirmado)
+                      _buildSecondaryActionButton(),
+                    const GutterLarge(),
                   ],
                 ),
               ),
@@ -170,172 +91,125 @@ class ShowTransactionPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class InfoWidget extends StatelessWidget {
-  const InfoWidget({
-    super.key,
-    required this.desc,
-    required this.value,
-    required this.icon,
-  });
-
-  final String desc;
-  final String value;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        icon,
-        Gutter(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              desc,
-              style: GoogleFonts.inter(
-                color: Colors.grey[600],
-                fontSize: 12,
-              ),
-            ),
-            Text(
-              value,
-              softWrap: true,
-              style: GoogleFonts.inter(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+  OutlinedButton _buildSecondaryActionButton() {
+    return OutlinedButton(
+      onPressed: () {},
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(Get.size.width / 2.5, 45),
+        padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding * 3,
+          vertical: kDefaultPadding,
         ),
-      ],
+        side: BorderSide(
+          color: widget.movimento.tipoMovimentoId == 1
+              ? kVerdeForteColor
+              : kVermelhaForteColor,
+          width: 2,
+        ),
+        foregroundColor: widget.movimento.tipoMovimentoId == 1
+            ? kVerdeForteColor
+            : kVermelhaForteColor,
+      ),
+      child: Text(
+        widget.movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
+      ),
     );
   }
-}
 
-class ExpandedInfoWidget extends StatelessWidget {
-  const ExpandedInfoWidget({
-    super.key,
-    required this.desc,
-    required this.value,
-    required this.icon,
-  });
-
-  final String desc;
-  final String value;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          desc,
-          style: GoogleFonts.inter(
-            color: Colors.grey[600],
-            fontSize: 14,
+  ElevatedButton _buildActionButton() {
+    return ElevatedButton(
+      onPressed: () {
+        customShowModalBottomSheet(
+          context,
+          child: EditTransactionPage(
+            movimento: widget.movimento,
+            movimentoType: widget.movimento.tipoMovimentoId,
           ),
-        ),
-        Text(
-          value.isEmpty ? 'Nenhuma' : value,
-          softWrap: true,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: widget.movimento.tipoMovimentoId == 1
+            ? kVerdeForteColor
+            : kVermelhaForteColor,
+        foregroundColor: Colors.white,
+        minimumSize: Size(Get.size.width / 2.5, 45),
+      ),
+      child: Text(
+        widget.movimento.tipoMovimentoId == 1
+            ? 'Editar receita'
+            : 'Editar despesa',
+      ),
     );
   }
-}
 
-class _HeaderInfo extends StatelessWidget {
-  const _HeaderInfo({required this.movimento});
-
-  final Movimento movimento;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        CircleInfo(
-          icon: Icon(
-            movimento.confirmado
-                ? CupertinoIcons.checkmark_alt
-                : CupertinoIcons.pin,
-            color: Colors.white,
-          ),
-          backgroundColor:
-              movimento.confirmado ? kVerdeAccentColor : kVermelhaColor,
-          title: isReceita(movimento.tipoMovimentoId)
-              ? movimento.confirmado
-                  ? 'Recebido'
-                  : 'Não foi recebido'
-              : movimento.confirmado
-                  ? 'Pago'
-                  : 'Não foi pago',
-        ),
-        CircleInfo(
-          icon: Icon(
-            movimento.tipoMovimentoId == 1
-                ? CupertinoIcons.arrow_up
-                : CupertinoIcons.arrow_down,
-            color: Colors.white,
-          ),
-          backgroundColor:
-              movimento.tipoMovimentoId == 1 ? kVerdeColor : kVermelhaColor,
-          title: movimento.tipoMovimentoId == 1 ? 'Receita' : 'Despesa',
-        ),
-        CircleInfo(
-          icon: Icon(
-            CupertinoIcons.heart,
-            color: Colors.white,
-          ),
-          title: 'Favorita',
-        ),
-      ],
+  dynamic _buildObservacoesInput() {
+    return ExpandedInfo(
+      desc: 'Observações',
+      value: widget.movimento.obsMovimento,
+      icon: const Icon(
+        Icons.create_sharp,
+      ),
     );
   }
-}
 
-class CircleInfo extends StatelessWidget {
-  const CircleInfo({
-    super.key,
-    required this.icon,
-    required this.title,
-    this.backgroundColor,
-  });
+  Widget _buildCategoriaInput(ShowTransactionController controller) {
+    return InfoWidget(
+      desc: 'Categoria',
+      value: controller.getCategoryName(widget.movimento.categoriaMovimentoId),
+      icon: const Icon(
+        Icons.category_outlined,
+        color: Colors.black,
+        size: 20,
+      ),
+    );
+  }
 
-  final Widget icon;
-  final String title;
-  final Color? backgroundColor;
+  Widget _buildValorInput() {
+    return InfoWidget(
+      desc: 'Valor',
+      value: numberFormat.format(widget.movimento.valor),
+      icon: const Icon(
+        Icons.monetization_on,
+        color: kVerdeAccentColor,
+        size: 20,
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: backgroundColor ?? Colors.grey[500],
-          radius: 22,
-          child: Center(
-            child: icon,
-          ),
-        ),
-        const GutterTiny(),
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            color: Colors.grey[600],
-            fontSize: 10,
-          ),
-        ),
-      ],
+  Widget _buildContaInput(ShowTransactionController controller) {
+    return InfoWidget(
+      desc: 'Conta',
+      value: controller.getAccountName(widget.movimento.cartaoId),
+      icon: const Icon(
+        Icons.wallet,
+        color: Colors.black,
+        size: 20,
+      ),
+    );
+  }
+
+  Widget _buildDataInput() {
+    return InfoWidget(
+      desc: 'Data',
+      value: dateFormat.format(widget.movimento.data),
+      icon: const Icon(
+        Icons.calendar_month,
+        color: Colors.black,
+        size: 20,
+      ),
+    );
+  }
+
+  Widget _buildDescricaoInput() {
+    return InfoWidget(
+      desc: 'Descrição',
+      value: widget.movimento.descricao,
+      icon: const Icon(
+        Icons.create_outlined,
+        color: Colors.black,
+        size: 20,
+      ),
     );
   }
 }
