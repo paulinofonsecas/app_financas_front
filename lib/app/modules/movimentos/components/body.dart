@@ -1,4 +1,5 @@
 import 'package:app_financas/app/components/movimento_item.dart';
+import 'package:app_financas/app/modules/show_despesa_transaction/show_despesa_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -7,7 +8,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../show_receita_transaction/show_incomming_transaction_page.dart';
 import '../controllers/movimentos_screen_controller.dart';
 
 class Body extends StatelessWidget {
@@ -79,7 +79,7 @@ class Body extends StatelessWidget {
       onTap: () {
         customShowModalBottomSheet(
           context,
-          child: ShowIncomingTransactionPage(movimento: movimento),
+          child: ShowDespesaTransactionPage(movimento: movimento),
         );
       },
     );

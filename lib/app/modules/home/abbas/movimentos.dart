@@ -11,7 +11,6 @@ import 'package:app_financas/constants.dart';
 import 'package:get/get.dart';
 
 import '../../show_despesa_transaction/show_despesa_transaction_page.dart';
-import '../../show_receita_transaction/show_incomming_transaction_page.dart';
 import 'components/abba_header.dart';
 
 class MovimentosAtHomePage extends StatelessWidget {
