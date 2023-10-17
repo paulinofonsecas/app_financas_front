@@ -7,7 +7,6 @@ class ShowTransactionController extends GetxController {
   @override
   onInit() {
     setupConfiguration = Get.find<SetupConfiguration>();
-    print('ShowReceitaTransactionController initd');
     super.onInit();
   }
 
