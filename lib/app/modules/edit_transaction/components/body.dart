@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import '../controllers/registar_transacao_controller.dart';
-import 'register_despesa_header.dart';
+import '../controllers/edit_transacao_controller.dart';
+import 'edit_transaction_header.dart';
 import 'select_date_component.dart';
 
 class Body extends StatelessWidget {

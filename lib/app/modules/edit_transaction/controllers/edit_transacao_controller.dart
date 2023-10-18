@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -6,6 +9,7 @@ import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -19,15 +23,17 @@ class EditTransacaoController extends GetxController {
   late final TextEditingController valorTextController;
   late final TextEditingController obsTextController;
   int movimentoType;
+  late Movimento movimento;
   var confirmado = true.obs;
 
   var date = DateTime.now();
   late int categoriaMovimentoId;
   late int cartaoId;
-  var salvandoMovimento = false.obs;
+  var alterandoTransacao = false.obs;
   var salvo = false;
 
-  EditTransacaoController({required this.movimentoType});
+  EditTransacaoController(
+      {required this.movimentoType, required this.movimento});
 
   @override
   void onInit() {
@@ -39,13 +45,16 @@ class EditTransacaoController extends GetxController {
     movimentoService = Get.find();
     setupConfiguration = Get.find();
 
-    descricaoTextController = TextEditingController();
-    dateTextController = TextEditingController();
-    valorTextController = TextEditingController();
-    obsTextController = TextEditingController();
+    descricaoTextController = TextEditingController(text: movimento.descricao);
+    dateTextController = TextEditingController(text: getSelectedDate());
+    valorTextController =
+        TextEditingController(text: movimento.valor.toString());
+    obsTextController = TextEditingController(text: movimento.obsMovimento);
 
-    categoriaMovimentoId = getCategories().first.id;
-    cartaoId = getCards().first.id;
+    categoriaMovimentoId = movimento.categoriaMovimentoId;
+    cartaoId = movimento.cartaoId;
+    date = movimento.data;
+    confirmado.value = movimento.confirmado;
   }
 
   String onValorChange(value) {
@@ -77,8 +86,8 @@ class EditTransacaoController extends GetxController {
     return setupConfiguration.cartoes;
   }
 
-  Future<void> finalizarMovimento() async {
-    salvandoMovimento.value = true;
+  Future<void> alterarTransacao() async {
+    alterandoTransacao.value = true;
     var valor = valorTextController.text;
     if (valor.isEmpty) {
       valor = '0';
@@ -90,34 +99,18 @@ class EditTransacaoController extends GetxController {
     var obsMovimento = obsTextController.text;
 
     if (descricaoMovimento.isEmpty) {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Erro',
-          message: 'Preencha a descrição do movimento',
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-        ),
-      );
-      salvandoMovimento.value = false;
-      return;
+      showErrorMessage('Error', 'Preencha a descrição do movimento');
+      alterandoTransacao.value = false;
     }
 
     if (valorMovimento <= 0) {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Erro',
-          message: 'Preencha o valor do movimento',
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-          isDismissible: true,
-        ),
-      );
-      salvandoMovimento.value = false;
+      showErrorMessage('Error', 'Preencha o valor do movimento');
+      alterandoTransacao.value = false;
       return;
     }
 
-    var movimento = Movimento.make(
+    var myMovimento = Movimento.make(
+      id: movimento.id,
       valor: valorMovimento,
       data: dateMovimento,
       descricao: descricaoMovimento,
@@ -128,50 +121,61 @@ class EditTransacaoController extends GetxController {
       confirmado: confirmado.value,
     );
 
-    var result = await movimentoService.saveMovimento(movimento);
+    var result = await movimentoService.editMovimento(myMovimento);
 
-    if (result is Right) {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Sucesso',
-          message: 'Movimento registrado com sucesso',
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-        ),
-      );
-      salvo = true;
+    if (result is Right && result.getOrElse(() => false)) {
+      dynamic result0 = await movimentoService.getMovimento(movimento.id);
+      result0 = result0.getOrElse(() => Movimento.fake());
+
+      // showSucessMessage('Sucesso', 'Transação alterada com sucesso');
+      if (result0 != Movimento.fake()) {
+        movimento = result0;
+        salvo = true;
+      } else {
+        salvo = false;
+      }
     } else {
       if (result is Left &&
           result.swap().getOrElse(() => HttpException('message'))
               is SaldoInsuficiente) {
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Saldo insuficiente',
-            message:
-                'O saldo do cartão é insuficiente para realizar o movimento',
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-          ),
-        );
+        showErrorMessage('Erro', 'Saldo insuficiente na conta selecionada');
       } else {
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Erro',
-            message: 'Erro ao registrar movimento',
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-          ),
-        );
+        var error = result.swap().getOrElse(() => HttpException('message'));
+        if (kDebugMode) {
+          print(error.message);
+        }
+        showErrorMessage('Erro', 'Erro desconhecido ao atualizar a transação');
       }
-      salvandoMovimento.value = false;
+      alterandoTransacao.value = false;
     }
   }
 
   void switchTransactionType() {
     movimentoType = movimentoType == 1 ? 2 : 1;
     update(['geral']);
+  }
+
+  void showErrorMessage(String title, String message) {
+    Get.showSnackbar(
+      GetSnackBar(
+        title: title,
+        message: message,
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.red,
+        isDismissible: true,
+      ),
+    );
+  }
+
+  void showSucessMessage(String title, String message) {
+    Get.showSnackbar(
+      GetSnackBar(
+        title: title,
+        message: message,
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.green,
+        isDismissible: true,
+      ),
+    );
   }
 }

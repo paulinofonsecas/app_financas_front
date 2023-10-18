@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/app/components/movimento_item.dart';
+import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:app_financas/constants.dart';
 import 'package:get/get.dart';
 
+import '../../show_transaction/controller/show_transaction_controller.dart';
 import '../../show_transaction/show_transaction_page.dart';
 import 'components/abba_header.dart';
 
@@ -25,6 +27,7 @@ class MovimentosAtHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(HomePageController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,11 +44,7 @@ class MovimentosAtHomePage extends StatelessWidget {
                     customShowModalBottomSheet(
                       context,
                       child: ShowTransactionPage(movimento: movimento),
-                    ).then((value) {
-                      Get.delete(tag: 'EditTransactionController', force: true);
-                      Get.delete(
-                          tag: 'ShowReceitaTransactionController', force: true);
-                    });
+                    ).then((value) => controller.update(['geral']));
                   },
                   movimento: movimento,
                   asset: 'assets/svgs/categories/desktop.svg',

@@ -10,7 +10,7 @@ class Movimento {
   final int cartaoId;
   final int tipoMovimentoId;
   final int categoriaMovimentoId;
-  final String obsMovimento;
+  final String? obsMovimento;
   final bool confirmado;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -38,13 +38,13 @@ class Movimento {
     required int cartaoId,
     required int tipoMovimentoId,
     required int categoriaMovimentoId,
-    required String obsMovimento,
+    required String? obsMovimento,
     required bool confirmado,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
     return Movimento(
-      id: -1,
+      id: id ?? -1,
       valor: valor,
       data: data,
       descricao: descricao,
@@ -116,8 +116,8 @@ class Movimento {
       'cartao_id': cartaoId,
       'tipo_movimento_id': tipoMovimentoId,
       'categoria_movimento_id': categoriaMovimentoId,
-      'obs_movimento': obsMovimento,
-      'confirmado': confirmado,
+      'obs_movimento': obsMovimento ?? '',
+      'confirmado': confirmado ? 1 : 0,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
     };

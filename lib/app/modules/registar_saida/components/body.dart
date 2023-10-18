@@ -1,13 +1,13 @@
 import 'package:app_financas/app/components/my_divider.dart';
 import 'package:app_financas/app/components/with_icon.dart';
 import 'package:app_financas/app/modules/registar_saida/components/select_date_component.dart';
+import 'package:app_financas/app/modules/registar_saida/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import '../controllers/registar_transacao_controller.dart';
 import 'register_despesa_header.dart';
 
 class Body extends StatelessWidget {
@@ -69,9 +69,9 @@ class Body extends StatelessWidget {
                       const GutterTiny(),
                       const MyDivider(),
                       const GutterTiny(),
-                      WithIcon(
+                      const WithIcon(
                         icon: Icons.calendar_today_outlined,
-                        child: SelectDateComponent(controller: controller),
+                        child: SelectDateComponent(),
                       ),
                       const GutterTiny(),
                       const MyDivider(),

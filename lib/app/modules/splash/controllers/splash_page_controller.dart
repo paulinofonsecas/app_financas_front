@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 class SplashPageController extends GetxController {
   final ISetupService setupService;
   var isLoading = false.obs;
+  var loadingError = true.obs;
 
   SplashPageController(this.setupService);
 
@@ -31,6 +32,7 @@ class SplashPageController extends GetxController {
         showErrorSnackBar();
       } else {
         isLoading.value = false;
+        loadingError.value = false;
         Get.put(setupConfig, permanent: true);
         Get.off(const HomePage());
       }

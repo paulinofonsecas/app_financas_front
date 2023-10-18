@@ -7,11 +7,11 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/app/modules/registar_saida/components/body.dart';
+import 'package:app_financas/app/modules/edit_transaction/components/body.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 
-import 'controllers/registar_transacao_controller.dart';
+import 'controllers/edit_transacao_controller.dart';
 
 class EditTransactionPage extends StatelessWidget {
   const EditTransactionPage({
@@ -27,28 +27,30 @@ class EditTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(EditTransacaoController(
       movimentoType: movimentoType,
+      movimento: movimento,
     ));
 
     return GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return Scaffold(
-            backgroundColor: isReceita(controller.movimentoType)
-                ? kVerdeColor
-                : kVermelhaColor,
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                Body(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SuspendedButton(),
-                ),
-              ],
-            ),
-          );
-        });
+      init: controller,
+      id: 'geral',
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: isReceita(controller.movimentoType)
+              ? kVerdeColor
+              : kVermelhaColor,
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Body(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SuspendedButton(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -63,9 +65,9 @@ class SuspendedButton extends StatelessWidget {
       children: [
         OutlinedButton(
           onPressed: () async {
-            await controller.finalizarMovimento();
+            await controller.alterarTransacao();
             if (controller.salvo) {
-              Get.back(closeOverlays: true);
+              Get.back(closeOverlays: true, result: controller.movimento);
             }
           },
           style: OutlinedButton.styleFrom(

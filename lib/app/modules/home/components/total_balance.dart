@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 
 import '../controllers/home_page_controller.dart';
@@ -17,13 +16,13 @@ class CardWidget extends StatelessWidget {
   const CardWidget({
     Key? key,
     required this.index,
-    required this.cartao,
+    required this.saldo,
     required this.width,
     required this.height,
   }) : super(key: key);
 
   final int index;
-  final Cartao cartao;
+  final double saldo;
   final double width;
   final double height;
 
@@ -50,7 +49,7 @@ class CardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    cartao.nome,
+                    saldo.toString(),
                     style: GoogleFonts.inter(
                       fontSize: 22,
                       color: Colors.white,
@@ -60,7 +59,7 @@ class CardWidget extends StatelessWidget {
                   Obx(
                     () => Text(
                       controller.showMoneyOnCards.value
-                          ? numberFormat.format(cartao.saldo)
+                          ? numberFormat.format(saldo)
                           : '**********',
                       style: GoogleFonts.plusJakartaSans(
                         color: Colors.white,

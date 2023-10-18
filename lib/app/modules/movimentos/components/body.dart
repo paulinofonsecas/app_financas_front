@@ -7,7 +7,9 @@ import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../show_transaction/controller/show_transaction_controller.dart';
 import '../controllers/movimentos_screen_controller.dart';
 
 class Body extends StatelessWidget {

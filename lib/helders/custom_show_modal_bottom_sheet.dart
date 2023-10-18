@@ -13,7 +13,6 @@ Future<dynamic> customShowModalBottomSheet(
     backgroundColor: Colors.white,
     showDragHandle: true,
     useSafeArea: true,
-    useRootNavigator: true,
     constraints:
         constraints ?? BoxConstraints.expand(height: size.height * 0.8),
     builder: (context) => child,

@@ -38,62 +38,43 @@ class _ShowCardsState extends State<ShowCards> {
             width: size.width,
             height: size.height * 0.23,
             child: FutureBuilder<List<Cartao>>(
-                future: controller.getCartoes(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+              future: controller.getCartoes(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-                  var cartoes = snapshot.data ?? [];
+                var cartoes = snapshot.data ?? [];
 
-                  if (cartoes.isEmpty) {
-                    return const Center(
-                      child: Text('Nenhum cartão cadastrado'),
-                    );
-                  }
+                if (cartoes.isEmpty) {
+                  return const Center(
+                    child: Text('Nenhum cartão cadastrado'),
+                  );
+                }
 
-                  cartoes.insert(
-                    0,
-                    Cartao(
-                      id: 0,
-                      nome: 'Saldo disponivel',
-                      numero: '0001',
-                      saldo: cartoes.fold(
-                        0,
+                return LayoutBuilder(
+                  builder: (c, constraines) {
+                    var saldoTotal = cartoes.fold(
+                        0.0,
                         (previousValue, element) =>
-                            previousValue + element.saldo,
+                            previousValue + element.saldo);
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: kDefaultPadding,
                       ),
-                      bancoId: 0,
-                    ),
-                  );
-
-                  return PageView.builder(
-                    controller: pageController,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(
-                      decelerationRate: ScrollDecelerationRate.fast,
-                    ),
-                    itemCount: cartoes.length,
-                    itemBuilder: (context, index) {
-                      var cartao = cartoes[index];
-                      return LayoutBuilder(
-                        builder: (c, constraines) => Container(
-                          margin: const EdgeInsets.only(right: kDefaultPadding),
-                          child: CardWidget(
-                            index: index,
-                            cartao: cartao,
-                            width: size.width * 0.85,
-                            height: index == 0
-                                ? constraines.maxHeight
-                                : constraines.maxHeight * 0.75,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }),
+                      child: CardWidget(
+                        index: 0,
+                        saldo: saldoTotal,
+                        width: size.width * 0.85,
+                        height: constraines.maxHeight * 0.75,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           );
         });
   }

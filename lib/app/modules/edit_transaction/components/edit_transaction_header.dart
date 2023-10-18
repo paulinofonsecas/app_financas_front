@@ -1,4 +1,4 @@
-import 'package:app_financas/app/modules/registar_saida/controllers/registar_transacao_controller.dart';
+import 'package:app_financas/app/modules/edit_transaction/controllers/edit_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +13,7 @@ class RegisterHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<RegistarTransacaoController>();
+    var controller = Get.find<EditTransacaoController>();
 
     var size = MediaQuery.of(context).size;
     return GetBuilder(
@@ -47,7 +47,7 @@ class RegisterHeader extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SwitchTransactionButton(controller: controller),
+                    const SwitchTransactionButton(),
                   ],
                 ),
                 const GutterLarge(),
@@ -98,13 +98,11 @@ class RegisterHeader extends StatelessWidget {
 class SwitchTransactionButton extends StatelessWidget {
   const SwitchTransactionButton({
     super.key,
-    required this.controller,
   });
-
-  final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<EditTransacaoController>();
     return Align(
       alignment: Alignment.center,
       child: GestureDetector(

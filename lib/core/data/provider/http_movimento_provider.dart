@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -79,6 +81,63 @@ class HttpMovimentoProvider implements IMovimentoProvider {
           .map<Movimento>((e) => Movimento.fromMap(e))
           .toList();
       return Right(movimentos as List<Movimento>);
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.error);
+      }
+      return Left(HttpException('Erro ao listar os movimentos \n ${e.error}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> editMovimento(Movimento movimento) async {
+    try {
+      var result = await dio.put(
+        '/movimento/${movimento.id}',
+        queryParameters: {
+          'valor': movimento.valor,
+          'descricao': movimento.descricao,
+          'cartao_id': movimento.cartaoId,
+          'categoria_movimento_id': movimento.categoriaMovimentoId,
+          'obs_movimento': movimento.obsMovimento,
+          'confirmado': movimento.confirmado ? 1 : 0,
+          'data': movimento.data.toString(),
+        },
+      );
+
+      if (result.statusCode == 200) {
+        return const Right(true);
+      } else {
+        if (kDebugMode) {
+          print(result.data);
+        }
+        return const Right(false);
+      }
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.error);
+      }
+
+      if (e.response?.statusCode == 400) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
+      }
+
+      return Left(HttpException(
+        'Erro ao editar o movimento \n ${e.response?.statusCode}',
+        error: e.error,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Movimento>> getMovimento(int id) async {
+    try {
+      var result = await dio.get(
+        '/movimento/$id',
+      );
+      dynamic movimento0 = result.data;
+      var movimento = Movimento.fromMap(movimento0);
+      return Right(movimento);
     } on DioException catch (e) {
       if (kDebugMode) {
         print(e.error);

@@ -3,7 +3,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/registar_transacao_controller.dart';
+import '../controllers/edit_transacao_controller.dart';
 
 class SelectDateComponent extends StatelessWidget {
   const SelectDateComponent({super.key});

@@ -8,13 +8,11 @@ import '../controllers/registar_transacao_controller.dart';
 class SelectDateComponent extends StatelessWidget {
   const SelectDateComponent({
     super.key,
-    required this.controller,
   });
-
-  final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<RegistarTransacaoController>();
     return Row(
       children: [
         GetBuilder(

@@ -2,7 +2,6 @@ import 'package:app_financas/app/components/custom_bottom_sheet.dart';
 import 'package:app_financas/app/modules/edit_transaction/edit_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -14,10 +13,7 @@ import 'components/info.dart';
 import 'controller/show_transaction_controller.dart';
 
 class ShowTransactionPage extends StatefulWidget {
-  const ShowTransactionPage({
-    super.key,
-    required this.movimento,
-  });
+  const ShowTransactionPage({super.key, required this.movimento});
 
   final Movimento movimento;
 
@@ -26,12 +22,17 @@ class ShowTransactionPage extends StatefulWidget {
 }
 
 class _ShowTransactionPageState extends State<ShowTransactionPage> {
+  late final ShowTransactionController controller;
+
+  @override
+  void initState() {
+    controller = Get.put(ShowTransactionController());
+    controller.setMovimento(widget.movimento);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(
-      ShowTransactionController(),
-      tag: 'EditTransactionController',
-    );
     return CustomBottomSheet(
       child: Container(
         color: Colors.white,
@@ -41,7 +42,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              HeaderInfo(movimento: widget.movimento),
+              HeaderInfo(movimento: controller.movimento),
               const GutterTiny(),
               Divider(color: Colors.grey[100]),
               const GutterTiny(),
@@ -56,7 +57,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
                       const Gutter(),
                       _buildDataInput(),
                       const Gutter(),
-                      _buildContaInput(controller),
+                      _buildContaInput(),
                     ],
                   ),
                   Column(
@@ -64,7 +65,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
                     children: [
                       _buildValorInput(),
                       const Gutter(),
-                      _buildCategoriaInput(controller),
+                      _buildCategoriaInput(),
                     ],
                   ),
                   const SizedBox(),
@@ -79,7 +80,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
                   children: [
                     _buildActionButton(),
                     const GutterSmall(),
-                    if (!widget.movimento.confirmado)
+                    if (!controller.movimento.confirmado)
                       _buildSecondaryActionButton(),
                     const GutterLarge(),
                   ],
@@ -93,6 +94,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   }
 
   OutlinedButton _buildSecondaryActionButton() {
+    var controller = Get.find<ShowTransactionController>();
     return OutlinedButton(
       onPressed: () {},
       style: OutlinedButton.styleFrom(
@@ -102,41 +104,52 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
           vertical: kDefaultPadding,
         ),
         side: BorderSide(
-          color: widget.movimento.tipoMovimentoId == 1
+          color: controller.movimento.tipoMovimentoId == 1
               ? kVerdeForteColor
               : kVermelhaForteColor,
           width: 2,
         ),
-        foregroundColor: widget.movimento.tipoMovimentoId == 1
+        foregroundColor: controller.movimento.tipoMovimentoId == 1
             ? kVerdeForteColor
             : kVermelhaForteColor,
       ),
       child: Text(
-        widget.movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
+        controller.movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
       ),
     );
   }
 
   ElevatedButton _buildActionButton() {
+    var controller = Get.find<ShowTransactionController>();
     return ElevatedButton(
       onPressed: () {
-        customShowModalBottomSheet(
-          context,
-          child: EditTransactionPage(
-            movimento: widget.movimento,
-            movimentoType: widget.movimento.tipoMovimentoId,
-          ),
-        );
+        // customShowModalBottomSheet(
+        //   context,
+        //   child: EditTransactionPage(
+        //     movimento: controller.movimento,
+        //     movimentoType: controller.movimento.tipoMovimentoId,
+        //   ),
+        // );
+
+        Get.to(EditTransactionPage(
+          movimentoType: controller.movimento.tipoMovimentoId,
+          movimento: controller.movimento,
+        ))?.then((value) {
+          if (value != null) {
+            controller.updateMovimento(value);
+            setState(() {});
+          }
+        });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: widget.movimento.tipoMovimentoId == 1
+        backgroundColor: controller.movimento.tipoMovimentoId == 1
             ? kVerdeForteColor
             : kVermelhaForteColor,
         foregroundColor: Colors.white,
         minimumSize: Size(Get.size.width / 2.5, 45),
       ),
       child: Text(
-        widget.movimento.tipoMovimentoId == 1
+        controller.movimento.tipoMovimentoId == 1
             ? 'Editar receita'
             : 'Editar despesa',
       ),
@@ -144,19 +157,22 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   }
 
   dynamic _buildObservacoesInput() {
+    var controller = Get.find<ShowTransactionController>();
     return ExpandedInfo(
       desc: 'Observações',
-      value: widget.movimento.obsMovimento,
+      value: controller.movimento.obsMovimento ?? '',
       icon: const Icon(
         Icons.create_sharp,
       ),
     );
   }
 
-  Widget _buildCategoriaInput(ShowTransactionController controller) {
+  Widget _buildCategoriaInput() {
+    var controller = Get.find<ShowTransactionController>();
     return InfoWidget(
       desc: 'Categoria',
-      value: controller.getCategoryName(widget.movimento.categoriaMovimentoId),
+      value:
+          controller.getCategoryName(controller.movimento.categoriaMovimentoId),
       icon: const Icon(
         Icons.category_outlined,
         color: Colors.black,
@@ -166,9 +182,10 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   }
 
   Widget _buildValorInput() {
+    var controller = Get.find<ShowTransactionController>();
     return InfoWidget(
       desc: 'Valor',
-      value: numberFormat.format(widget.movimento.valor),
+      value: numberFormat.format(controller.movimento.valor),
       icon: const Icon(
         Icons.monetization_on,
         color: kVerdeAccentColor,
@@ -177,10 +194,11 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     );
   }
 
-  Widget _buildContaInput(ShowTransactionController controller) {
+  Widget _buildContaInput() {
+    var controller = Get.find<ShowTransactionController>();
     return InfoWidget(
       desc: 'Conta',
-      value: controller.getAccountName(widget.movimento.cartaoId),
+      value: controller.getAccountName(controller.movimento.cartaoId),
       icon: const Icon(
         Icons.wallet,
         color: Colors.black,
@@ -190,9 +208,10 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   }
 
   Widget _buildDataInput() {
+    var controller = Get.find<ShowTransactionController>();
     return InfoWidget(
       desc: 'Data',
-      value: dateFormat.format(widget.movimento.data),
+      value: dateFormat.format(controller.movimento.data),
       icon: const Icon(
         Icons.calendar_month,
         color: Colors.black,
@@ -202,9 +221,10 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   }
 
   Widget _buildDescricaoInput() {
+    var controller = Get.find<ShowTransactionController>();
     return InfoWidget(
       desc: 'Descrição',
-      value: widget.movimento.descricao,
+      value: controller.movimento.descricao,
       icon: const Icon(
         Icons.create_outlined,
         color: Colors.black,

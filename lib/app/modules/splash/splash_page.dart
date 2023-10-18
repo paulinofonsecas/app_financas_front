@@ -38,17 +38,19 @@ class SplashScreen extends StatelessWidget {
           Obx(
             () => c.isLoading.value
                 ? const CircularProgressIndicator()
-                : TextButton.icon(
-                    style: TextButton.styleFrom(
-                      primary: Colors.green,
-                    ),
-                    onPressed: () {
-                      Get.back();
-                      c.init();
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green[700]),
-                    label: const Text('Tentar novamente'),
-                  ),
+                : c.loadingError.value
+                    ? TextButton.icon(
+                        style: TextButton.styleFrom(
+                          primary: Colors.green,
+                        ),
+                        onPressed: () {
+                          Get.back();
+                          c.init();
+                        },
+                        icon: Icon(Icons.refresh, color: Colors.green[700]),
+                        label: const Text('Tentar novamente'),
+                      )
+                    : const Text(''),
           ),
           GutterLarge(),
           GutterLarge(),
