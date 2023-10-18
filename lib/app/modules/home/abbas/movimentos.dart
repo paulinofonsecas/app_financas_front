@@ -11,7 +11,6 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:app_financas/constants.dart';
 import 'package:get/get.dart';
 
-import '../../show_transaction/controller/show_transaction_controller.dart';
 import '../../show_transaction/show_transaction_page.dart';
 import 'components/abba_header.dart';
 

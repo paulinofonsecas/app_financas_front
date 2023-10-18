@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
