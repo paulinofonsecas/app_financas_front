@@ -29,6 +29,7 @@ class EditTransactionPage extends StatelessWidget {
       movimentoType: movimentoType,
       movimento: movimento,
     ));
+    // controller.resetVariables();
 
     return GetBuilder(
       init: controller,
@@ -60,37 +61,38 @@ class SuspendedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<EditTransacaoController>();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        OutlinedButton(
-          onPressed: () async {
-            await controller.alterarTransacao();
-            if (controller.salvo) {
-              Get.back(closeOverlays: true, result: controller.movimento);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            minimumSize: Size(Get.size.width / 1.9, 45),
-            backgroundColor: isReceita(controller.movimentoType)
-                ? kVerdeForteColor
-                : kVermelhaForteColor,
-            foregroundColor: Colors.white,
-            side: BorderSide(
-              color: isReceita(controller.movimentoType)
-                  ? kVerdeForteColor
-                  : kVermelhaForteColor,
-            ),
-          ),
-          child: Text(
-            'Salvar',
-            style: GoogleFonts.inter().copyWith(
-              fontSize: 16,
-            ),
-          ),
-        ),
-        GutterLarge(),
-      ],
+    return Obx(
+      () => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          !controller.alterandoTransacao.value
+              ? OutlinedButton(
+                  onPressed: () async {
+                    await controller.alterarTransacao();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size(Get.size.width / 1.9, 45),
+                    backgroundColor: isReceita(controller.movimentoType)
+                        ? kVerdeForteColor
+                        : kVermelhaForteColor,
+                    foregroundColor: Colors.white,
+                    side: BorderSide(
+                      color: isReceita(controller.movimentoType)
+                          ? kVerdeForteColor
+                          : kVermelhaForteColor,
+                    ),
+                  ),
+                  child: Text(
+                    'Salvar',
+                    style: GoogleFonts.inter().copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              : CircularProgressIndicator(),
+          GutterLarge(),
+        ],
+      ),
     );
   }
 }

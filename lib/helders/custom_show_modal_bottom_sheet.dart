@@ -4,6 +4,7 @@ Future<dynamic> customShowModalBottomSheet(
   BuildContext context, {
   required Widget child,
   bool isScrollControlled = true,
+  bool? showDragHandle,
   BoxConstraints? constraints,
 }) {
   final size = MediaQuery.of(context).size;
@@ -11,10 +12,18 @@ Future<dynamic> customShowModalBottomSheet(
     context: context,
     isScrollControlled: isScrollControlled,
     backgroundColor: Colors.white,
-    showDragHandle: true,
+    showDragHandle: showDragHandle ?? true,
     useSafeArea: true,
-    constraints:
-        constraints ?? BoxConstraints.expand(height: size.height * 0.8),
+    useRootNavigator: true,
+    constraints: constraints ??
+        BoxConstraints.expand(
+          height: size.height * 0.8,
+        ),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(30),
+      ),
+    ),
     builder: (context) => child,
   );
 }

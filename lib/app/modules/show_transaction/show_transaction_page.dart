@@ -1,7 +1,9 @@
 import 'package:app_financas/app/components/custom_bottom_sheet.dart';
+import 'package:app_financas/app/modules/confirmar_transacao/confirmar_transacao_page.dart';
 import 'package:app_financas/app/modules/edit_transaction/edit_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -96,9 +98,19 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   OutlinedButton _buildSecondaryActionButton() {
     var controller = Get.find<ShowTransactionController>();
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.back();
+        customShowModalBottomSheet(
+          context,
+          showDragHandle: false,
+          child: ConfirmarTransacao(
+            movimento: controller.movimento,
+          ),
+          isScrollControlled: false,
+        );
+      },
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(Get.size.width / 2.5, 45),
+        minimumSize: Size(Get.size.width / 2.5, 50),
         padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding * 3,
           vertical: kDefaultPadding,
@@ -146,7 +158,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
             ? kVerdeForteColor
             : kVermelhaForteColor,
         foregroundColor: Colors.white,
-        minimumSize: Size(Get.size.width / 2.5, 45),
+        minimumSize: Size(Get.size.width / 2.5, 50),
       ),
       child: Text(
         controller.movimento.tipoMovimentoId == 1

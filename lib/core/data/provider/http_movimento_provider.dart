@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';

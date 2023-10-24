@@ -49,9 +49,10 @@ class CardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    saldo.toString(),
+                    "Saldo disponivel em contas",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
-                      fontSize: 22,
+                      fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
