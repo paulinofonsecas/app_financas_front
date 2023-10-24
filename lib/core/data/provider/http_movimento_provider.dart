@@ -143,4 +143,22 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       return Left(HttpException('Erro ao listar os movimentos \n ${e.error}'));
     }
   }
+  
+  @override
+  Future<Either<Failure, List<Movimento>>> listPaginatedMovimentos(int page, int pageSize) async {
+    try {
+      var result = await dio.get(
+        '/paginated/movimento?page=$page&pageSize=$pageSize',
+      );
+      List<dynamic> movimentos = result.data['data']
+          .map<Movimento>((e) => Movimento.fromMap(e))
+          .toList();
+      return Right(movimentos as List<Movimento>);
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.error);
+      }
+      return Left(HttpException('Erro ao listar os movimentos paginados\n ${e.error}'));
+    }
+  }
 }
