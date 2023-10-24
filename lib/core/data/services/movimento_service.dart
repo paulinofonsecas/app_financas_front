@@ -34,4 +34,12 @@ class MovimentoService implements IMovimentoService {
   Future<Either<Failure, Movimento>> getMovimento(int id) {
     return provider.getMovimento(id);
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listPaginatedMovimentos(
+    int page,
+    int pageSize,
+  ) {
+    return provider.listPaginatedMovimentos(page, pageSize);
+  }
 }

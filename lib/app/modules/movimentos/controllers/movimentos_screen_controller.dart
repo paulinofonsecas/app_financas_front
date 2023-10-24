@@ -4,18 +4,57 @@ import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class MovimentoScreenController extends GetxController {
+  late final PagingController<int, Movimento> pagingController;
   late final IMovimentoService service;
+  var pageSize = 10;
   late DateTime date;
 
   @override
   void onInit() {
     service = Get.find();
-
+    pagingController = PagingController(firstPageKey: 1);
     date = DateTime.now();
+
+    pagingController.addPageRequestListener((pageKey) {
+      print(pageKey);
+      fetchPage(pageKey);
+    });
     super.onInit();
+  }
+
+  Future<void> fetchPage(int pageKey) async {
+    try {
+      final newItems = await getPaginatedMovimentos(pageKey);
+      final isLastPage = newItems.length < pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + pageSize;
+        pagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  Future<List<Movimento>> getPaginatedMovimentos(
+    int page,
+  ) async {
+    var result = await service.listPaginatedMovimentos(page, pageSize);
+    if (result is Right) {
+      return result.getOrElse(() => []);
+    } else {
+      throw result.swap().getOrElse(
+            () => Failure(
+              'Erro desconhecido no ' 'movimento screen controller',
+            ),
+          );
+    }
   }
 
   Future<Either<Failure, List<Movimento>>> listMovimentos() {
