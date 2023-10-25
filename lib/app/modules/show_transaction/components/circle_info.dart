@@ -1,3 +1,4 @@
+import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,9 @@ class CircleInfo extends StatelessWidget {
         Text(
           title,
           style: GoogleFonts.inter(
-            color: Colors.grey[600],
+            color: isDarkMode(context)
+                ? Colors.white.withOpacity(.5)
+                : Colors.grey[600],
             fontSize: 10,
           ),
         ),

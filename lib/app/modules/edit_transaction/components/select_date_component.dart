@@ -24,7 +24,6 @@ class SelectDateComponent extends StatelessWidget {
                   hintStyle: GoogleFonts.inter().copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
                   ),
                   border: InputBorder.none,
                 ),

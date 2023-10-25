@@ -28,9 +28,11 @@ class Body extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: size.height * .9,
             ),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+            decoration: BoxDecoration(
+              color: Get.theme.scaffoldBackgroundColor,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(30),
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

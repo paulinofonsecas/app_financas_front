@@ -23,66 +23,71 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final HomePageController controller;
+
+  @override
+  void initState() {
+    controller = Get.put(HomePageController());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
-
     return Scaffold(
-      backgroundColor: Color(0xffECF3FB),
+      backgroundColor: context.theme.dialogBackgroundColor,
       body: GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return ListView(
-            children: [
-              ActionBar(),
-              SizedBox(height: kDefaultPadding),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ShowCards(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: kDefaultPadding),
-                        EntradasESaidas(),
-                        SizedBox(height: kDefaultPadding * 2),
-                        FutureBuilder<List<Movimento>>(
-                          future: controller.listMovimentosDoDia(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text('${snapshot.error}');
-                            }
-                            if (snapshot.hasData) {
-                              return MovimentosAtHomePage(
-                                movimentos: snapshot.data ?? [],
-                                verMaisAction: () {
-                                  Get.to(MovimentosScreen());
-                                },
-                              );
-                            } else {
-                              return Align(
-                                alignment: Alignment.topCenter,
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ),
-                      ],
+          init: controller,
+          id: 'geral',
+          builder: (context) {
+            return ListView(
+              children: [
+                ActionBar(),
+                SizedBox(height: kDefaultPadding),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ShowCards(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: kDefaultPadding),
+                          EntradasESaidas(),
+                          SizedBox(height: kDefaultPadding * 2),
+                          FutureBuilder<List<Movimento>>(
+                            future: controller.listMovimentosDoDia(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+                              if (snapshot.hasData) {
+                                return MovimentosAtHomePage(
+                                  movimentos: snapshot.data ?? [],
+                                  verMaisAction: () {
+                                    Get.to(MovimentosScreen());
+                                  },
+                                );
+                              } else {
+                                return Align(
+                                  alignment: Alignment.topCenter,
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        }
-      ),
+                  ],
+                ),
+              ],
+            );
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Get.theme.primaryColor,
+        backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,
         onPressed: () {
           customShowModalBottomSheet(
             context,
@@ -99,13 +104,13 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(
           CupertinoIcons.add,
-          color: Colors.white,
+          color: Get.theme.floatingActionButtonTheme.foregroundColor,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         useLegacyColorScheme: false,
-        backgroundColor: kWhiteColor,
+        backgroundColor: Get.theme.bottomAppBarTheme.color,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

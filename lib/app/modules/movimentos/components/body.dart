@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Builder(
           builder: (context) {
             return PagedListView<int, Movimento>(

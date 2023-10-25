@@ -14,7 +14,8 @@ class EntradasESaidas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
+    var controller = Get.find<HomePageController>();
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -79,7 +80,7 @@ class EntradaOuSaidaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
+    var controller = Get.find<HomePageController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,

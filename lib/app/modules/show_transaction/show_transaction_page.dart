@@ -37,7 +37,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   Widget build(BuildContext context) {
     return CustomBottomSheet(
       child: Container(
-        color: Colors.white,
+        color: Get.theme.scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
@@ -185,9 +185,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
       desc: 'Categoria',
       value:
           controller.getCategoryName(controller.movimento.categoriaMovimentoId),
-      icon: const Icon(
+      icon: Icon(
         Icons.category_outlined,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -211,9 +211,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Conta',
       value: controller.getAccountName(controller.movimento.cartaoId),
-      icon: const Icon(
+      icon: Icon(
         Icons.wallet,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -224,9 +224,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Data',
       value: dateFormat.format(controller.movimento.data),
-      icon: const Icon(
+      icon: Icon(
         Icons.calendar_month,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -237,9 +237,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Descrição',
       value: controller.movimento.descricao,
-      icon: const Icon(
+      icon: Icon(
         Icons.create_outlined,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );

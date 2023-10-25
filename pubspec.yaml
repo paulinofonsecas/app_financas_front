@@ -21,6 +21,7 @@ dependencies:
   omni_datetime_picker:
     git:
       url: https://github.com/paulinofonsecas/OmniDateTimePicker
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

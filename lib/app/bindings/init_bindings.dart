@@ -35,6 +35,7 @@ class InitBingings extends Bindings {
     // Saldos
     Get.lazyPut<ISaldosProvider>(
       () => HttpSaldosProvider(Get.find()),
+      fenix: true,
     );
     Get.put<ISaldosService>(SaldosService(Get.find()));
 

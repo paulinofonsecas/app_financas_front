@@ -1,4 +1,5 @@
 import 'package:app_financas/app/bindings/init_bindings.dart';
+import 'package:app_financas/app/controllers/global_theme_controller.dart';
 import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kwanzagest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ),
-        useMaterial3: true,
-      ),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      theme: ThemeData(useMaterial3: true),
+      themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialBinding: InitBingings(),
       home: const SplashScreen(),
     );

@@ -28,7 +28,7 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(HomePageController());
+        var controller = Get.find<HomePageController>();
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
@@ -41,7 +41,7 @@ class CardWidget extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Background(index: index),
+            Background(),
             Padding(
               padding: const EdgeInsets.all(kDefaultPadding * 1.3),
               child: Column(
@@ -97,15 +97,12 @@ class CardWidget extends StatelessWidget {
 class Background extends StatelessWidget {
   const Background({
     Key? key,
-    required this.index,
   }) : super(key: key);
-
-  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: index == 0 ? Get.theme.primaryColor : Colors.black,
+      color: Get.theme.cardColor,
     );
   }
 }

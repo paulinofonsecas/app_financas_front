@@ -21,7 +21,8 @@ class _ShowCardsState extends State<ShowCards> {
 
   @override
   void initState() {
-    controller = Get.put(HomePageController());
+    controller = Get.find<HomePageController>();
+
     controller.getCartoes;
     super.initState();
   }

@@ -6,6 +6,7 @@ import 'package:app_financas/helders/format_helpers.dart';
 import 'package:app_financas/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -37,10 +38,20 @@ class MovimentoItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(14),
-        margin: EdgeInsets.only(bottom: 8),
+        margin: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 4,
+        ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Get.theme.cardColor,
           borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Get.theme.shadowColor.withOpacity(.2),
+              offset: Offset(0, 2),
+              blurRadius: 4,
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

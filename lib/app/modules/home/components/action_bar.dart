@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/constants.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({super.key});
@@ -42,10 +43,15 @@ class ActionBar extends StatelessWidget {
           Spacer(),
           // Cupertino alert icons
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.isDarkMode
+                  ? Get.changeTheme(ThemeData.light(useMaterial3: true))
+                  : Get.changeTheme(ThemeData.dark(useMaterial3: true));
+              Get.appUpdate();
+            },
             icon: Icon(
-              Icons.notification_add_outlined,
-              color: kBlackColor,
+              isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,
+              color: Get.theme.iconTheme.color,
               size: 26,
             ),
           ),

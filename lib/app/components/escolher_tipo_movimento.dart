@@ -15,9 +15,12 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SizedBox(
+    return Container(
       width: double.infinity,
       height: size.height * .25,
+      decoration: BoxDecoration(
+        color: Get.theme.dialogBackgroundColor,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(
