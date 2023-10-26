@@ -1,11 +1,9 @@
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/http/http_saldos_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_saldos_provider.dart';
 import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/data/services/conta_service.dart';
 import 'package:app_financas/core/data/services/movimento_service.dart';
