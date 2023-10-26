@@ -25,6 +25,7 @@ class SplashPageController extends GetxController {
   }
 
   void init() async {
+    await Future.delayed(const Duration(seconds: 2));
     isLoading.value = true;
     var categoriaResult = await categoriaService.listCategoriasEntradas();
     var contaResult = await contaService.listContas();

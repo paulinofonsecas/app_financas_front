@@ -4,7 +4,6 @@ import 'package:app_financas/app/modules/splash/controllers/splash_page_controll
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -12,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var c = Get.put(SplashPageController());
-    
+
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -21,18 +20,9 @@ class SplashScreen extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Image.asset(
-              'assets/imgs/logo.png',
-              width: 150,
-              height: 150,
-            ),
-          ),
-          Gutter(),
-          Text(
-            'Me Poupe',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Colors.amber[700],
+              'assets/imgs/logo.jpg',
+              width: 200,
+              height: 200,
             ),
           ),
           const Spacer(),
