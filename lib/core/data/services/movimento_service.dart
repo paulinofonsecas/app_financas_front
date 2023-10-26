@@ -1,14 +1,22 @@
+import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
 
 import '../../domain/entitys/movimento.dart';
 import '../provider/interfaces/i_movimento_provider.dart';
 
 class MovimentoService implements IMovimentoService {
   final IMovimentoProvider provider;
+  bool isLocal = false;
 
-  MovimentoService({required this.provider});
+  MovimentoService({required this.provider}) {
+    if (Get.isRegistered<SetupConfiguration>()) {
+      var sc = Get.find<SetupConfiguration>();
+      isLocal = sc.isLocal;
+    }
+  }
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentos() {
@@ -16,7 +24,7 @@ class MovimentoService implements IMovimentoService {
   }
 
   @override
-  Future<Either<Failure, Movimento>> saveMovimento(Movimento movimento) {
+  Future<Either<Failure, bool>> saveMovimento(Movimento movimento) {
     return provider.saveMovimento(movimento);
   }
 
@@ -40,6 +48,35 @@ class MovimentoService implements IMovimentoService {
     int page,
     int pageSize,
   ) {
-    return provider.listPaginatedMovimentos(page, pageSize);
+    if (isLocal) {
+      return _getLocalPaginatedMovimentos(page, pageSize);
+    } else {
+      return provider.listPaginatedMovimentos(page, pageSize);
+    }
+  }
+
+  Future<Either<Failure, List<Movimento>>> _getLocalPaginatedMovimentos(
+    int page,
+    int pageSize,
+  ) {
+    return provider.listMovimentos().then((value) {
+      if (value.isLeft()) {
+        return const Right([]);
+      } else {
+        var list = value.getOrElse(() => []);
+
+        var result = paginatedList(list, page, pageSize);
+        return Right(result);
+      }
+    });
+  }
+
+  List<Movimento> paginatedList(List<Movimento> list, int page,
+      [int pageSize = 10]) {
+    if (page == 1) {
+      return list.take(pageSize).toList();
+    } else {
+      return list.skip(pageSize * page).take(pageSize).toList();
+    }
   }
 }

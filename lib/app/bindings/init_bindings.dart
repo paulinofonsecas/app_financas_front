@@ -1,6 +1,6 @@
-import 'package:app_financas/core/data/provider/http_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/http_saldos_provider.dart';
-import 'package:app_financas/core/data/provider/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_saldos_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_saldos_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_setup_provider.dart';
@@ -24,7 +24,7 @@ class InitBingings extends Bindings {
 
     // Movimentos
     Get.lazyPut<IMovimentoProvider>(
-      () => HttpMovimentoProvider(Get.find()),
+      () => DbMovimentoProvider(),
       fenix: true,
     );
     Get.lazyPut<IMovimentoService>(
@@ -37,6 +37,7 @@ class InitBingings extends Bindings {
       () => HttpSaldosProvider(Get.find()),
       fenix: true,
     );
+
     Get.put<ISaldosService>(SaldosService(Get.find()));
 
     // Setup

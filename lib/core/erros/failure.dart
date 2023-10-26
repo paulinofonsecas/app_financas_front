@@ -8,6 +8,16 @@ class HttpException extends Failure {
   HttpException(super.message, {this.error});
 }
 
+class NotFoundError extends Failure {
+  Object? error;
+  NotFoundError(super.message, {this.error});
+}
+
+class DbException extends Failure {
+  Object? error;
+  DbException(super.message, {this.error});
+}
+
 class SaldoInsuficiente extends Failure {
   SaldoInsuficiente(super.message);
 }

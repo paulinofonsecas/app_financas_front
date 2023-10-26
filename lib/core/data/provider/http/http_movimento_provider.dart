@@ -29,7 +29,7 @@ class HttpMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, Movimento>> saveMovimento(Movimento movimento) async {
+  Future<Either<Failure, bool>> saveMovimento(Movimento movimento) async {
     try {
       var result = await dio.post(
         '/movimento',
@@ -47,7 +47,7 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       if (result.statusCode == 201) {
         dynamic movimento0 = result.data['movimento'];
         movimento0 = Movimento.fromMap(movimento0);
-        return Right(movimento0 as Movimento);
+        return const Right(true);
       } else if (result.statusCode == 400) {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       } else {

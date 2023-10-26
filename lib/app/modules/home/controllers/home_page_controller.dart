@@ -72,7 +72,7 @@ class HomePageController extends GetxController {
     var setupService = Get.find<ISetupService>();
     var result = await setupService.setup();
     if (result is Right) {
-      setupConfiguration = result.getOrElse(() => SetupConfiguration.zero());
+      setupConfiguration = result.getOrElse(() => SetupConfiguration.local());
       Get.put(setupConfiguration);
       cartoes = setupConfiguration.cartoes;
       return cartoes;

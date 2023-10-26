@@ -7,18 +7,21 @@ import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 class SetupConfiguration {
+  final bool isLocal;
   final List<CategoriaMovimento> categorias;
   final List<Cartao> cartoes;
 
   SetupConfiguration({
     required this.categorias,
     required this.cartoes,
+    this.isLocal = false,
   });
 
-  factory SetupConfiguration.zero() {
+  factory SetupConfiguration.local() {
     return SetupConfiguration(
       categorias: [],
       cartoes: [],
+      isLocal: true,
     );
   }
 

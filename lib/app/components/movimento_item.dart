@@ -39,17 +39,24 @@ class MovimentoItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(14),
         margin: EdgeInsets.symmetric(
-          vertical: 6,
+          vertical: 10,
           horizontal: 4,
         ),
         decoration: BoxDecoration(
-          color: Get.theme.cardColor,
+          color: Get.theme.colorScheme.onInverseSurface,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: Get.theme.shadowColor.withOpacity(.2),
-              offset: Offset(0, 2),
-              blurRadius: 4,
+              color: Color(0x4C000000),
+              blurRadius: 3,
+              offset: Offset(0, 1),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: Color(0x26000000),
+              blurRadius: 8,
+              offset: Offset(0, 4),
+              spreadRadius: 3,
             ),
           ],
         ),

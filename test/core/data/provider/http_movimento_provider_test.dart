@@ -1,4 +1,4 @@
-import 'package:app_financas/core/data/provider/http_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -17,6 +17,7 @@ void main() {
   });
 
   test('Deve retornar a lista de movimentos paginados do usuario', () async {
+    
     var page = 1;
     var pageSize = 12;
 
@@ -49,9 +50,9 @@ void main() {
     var result = await httpProvider.saveMovimento(movimento);
 
     expect(result, isA<Right>());
-    expect(result.getOrElse(() => Movimento.fake()), isA<Movimento>());
+    expect(result.getOrElse(() => false), isA<bool>());
     if (kDebugMode) {
-      print(result.getOrElse(() => Movimento.fake()));
+      print(result.getOrElse(() => false));
     }
   });
 

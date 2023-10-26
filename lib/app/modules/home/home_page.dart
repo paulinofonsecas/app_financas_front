@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.dialogBackgroundColor,
+      backgroundColor: context.theme.colorScheme.surface,
       body: GetBuilder(
           init: controller,
           id: 'geral',
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,
+        // backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,
         onPressed: () {
           customShowModalBottomSheet(
             context,

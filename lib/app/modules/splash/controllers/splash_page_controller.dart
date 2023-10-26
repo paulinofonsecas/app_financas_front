@@ -1,9 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:app_financas/app/modules/home/home_page.dart';
+import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_setup_service.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,26 +21,21 @@ class SplashPageController extends GetxController {
     super.onInit();
   }
 
+  void _goToHomePage(SetupConfiguration setupConfig) {
+    if (setupConfig.isLocal) {
+      Get.lazyReplace<IMovimentoProvider>(() => DbMovimentoProvider());
+    }
+
+    Get.put(setupConfig, permanent: true);
+    Get.off(const HomePage());
+  }
+
   void init() async {
     isLoading.value = true;
     var result = await setupService.setup();
 
-    if (result is Right) {
-      var setupConfig = result.getOrElse(() => SetupConfiguration.zero());
-
-      if (setupConfig == SetupConfiguration.zero()) {
-        isLoading.value = false;
-        showErrorSnackBar();
-      } else {
-        isLoading.value = false;
-        loadingError.value = false;
-        Get.put(setupConfig, permanent: true);
-        Get.off(const HomePage());
-      }
-    } else {
-      isLoading.value = false;
-      showErrorSnackBar();
-    }
+    var setupConfig = result.getOrElse(() => SetupConfiguration.local());
+    _goToHomePage(setupConfig);
   }
 
   void showErrorSnackBar() {
