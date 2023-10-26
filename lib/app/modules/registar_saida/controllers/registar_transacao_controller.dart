@@ -69,12 +69,12 @@ class RegistarTransacaoController extends GetxController {
     return verboseDateFormat.format(date);
   }
 
-  List<CategoriaMovimento> getCategories() {
+  List<Categoria> getCategories() {
     return setupConfiguration.categorias;
   }
 
-  List<Cartao> getCards() {
-    return setupConfiguration.cartoes;
+  List<Conta> getCards() {
+    return setupConfiguration.contas;
   }
 
   Future<void> finalizarMovimento() async {

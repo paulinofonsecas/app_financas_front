@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = Get.put(SplashPageController(Get.find()));
+    var c = Get.put(SplashPageController());
     
     return Scaffold(
       body: Column(

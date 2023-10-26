@@ -10,7 +10,7 @@ Future<void> main() async {
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
 
-  await Hive.initFlutter();
+  await Hive.initFlutter('./app_financas_db');
 
   runApp(const MyApp());
 }

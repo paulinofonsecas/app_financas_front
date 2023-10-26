@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class Cartao {
+class Conta {
   final int id;
   final String numero;
   final String nome;
   final double saldo;
   final int bancoId;
 
-  Cartao({
+  Conta({
     required this.id,
     required this.numero,
     required this.nome,
@@ -16,14 +16,14 @@ class Cartao {
     required this.bancoId,
   });
 
-  Cartao copyWith({
+  Conta copyWith({
     int? id,
     String? numero,
     String? nome,
     double? saldo,
     int? bancoId,
   }) {
-    return Cartao(
+    return Conta(
       id: id ?? this.id,
       numero: numero ?? this.numero,
       nome: nome ?? this.nome,
@@ -42,20 +42,20 @@ class Cartao {
     };
   }
 
-  factory Cartao.fromMap(Map<String, dynamic> map) {
-    return Cartao(
+  factory Conta.fromMap(Map<String, dynamic> map) {
+    return Conta(
       id: map['id'] as int,
       numero: map['numero'] as String,
       nome: map['nome'] as String,
-      saldo: (map['saldo'] as int).toDouble(),
+      saldo: (map['saldo']).toDouble(),
       bancoId: map['banco_id'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Cartao.fromJson(String source) =>
-      Cartao.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Conta.fromJson(String source) =>
+      Conta.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -63,7 +63,7 @@ class Cartao {
   }
 
   @override
-  bool operator ==(covariant Cartao other) {
+  bool operator ==(covariant Conta other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&

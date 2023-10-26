@@ -1,41 +1,49 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:app_financas/app/modules/home/home_page.dart';
-import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
-import 'package:app_financas/core/domain/services/i_setup_service.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SplashPageController extends GetxController {
-  final ISetupService setupService;
+  late ICategoriaService categoriaService;
+  late IContaService contaService;
   var isLoading = false.obs;
   var loadingError = true.obs;
 
-  SplashPageController(this.setupService);
+  SplashPageController();
 
   @override
   void onInit() {
+    categoriaService = Get.find();
+    contaService = Get.find();
+
     init();
     super.onInit();
   }
 
-  void _goToHomePage(SetupConfiguration setupConfig) {
-    if (setupConfig.isLocal) {
-      Get.lazyReplace<IMovimentoProvider>(() => DbMovimentoProvider());
-    }
-
-    Get.put(setupConfig, permanent: true);
-    Get.off(const HomePage());
-  }
-
   void init() async {
     isLoading.value = true;
-    var result = await setupService.setup();
+    var categoriaResult = await categoriaService.listCategoriasEntradas();
+    var contaResult = await contaService.listContas();
 
-    var setupConfig = result.getOrElse(() => SetupConfiguration.local());
+    var categoriaEntradasList = categoriaResult.getOrElse(() => []);
+    var contaList = contaResult.getOrElse(() => []);
+
+    var setupConfig = SetupConfiguration(
+      categorias: categoriaEntradasList,
+      contas: contaList,
+      isLocal: true,
+    );
+
     _goToHomePage(setupConfig);
+  }
+
+  void _goToHomePage(SetupConfiguration setupConfig) {
+    Get.replace(setupConfig);
+    Get.off(const HomePage());
   }
 
   void showErrorSnackBar() {

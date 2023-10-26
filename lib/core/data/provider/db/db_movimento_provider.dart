@@ -1,4 +1,4 @@
-import 'package:app_financas/core/data/provider/db/db_hive_box_names.dart';
+import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -8,7 +8,7 @@ import 'package:hive/hive.dart';
 class DbMovimentoProvider implements IMovimentoProvider {
   late Box<Map<dynamic, dynamic>> _movimentosBox;
 
-  Future<void> _initDb() async {
+  Future<void> initDb() async {
     _movimentosBox = await Hive.openBox(kMovimentosBox);
   }
 
@@ -20,7 +20,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
   @override
   Future<Either<Failure, Movimento>> getMovimento(int id) async {
-    await _initDb();
+    await initDb();
 
     var data = _movimentosBox.get(id);
 
@@ -34,7 +34,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentos() async {
-    await _initDb();
+    await initDb();
     var data = _movimentosBox.toMap();
     var movimentos = data.values
         .map<Movimento>(
@@ -60,7 +60,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
   @override
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento) async {
     try {
-      await _initDb();
+      await initDb();
       var map = movimento.toMap();
       await _movimentosBox.put(movimento.id, map);
 

@@ -24,7 +24,7 @@ class ShowTransactionController extends GetxController {
   }
 
   String getAccountName(int cartaoId) {
-    return setupConfiguration.cartoes
+    return setupConfiguration.contas
         .where((element) => element.id == cartaoId)
         .first
         .nome;

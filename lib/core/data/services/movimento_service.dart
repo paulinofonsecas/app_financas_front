@@ -12,10 +12,8 @@ class MovimentoService implements IMovimentoService {
   bool isLocal = false;
 
   MovimentoService({required this.provider}) {
-    if (Get.isRegistered<SetupConfiguration>()) {
-      var sc = Get.find<SetupConfiguration>();
-      isLocal = sc.isLocal;
-    }
+    var sc = Get.find<SetupConfiguration>();
+    isLocal = sc.isLocal;
   }
 
   @override

@@ -28,16 +28,13 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        var controller = Get.find<HomePageController>();
+    var controller = Get.find<HomePageController>();
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: kBlackColor,
-        ),
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -53,7 +50,6 @@ class CardWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                       fontSize: 18,
-                      color: Colors.white,
                     ),
                   ),
                   Spacer(),
@@ -63,7 +59,6 @@ class CardWidget extends StatelessWidget {
                           ? numberFormat.format(saldo)
                           : '**********',
                       style: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -102,7 +97,7 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Get.theme.cardColor,
+      color: Get.theme.colorScheme.onInverseSurface,
     );
   }
 }

@@ -1,22 +1,24 @@
+import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
-import 'package:app_financas/core/domain/services/i_setup_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
   late final IMovimentoService movimentoService;
   late final ISaldosService saldosService;
-  late SetupConfiguration setupConfiguration;
+  late ICategoriaProvider categoriaProvider;
+  late IContaProvider contaProvider;
   var showMoneyOnCards = false.obs;
-  var cartoes = <Cartao>[];
+  var cartoes = <Conta>[];
 
   @override
   void onInit() {
-    setupConfiguration = Get.find();
+    categoriaProvider = Get.find();
+    contaProvider = Get.find();
     movimentoService = Get.find();
     saldosService = Get.find();
     super.onInit();
@@ -68,13 +70,12 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future<List<Cartao>> getCartoes() async {
-    var setupService = Get.find<ISetupService>();
-    var result = await setupService.setup();
+  Future<List<Conta>> getCartoes() async {
+    var contaService = Get.find<IContaProvider>();
+    var result = await contaService.listContas();
+
     if (result is Right) {
-      setupConfiguration = result.getOrElse(() => SetupConfiguration.local());
-      Get.put(setupConfiguration);
-      cartoes = setupConfiguration.cartoes;
+      cartoes = result.getOrElse(() => []);
       return cartoes;
     } else {
       return [];

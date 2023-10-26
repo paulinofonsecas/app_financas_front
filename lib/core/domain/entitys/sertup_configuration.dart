@@ -7,51 +7,51 @@ import 'package:app_financas/core/domain/entitys/cartao.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 class SetupConfiguration {
-  final bool isLocal;
-  final List<CategoriaMovimento> categorias;
-  final List<Cartao> cartoes;
+  bool isLocal;
+  final List<Categoria> categorias;
+  final List<Conta> contas;
 
   SetupConfiguration({
     required this.categorias,
-    required this.cartoes,
+    required this.contas,
     this.isLocal = false,
   });
 
   factory SetupConfiguration.local() {
     return SetupConfiguration(
       categorias: [],
-      cartoes: [],
+      contas: [],
       isLocal: true,
     );
   }
 
   SetupConfiguration copyWith({
-    List<CategoriaMovimento>? categorias,
-    List<Cartao>? cartoes,
+    List<Categoria>? categorias,
+    List<Conta>? cartoes,
   }) {
     return SetupConfiguration(
       categorias: categorias ?? this.categorias,
-      cartoes: cartoes ?? this.cartoes,
+      contas: cartoes ?? this.contas,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'categorias': categorias.map((x) => x.toMap()).toList(),
-      'cartoes': cartoes.map((x) => x.toMap()).toList(),
+      'cartoes': contas.map((x) => x.toMap()).toList(),
     };
   }
 
   factory SetupConfiguration.fromMap(Map<String, dynamic> map) {
     return SetupConfiguration(
-      categorias: List<CategoriaMovimento>.from(
-        (map['categorias'] as List<dynamic>).map<CategoriaMovimento>(
-          (x) => CategoriaMovimento.fromMap(x as Map<String, dynamic>),
+      categorias: List<Categoria>.from(
+        (map['categorias'] as List<dynamic>).map<Categoria>(
+          (x) => Categoria.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      cartoes: List<Cartao>.from(
-        (map['cartoes'] as List<dynamic>).map<Cartao>(
-          (x) => Cartao.fromMap(x as Map<String, dynamic>),
+      contas: List<Conta>.from(
+        (map['cartoes'] as List<dynamic>).map<Conta>(
+          (x) => Conta.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
@@ -64,16 +64,16 @@ class SetupConfiguration {
 
   @override
   String toString() =>
-      'SetupConfiguration(categorias: $categorias, cartoes: $cartoes)';
+      'SetupConfiguration(categorias: $categorias, cartoes: $contas)';
 
   @override
   bool operator ==(covariant SetupConfiguration other) {
     if (identical(this, other)) return true;
 
     return listEquals(other.categorias, categorias) &&
-        listEquals(other.cartoes, cartoes);
+        listEquals(other.contas, contas);
   }
 
   @override
-  int get hashCode => categorias.hashCode ^ cartoes.hashCode;
+  int get hashCode => categorias.hashCode ^ contas.hashCode;
 }

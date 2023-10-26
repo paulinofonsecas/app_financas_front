@@ -38,7 +38,7 @@ class _ShowCardsState extends State<ShowCards> {
           return SizedBox(
             width: size.width,
             height: size.height * 0.23,
-            child: FutureBuilder<List<Cartao>>(
+            child: FutureBuilder<List<Conta>>(
               future: controller.getCartoes(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
