@@ -13,16 +13,20 @@ class SplashScreen extends StatelessWidget {
     var c = Get.put(SplashPageController());
 
     return Scaffold(
+      backgroundColor: Colors.amber[700],
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           const Spacer(),
           Align(
             alignment: Alignment.center,
-            child: Image.asset(
-              'assets/imgs/logo.jpg',
-              width: 200,
-              height: 200,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.asset(
+                'assets/imgs/logo.jpg',
+                width: 200,
+                height: 200,
+              ),
             ),
           ),
           const Spacer(),

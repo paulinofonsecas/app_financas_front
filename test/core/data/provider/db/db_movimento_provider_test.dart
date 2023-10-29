@@ -13,8 +13,12 @@ void main() async {
 
   setUp(() {
     Hive.init('$path/test/hive_testing_path');
-
     dbMovimentosProvider = DbMovimentoProvider();
+  });
+
+  tearDown(() {
+    Hive.deleteFromDisk();
+    Hive.close();
   });
 
   test('deve retornar um movimento', () async {
@@ -26,6 +30,12 @@ void main() async {
     expect(result, isA<Right>());
     expect(result.getOrElse(() => Movimento.fake()), isA<Movimento>());
     expect(result.getOrElse(() => Movimento.fake()).id, 1);
+  });
+
+  test('Deve retornar um erro ao buscar um movimento', () async {
+    var result = await dbMovimentosProvider.getMovimento(1);
+
+    expect(result, isA<Left>());
   });
 
   test('Deve salvar um movimento', () async {
@@ -48,15 +58,50 @@ void main() async {
   });
 
   test('Deve retornar a lista de movimentos', () async {
-    var movimento = _makeFakeMovimento();
+    for (var i in [1, 2, 3]) {
+      var movimento = _makeFakeMovimento();
+      movimento = movimento.copyWith(id: i);
+      await dbMovimentosProvider.saveMovimento(movimento);
+    }
 
-    await dbMovimentosProvider.saveMovimento(movimento);
     var result = await dbMovimentosProvider.listMovimentos();
 
     expect(result, isA<Right>());
     expect(result.getOrElse(() => []), isA<List<Movimento>>());
-    expect(result.getOrElse(() => []).length, 1);
+    expect(result.getOrElse(() => []).length, 3);
     expect(result.getOrElse(() => []).first.id, 1);
+  });
+
+  test('Deve editar um movimento', () async {
+    var movimento = _makeFakeMovimento();
+    movimento = movimento.copyWith(id: 2);
+    await dbMovimentosProvider.saveMovimento(movimento);
+
+    var result = (await dbMovimentosProvider.getMovimento(1))
+        .getOrElse(() => Movimento.fake());
+
+    result = result.copyWith(
+      valor: 30000,
+      descricao: 'Compra de computador',
+      cartaoId: 2,
+      tipoMovimentoId: 1,
+      categoriaMovimentoId: 2,
+      obsMovimento: 'piloto',
+      confirmado: false,
+    );
+
+    await dbMovimentosProvider.editMovimento(result);
+    var result2 = (await dbMovimentosProvider.getMovimento(1))
+        .getOrElse(() => Movimento.fake());
+
+    expect(result2, isA<Movimento>());
+    expect(result2.valor, 30000);
+    expect(result2.obsMovimento, 'piloto');
+    expect(result2.confirmado, false);
+    expect(result2.categoriaMovimentoId, 2);
+    expect(result2.cartaoId, 2);
+    expect(result2.descricao, 'Compra de computador');
+    expect(result2.tipoMovimentoId, 1);
   });
 }
 

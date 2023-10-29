@@ -3,6 +3,13 @@ class Failure implements Exception {
   Failure(this.message);
 }
 
+class ValorInvalido implements Failure {
+  @override
+  final String message;
+  
+  ValorInvalido(this.message);
+}
+
 class HttpException extends Failure {
   Object? error;
   HttpException(super.message, {this.error});

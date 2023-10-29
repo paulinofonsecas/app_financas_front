@@ -61,7 +61,9 @@ class MovimentoService implements IMovimentoService {
       if (value.isLeft()) {
         return const Right([]);
       } else {
-        var list = value.getOrElse(() => []);
+        var list = value.getOrElse(() => [])
+          ..sort((a, b) => a.data.compareTo(b.data));
+        list = list.reversed.toList();
 
         var result = paginatedList(list, page, pageSize);
         return Right(result);

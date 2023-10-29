@@ -13,9 +13,31 @@ class DbMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, bool>> editMovimento(Movimento movimento) {
-    // TODO: implement editMovimento
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> editMovimento(Movimento movimento) async {
+    try {
+      await initDb();
+
+      if (movimento.valor < 0) {
+        return Left(ValorInvalido('Saldo invalido ${movimento.valor}'));
+      }
+
+      movimento = movimento.copyWith(
+        valor: movimento.valor,
+        descricao: movimento.descricao,
+        data: movimento.data,
+        confirmado: movimento.confirmado,
+        categoriaMovimentoId: movimento.categoriaMovimentoId,
+        cartaoId: movimento.cartaoId,
+        obsMovimento: movimento.obsMovimento,
+      );
+
+      var map = movimento.toMap();
+      await _movimentosBox.put(movimento.id, map);
+
+      return const Right(true);
+    } catch (e) {
+      return Left(HttpException('Erro ao salvar movimento'));
+    }
   }
 
   @override
@@ -61,12 +83,32 @@ class DbMovimentoProvider implements IMovimentoProvider {
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento) async {
     try {
       await initDb();
+
+      var lastId = _movimentosBox.values.length + 1;
+      movimento = movimento.copyWith(id: lastId);
       var map = movimento.toMap();
-      await _movimentosBox.put(movimento.id, map);
+      await _movimentosBox.put(lastId, map);
 
       return const Right(true);
     } catch (e) {
       return Left(HttpException('Erro ao salvar movimento'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, double>> getSaldo(int contaId) async {
+    await initDb();
+
+    var result = await listMovimentos();
+
+    if (result.isRight()) {
+      var movimentos = result.getOrElse(() => []);
+      var saldo = movimentos
+          .where((element) => element.cartaoId == contaId)
+          .fold(0.0, (sum, element) => sum + element.valor);
+      return Right(saldo);
+    } else {
+      return Left(Failure('Erro ao processar o saldo da conta'));
     }
   }
 }

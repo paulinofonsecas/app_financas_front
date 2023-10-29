@@ -6,7 +6,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/app/modules/registar_saida/components/body.dart';
+import 'package:app_financas/app/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 
@@ -27,25 +27,26 @@ class RegistarTransacao extends StatelessWidget {
     ));
 
     return GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return Scaffold(
-            backgroundColor: isReceita(controller.movimentoType)
-                ? kVerdeColor
-                : kVermelhaColor,
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                Body(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SuspendedButton(),
-                ),
-              ],
-            ),
-          );
-        });
+      init: controller,
+      id: 'geral',
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: isReceita(controller.movimentoType)
+              ? kVerdeColor
+              : kVermelhaColor,
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Body(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SuspendedButton(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 

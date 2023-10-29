@@ -16,52 +16,59 @@ class EntradasESaidas extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<HomePageController>();
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: kBlackColor,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FutureBuilder<double>(
-              future: controller.getEntradasDoMes(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return EntradaOuSaidaWidget(
-                    asset: 'assets/svgs/home_page/Arrow_down.svg',
-                    title: 'Entradas',
-                    valor: snapshot.data ?? 0,
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
+    return GetBuilder(
+      init: controller,
+      id: 'geral',
+      builder: (context) {
+        print('Atualizando geral');
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: kBlackColor,
             ),
-            VerticalDivider(
-              color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FutureBuilder<double>(
+                  future: controller.getEntradasDoMes(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return EntradaOuSaidaWidget(
+                        asset: 'assets/svgs/home_page/Arrow_down.svg',
+                        title: 'Entradas',
+                        valor: snapshot.data ?? 0,
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+                VerticalDivider(
+                  color: Colors.white,
+                ),
+                FutureBuilder<double>(
+                  future: controller.getSaidasDoMes(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return EntradaOuSaidaWidget(
+                        asset: 'assets/svgs/home_page/Arrow_up.svg',
+                        title: 'Saidas',
+                        valor: snapshot.data ?? 0,
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ],
             ),
-            FutureBuilder<double>(
-              future: controller.getSaidasDoMes(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return EntradaOuSaidaWidget(
-                    asset: 'assets/svgs/home_page/Arrow_up.svg',
-                    title: 'Saidas',
-                    valor: snapshot.data ?? 0,
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

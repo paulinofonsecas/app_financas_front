@@ -1,5 +1,6 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
 
 import 'package:dartz/dartz.dart';
@@ -8,7 +9,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../interfaces/i_contas_provider.dart';
 
 class DbContaProvider implements IContaProvider {
+  final IMovimentoProvider movimentoProvider;
   late Box<Map<dynamic, dynamic>> _contas;
+
+  DbContaProvider(this.movimentoProvider);
 
   Future<void> initDb() async {
     _contas = await Hive.openBox(kContasBox);
@@ -16,13 +20,14 @@ class DbContaProvider implements IContaProvider {
 
   @override
   Future<Either<Failure, bool>> saveConta(
-    Conta categoria,
+    Conta conta,
   ) async {
     try {
       await initDb();
 
-      var map = categoria.toMap();
       var lastId = _contas.values.length + 1;
+      conta = conta.copyWith(id: lastId);
+      var map = conta.toMap();
       await _contas.put(lastId, map);
       return const Right(true);
     } catch (e) {
@@ -39,10 +44,61 @@ class DbContaProvider implements IContaProvider {
       return const Right([]);
     }
 
-    return Right(
-      result.values
-          .map((e) => Conta.fromMap(e.cast<String, dynamic>()))
-          .toList(),
-    );
+    var contas = result.values
+        .map((e) => Conta.fromMap(e.cast<String, dynamic>()))
+        .toList();
+
+    for (var conta in contas) {
+      var saldoResult = await _getSaldo(conta.id);
+
+      if (saldoResult.isLeft()) {
+        return Left(Failure('Erro ao processar o saldo da conta'));
+      } else {
+        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+      }
+    }
+
+    return Right(contas);
+  }
+
+  @override
+  Future<Either<Failure, Conta>> getConta(int id) async {
+    await initDb();
+
+    var data = _contas.get(id);
+
+    if (data == null) {
+      return Left(NotFoundError('Conta não encontrada'));
+    } else {
+      var conta = Conta.fromMap(data.cast<String, dynamic>());
+      var saldoResult = await _getSaldo(id);
+
+      if (saldoResult.isLeft()) {
+        return Left(Failure('Saldo inválido'));
+      } else {
+        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+      }
+      return Right(conta);
+    }
+  }
+
+  Future<Either<Failure, double>> _getSaldo(int contaId) async {
+    var result = await movimentoProvider.getSaldo(contaId);
+
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateConta(Conta conta) async {
+    try {
+      await initDb();
+
+      var map = conta.toMap();
+      await _contas.put(conta.id, map);
+
+      return const Right(true);
+    } catch (e) {
+      return Left(DbException('Erro ao atualizar conta'));
+    }
   }
 }

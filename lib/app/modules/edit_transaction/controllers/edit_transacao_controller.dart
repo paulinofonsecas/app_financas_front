@@ -1,5 +1,5 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
@@ -5,6 +7,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_sync_data_service.dart';
 import 'package:app_financas/helders/http_helpers.dart';
+import 'package:hive/hive.dart';
 
 import '../provider/db/db_categoria_provider.dart';
 import '../provider/db/db_conta_provider.dart';
@@ -21,9 +24,11 @@ class SyncDataService implements ISyncDataService {
 
   @override
   Future<void> syncData() async {
+    await Hive.deleteFromDisk();
     var dio = makeDefaultDio();
     setupService = HttpSetupProvider(dio);
     movimentoService = HttpMovimentoProvider(dio);
+    movimentoService = DbMovimentoProvider();
 
     var setup = await setupService.setup();
     await _syncSetup(setup.getOrElse(() => SetupConfiguration.local()));
@@ -34,27 +39,28 @@ class SyncDataService implements ISyncDataService {
 
   Future<void> _syncSetup(SetupConfiguration setup) async {
     if (setup.isLocal) return;
+
     var categorias = setup.categorias;
     var contas = setup.contas;
 
     print('salvando categorias');
     categoriasService = DbCategoriaProvider();
     for (var categoria in categorias) {
-      categoriasService.saveSaidaCategoria(categoria);
+      await categoriasService.saveEntradaCategoria(categoria);
     }
 
     print('salvando contas');
-    contaService = DbContaProvider();
+    contaService = DbContaProvider(movimentoService);
     for (var conta in contas) {
-      contaService.saveConta(conta);
+      await contaService.saveConta(conta);
     }
   }
 
   Future<void> _syncMovimentos(List<Movimento> movimentoList) async {
     print('salvando movimentos');
-    movimentoService = DbMovimentoProvider();
+
     for (var movimento in movimentoList) {
-      movimentoService.saveMovimento(movimento);
+      await movimentoService.saveMovimento(movimento);
     }
   }
 }

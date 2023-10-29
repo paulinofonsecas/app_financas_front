@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
             child: BottomEscolherTipoMovimento(
               cloused: () {
                 Get.back(closeOverlays: true);
-                controller.update();
+                controller.update(['geral'], false);
                 setState(() {});
               },
             ),

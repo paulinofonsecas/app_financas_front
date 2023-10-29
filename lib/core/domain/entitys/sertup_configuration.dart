@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 class SetupConfiguration {

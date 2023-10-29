@@ -161,4 +161,10 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       return Left(HttpException('Erro ao listar os movimentos paginados\n ${e.error}'));
     }
   }
+  
+  @override
+  Future<Either<Failure, double>> getSaldo(int id) {
+    // TODO: implement getSaldo
+    throw UnimplementedError();
+  }
 }

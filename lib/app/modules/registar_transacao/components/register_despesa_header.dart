@@ -1,4 +1,4 @@
-import 'package:app_financas/app/modules/registar_saida/controllers/registar_transacao_controller.dart';
+import 'package:app_financas/app/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/cupertino.dart';

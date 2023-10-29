@@ -1,7 +1,7 @@
 import 'package:app_financas/app/components/my_divider.dart';
 import 'package:app_financas/app/components/with_icon.dart';
-import 'package:app_financas/app/modules/registar_saida/components/select_date_component.dart';
-import 'package:app_financas/app/modules/registar_saida/controllers/registar_transacao_controller.dart';
+import 'package:app_financas/app/modules/registar_transacao/components/select_date_component.dart';
+import 'package:app_financas/app/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
@@ -89,57 +89,39 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Date picker
-                      //                       const GutterTiny(),
-                      // const MyDivider(),
-                      //                       const GutterTiny(),
-                      // TextFormField(
-                      //   controller: controller.valorTextController,
-                      //   onChanged: controller.onValorChange,
-                      //   inputFormatters: [
-                      //     FilteringTextInputFormatter.digitsOnly,
-                      //   ],
-                      //   keyboardType: TextInputType.number,
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Valor',
-                      //     prefixText: 'Kz ',
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(8),
-                      //     ),
-                      //   ),
-                      // ),
-                      // implementar um select box para categorias
                       const GutterTiny(),
                       const MyDivider(),
                       const GutterTiny(),
-                      WithIcon(
-                        icon: Icons.label_outline,
-                        child: GetBuilder(
-                          init: controller,
-                          id: 'category',
-                          builder: (c) => DropdownButton<int>(
-                            isExpanded: true,
-                            value: controller.categoriaMovimentoId,
-                            onChanged: (int? value) {
-                              if (value == null) {
-                                return;
-                              }
-                              controller.categoriaMovimentoId = value;
-                              controller.update(['category']);
-                            },
-                            borderRadius: BorderRadius.circular(8),
-                            padding: const EdgeInsets.all(kDefaultPadding / 4),
-                            hint: const Text('Categoria de movimento'),
-                            items: controller
-                                .getCategories()
-                                .map((c) => DropdownMenuItem(
-                                      value: c.id,
-                                      child: Text(c.name),
-                                    ))
-                                .toList(),
+                      if (controller.movimentoType != 1)
+                        WithIcon(
+                          icon: Icons.label_outline,
+                          child: GetBuilder(
+                            init: controller,
+                            id: 'category',
+                            builder: (c) => DropdownButton<int>(
+                              isExpanded: true,
+                              value: controller.categoriaMovimentoId,
+                              onChanged: (int? value) {
+                                if (value == null) {
+                                  return;
+                                }
+                                controller.categoriaMovimentoId = value;
+                                controller.update(['category']);
+                              },
+                              borderRadius: BorderRadius.circular(8),
+                              padding:
+                                  const EdgeInsets.all(kDefaultPadding / 4),
+                              hint: const Text('Categoria de movimento'),
+                              items: controller
+                                  .getCategories()
+                                  .map((c) => DropdownMenuItem(
+                                        value: c.id,
+                                        child: Text(c.name),
+                                      ))
+                                  .toList(),
+                            ),
                           ),
                         ),
-                      ),
                       const GutterTiny(),
                       const MyDivider(),
                       const GutterTiny(),

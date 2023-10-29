@@ -10,6 +10,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 class MovimentoScreenController extends GetxController {
   late final PagingController<int, Movimento> pagingController;
   late final IMovimentoService service;
+  var page = 1;
   var pageSize = 10;
   late DateTime date;
 
@@ -34,7 +35,7 @@ class MovimentoScreenController extends GetxController {
       if (isLastPage) {
         pagingController.appendLastPage(newItems);
       } else {
-        final nextPageKey = pageKey + pageSize;
+        final nextPageKey = pageKey + 1;
         pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {

@@ -1,4 +1,4 @@
-import 'package:app_financas/app/modules/registar_saida/registar_saida.dart';
+import 'package:app_financas/app/modules/registar_transacao/registar_transacao.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

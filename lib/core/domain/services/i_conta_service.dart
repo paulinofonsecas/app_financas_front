@@ -1,4 +1,4 @@
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
 

@@ -1,6 +1,6 @@
 import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
@@ -59,7 +59,9 @@ class HomePageController extends GetxController {
     var result = await movimentoService.listMovimentos();
 
     if (result is Right) {
-      var list = result.getOrElse(() => []);
+      var list = result.getOrElse(() => [])
+        ..sort((a, b) => a.data.compareTo(b.data));
+      list = list.reversed.toList();
       if (list.length > 10) {
         return list.sublist(0, 6);
       } else {

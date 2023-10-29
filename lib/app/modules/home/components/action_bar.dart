@@ -47,7 +47,6 @@ class ActionBar extends StatelessWidget {
               Get.isDarkMode
                   ? Get.changeTheme(ThemeData.light(useMaterial3: true))
                   : Get.changeTheme(ThemeData.dark(useMaterial3: true));
-              Get.appUpdate();
             },
             icon: Icon(
               isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,

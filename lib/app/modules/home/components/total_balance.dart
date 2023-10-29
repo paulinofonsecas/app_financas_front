@@ -15,14 +15,10 @@ import '../controllers/home_page_controller.dart';
 class CardWidget extends StatelessWidget {
   const CardWidget({
     Key? key,
-    required this.index,
-    required this.saldo,
     required this.width,
     required this.height,
   }) : super(key: key);
 
-  final int index;
-  final double saldo;
   final double width;
   final double height;
 
@@ -53,16 +49,29 @@ class CardWidget extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Obx(
-                    () => Text(
-                      controller.showMoneyOnCards.value
-                          ? numberFormat.format(saldo)
-                          : '**********',
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  FutureBuilder<double>(
+                    future: controller.getSaldoDisponivel(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Obx(
+                          () => Text(
+                            controller.showMoneyOnCards.value
+                                ? numberFormat.format(snapshot.data ?? 0.0)
+                                : '**********',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                   GutterTiny(),
                   // mostrar icon de olhos para ver o valor
