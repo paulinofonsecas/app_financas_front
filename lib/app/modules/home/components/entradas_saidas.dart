@@ -20,7 +20,6 @@ class EntradasESaidas extends StatelessWidget {
       init: controller,
       id: 'geral',
       builder: (context) {
-        print('Atualizando geral');
         return ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Container(

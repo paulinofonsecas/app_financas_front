@@ -15,9 +15,15 @@ import 'components/info.dart';
 import 'controller/show_transaction_controller.dart';
 
 class ShowTransactionPage extends StatefulWidget {
-  const ShowTransactionPage({super.key, required this.movimento});
+  const ShowTransactionPage({
+    super.key,
+    required this.movimento,
+    this.onEdit,
+  });
 
   final Movimento movimento;
+
+  final Function? onEdit;
 
   @override
   State<ShowTransactionPage> createState() => _ShowTransactionPageState();
@@ -135,19 +141,12 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     var controller = Get.find<ShowTransactionController>();
     return ElevatedButton(
       onPressed: () {
-        // customShowModalBottomSheet(
-        //   context,
-        //   child: EditTransactionPage(
-        //     movimento: controller.movimento,
-        //     movimentoType: controller.movimento.tipoMovimentoId,
-        //   ),
-        // );
-
         Get.to(EditTransactionPage(
           movimentoType: controller.movimento.tipoMovimentoId,
           movimento: controller.movimento,
         ))?.then((value) {
           if (value != null) {
+            widget.onEdit?.call();
             controller.updateMovimento(value);
             setState(() {});
           }

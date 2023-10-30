@@ -105,42 +105,37 @@ class SwitchTransactionButton extends StatelessWidget {
     var controller = Get.find<EditTransacaoController>();
     return Align(
       alignment: Alignment.center,
-      child: GestureDetector(
-        onTap: () {
-          controller.switchTransactionType();
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: kDefaultPadding / 2,
-            horizontal: kDefaultPadding * 1.5,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(90)),
-            color: isReceita(controller.movimentoType)
-                ? kVerdeForteColor
-                : kVermelhaForteColor,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                controller.movimentoType == 1 ? 'Receita' : 'Despesa',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Gutter(),
-              Icon(
-                isReceita(controller.movimentoType)
-                    ? CupertinoIcons.chevron_up
-                    : CupertinoIcons.chevron_down,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: kDefaultPadding / 2,
+          horizontal: kDefaultPadding * 1.5,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(90)),
+          color: isReceita(controller.movimentoType)
+              ? kVerdeForteColor
+              : kVermelhaForteColor,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              controller.movimentoType == 1 ? 'Receita' : 'Despesa',
+              style: GoogleFonts.inter(
+                fontSize: 16,
                 color: Colors.white,
-                weight: 1,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
+            ),
+            const Gutter(),
+            Icon(
+              isReceita(controller.movimentoType)
+                  ? CupertinoIcons.chevron_up
+                  : CupertinoIcons.chevron_down,
+              color: Colors.white,
+              weight: 1,
+            ),
+          ],
         ),
       ),
     );

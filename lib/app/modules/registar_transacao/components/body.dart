@@ -90,8 +90,8 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       const GutterTiny(),
-                      const MyDivider(),
-                      const GutterTiny(),
+                      if (controller.movimentoType != 1) const MyDivider(),
+                      if (controller.movimentoType != 1) const GutterTiny(),
                       if (controller.movimentoType != 1)
                         WithIcon(
                           icon: Icons.label_outline,

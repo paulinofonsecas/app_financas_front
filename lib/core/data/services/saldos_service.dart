@@ -14,7 +14,7 @@ class SaldosService implements ISaldosService {
     var list = _getList(await movimentoService.listMovimentos());
 
     var result = list
-        .where((element) => element.tipoMovimentoId == 1)
+        .where((element) => element.tipoMovimentoId == 1 && element.confirmado)
         .fold(0.0, (sum, element) => sum + element.valor);
 
     return Right(result);
@@ -25,7 +25,7 @@ class SaldosService implements ISaldosService {
     var list = _getList(await movimentoService.listMovimentos());
 
     var result = list
-        .where((element) => element.tipoMovimentoId == 2)
+        .where((element) => element.tipoMovimentoId == 2 && element.confirmado)
         .fold(0.0, (sum, element) => sum + element.valor);
 
     return Right(result);

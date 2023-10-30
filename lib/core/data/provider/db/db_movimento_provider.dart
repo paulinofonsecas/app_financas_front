@@ -12,6 +12,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
     _movimentosBox = await Hive.openBox(kMovimentosBox);
   }
 
+  Future<void> dispose() {
+    return _movimentosBox.close();
+  }
+
   @override
   Future<Either<Failure, bool>> editMovimento(Movimento movimento) async {
     try {
@@ -103,9 +107,20 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
     if (result.isRight()) {
       var movimentos = result.getOrElse(() => []);
-      var saldo = movimentos
-          .where((element) => element.cartaoId == contaId)
-          .fold(0.0, (sum, element) => sum + element.valor);
+
+      var entradas = 0.0;
+      var saidas = 0.0;
+
+      for (var mov in movimentos) {
+        if (mov.tipoMovimentoId == 1) {
+          entradas += mov.valor;
+        } else {
+          saidas += mov.valor;
+        }
+      }
+
+      var saldo = entradas - saidas;
+
       return Right(saldo);
     } else {
       return Left(Failure('Erro ao processar o saldo da conta'));

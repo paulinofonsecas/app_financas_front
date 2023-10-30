@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-import '../../home/controllers/home_page_controller.dart';
-
 class ConfirmarTransacaoController extends GetxController {
   late final IMovimentoService movimentoService;
   late final TextEditingController valorTextController;
@@ -76,14 +74,12 @@ class ConfirmarTransacaoController extends GetxController {
       confirmado: true,
     );
 
-    var result = await movimentoService.editMovimento(myMovimento);
+  var result = await movimentoService.editMovimento(myMovimento);
 
     if (result is Right && result.getOrElse(() => false)) {
       dynamic result0 = await movimentoService.getMovimento(movimento.id);
       result0 = result0.getOrElse(() => Movimento.fake());
 
-      var homeController = Get.find<HomePageController>();
-      homeController.update(['geral']);
       Get.back();
     } else {
       if (result is Left &&

@@ -4,6 +4,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../controllers/movimentos_screen_controller.dart';
@@ -21,7 +22,9 @@ class Body extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Builder(
+        child: GetBuilder(
+          init: controller,
+          id: 'movimento_screen',
           builder: (context) {
             return PagedListView<int, Movimento>(
               pagingController: controller.pagingController,
@@ -37,7 +40,13 @@ class Body extends StatelessWidget {
                   onTap: () {
                     customShowModalBottomSheet(
                       context,
-                      child: ShowTransactionPage(movimento: movimento),
+                      child: ShowTransactionPage(
+                        movimento: movimento,
+                        onEdit: () {
+                          controller.update(['geral']);
+                          controller.pagingController.refresh();
+                        },
+                      ),
                     );
                   },
                 ),

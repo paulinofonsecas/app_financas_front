@@ -23,6 +23,7 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       body: GetBuilder(
         init: controller,
+        id: 'geral',
         builder: (context) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,

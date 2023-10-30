@@ -21,7 +21,6 @@ class MovimentoScreenController extends GetxController {
     date = DateTime.now();
 
     pagingController.addPageRequestListener((pageKey) {
-      print(pageKey);
       fetchPage(pageKey);
     });
     super.onInit();
