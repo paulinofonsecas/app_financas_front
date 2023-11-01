@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../components/my_drawer.dart';
 import 'abbas/movimentos.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
+      drawer: MyDrawer(),
       body: GetBuilder(
           init: controller,
           id: 'geral',

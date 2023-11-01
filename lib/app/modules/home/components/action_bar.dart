@@ -13,10 +13,15 @@ class ActionBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 24),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundImage: AssetImage(
-              'assets/imgs/profiles/home_profile.png',
+          GestureDetector(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: CircleAvatar(
+              radius: 22,
+              backgroundImage: AssetImage(
+                'assets/imgs/profiles/home_profile.png',
+              ),
             ),
           ),
           SizedBox(width: 10),
