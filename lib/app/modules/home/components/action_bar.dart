@@ -13,16 +13,14 @@ class ActionBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 24),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
+          IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Get.theme.iconTheme.color,
+            ),
+            onPressed: () {
               Scaffold.of(context).openDrawer();
             },
-            child: CircleAvatar(
-              radius: 22,
-              backgroundImage: AssetImage(
-                'assets/imgs/profiles/home_profile.png',
-              ),
-            ),
           ),
           SizedBox(width: 10),
           Column(
