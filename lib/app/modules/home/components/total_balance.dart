@@ -33,6 +33,7 @@ class CardWidget extends StatelessWidget {
         height: height,
         child: Stack(
           alignment: Alignment.center,
+          fit: StackFit.expand,
           children: [
             Background(),
             Padding(

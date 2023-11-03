@@ -63,7 +63,7 @@ class _ShowCardsState extends State<ShowCards> {
                       ),
                       child: CardWidget(
                         width: size.width * 0.85,
-                        height: constraines.maxHeight * 0.75,
+                        height: 176,
                       ),
                     );
                   },

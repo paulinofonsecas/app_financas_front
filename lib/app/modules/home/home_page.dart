@@ -34,8 +34,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.size);
-
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: MyDrawer(),

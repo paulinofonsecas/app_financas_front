@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Kwanzagest',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(useMaterial3: true),
-      theme: ThemeData.light(useMaterial3: true),
+      theme: ThemeData.dark(useMaterial3: true),
       themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialBinding: InitBingings(),
       home: const SplashScreen(),
