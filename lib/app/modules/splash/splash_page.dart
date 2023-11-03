@@ -11,9 +11,10 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var c = Get.put(SplashPageController());
+    c.init();
+
 
     return Scaffold(
-      backgroundColor: Colors.amber[700],
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [

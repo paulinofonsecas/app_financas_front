@@ -13,7 +13,7 @@ void main() {
 
     expect(result, isA<Right>());
     var setup = result.getOrElse(() => SetupConfiguration.local());
-    expect(setup.categorias, isNotEmpty);
+    expect(setup.categoriasEntradas, isNotEmpty);
     expect(setup.contas, isNotEmpty);
   });
 }

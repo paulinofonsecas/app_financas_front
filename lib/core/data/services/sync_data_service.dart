@@ -40,7 +40,7 @@ class SyncDataService implements ISyncDataService {
   Future<void> _syncSetup(SetupConfiguration setup) async {
     if (setup.isLocal) return;
 
-    var categorias = setup.categorias;
+    var categorias = setup.categoriasEntradas;
     var contas = setup.contas;
 
     print('salvando categorias');

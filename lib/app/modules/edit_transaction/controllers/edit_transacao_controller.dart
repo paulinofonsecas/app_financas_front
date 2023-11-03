@@ -76,7 +76,7 @@ class EditTransacaoController extends GetxController {
   }
 
   List<Categoria> getCategories() {
-    return setupConfiguration.categorias;
+    return setupConfiguration.categoriasEntradas;
   }
 
   List<Conta> getCards() {

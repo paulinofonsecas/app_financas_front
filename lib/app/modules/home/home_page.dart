@@ -34,59 +34,62 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.size);
+
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: MyDrawer(),
       body: GetBuilder(
-          init: controller,
-          id: 'geral',
-          builder: (context) {
-            return ListView(
-              children: [
-                ActionBar(),
-                SizedBox(height: kDefaultPadding),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ShowCards(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: kDefaultPadding),
-                          EntradasESaidas(),
-                          SizedBox(height: kDefaultPadding * 2),
-                          FutureBuilder<List<Movimento>>(
-                            future: controller.listMovimentosDoDia(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('${snapshot.error}');
-                              }
-                              if (snapshot.hasData) {
-                                return MovimentosAtHomePage(
-                                  movimentos: snapshot.data ?? [],
-                                  verMaisAction: () {
-                                    Get.to(MovimentosScreen());
-                                  },
-                                );
-                              } else {
-                                return Align(
-                                  alignment: Alignment.topCenter,
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      ),
+        init: controller,
+        id: 'geral',
+        builder: (context) {
+          return ListView(
+            children: [
+              ActionBar(),
+              SizedBox(height: kDefaultPadding),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ShowCards(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: kDefaultPadding),
+                        EntradasESaidas(),
+                        SizedBox(height: kDefaultPadding * 2),
+                        FutureBuilder<List<Movimento>>(
+                          future: controller.listMovimentosDoDia(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
+                            }
+                            if (snapshot.hasData) {
+                              return MovimentosAtHomePage(
+                                movimentos: snapshot.data ?? [],
+                                verMaisAction: () {
+                                  Get.to(MovimentosScreen());
+                                },
+                              );
+                            } else {
+                              return Align(
+                                alignment: Alignment.topCenter,
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            );
-          }),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         // backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,

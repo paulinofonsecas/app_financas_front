@@ -17,7 +17,7 @@ class ShowTransactionController extends GetxController {
   }
 
   String getCategoryName(int categoryId) {
-    return setupConfiguration.categorias
+    return setupConfiguration.categoriasEntradas
         .where((element) => element.id == categoryId)
         .first
         .name;

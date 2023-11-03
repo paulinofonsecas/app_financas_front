@@ -8,44 +8,55 @@ import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 class SetupConfiguration {
   bool isLocal;
-  final List<Categoria> categorias;
+  final List<Categoria> categoriasEntradas;
+  final List<Categoria> categoriasSaidas;
   final List<Conta> contas;
 
   SetupConfiguration({
-    required this.categorias,
+    required this.categoriasEntradas,
+    required this.categoriasSaidas,
     required this.contas,
     this.isLocal = false,
   });
 
   factory SetupConfiguration.local() {
     return SetupConfiguration(
-      categorias: [],
+      categoriasEntradas: [],
+      categoriasSaidas: [],
       contas: [],
       isLocal: true,
     );
   }
 
   SetupConfiguration copyWith({
-    List<Categoria>? categorias,
-    List<Conta>? cartoes,
+    List<Categoria>? categoriasEntradas,
+    List<Categoria>? categoriasSaidas,
+    List<Conta>? contas,
   }) {
     return SetupConfiguration(
-      categorias: categorias ?? this.categorias,
-      contas: cartoes ?? this.contas,
+      categoriasEntradas: categoriasEntradas ?? this.categoriasEntradas,
+      categoriasSaidas: categoriasSaidas ?? this.categoriasSaidas,
+      contas: contas ?? this.contas,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'categorias': categorias.map((x) => x.toMap()).toList(),
+      'categoriasEntradas': categoriasEntradas.map((x) => x.toMap()).toList(),
+      'categoriasSaidas': categoriasSaidas.map((x) => x.toMap()).toList(),
       'cartoes': contas.map((x) => x.toMap()).toList(),
     };
   }
 
   factory SetupConfiguration.fromMap(Map<String, dynamic> map) {
     return SetupConfiguration(
-      categorias: List<Categoria>.from(
-        (map['categorias'] as List<dynamic>).map<Categoria>(
+      categoriasEntradas: List<Categoria>.from(
+        (map['categoriasEntradas'] as List<dynamic>).map<Categoria>(
+          (x) => Categoria.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      categoriasSaidas: List<Categoria>.from(
+        (map['categoriasSaidas'] as List<dynamic>).map<Categoria>(
           (x) => Categoria.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -64,16 +75,16 @@ class SetupConfiguration {
 
   @override
   String toString() =>
-      'SetupConfiguration(categorias: $categorias, cartoes: $contas)';
+      'SetupConfiguration(categorias: $categoriasEntradas, cartoes: $contas)';
 
   @override
   bool operator ==(covariant SetupConfiguration other) {
     if (identical(this, other)) return true;
 
-    return listEquals(other.categorias, categorias) &&
+    return listEquals(other.categoriasEntradas, categoriasEntradas) &&
         listEquals(other.contas, contas);
   }
 
   @override
-  int get hashCode => categorias.hashCode ^ contas.hashCode;
+  int get hashCode => categoriasEntradas.hashCode ^ contas.hashCode;
 }

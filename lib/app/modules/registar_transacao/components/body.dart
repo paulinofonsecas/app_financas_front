@@ -90,38 +90,36 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       const GutterTiny(),
-                      if (controller.movimentoType != 1) const MyDivider(),
-                      if (controller.movimentoType != 1) const GutterTiny(),
-                      if (controller.movimentoType != 1)
-                        WithIcon(
-                          icon: Icons.label_outline,
-                          child: GetBuilder(
-                            init: controller,
-                            id: 'category',
-                            builder: (c) => DropdownButton<int>(
-                              isExpanded: true,
-                              value: controller.categoriaMovimentoId,
-                              onChanged: (int? value) {
-                                if (value == null) {
-                                  return;
-                                }
-                                controller.categoriaMovimentoId = value;
-                                controller.update(['category']);
-                              },
-                              borderRadius: BorderRadius.circular(8),
-                              padding:
-                                  const EdgeInsets.all(kDefaultPadding / 4),
-                              hint: const Text('Categoria de movimento'),
-                              items: controller
-                                  .getCategories()
-                                  .map((c) => DropdownMenuItem(
-                                        value: c.id,
-                                        child: Text(c.name),
-                                      ))
-                                  .toList(),
-                            ),
+                      const MyDivider(),
+                      const GutterTiny(),
+                      WithIcon(
+                        icon: Icons.label_outline,
+                        child: GetBuilder(
+                          init: controller,
+                          id: 'category',
+                          builder: (c) => DropdownButton<int>(
+                            isExpanded: true,
+                            value: controller.categoriaMovimentoId,
+                            onChanged: (int? value) {
+                              if (value == null) {
+                                return;
+                              }
+                              controller.categoriaMovimentoId = value;
+                              controller.update(['category']);
+                            },
+                            borderRadius: BorderRadius.circular(8),
+                            padding: const EdgeInsets.all(kDefaultPadding / 4),
+                            hint: const Text('Categoria de movimento'),
+                            items: controller
+                                .getCategories()
+                                .map((c) => DropdownMenuItem(
+                                      value: c.id,
+                                      child: Text(c.name),
+                                    ))
+                                .toList(),
                           ),
                         ),
+                      ),
                       const GutterTiny(),
                       const MyDivider(),
                       const GutterTiny(),

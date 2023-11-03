@@ -41,7 +41,18 @@ class DbContaProvider implements IContaProvider {
     var result = _contas.toMap();
 
     if (result.isEmpty) {
-      return const Right([]);
+      var contasPadrao = [
+        'Familiar',
+        'Empresa',
+        'Gastos gerais',
+        'Poupanças',
+        'Outro',
+      ];
+
+      for (var cont in contasPadrao) {
+        await saveConta(Conta(nome: cont, saldo: 0.0, id: -1));
+      }
+      return listContas();
     }
 
     var contas = result.values

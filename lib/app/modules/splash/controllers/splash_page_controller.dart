@@ -20,24 +20,26 @@ class SplashPageController extends GetxController {
     categoriaService = Get.find();
     contaService = Get.find();
 
-    init();
     super.onInit();
   }
 
-  void init() async {
+  Future<void> init() async {
     // var syncService = SyncDataService();
     // await syncService.syncData();
 
-    await Future.delayed(const Duration(seconds: 2));
     isLoading.value = true;
-    var categoriaResult = await categoriaService.listCategoriasEntradas();
+    var categoriaEntradasResult =
+        await categoriaService.listCategoriasEntradas();
+    var categoriasSaidasResult = await categoriaService.listCategoriasSaidas();
     var contaResult = await contaService.listContas();
 
-    var categoriaEntradasList = categoriaResult.getOrElse(() => []);
+    var categoriaEntradasList = categoriaEntradasResult.getOrElse(() => []);
+    var categoriasSaidasList = categoriasSaidasResult.getOrElse(() => []);
     var contaList = contaResult.getOrElse(() => []);
 
     var setupConfig = SetupConfiguration(
-      categorias: categoriaEntradasList,
+      categoriasEntradas: categoriaEntradasList,
+      categoriasSaidas: categoriasSaidasList,
       contas: contaList,
       isLocal: true,
     );
@@ -45,9 +47,9 @@ class SplashPageController extends GetxController {
     _goToHomePage(setupConfig);
   }
 
-  void _goToHomePage(SetupConfiguration setupConfig) {
+  Future? _goToHomePage(SetupConfiguration setupConfig) {
     Get.replace(setupConfig);
-    Get.off(const HomePage());
+    return Get.to(() => const HomePage());
   }
 
   void showErrorSnackBar() {

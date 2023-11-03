@@ -44,7 +44,7 @@ class RegistarTransacaoController extends GetxController {
     valorTextController = TextEditingController();
     obsTextController = TextEditingController();
 
-    categoriaMovimentoId = getCategories().first.id;
+    categoriaMovimentoId = 1;
     cartaoId = getCards().first.id;
   }
 
@@ -70,7 +70,15 @@ class RegistarTransacaoController extends GetxController {
   }
 
   List<Categoria> getCategories() {
-    return setupConfiguration.categorias;
+    return movimentoType == 1 ? getEntradaCategories() : getSaidasCategories();
+  }
+
+  List<Categoria> getEntradaCategories() {
+    return setupConfiguration.categoriasEntradas;
+  }
+
+  List<Categoria> getSaidasCategories() {
+    return setupConfiguration.categoriasSaidas;
   }
 
   List<Conta> getCards() {
@@ -172,6 +180,9 @@ class RegistarTransacaoController extends GetxController {
 
   void switchTransactionType() {
     movimentoType = movimentoType == 1 ? 2 : 1;
-    update(['geral']);
+    update([
+      'category',
+      'geral',
+    ]);
   }
 }

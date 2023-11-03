@@ -27,8 +27,9 @@ class DbCategoriaProvider implements ICategoriaProvider {
     try {
       await initCategoriaEntradasDb();
 
-      var map = categoria.toMap();
       var lastId = _categoriasEntradaBox.values.length + 1;
+      categoria = categoria.copyWith(id: lastId);
+      var map = categoria.toMap();
       await _categoriasEntradaBox.put(lastId, map);
       return const Right(true);
     } catch (e) {
@@ -41,8 +42,9 @@ class DbCategoriaProvider implements ICategoriaProvider {
     try {
       await initCategoriaSaidasDb();
 
-      var map = categoria.toMap();
       var lastId = _categoriasSaidaBox.values.length + 1;
+      categoria = categoria.copyWith(id: lastId);
+      var map = categoria.toMap();
       await _categoriasSaidaBox.put(lastId, map);
       return const Right(true);
     } catch (e) {
@@ -56,7 +58,18 @@ class DbCategoriaProvider implements ICategoriaProvider {
     var result = _categoriasEntradaBox.toMap();
 
     if (result.isEmpty) {
-      return const Right([]);
+      var categoriasPadrao = [
+        'Salário',
+        'Horas Extras',
+        'Rendimento',
+        'Devolução',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveEntradaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasEntradas();
     }
 
     return Right(
@@ -72,7 +85,17 @@ class DbCategoriaProvider implements ICategoriaProvider {
     var result = _categoriasSaidaBox.toMap();
 
     if (result.isEmpty) {
-      return const Right([]);
+      var categoriasPadrao = [
+        'Pagamento',
+        'Divida',
+        'Emprestimo',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasSaidas();
     }
 
     return Right(
