@@ -88,7 +88,12 @@ class DbMovimentoProvider implements IMovimentoProvider {
     try {
       await initDb();
 
-      var lastId = _movimentosBox.values.length + 1;
+      var lastId = 1;
+
+      if (_movimentosBox.values.isNotEmpty) {
+        lastId = _movimentosBox.keys.last + 1;
+      }
+
       movimento = movimento.copyWith(id: lastId);
       var map = movimento.toMap();
       await _movimentosBox.put(lastId, map);
@@ -124,6 +129,18 @@ class DbMovimentoProvider implements IMovimentoProvider {
       return Right(saldo);
     } else {
       return Left(Failure('Erro ao processar o saldo da conta'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteMovimento(int id) async {
+    try {
+      await initDb();
+
+      await _movimentosBox.delete(id);
+      return const Right(true);
+    } catch (e) {
+      return Left(HttpException('Erro ao deletar movimento'));
     }
   }
 }

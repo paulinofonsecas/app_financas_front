@@ -13,4 +13,5 @@ abstract class IMovimentoProvider {
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento);
   Future<Either<Failure, bool>> editMovimento(Movimento movimento);
   Future<Either<Failure, double>> getSaldo(int id);
+  Future<Either<Failure, bool>> deleteMovimento(int id);
 }

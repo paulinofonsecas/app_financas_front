@@ -27,7 +27,7 @@ class MovimentosAtHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomePageController>();
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -167,4 +167,10 @@ class HttpMovimentoProvider implements IMovimentoProvider {
     // TODO: implement getSaldo
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Either<Failure, bool>> deleteMovimento(int id) {
+    // TODO: implement deleteMovimento
+    throw UnimplementedError();
+  }
 }

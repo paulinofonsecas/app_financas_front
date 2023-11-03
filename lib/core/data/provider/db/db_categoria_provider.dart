@@ -87,7 +87,6 @@ class DbCategoriaProvider implements ICategoriaProvider {
     if (result.isEmpty) {
       var categoriasPadrao = [
         'Pagamento',
-        'Divida',
         'Emprestimo',
         'Outro',
       ];

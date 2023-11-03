@@ -19,6 +19,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var controller = Get.find<EditTransacaoController>();
+    controller.init();
 
     return SingleChildScrollView(
       child: Column(

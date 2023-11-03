@@ -79,4 +79,9 @@ class MovimentoService implements IMovimentoService {
       return list.skip(pageSize * page).take(pageSize).toList();
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteMovimento(int id) {
+    return provider.deleteMovimento(id);
+  }
 }
