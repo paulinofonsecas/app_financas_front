@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,
         onPressed: () {
@@ -109,37 +109,6 @@ class _HomePageState extends State<HomePage> {
           CupertinoIcons.add,
           color: Get.theme.floatingActionButtonTheme.foregroundColor,
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        useLegacyColorScheme: false,
-        backgroundColor: Get.theme.bottomAppBarTheme.color,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.home,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.wallet,
-            ),
-            label: 'Carteira',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.timeline,
-            ),
-            label: 'Estatisticas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.person_alt,
-            ),
-            label: 'Perfil',
-          ),
-        ],
       ),
     );
   }
