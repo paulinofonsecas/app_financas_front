@@ -104,7 +104,7 @@ class MovimentoItem extends StatelessWidget {
               children: [
                 Text(
                   tipoMovimentoId == 1
-                      ? numberFormat.format(600000)
+                      ? numberFormat.format(valor)
                       : '- ${numberFormat.format(valor)}',
                   style: GoogleFonts.inter(
                     fontSize: 15,
