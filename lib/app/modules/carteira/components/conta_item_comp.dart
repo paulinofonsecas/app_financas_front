@@ -25,7 +25,7 @@ class ContaItem extends StatelessWidget {
         vertical: isActive ? 0 : kDefaultPadding * 1.5,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xff031A6E),
+        color: kAzulForteColor,
         borderRadius: BorderRadius.circular(10),
         gradient: isActive
             ? LinearGradient(

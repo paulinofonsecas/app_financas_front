@@ -12,6 +12,7 @@ class CarteiraPageController extends GetxController {
   late final PagingController<int, Movimento> pagingController;
   late final IContaService contaService;
   late final IMovimentoService movimentoService;
+  int esFilter = 0;
   int currentIndex = 0;
   var page = 1;
   var pageSize = 10;
@@ -50,7 +51,14 @@ class CarteiraPageController extends GetxController {
     var result = await movimentoService.listPaginatedContaMovimentos(
         currentIndex, page, pageSize);
     if (result is Right) {
-      return result.getOrElse(() => []);
+      if (esFilter == 0) {
+        return result.getOrElse(() => []);
+      } else {
+        return result
+            .getOrElse(() => [])
+            .where((element) => element.tipoMovimentoId == esFilter)
+            .toList();
+      }
     } else {
       throw result.swap().getOrElse(
             () => Failure(
@@ -73,6 +81,16 @@ class CarteiraPageController extends GetxController {
 
   void updateContaIndex(int index) {
     currentIndex = index;
+    update(['geral']);
+    pagingController.refresh();
+  }
+
+  void changeESFilter(int filter) {
+    if (esFilter == filter) {
+      return;
+    }
+
+    esFilter = filter;
     update(['geral']);
     pagingController.refresh();
   }

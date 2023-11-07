@@ -1,3 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
 import 'package:app_financas/app/components/movimento_item.dart';
 import 'package:app_financas/app/modules/carteira/controllers/carteira_page_controller.dart';
 import 'package:app_financas/app/modules/show_transaction/show_transaction_page.dart';
@@ -5,11 +13,6 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'components/conta_item_comp.dart';
 
@@ -80,13 +83,7 @@ class _CarteiraPageState extends State<CarteiraPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Movimentos da conta',
-              style: GoogleFonts.inter(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            headerMovimentoSection(),
             const GutterTiny(),
             Expanded(
               child: PagedListView<int, Movimento>(
@@ -119,6 +116,41 @@ class _CarteiraPageState extends State<CarteiraPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Row headerMovimentoSection() {
+    return Row(
+      children: [
+        MyTextFilter(
+          title: 'Tudo',
+          isActive: carteiraController.esFilter == 0,
+          onTap: () {
+            carteiraController.changeESFilter(0);
+          },
+        ),
+        const GutterTiny(),
+        MyTextFilter(
+          title: 'Saídas',
+          isActive: carteiraController.esFilter == TipoMovimento.SAIDA,
+          onTap: () {
+            carteiraController.changeESFilter(TipoMovimento.SAIDA);
+          },
+        ),
+        const GutterTiny(),
+        MyTextFilter(
+          title: 'Entrada',
+          isActive: carteiraController.esFilter == TipoMovimento.ENTRADA,
+          onTap: () {
+            carteiraController.changeESFilter(TipoMovimento.ENTRADA);
+          },
+        ),
+        const Spacer(),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Ver mais'),
+        ),
+      ],
     );
   }
 
@@ -160,6 +192,33 @@ class _CarteiraPageState extends State<CarteiraPage> {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class MyTextFilter extends StatelessWidget {
+  const MyTextFilter({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    required this.isActive,
+  }) : super(key: key);
+
+  final String title;
+  final GestureTapCallback onTap;
+  final bool isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onTap,
+      child: Text(
+        title,
+        style: GoogleFonts.inter(
+          fontSize: 16,
+          fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+        ),
       ),
     );
   }
