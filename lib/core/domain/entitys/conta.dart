@@ -12,7 +12,7 @@ class Conta {
     required this.saldo,
   });
 
-  factory Conta.nullo() {
+  factory Conta.fake() {
     return Conta(
       id: 0,
       nome: '',

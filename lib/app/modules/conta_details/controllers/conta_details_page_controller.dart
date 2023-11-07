@@ -8,15 +8,18 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class CarteiraPageController extends GetxController {
+class ContaDetailsPageController extends GetxController {
   late final PagingController<int, Movimento> pagingController;
-  late final IContaService contaService;
   late final IMovimentoService movimentoService;
-  Conta? conta;
-  int currentIndex = 0;
+  late final IContaService contaService;
+  late Conta conta;
   int esFilter = 0;
   var page = 1;
   var pageSize = 10;
+
+  ContaDetailsPageController({
+    required this.conta,
+  });
 
   @override
   void onInit() {
@@ -27,8 +30,6 @@ class CarteiraPageController extends GetxController {
     pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);
     });
-
-    pagingController.refresh();
     super.onInit();
   }
 
@@ -52,7 +53,7 @@ class CarteiraPageController extends GetxController {
     int page,
   ) async {
     var result = await movimentoService.listPaginatedContaMovimentos(
-        currentIndex, page, pageSize);
+        conta.id, page, pageSize);
     if (result is Right) {
       if (esFilter == 0) {
         return result.getOrElse(() => []);
@@ -71,25 +72,6 @@ class CarteiraPageController extends GetxController {
     }
   }
 
-  Future<List<Conta>> getContas() async {
-    var result = await contaService.listContas();
-
-    if (result is Right) {
-      var s = result.getOrElse(() => []);
-      conta ??= s.first;
-      return s;
-    } else {
-      showErrorMessage('Error', 'Erro ao buscar contas');
-      return [];
-    }
-  }
-
-  void updateContaIndex(int index) {
-    currentIndex = index;
-    update(['geral']);
-    pagingController.refresh();
-  }
-
   void changeESFilter(int filter) {
     if (esFilter == filter) {
       return;
@@ -100,8 +82,14 @@ class CarteiraPageController extends GetxController {
     pagingController.refresh();
   }
 
-  void updateConta(Conta conta) {
-    this.conta = conta;
-    update();
+  void updateGeral() async {
+    var result = await contaService.getConta(conta.id);
+
+    if (result is Right) {
+      conta = result.getOrElse(() => Conta.fake());
+      update(['geral']);
+    } else {
+      showErrorMessage('Error', 'Erro desconhecido ao atualizar a tela');
+    }
   }
 }

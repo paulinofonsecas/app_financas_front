@@ -18,4 +18,9 @@ class ContaService implements IContaService {
   Future<Either<Failure, bool>> saveConta(Conta categoria) {
     return provider.saveConta(categoria);
   }
+
+  @override
+  Future<Either<Failure, Conta>> getConta(int id) {
+    return provider.getConta(id);
+  }
 }

@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
         init: controller,
         id: 'geral',
         builder: (context) {
-          print('atualizou');
           return ListView(
             children: [
               ActionBar(),

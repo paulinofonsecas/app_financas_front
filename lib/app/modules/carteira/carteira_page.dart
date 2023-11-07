@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/app/modules/conta_details/conta_details_page.dart';
 import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -147,7 +148,9 @@ class _CarteiraPageState extends State<CarteiraPage> {
         ),
         const Spacer(),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(ContaDetailsPage(conta: carteiraController.conta!));
+          },
           child: const Text('Ver mais'),
         ),
       ],
@@ -176,6 +179,7 @@ class _CarteiraPageState extends State<CarteiraPage> {
             controller: pageController,
             onPageChanged: (index) {
               carteiraController.updateContaIndex(contas[index].id);
+              carteiraController.updateConta(contas[index]);
               setState(() {
                 currentIndex = index;
               });
@@ -188,6 +192,18 @@ class _CarteiraPageState extends State<CarteiraPage> {
               return ContaItem(
                 conta: conta,
                 isActive: index == currentIndex,
+                onTap: () {
+                  if (index == currentIndex) {
+                    Get.to(
+                      ContaDetailsPage(
+                        conta: conta,
+                      ),
+                    )?.then((value) {
+                      setState(() {});
+                      carteiraController.update(['geral']);
+                    });
+                  }
+                },
               );
             },
           );

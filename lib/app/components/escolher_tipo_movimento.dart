@@ -1,16 +1,20 @@
-import 'package:app_financas/app/modules/registar_transacao/registar_transacao.dart';
-import 'package:app_financas/constants.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:app_financas/app/modules/registar_transacao/registar_transacao.dart';
+import 'package:app_financas/constants.dart';
+
 class BottomEscolherTipoMovimento extends StatelessWidget {
   const BottomEscolherTipoMovimento({
-    super.key,
+    Key? key,
     required this.cloused,
-  });
+    this.contaId,
+  }) : super(key: key);
 
   final Function cloused;
+  final int? contaId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,10 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      Get.to(const RegistarTransacao(movimentoType: 1))?.then(
+                      Get.to(RegistarTransacao(
+                        movimentoType: 1,
+                        contaId: contaId,
+                      ))?.then(
                         (value) {
                           cloused();
                         },
@@ -51,8 +58,10 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Saida',
                     color: kVermelhaColor,
                     onTap: () {
-                      Get.to(const RegistarTransacao(movimentoType: 2))
-                          ?.then((value) {
+                      Get.to(RegistarTransacao(
+                        movimentoType: 2,
+                        contaId: contaId,
+                      ))?.then((value) {
                         cloused();
                       });
                     },

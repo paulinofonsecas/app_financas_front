@@ -51,7 +51,10 @@ class MovimentoItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(kDefaultPadding / 2),
+        padding: EdgeInsets.symmetric(
+          horizontal: kDefaultPadding / 2,
+          vertical: kDefaultPadding,
+        ),
         margin: EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 4,

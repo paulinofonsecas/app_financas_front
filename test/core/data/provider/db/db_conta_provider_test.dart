@@ -30,7 +30,7 @@ void main() {
     var newConta = _createConta();
     var result = (await dbConta.saveConta(newConta)).getOrElse(() => false);
     expect(result, true);
-    
+
     await movimentoProvider.saveMovimento(Movimento.make(
       id: 1,
       valor: 15000,
@@ -46,20 +46,19 @@ void main() {
     var conta = await dbConta.getConta(1);
 
     expect(conta, isA<Right>());
-    expect(conta.getOrElse(() => Conta.nullo()).saldo, 15000);
+    expect(conta.getOrElse(() => Conta.fake()).saldo, 15000);
   });
 
   test('deve retornar a lista de contas', () async {
     var newConta = _createConta();
     var result0 = (await dbConta.saveConta(newConta)).getOrElse(() => false);
     expect(result0, true);
-    
+
     var result = await dbConta.listContas();
     expect(result, isA<Right>());
     expect(result.getOrElse(() => []), isA<List<Conta>>());
     expect(result.getOrElse(() => []).length, 1);
   });
-
 }
 
 Conta _createConta([int id = 1]) {

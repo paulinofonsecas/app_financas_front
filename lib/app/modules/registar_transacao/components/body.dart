@@ -1,24 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:get/get.dart';
+
 import 'package:app_financas/app/components/my_divider.dart';
 import 'package:app_financas/app/components/with_icon.dart';
 import 'package:app_financas/app/modules/registar_transacao/components/select_date_component.dart';
 import 'package:app_financas/app/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 
 import 'register_despesa_header.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    super.key,
-  });
+    Key? key,
+    this.contaId,
+  }) : super(key: key);
+
+  final int? contaId;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var controller = Get.find<RegistarTransacaoController>();
+    if (contaId != null) controller.cartaoId = contaId!;
 
     return SingleChildScrollView(
       child: Column(

@@ -16,9 +16,11 @@ class RegistarTransacao extends StatelessWidget {
   const RegistarTransacao({
     Key? key,
     required this.movimentoType,
+    this.contaId,
   }) : super(key: key);
 
   final int movimentoType;
+  final int? contaId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,9 @@ class RegistarTransacao extends StatelessWidget {
           body: Stack(
             fit: StackFit.expand,
             children: [
-              Body(),
+              Body(
+                contaId: contaId,
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SuspendedButton(),
