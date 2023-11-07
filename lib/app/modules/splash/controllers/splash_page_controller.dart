@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:app_financas/app/modules/home/home_page.dart';
+import 'package:app_financas/app/modules/app/app_page.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
@@ -49,7 +49,7 @@ class SplashPageController extends GetxController {
 
   Future? _goToHomePage(SetupConfiguration setupConfig) {
     Get.replace(setupConfig);
-    return Get.to(() => const HomePage());
+    return Get.to(() => const AppPage());
   }
 
   void showErrorSnackBar() {

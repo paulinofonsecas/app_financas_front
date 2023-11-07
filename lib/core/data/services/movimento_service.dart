@@ -84,4 +84,18 @@ class MovimentoService implements IMovimentoService {
   Future<Either<Failure, bool>> deleteMovimento(int id) {
     return provider.deleteMovimento(id);
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
+      int contaId, int page, int pageSize) async {
+    var result = await listPaginatedMovimentos(page, pageSize);
+
+    if (result.isRight()) {
+      var list = result.getOrElse(() => []);
+      list = list.where((element) => element.cartaoId == contaId).toList();
+      return Right(list);
+    } else {
+      return result;
+    }
+  }
 }

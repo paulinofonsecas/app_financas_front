@@ -1,16 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:app_financas/app/components/escolher_tipo_movimento.dart';
 import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../components/my_drawer.dart';
 import 'abbas/movimentos.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
@@ -36,11 +32,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
-      drawer: MyDrawer(),
       body: GetBuilder(
         init: controller,
         id: 'geral',
         builder: (context) {
+          print('atualizou');
           return ListView(
             children: [
               ActionBar(),
@@ -87,59 +83,6 @@ class _HomePageState extends State<HomePage> {
             ],
           );
         },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        // backgroundColor: Get.theme.floatingActionButtonTheme.backgroundColor,
-        onPressed: () {
-          customShowModalBottomSheet(
-            context,
-            isScrollControlled: false,
-            constraints: BoxConstraints.tightFor(),
-            child: BottomEscolherTipoMovimento(
-              cloused: () {
-                Get.back(closeOverlays: true);
-                controller.update(['geral'], false);
-                setState(() {});
-              },
-            ),
-          );
-        },
-        child: Icon(
-          CupertinoIcons.add,
-          color: Get.theme.floatingActionButtonTheme.foregroundColor,
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        useLegacyColorScheme: false,
-        backgroundColor: Get.theme.bottomAppBarTheme.color,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.home,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.wallet,
-            ),
-            label: 'Carteira',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.timeline,
-            ),
-            label: 'Estatisticas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CupertinoIcons.person_alt,
-            ),
-            label: 'Perfil',
-          ),
-        ],
       ),
     );
   }

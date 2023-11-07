@@ -37,10 +37,11 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      Get.to(const RegistarTransacao(movimentoType: 1))
-                          ?.then((value) {
-                        cloused();
-                      });
+                      Get.to(const RegistarTransacao(movimentoType: 1))?.then(
+                        (value) {
+                          cloused();
+                        },
+                      );
                     },
                   ),
                 ),

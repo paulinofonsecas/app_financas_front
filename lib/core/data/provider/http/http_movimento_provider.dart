@@ -173,4 +173,10 @@ class HttpMovimentoProvider implements IMovimentoProvider {
     // TODO: implement deleteMovimento
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(int currentIndex, int page, int pageSize) {
+    // TODO: implement listPaginatedContaMovimentos
+    throw UnimplementedError();
+  }
 }

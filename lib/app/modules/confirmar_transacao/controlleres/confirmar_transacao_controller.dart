@@ -2,6 +2,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class ConfirmarTransacaoController extends GetxController {
       confirmado: true,
     );
 
-  var result = await movimentoService.editMovimento(myMovimento);
+    var result = await movimentoService.editMovimento(myMovimento);
 
     if (result is Right && result.getOrElse(() => false)) {
       dynamic result0 = await movimentoService.getMovimento(movimento.id);
@@ -95,29 +96,5 @@ class ConfirmarTransacaoController extends GetxController {
       }
       alterandoTransacao.value = false;
     }
-  }
-
-  void showErrorMessage(String title, String message) {
-    Get.showSnackbar(
-      GetSnackBar(
-        title: title,
-        message: message,
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        isDismissible: true,
-      ),
-    );
-  }
-
-  void showSucessMessage(String title, String message) {
-    Get.showSnackbar(
-      GetSnackBar(
-        title: title,
-        message: message,
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.green,
-        isDismissible: true,
-      ),
-    );
   }
 }

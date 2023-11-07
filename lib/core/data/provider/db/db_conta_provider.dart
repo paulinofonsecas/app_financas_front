@@ -55,6 +55,7 @@ class DbContaProvider implements IContaProvider {
       return listContas();
     }
 
+    var saida = <Conta>[];
     var contas = result.values
         .map((e) => Conta.fromMap(e.cast<String, dynamic>()))
         .toList();
@@ -66,10 +67,11 @@ class DbContaProvider implements IContaProvider {
         return Left(Failure('Erro ao processar o saldo da conta'));
       } else {
         conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+        saida.add(conta);
       }
     }
 
-    return Right(contas);
+    return Right(saida);
   }
 
   @override

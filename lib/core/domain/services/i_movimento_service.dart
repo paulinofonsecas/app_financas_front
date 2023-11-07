@@ -12,4 +12,7 @@ abstract class IMovimentoService {
   Future<Either<Failure, List<Movimento>>> listMovimentosAt(DateTime date);
   Future<Either<Failure, bool>> editMovimento(Movimento movimento);
   Future<Either<Failure, bool>> deleteMovimento(int id);
+
+  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
+      int currentIndex, int page, int pageSize);
 }

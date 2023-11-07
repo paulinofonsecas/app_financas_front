@@ -1,4 +1,4 @@
-import 'package:app_financas/app/modules/home/components/total_balance.dart';
+import 'package:app_financas/app/modules/home/components/card_widget.dart';
 import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';

@@ -35,7 +35,7 @@ class ActionBar extends StatelessWidget {
                 ),
               ),
               Text(
-                'Paulino Fonseca',
+                'Kwanza Gest',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,

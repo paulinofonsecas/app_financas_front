@@ -111,7 +111,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
     var result = await listMovimentos();
 
     if (result.isRight()) {
-      var movimentos = result.getOrElse(() => []);
+      var movimentos = result
+          .getOrElse(() => [])
+          .where((element) => element.cartaoId == contaId);
 
       var entradas = 0.0;
       var saidas = 0.0;
@@ -142,5 +144,12 @@ class DbMovimentoProvider implements IMovimentoProvider {
     } catch (e) {
       return Left(HttpException('Erro ao deletar movimento'));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
+      int currentIndex, int page, int pageSize) {
+    // TODO: implement listPaginatedMovimentos
+    throw UnimplementedError();
   }
 }
