@@ -13,7 +13,7 @@ class CarteiraPageController extends GetxController {
   late final IContaService contaService;
   late final IMovimentoService movimentoService;
   Conta? conta;
-  int currentIndex = 0;
+  int currentIndex = 1;
   int esFilter = 0;
   var page = 1;
   var pageSize = 10;
@@ -28,7 +28,6 @@ class CarteiraPageController extends GetxController {
       fetchPage(pageKey);
     });
 
-    pagingController.refresh();
     super.onInit();
   }
 
