@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/bottom_category_comp_controller.dart';
+
 class SearchComponent extends StatelessWidget {
   const SearchComponent({
     super.key,
@@ -8,11 +10,19 @@ class SearchComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<BottomCategoryCompController>();
+
     return TextField(
+      controller: controller.searchTextController,
       decoration: InputDecoration(
         hintText: 'Pesquisar',
         prefixIcon: const Icon(Icons.search),
-        suffixIcon: const Icon(Icons.close),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            controller.searchTextController.clear();
+          },
+        ),
         hintStyle: const TextStyle(
           color: Colors.grey,
         ),

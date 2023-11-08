@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
+import '../controllers/bottom_category_comp_controller.dart';
 import 'categoria_item_component.dart';
 
 class CategoriaListComponent extends StatelessWidget {
@@ -17,19 +21,71 @@ class CategoriaListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: categorias.length,
-      itemBuilder: (c, i) {
-        var categoria = categorias[i];
+    var controller = Get.find<BottomCategoryCompController>();
 
-        return CategoriaItem(
-          onTap: () {
-            Navigator.of(context).pop(categoria);
-          },
-          categoria: categoria,
-          isSelected: categoria.id == selectedCategoriaId,
-        );
-      },
+    return ListView(
+      children: [
+        ...List.generate(categorias.length, (i) {
+          var categoria = categorias[i];
+
+          return CategoriaItem(
+            onTap: () {
+              controller.searchTextController.clear();
+              Navigator.of(context).pop(categoria);
+            },
+            categoria: categoria,
+            isSelected: categoria.id == selectedCategoriaId,
+          );
+        }).toList(),
+
+        // listItem actions
+        CustomListTileAction(
+          title: 'Criar categoria',
+          icon: Icons.add,
+          onTap: () {},
+        ),
+        CustomListTileAction(
+          title: 'Criar subcategoria',
+          icon: Icons.add,
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class CustomListTileAction extends StatelessWidget {
+  const CustomListTileAction({
+    Key? key,
+    required this.title,
+    this.onTap,
+    required this.icon,
+  }) : super(key: key);
+
+  final String title;
+  final GestureTapCallback? onTap;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: kDefaultPadding / 2),
+      child: ListTile(
+        onTap: onTap,
+        title: Text(
+          title,
+          style: GoogleFonts.inter(fontWeight: FontWeight.w400),
+        ),
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey,
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: 16,
+          ),
+        ),
+        trailing: const Icon(Icons.chevron_right),
+      ),
     );
   }
 }

@@ -76,30 +76,36 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
           ),
           Gutter(),
           Expanded(
-            child: FutureBuilder<List<Categoria>>(
-              future: controller.getCategorias(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Ocorreu um erro ao buscar as categorias'),
-                  );
-                }
+            child: GetBuilder(
+              init: controller,
+              id: 'categoriaList',
+              builder: (context) {
+                return FutureBuilder<List<Categoria>>(
+                  future: controller.getCategorias(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Ocorreu um erro ao buscar as categorias'),
+                      );
+                    }
 
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-                var categorias = snapshot.data ?? [];
+                    var categorias = snapshot.data ?? [];
 
-                return CategoriaListComponent(
-                  categorias: categorias,
-                  selectedCategoriaId: widget.selectedCategoriaId,
+                    return CategoriaListComponent(
+                      categorias: categorias,
+                      selectedCategoriaId: widget.selectedCategoriaId,
+                    );
+                  },
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

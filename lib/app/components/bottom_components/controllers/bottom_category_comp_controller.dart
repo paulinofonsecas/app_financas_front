@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
@@ -7,6 +8,7 @@ import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/helders/helpers.dart';
 
 class BottomCategoryCompController extends GetxController {
+  late final TextEditingController searchTextController;
   late final ICategoriaService service;
   TipoCategoria tipoCategoria;
 
@@ -17,6 +19,12 @@ class BottomCategoryCompController extends GetxController {
   @override
   void onInit() {
     service = Get.find();
+    searchTextController = TextEditingController();
+
+    searchTextController.addListener(() {
+      update(['categoriaList']);
+    });
+
     super.onInit();
   }
 
@@ -42,11 +50,29 @@ class BottomCategoryCompController extends GetxController {
     }
   }
 
-  Future<List<Categoria>> getCategorias() {
+  Future<List<Categoria>> getCategorias() async {
+    var list = <Categoria>[];
+
     if (tipoCategoria == TipoCategoria.entrada) {
-      return listCategoriasEntradas();
+      list = await listCategoriasEntradas();
     } else {
-      return listCategoriasSaidas();
+      list = await listCategoriasSaidas();
     }
+
+    if (searchTextController.text.isNotEmpty) {
+      list = filterBySearchArg(list);
+    }
+
+    return list;
+  }
+
+  List<Categoria> filterBySearchArg(List<Categoria> list) {
+    var arg = searchTextController.text;
+
+    list = list.where((element) {
+      return element.name.toLowerCase().contains(arg.toLowerCase());
+    }).toList();
+
+    return list;
   }
 }

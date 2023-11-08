@@ -20,33 +20,36 @@ class CategoriaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-        vertical: kDefaultPadding / 4,
-      ),
-      title: Text(
-        categoria.name.capitalize.toString(),
-        style: GoogleFonts.roboto(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: kDefaultPadding / 2),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding,
+          vertical: kDefaultPadding / 4,
         ),
-      ),
-      leading: const CircleAvatar(
-        backgroundColor: Colors.redAccent,
-        child: Icon(
-          Icons.phone,
-          color: Colors.white,
-          size: 16,
+        title: Text(
+          categoria.name.capitalize.toString(),
+          style: GoogleFonts.roboto(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      trailing: Checkbox(
-        value: isSelected,
-        onChanged: (c) {
-          onTap?.call();
-        },
-        shape: const CircleBorder(),
+        leading: const CircleAvatar(
+          backgroundColor: Colors.redAccent,
+          child: Icon(
+            Icons.phone,
+            color: Colors.white,
+            size: 16,
+          ),
+        ),
+        trailing: Checkbox(
+          value: isSelected,
+          onChanged: (c) {
+            onTap?.call();
+          },
+          shape: const CircleBorder(),
+        ),
       ),
     );
   }
