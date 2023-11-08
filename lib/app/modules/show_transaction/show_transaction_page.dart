@@ -19,11 +19,13 @@ class ShowTransactionPage extends StatefulWidget {
     super.key,
     required this.movimento,
     this.onEdit,
+    this.onConfirmar,
   });
 
   final Movimento movimento;
 
   final Function? onEdit;
+  final Function? onConfirmar;
 
   @override
   State<ShowTransactionPage> createState() => _ShowTransactionPageState();
@@ -113,6 +115,10 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
             movimento: controller.movimento,
           ),
           isScrollControlled: false,
+        ).then(
+          (_) {
+            widget.onConfirmar?.call();
+          },
         );
       },
       style: OutlinedButton.styleFrom(

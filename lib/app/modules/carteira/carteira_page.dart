@@ -16,6 +16,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 
 import 'components/conta_item_comp.dart';
+import 'components/my_text_filter.dart';
 
 class CarteiraPage extends StatefulWidget {
   const CarteiraPage({super.key});
@@ -200,6 +201,7 @@ class _CarteiraPageState extends State<CarteiraPage> {
                       ),
                     )?.then((value) {
                       setState(() {});
+                      carteiraController.pagingController.refresh();
                       carteiraController.update(['geral']);
                     });
                   }
@@ -213,29 +215,3 @@ class _CarteiraPageState extends State<CarteiraPage> {
   }
 }
 
-class MyTextFilter extends StatelessWidget {
-  const MyTextFilter({
-    Key? key,
-    required this.title,
-    required this.onTap,
-    required this.isActive,
-  }) : super(key: key);
-
-  final String title;
-  final GestureTapCallback onTap;
-  final bool isActive;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onTap,
-      child: Text(
-        title,
-        style: GoogleFonts.inter(
-          fontSize: 16,
-          fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-    );
-  }
-}
