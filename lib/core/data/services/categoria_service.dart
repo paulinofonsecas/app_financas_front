@@ -28,4 +28,14 @@ class CategoriaService extends ICategoriaService {
   Future<Either<Failure, bool>> saveSaidaCategoria(Categoria categoria) {
     return provider.saveSaidaCategoria(categoria);
   }
+
+  @override
+  Future<Either<Failure, Categoria>> getCategoria(int id) {
+    return provider.getCategoria(id);
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listCategorias() {
+    return provider.listCategorias();
+  }
 }

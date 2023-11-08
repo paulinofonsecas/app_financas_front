@@ -12,6 +12,10 @@ class Categoria {
     required this.name,
   });
 
+  factory Categoria.fake() {
+    return Categoria(id: -1, name: '');
+  }
+
   Categoria copyWith({
     int? id,
     String? name,

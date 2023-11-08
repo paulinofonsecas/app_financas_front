@@ -10,6 +10,7 @@ import 'package:app_financas/app/modules/registar_transacao/controllers/registar
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/helders/helpers.dart';
 
+import 'category_list_item_component.dart';
 import 'register_despesa_header.dart';
 
 class Body extends StatelessWidget {
@@ -97,36 +98,12 @@ class Body extends StatelessWidget {
                       ),
                       const GutterTiny(),
                       const MyDivider(),
-                      const GutterTiny(),
-                      WithIcon(
+                      const GutterSmall(),
+                      const WithIcon(
                         icon: Icons.label_outline,
-                        child: GetBuilder(
-                          init: controller,
-                          id: 'category',
-                          builder: (c) => DropdownButton<int>(
-                            isExpanded: true,
-                            value: controller.categoriaMovimentoId,
-                            onChanged: (int? value) {
-                              if (value == null) {
-                                return;
-                              }
-                              controller.categoriaMovimentoId = value;
-                              controller.update(['category']);
-                            },
-                            borderRadius: BorderRadius.circular(8),
-                            padding: const EdgeInsets.all(kDefaultPadding / 4),
-                            hint: const Text('Categoria de movimento'),
-                            items: controller
-                                .getCategories()
-                                .map((c) => DropdownMenuItem(
-                                      value: c.id,
-                                      child: Text(c.name),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
+                        child: CategoryListItemComponent(),
                       ),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const MyDivider(),
                       const GutterTiny(),
                       WithIcon(

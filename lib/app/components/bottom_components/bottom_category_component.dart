@@ -22,14 +22,14 @@ class BottomCategoryComponent extends StatefulWidget {
   final TipoCategoria tipoCategoria;
   final int selectedCategoriaId;
 
-  static Future<void> openModalBottomSheet(
+  static Future<dynamic> openModalBottomSheet(
     BuildContext context,
     TipoCategoria tipoCategoria,
     int selectedCategoriaId,
   ) async {
     var size = MediaQuery.of(context).size;
 
-    await showModalBottomSheet<void>(
+    return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Get.theme.dialogBackgroundColor,

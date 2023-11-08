@@ -1,7 +1,9 @@
+import 'package:app_financas/app/components/bottom_components/bottom_category_component.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
@@ -12,6 +14,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class RegistarTransacaoController extends GetxController {
   late final IMovimentoService movimentoService;
+  late final ICategoriaService categoriaService;
   late final SetupConfiguration setupConfiguration;
 
   late final TextEditingController descricaoTextController;
@@ -37,6 +40,7 @@ class RegistarTransacaoController extends GetxController {
 
   void _init() {
     movimentoService = Get.find();
+    categoriaService = Get.find();
     setupConfiguration = Get.find();
 
     descricaoTextController = TextEditingController();
@@ -184,5 +188,31 @@ class RegistarTransacaoController extends GetxController {
       'category',
       'geral',
     ]);
+  }
+
+  Future<Categoria?> getCategoriaSelecionada() async {
+    var result = await categoriaService.getCategoria(categoriaMovimentoId);
+
+    if (result is Right) {
+      return result.getOrElse(() => Categoria.fake());
+    } else {
+      return null;
+    }
+  }
+
+  void selectCategory(BuildContext context) async {
+    var categoria = await BottomCategoryComponent.openModalBottomSheet(
+      context,
+      movimentoType == 1 ? TipoCategoria.entrada : TipoCategoria.saida,
+      categoriaMovimentoId,
+    );
+
+    if (categoria != null) {
+      categoriaMovimentoId = categoria.id;
+    } else {
+      categoriaMovimentoId = 1;
+    }
+
+    update(['category']);
   }
 }

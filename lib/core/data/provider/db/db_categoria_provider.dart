@@ -103,4 +103,38 @@ class DbCategoriaProvider implements ICategoriaProvider {
           .toList(),
     );
   }
+
+  @override
+  Future<Either<Failure, Categoria>> getCategoria(int id) async {
+    var result = await listCategoriasEntradas();
+
+    if (result is Right) {
+      var categorias = result.getOrElse(() => []);
+
+      var result0 = categorias.where((element) => element.id == id).firstOrNull;
+
+      if (result0 != null) {
+        return Right(result0);
+      } else {
+        return Left(
+          NotFoundError('Nao foi possivel encontrar a categoria solicitada'),
+        );
+      }
+    } else {
+      return Left(
+        Failure('Falha desconhecia ao lista as categorias de entrada'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listCategorias() async {
+    await initCategoriaEntradasDb();
+    await initCategoriaSaidasDb();
+
+    var entradas = (await listCategoriasEntradas()).getOrElse(() => []);
+    var saidas = (await listCategoriasSaidas()).getOrElse(() => []);
+
+    return Right(entradas + saidas);
+  }
 }

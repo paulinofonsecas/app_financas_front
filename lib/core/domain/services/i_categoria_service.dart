@@ -3,6 +3,8 @@ import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ICategoriaService {
+  Future<Either<Failure, Categoria>> getCategoria(int id);
+  Future<Either<Failure, List<Categoria>>> listCategorias();
   Future<Either<Failure, List<Categoria>>> listCategoriasEntradas();
   Future<Either<Failure, List<Categoria>>> listCategoriasSaidas();
   Future<Either<Failure, bool>> saveEntradaCategoria(Categoria categoria);
