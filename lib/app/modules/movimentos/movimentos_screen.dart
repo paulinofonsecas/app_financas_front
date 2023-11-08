@@ -20,9 +20,10 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
     var controller = Get.put(MovimentoScreenController());
 
     return Scaffold(
-      backgroundColor: const Color(0xffF3F3F3),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       body: GetBuilder(
         init: controller,
+        id: 'geral',
         builder: (context) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -6,6 +6,7 @@ import 'package:app_financas/helders/format_helpers.dart';
 import 'package:app_financas/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -33,68 +34,129 @@ class MovimentoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int wordLimit() {
+      var width = MediaQuery.of(context).size.width;
+
+      if (width < 500) {
+        return 20;
+      } else if (width < 550) {
+        return 25;
+      } else if (width < 600) {
+        return 30;
+      }
+
+      return 70;
+    }
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(14),
-        margin: EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 4,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
+          fit: StackFit.loose,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: kBlackColor.withOpacity(.5),
-                  radius: 22,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      asset,
-                      // ignore: deprecated_member_use
-                      color: Colors.white,
-                    ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: kDefaultPadding / 2,
+                vertical: kDefaultPadding,
+              ),
+              decoration: BoxDecoration(
+                color: Get.theme.colorScheme.onInverseSurface,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: kBlackColor.withOpacity(.5),
+                        radius: 22,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            asset,
+                            // ignore: deprecated_member_use
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: kDefaultPadding),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            compressString(movimento.descricao, wordLimit()),
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Bebida & Comida',
+                            style: GoogleFonts.inter(
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(width: kDefaultPadding),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      compressString(title, 30),
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        tipoMovimentoId == 1
+                            ? numberFormat.format(valor)
+                            : '- ${numberFormat.format(valor)}',
+                        style: GoogleFonts.inter(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: tipoMovimentoId == 1
+                              ? kVerdeAccentColor
+                              : kVermelhaColor,
+                        ),
                       ),
-                    ),
-                    Text(
-                      movimento.data.day == DateTime.now().day
-                          ? 'Hoje ${DateFormat('hh:mm').format(movimento.data)}'
-                          : dateFormat.format(movimento.data),
-                      style: GoogleFonts.inter(
-                        fontSize: 13,
+                      Text(
+                        movimento.data.day == DateTime.now().day
+                            ? 'Hoje ${DateFormat('hh:mm').format(movimento.data)}'
+                            : dateFormat.format(movimento.data),
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                        ),
                       ),
-                    ),
-                    Text(
-                      tipoMovimentoId == 1
-                          ? numberFormat.format(valor)
-                          : '- ${numberFormat.format(valor)}',
-                      style: GoogleFonts.inter(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: tipoMovimentoId == 1
-                            ? kVerdeAccentColor
-                            : kVermelhaColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
+            if (!movimento.confirmado) NotConfirmWidgetIndicator(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class NotConfirmWidgetIndicator extends StatelessWidget {
+  const NotConfirmWidgetIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        width: 15,
+        height: 15,
+        decoration: BoxDecoration(
+          color: Colors.redAccent,
+          shape: BoxShape.circle,
         ),
       ),
     );

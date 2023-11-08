@@ -24,14 +24,12 @@ class PageActionBar extends StatelessWidget {
             onPressed: actionBack,
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
             ),
           ),
           Spacer(),
           Text(
             title,
             style: GoogleFonts.plusJakartaSans(
-              color: Colors.black,
               fontSize: 28,
             ),
           ),

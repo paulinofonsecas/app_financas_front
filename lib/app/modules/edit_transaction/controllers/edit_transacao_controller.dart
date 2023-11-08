@@ -1,5 +1,6 @@
+import 'package:app_financas/app/modules/home/home_page.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
@@ -29,25 +30,30 @@ class EditTransacaoController extends GetxController {
   var alterandoTransacao = false.obs;
   var salvo = false;
 
-  EditTransacaoController(
-      {required this.movimentoType, required this.movimento});
+  EditTransacaoController({
+    required this.movimentoType,
+    required this.movimento,
+  });
 
   @override
   void onInit() {
-    _init();
+    movimentoService = Get.find();
+    setupConfiguration = Get.find();
+    descricaoTextController = TextEditingController(text: movimento.descricao);
+    dateTextController = TextEditingController(text: getSelectedDate());
+    valorTextController = TextEditingController(
+      text: movimento.valor.toString(),
+    );
+    obsTextController = TextEditingController(text: movimento.obsMovimento);
+
     super.onInit();
   }
 
-  void _init() {
-    movimentoService = Get.find();
-    setupConfiguration = Get.find();
-
-    descricaoTextController = TextEditingController(text: movimento.descricao);
-    dateTextController = TextEditingController(text: getSelectedDate());
-    valorTextController =
-        TextEditingController(text: movimento.valor.toString());
-    obsTextController = TextEditingController(text: movimento.obsMovimento);
-
+  void init() {
+    descricaoTextController.text = movimento.descricao;
+    dateTextController.text = getSelectedDate();
+    valorTextController.text = movimento.valor.toString();
+    obsTextController.text = movimento.obsMovimento ?? ' ';
     categoriaMovimentoId = movimento.categoriaMovimentoId;
     cartaoId = movimento.cartaoId;
     date = movimento.data;
@@ -75,12 +81,12 @@ class EditTransacaoController extends GetxController {
     return verboseDateFormat.format(date);
   }
 
-  List<CategoriaMovimento> getCategories() {
-    return setupConfiguration.categorias;
+  List<Categoria> getCategories() {
+    return setupConfiguration.categoriasEntradas;
   }
 
-  List<Cartao> getCards() {
-    return setupConfiguration.cartoes;
+  List<Conta> getCards() {
+    return setupConfiguration.contas;
   }
 
   Future<void> alterarTransacao() async {
@@ -179,5 +185,19 @@ class EditTransacaoController extends GetxController {
         isDismissible: true,
       ),
     );
+  }
+
+  void deleteMovimento() async {
+    var result = await movimentoService.deleteMovimento(movimento.id);
+
+    if (result is Right && result.getOrElse(() => false)) {
+      Get.off(() => const HomePage());
+    } else {
+      var error = result.swap().getOrElse(() => HttpException('message'));
+      if (kDebugMode) {
+        print(error.message);
+      }
+      showErrorMessage('Erro', 'Erro desconhecido ao deletar a transação');
+    }
   }
 }

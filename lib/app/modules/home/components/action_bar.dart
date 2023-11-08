@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/constants.dart';
+import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({super.key});
@@ -12,11 +15,19 @@ class ActionBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 24),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundImage: AssetImage(
-              'assets/imgs/profiles/home_profile.png',
+          IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Get.theme.iconTheme.color,
             ),
+            onPressed: () {
+              // Scaffold.of(context).openDrawer();
+              BottomCategoryComponent.openModalBottomSheet(
+                context,
+                TipoCategoria.entrada,
+                2,
+              );
+            },
           ),
           SizedBox(width: 10),
           Column(
@@ -31,7 +42,7 @@ class ActionBar extends StatelessWidget {
                 ),
               ),
               Text(
-                'Paulino Fonseca',
+                'Kwanza Gest',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -42,10 +53,14 @@ class ActionBar extends StatelessWidget {
           Spacer(),
           // Cupertino alert icons
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.isDarkMode
+                  ? Get.changeTheme(ThemeData.light(useMaterial3: true))
+                  : Get.changeTheme(ThemeData.dark(useMaterial3: true));
+            },
             icon: Icon(
-              Icons.notification_add_outlined,
-              color: kBlackColor,
+              isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,
+              color: Get.theme.iconTheme.color,
               size: 26,
             ),
           ),

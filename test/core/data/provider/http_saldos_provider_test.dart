@@ -1,4 +1,4 @@
-import 'package:app_financas/core/data/provider/http_saldos_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_saldos_provider.dart';
 import 'package:app_financas/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';

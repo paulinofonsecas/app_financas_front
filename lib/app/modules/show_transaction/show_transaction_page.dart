@@ -15,9 +15,17 @@ import 'components/info.dart';
 import 'controller/show_transaction_controller.dart';
 
 class ShowTransactionPage extends StatefulWidget {
-  const ShowTransactionPage({super.key, required this.movimento});
+  const ShowTransactionPage({
+    super.key,
+    required this.movimento,
+    this.onEdit,
+    this.onConfirmar,
+  });
 
   final Movimento movimento;
+
+  final Function? onEdit;
+  final Function? onConfirmar;
 
   @override
   State<ShowTransactionPage> createState() => _ShowTransactionPageState();
@@ -37,7 +45,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   Widget build(BuildContext context) {
     return CustomBottomSheet(
       child: Container(
-        color: Colors.white,
+        color: Get.theme.scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
@@ -107,6 +115,10 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
             movimento: controller.movimento,
           ),
           isScrollControlled: false,
+        ).then(
+          (_) {
+            widget.onConfirmar?.call();
+          },
         );
       },
       style: OutlinedButton.styleFrom(
@@ -135,19 +147,12 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     var controller = Get.find<ShowTransactionController>();
     return ElevatedButton(
       onPressed: () {
-        // customShowModalBottomSheet(
-        //   context,
-        //   child: EditTransactionPage(
-        //     movimento: controller.movimento,
-        //     movimentoType: controller.movimento.tipoMovimentoId,
-        //   ),
-        // );
-
         Get.to(EditTransactionPage(
           movimentoType: controller.movimento.tipoMovimentoId,
           movimento: controller.movimento,
         ))?.then((value) {
           if (value != null) {
+            widget.onEdit?.call();
             controller.updateMovimento(value);
             setState(() {});
           }
@@ -185,9 +190,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
       desc: 'Categoria',
       value:
           controller.getCategoryName(controller.movimento.categoriaMovimentoId),
-      icon: const Icon(
+      icon: Icon(
         Icons.category_outlined,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -211,9 +216,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Conta',
       value: controller.getAccountName(controller.movimento.cartaoId),
-      icon: const Icon(
+      icon: Icon(
         Icons.wallet,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -224,9 +229,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Data',
       value: dateFormat.format(controller.movimento.data),
-      icon: const Icon(
+      icon: Icon(
         Icons.calendar_month,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );
@@ -237,9 +242,9 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     return InfoWidget(
       desc: 'Descrição',
       value: controller.movimento.descricao,
-      icon: const Icon(
+      icon: Icon(
         Icons.create_outlined,
-        color: Colors.black,
+        color: Get.theme.iconTheme.color,
         size: 20,
       ),
     );

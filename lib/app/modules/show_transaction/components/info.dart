@@ -1,3 +1,4 @@
+import 'package:app_financas/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,7 @@ class InfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         icon,
         const Gutter(),
@@ -32,8 +34,13 @@ class InfoWidget extends StatelessWidget {
               ),
             ),
             Text(
-              value,
-              softWrap: true,
+              compressString(value, 22),
+              softWrap: false,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              textDirection: TextDirection.ltr,
+              textWidthBasis: TextWidthBasis.longestLine,
               style: GoogleFonts.inter(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,

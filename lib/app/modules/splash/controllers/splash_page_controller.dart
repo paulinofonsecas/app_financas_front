@@ -1,45 +1,55 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:app_financas/app/modules/home/home_page.dart';
+import 'package:app_financas/app/modules/app/app_page.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
-import 'package:app_financas/core/domain/services/i_setup_service.dart';
-import 'package:dartz/dartz.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SplashPageController extends GetxController {
-  final ISetupService setupService;
+  late ICategoriaService categoriaService;
+  late IContaService contaService;
   var isLoading = false.obs;
   var loadingError = true.obs;
 
-  SplashPageController(this.setupService);
+  SplashPageController();
 
   @override
   void onInit() {
-    init();
+    categoriaService = Get.find();
+    contaService = Get.find();
+
     super.onInit();
   }
 
-  void init() async {
+  Future<void> init() async {
+    // var syncService = SyncDataService();
+    // await syncService.syncData();
+
     isLoading.value = true;
-    var result = await setupService.setup();
+    var categoriaEntradasResult =
+        await categoriaService.listCategoriasEntradas();
+    var categoriasSaidasResult = await categoriaService.listCategoriasSaidas();
+    var contaResult = await contaService.listContas();
 
-    if (result is Right) {
-      var setupConfig = result.getOrElse(() => SetupConfiguration.zero());
+    var categoriaEntradasList = categoriaEntradasResult.getOrElse(() => []);
+    var categoriasSaidasList = categoriasSaidasResult.getOrElse(() => []);
+    var contaList = contaResult.getOrElse(() => []);
 
-      if (setupConfig == SetupConfiguration.zero()) {
-        isLoading.value = false;
-        showErrorSnackBar();
-      } else {
-        isLoading.value = false;
-        loadingError.value = false;
-        Get.put(setupConfig, permanent: true);
-        Get.off(const HomePage());
-      }
-    } else {
-      isLoading.value = false;
-      showErrorSnackBar();
-    }
+    var setupConfig = SetupConfiguration(
+      categoriasEntradas: categoriaEntradasList,
+      categoriasSaidas: categoriasSaidasList,
+      contas: contaList,
+      isLocal: true,
+    );
+
+    _goToHomePage(setupConfig);
+  }
+
+  Future? _goToHomePage(SetupConfiguration setupConfig) {
+    Get.replace(setupConfig);
+    return Get.to(() => const AppPage());
   }
 
   void showErrorSnackBar() {

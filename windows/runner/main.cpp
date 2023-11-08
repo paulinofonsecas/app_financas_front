@@ -25,9 +25,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
   FlutterWindow window(project);
-  Win32Window::Point origin(10, 10);
-  Win32Window::Size size(1280, 720);
-  if (!window.Create(L"app_financas", origin, size)) {
+
+  int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+
+  int windowWidth = 480;
+  int windowHeight = GetSystemMetrics(SM_CYSCREEN);
+
+  int windowX = screenWidth - windowWidth;
+  int windowY = 0;
+
+  Win32Window::Point origin(windowX, windowY);
+  Win32Window::Size size(windowWidth, windowHeight);
+
+  if (!window.Create(L"Kwanzagest", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);

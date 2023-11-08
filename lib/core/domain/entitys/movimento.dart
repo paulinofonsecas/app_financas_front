@@ -110,7 +110,7 @@ class Movimento {
     return <String, dynamic>{
       'id': id,
       'valor': valor,
-      'data': data.millisecondsSinceEpoch,
+      'data': data.toIso8601String(),
       'descricao': descricao,
       'user_id': userId,
       'cartao_id': cartaoId,
@@ -118,15 +118,15 @@ class Movimento {
       'categoria_movimento_id': categoriaMovimentoId,
       'obs_movimento': obsMovimento ?? '',
       'confirmado': confirmado ? 1 : 0,
-      'created_at': createdAt.millisecondsSinceEpoch,
-      'updated_at': updatedAt.millisecondsSinceEpoch,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 
   factory Movimento.fromMap(Map<String, dynamic> map) {
     return Movimento(
       id: map['id'] as int,
-      valor: (map['valor'] as int).toDouble(),
+      valor: (map['valor']).toDouble(),
       data: DateTime.parse(map['data']),
       descricao: map['descricao'] as String,
       userId: map['user_id'] as int,

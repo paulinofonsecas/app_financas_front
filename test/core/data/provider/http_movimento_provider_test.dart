@@ -1,77 +1,85 @@
-import 'dart:convert';
-
-import 'package:app_financas/core/data/provider/http_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_movimento_provider.dart';
+import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() {
-  var dio = Dio();
-  var dioAdapter = DioAdapter(dio: dio);
-  dio.httpClientAdapter = dioAdapter;
+  var dio = makeDefaultDio();
+  var httpProvider = HttpMovimentoProvider(dio);
 
-  var movimentoProvider = HttpMovimentoProvider(dio);
-
-  onGet(String path, int statusCode, dynamic response) {
-    dioAdapter.onGet(
-      path,
-      (request) => request.reply(statusCode, response, headers: {
-        'contentType': [Headers.jsonContentType],
-      }),
-    );
-  }
-
-  test('http movimento provider ...', () async {
-    onGet(
-        '/movimentos',
-        200,
-        json.encode(
-            '''{
-    "data": [
-        {
-            "id": 1,
-            "valor": 821239,
-            "data": "1991-08-28 00:00:00",
-            "descricao": "Omnis officia voluptas qui.",
-            "cartao_id": 1,
-            "cartao_nome": "Mrs. Sandrine Dooley IV",
-            "tipo_movimento_id": {
-                "id": 2,
-                "nome": null
-            },
-            "created_at": "2023-08-27T23:38:48.000000Z"
-        },
-        {
-            "id": 3,
-            "valor": 74695,
-            "data": "2013-06-15 00:00:00",
-            "descricao": "Est modi sed molestias unde eum assumenda sint.",
-            "cartao_id": 2,
-            "cartao_nome": "Kale Douglas",
-            "tipo_movimento_id": {
-                "id": 1,
-                "nome": null
-            },
-            "created_at": "2023-08-27T23:38:48.000000Z"
-        },
-        {
-            "id": 4,
-            "valor": 828360,
-            "data": "1994-09-20 00:00:00",
-            "descricao": "Molestiae ad repudiandae ipsum non aliquam fugit.",
-            "cartao_id": 8,
-            "cartao_nome": "Ms. Aubrey Abbott",
-            "tipo_movimento_id": {
-                "id": 2,
-                "nome": null
-            },
-            "created_at": "2023-08-27T23:38:48.000000Z"
-        }]}'''));
-
-    var result = await movimentoProvider.listMovimentos();
+  test('Deve retornar a lista de movimentos do usuario', () async {
+    var result = await httpProvider.listMovimentos();
 
     expect(result, isA<Right>());
-    expect(result.getOrElse(() => []).length, 1);
+    expect(result.getOrElse(() => []), isA<List<Movimento>>());
+  });
+
+  test('Deve retornar a lista de movimentos paginados do usuario', () async {
+    
+    var page = 1;
+    var pageSize = 12;
+
+    var result = await httpProvider.listPaginatedMovimentos(page, pageSize);
+    var movimentos = result.getOrElse(() => []);
+
+    expect(result, isA<Right>());
+    expect(movimentos, isA<List<Movimento>>());
+    expect(movimentos.length, pageSize);
+  });
+
+  test('Deve retornar um movimentos', () async {
+    var result = await httpProvider.getMovimento(6);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => Movimento.fake()), isA<Movimento>());
+  });
+
+  test('Deve salvar um movimento e retornar o objeto salvo', () async {
+    var movimento = Movimento.make(
+      valor: 15000,
+      data: DateTime.now(),
+      descricao: 'Compra de auriculares',
+      cartaoId: 1,
+      tipoMovimentoId: 2,
+      categoriaMovimentoId: 1,
+      obsMovimento: 'Silva porto',
+      confirmado: true,
+    );
+    var result = await httpProvider.saveMovimento(movimento);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => false), isA<bool>());
+    if (kDebugMode) {
+      print(result.getOrElse(() => false));
+    }
+  });
+
+  test('Deve editar um movimento e retornar o objeto salvo', () async {
+    var movimento = Movimento.fromMap({
+      "id": 6,
+      "valor": 16000,
+      "data": "2023-10-17 10:33:00",
+      "descricao": "Cafe Teste",
+      "user_id": 1,
+      "cartao_id": 2,
+      "cartao_nome": "Familiar",
+      "tipo_movimento_id": 2,
+      "obs_movimento": null,
+      "categoria_movimento_id": 1,
+      "confirmado": 0,
+      "created_at": "2023-10-12T09:34:51.000000Z",
+      "updated_at": "2023-10-17T19:24:04.000000Z"
+    });
+
+    var result = await httpProvider.editMovimento(movimento);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => false), isA<bool>());
+    expect(result.getOrElse(() => false), true);
+    if (kDebugMode) {
+      print(result.getOrElse(() => false));
+    }
   });
 }

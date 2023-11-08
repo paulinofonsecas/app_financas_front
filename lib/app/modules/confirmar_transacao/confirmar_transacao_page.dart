@@ -40,9 +40,9 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
       borderRadius: BorderRadius.circular(30),
       child: CustomBottomSheet(
         child: Container(
-          color: Colors.white,
+          color: Get.theme.dialogBackgroundColor,
           child: Padding(
-            padding: EdgeInsets.all(kDefaultPadding),
+            padding: EdgeInsets.all(kDefaultPadding * 1.5),
             child: Column(
               children: [
                 Row(
@@ -81,14 +81,12 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
                     style: GoogleFonts.inter(
                       fontSize: 32,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
                     ),
                     decoration: InputDecoration(
                       hintText: '0,00',
                       hintStyle: GoogleFonts.inter(
                         fontSize: 32,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
                       ),
                       prefixText: 'Kz ',
                       border: InputBorder.none,
@@ -135,7 +133,6 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
                 style: GoogleFonts.inter().copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
                 ),
               ),
             );

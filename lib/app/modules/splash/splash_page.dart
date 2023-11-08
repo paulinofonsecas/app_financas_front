@@ -4,14 +4,26 @@ import 'package:app_financas/app/modules/splash/controllers/splash_page_controll
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  late final SplashPageController c;
+  
+  @override
+  void initState() {
+    c = Get.put(SplashPageController());
+    c.init();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var c = Get.put(SplashPageController(Get.find()));
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -19,19 +31,13 @@ class SplashScreen extends StatelessWidget {
           const Spacer(),
           Align(
             alignment: Alignment.center,
-            child: Image.asset(
-              'assets/imgs/logo.png',
-              width: 150,
-              height: 150,
-            ),
-          ),
-          Gutter(),
-          Text(
-            'Me Poupe',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Colors.amber[700],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.asset(
+                'assets/imgs/logo.jpg',
+                width: 200,
+                height: 200,
+              ),
             ),
           ),
           const Spacer(),

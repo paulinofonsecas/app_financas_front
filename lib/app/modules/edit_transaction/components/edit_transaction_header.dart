@@ -19,7 +19,7 @@ class RegisterHeader extends StatelessWidget {
     return GetBuilder(
         init: controller,
         id: 'geral',
-        builder: (context) {
+        builder: (controller) {
           return Container(
             padding: const EdgeInsets.all(kDefaultPadding),
             constraints: BoxConstraints(
@@ -33,7 +33,8 @@ class RegisterHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () {
@@ -48,6 +49,52 @@ class RegisterHeader extends StatelessWidget {
                       ),
                     ),
                     const SwitchTransactionButton(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Deletar transação'),
+                              content: const Text(
+                                'Deseja realmente eliminar a transação?',
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.green,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Cancelar'),
+                                ),
+                                TextButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  onPressed: () async {
+                                    controller.deleteMovimento();
+                                  },
+                                  child: const Text('Deletar'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.red,
+                        ),
+                        child: Text(
+                          'Deletar',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 const GutterLarge(),
@@ -103,46 +150,51 @@ class SwitchTransactionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<EditTransacaoController>();
-    return Align(
-      alignment: Alignment.center,
-      child: GestureDetector(
-        onTap: () {
-          controller.switchTransactionType();
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: kDefaultPadding / 2,
-            horizontal: kDefaultPadding * 1.5,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(90)),
-            color: isReceita(controller.movimentoType)
-                ? kVerdeForteColor
-                : kVermelhaForteColor,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                controller.movimentoType == 1 ? 'Receita' : 'Despesa',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    return GetBuilder(
+        init: controller,
+        id: 'geral',
+        builder: (context) {
+          return Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () {
+                controller.switchTransactionType();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: kDefaultPadding / 2,
+                  horizontal: kDefaultPadding * 1.5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(90)),
+                  color: isReceita(controller.movimentoType)
+                      ? kVerdeForteColor
+                      : kVermelhaForteColor,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      controller.movimentoType == 1 ? 'Receita' : 'Despesa',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Gutter(),
+                    Icon(
+                      isReceita(controller.movimentoType)
+                          ? CupertinoIcons.chevron_up
+                          : CupertinoIcons.chevron_down,
+                      color: Colors.white,
+                      weight: 1,
+                    ),
+                  ],
                 ),
               ),
-              const Gutter(),
-              Icon(
-                isReceita(controller.movimentoType)
-                    ? CupertinoIcons.chevron_up
-                    : CupertinoIcons.chevron_down,
-                color: Colors.white,
-                weight: 1,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

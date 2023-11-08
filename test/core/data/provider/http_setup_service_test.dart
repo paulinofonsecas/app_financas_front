@@ -1,4 +1,4 @@
-import 'package:app_financas/core/data/provider/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -12,8 +12,8 @@ void main() {
     var result = await httpProvider.setup();
 
     expect(result, isA<Right>());
-    var setup = result.getOrElse(() => SetupConfiguration.zero());
-    expect(setup.categorias, isNotEmpty);
-    expect(setup.cartoes, isNotEmpty);
+    var setup = result.getOrElse(() => SetupConfiguration.local());
+    expect(setup.categoriasEntradas, isNotEmpty);
+    expect(setup.contas, isNotEmpty);
   });
 }

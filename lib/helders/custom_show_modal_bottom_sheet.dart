@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Future<dynamic> customShowModalBottomSheet(
   BuildContext context, {
@@ -11,7 +12,7 @@ Future<dynamic> customShowModalBottomSheet(
   return showModalBottomSheet(
     context: context,
     isScrollControlled: isScrollControlled,
-    backgroundColor: Colors.white,
+    backgroundColor: Get.theme.dialogBackgroundColor,
     showDragHandle: showDragHandle ?? true,
     useSafeArea: true,
     useRootNavigator: true,

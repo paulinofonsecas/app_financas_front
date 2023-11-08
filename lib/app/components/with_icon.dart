@@ -1,16 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:get/get.dart';
 
 class WithIcon extends StatelessWidget {
   const WithIcon({
     Key? key,
     required this.icon,
     required this.child,
+    this.color,
   }) : super(key: key);
 
   final IconData icon;
   final Widget child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class WithIcon extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Colors.black.withOpacity(.8),
+          color: color ?? Get.theme.iconTheme.color?.withOpacity(.8),
           size: 22,
         ),
         const Gutter(),

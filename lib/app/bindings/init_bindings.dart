@@ -1,12 +1,19 @@
-import 'package:app_financas/core/data/provider/http_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/http_saldos_provider.dart';
-import 'package:app_financas/core/data/provider/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
+import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
+import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_saldos_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_setup_provider.dart';
+import 'package:app_financas/core/data/services/categoria_service.dart';
+import 'package:app_financas/core/data/services/conta_service.dart';
 import 'package:app_financas/core/data/services/movimento_service.dart';
 import 'package:app_financas/core/data/services/saldos_service.dart';
 import 'package:app_financas/core/data/services/setup_service.dart';
+import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/core/domain/services/i_setup_service.dart';
@@ -24,7 +31,7 @@ class InitBingings extends Bindings {
 
     // Movimentos
     Get.lazyPut<IMovimentoProvider>(
-      () => HttpMovimentoProvider(Get.find()),
+      () => DbMovimentoProvider(),
       fenix: true,
     );
     Get.lazyPut<IMovimentoService>(
@@ -32,14 +39,32 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
-    // Saldos
-    Get.lazyPut<ISaldosProvider>(
-      () => HttpSaldosProvider(Get.find()),
+    Get.lazyPut<SetupConfiguration>(
+      () => SetupConfiguration.local(),
     );
-    Get.put<ISaldosService>(SaldosService(Get.find()));
 
     // Setup
-    Get.lazyPut<ISetupProvider>(() => HttpSetupProvider(Get.find()));
-    Get.lazyPut<ISetupService>(() => SetupService(Get.find()));
+    Get.lazyPut<ISetupProvider>(
+      () => HttpSetupProvider(Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<ISetupService>(
+      () => SetupService(Get.find()),
+      fenix: true,
+    );
+
+    Get.put<ISaldosService>(
+      SaldosService(Get.find()),
+      permanent: true,
+    );
+
+    // Categoria
+    Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
+    Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
+        fenix: true);
+
+    // Conta
+    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
+    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
   }
 }

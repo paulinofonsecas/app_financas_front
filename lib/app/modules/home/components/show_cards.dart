@@ -1,7 +1,7 @@
-import 'package:app_financas/app/modules/home/components/total_balance.dart';
+import 'package:app_financas/app/modules/home/components/card_widget.dart';
 import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/cartao.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +21,8 @@ class _ShowCardsState extends State<ShowCards> {
 
   @override
   void initState() {
-    controller = Get.put(HomePageController());
+    controller = Get.find<HomePageController>();
+
     controller.getCartoes;
     super.initState();
   }
@@ -32,12 +33,12 @@ class _ShowCardsState extends State<ShowCards> {
 
     return GetBuilder(
         init: controller,
-        id: 'cards',
+        id: 'geral',
         builder: (context) {
           return SizedBox(
             width: size.width,
             height: size.height * 0.23,
-            child: FutureBuilder<List<Cartao>>(
+            child: FutureBuilder<List<Conta>>(
               future: controller.getCartoes(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
@@ -56,19 +57,13 @@ class _ShowCardsState extends State<ShowCards> {
 
                 return LayoutBuilder(
                   builder: (c, constraines) {
-                    var saldoTotal = cartoes.fold(
-                        0.0,
-                        (previousValue, element) =>
-                            previousValue + element.saldo);
                     return Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: kDefaultPadding,
                       ),
                       child: CardWidget(
-                        index: 0,
-                        saldo: saldoTotal,
                         width: size.width * 0.85,
-                        height: constraines.maxHeight * 0.75,
+                        height: 176,
                       ),
                     );
                   },

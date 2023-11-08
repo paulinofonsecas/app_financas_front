@@ -2,13 +2,12 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-
-import '../../home/controllers/home_page_controller.dart';
 
 class ConfirmarTransacaoController extends GetxController {
   late final IMovimentoService movimentoService;
@@ -82,8 +81,6 @@ class ConfirmarTransacaoController extends GetxController {
       dynamic result0 = await movimentoService.getMovimento(movimento.id);
       result0 = result0.getOrElse(() => Movimento.fake());
 
-      var homeController = Get.find<HomePageController>();
-      homeController.update(['geral']);
       Get.back();
     } else {
       if (result is Left &&
@@ -99,29 +96,5 @@ class ConfirmarTransacaoController extends GetxController {
       }
       alterandoTransacao.value = false;
     }
-  }
-
-  void showErrorMessage(String title, String message) {
-    Get.showSnackbar(
-      GetSnackBar(
-        title: title,
-        message: message,
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
-        isDismissible: true,
-      ),
-    );
-  }
-
-  void showSucessMessage(String title, String message) {
-    Get.showSnackbar(
-      GetSnackBar(
-        title: title,
-        message: message,
-        duration: const Duration(seconds: 2),
-        backgroundColor: Colors.green,
-        isDismissible: true,
-      ),
-    );
   }
 }
