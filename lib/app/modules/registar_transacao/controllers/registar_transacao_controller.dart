@@ -1,4 +1,4 @@
-import 'package:app_financas/app/components/bottom_components/bottom_category_component.dart';
+import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';

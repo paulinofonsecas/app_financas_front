@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/app/components/bottom_components/bottom_category_component.dart';
+import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
