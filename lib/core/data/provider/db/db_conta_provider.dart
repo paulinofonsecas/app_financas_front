@@ -52,6 +52,7 @@ class DbContaProvider implements IContaProvider {
       for (var cont in contasPadrao) {
         await saveConta(Conta(nome: cont, saldo: 0.0, id: -1));
       }
+      
       return listContas();
     }
 

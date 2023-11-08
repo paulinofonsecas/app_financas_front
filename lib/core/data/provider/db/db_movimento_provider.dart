@@ -111,9 +111,8 @@ class DbMovimentoProvider implements IMovimentoProvider {
     var result = await listMovimentos();
 
     if (result.isRight()) {
-      var movimentos = result
-          .getOrElse(() => [])
-          .where((element) => element.cartaoId == contaId);
+      var movimentos = result.getOrElse(() => []).where(
+          (element) => element.confirmado && element.cartaoId == contaId);
 
       var entradas = 0.0;
       var saidas = 0.0;

@@ -45,8 +45,11 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
         builder: (context) {
           return Column(
             children: [
-              CardSection(
-                conta: widget.conta,
+              Hero(
+                tag: 'conta_${controller.conta.id}',
+                child: CardSection(
+                  conta: controller.conta,
+                ),
               ),
               Gutter(),
               movimentoSection(),
@@ -58,42 +61,47 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
   }
 
   Widget headerMovimentoSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: Row(
-        children: [
-          MyTextFilter(
-            title: 'Tudo',
-            isActive: true,
-            onTap: () {
-              controller.changeESFilter(0);
-            },
+    return Hero(
+      tag: 'header_movimento',
+      child: Material(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          child: Row(
+            children: [
+              MyTextFilter(
+                title: 'Tudo',
+                isActive: true,
+                onTap: () {
+                  controller.changeESFilter(0);
+                },
+              ),
+              const GutterTiny(),
+              MyTextFilter(
+                title: 'Saídas',
+                isActive: false,
+                onTap: () {
+                  controller.changeESFilter(TipoMovimento.SAIDA);
+                },
+              ),
+              const GutterTiny(),
+              MyTextFilter(
+                title: 'Entrada',
+                isActive: false,
+                onTap: () {
+                  controller.changeESFilter(TipoMovimento.ENTRADA);
+                },
+              ),
+              const Spacer(),
+              TextButton.icon(
+                icon: Icon(Icons.filter_list),
+                label: const Text('Filtrar por'),
+                onPressed: () {
+                  // Get.to(ContaDetailsPage(conta: carteiraController.conta!));
+                },
+              ),
+            ],
           ),
-          const GutterTiny(),
-          MyTextFilter(
-            title: 'Saídas',
-            isActive: false,
-            onTap: () {
-              controller.changeESFilter(TipoMovimento.SAIDA);
-            },
-          ),
-          const GutterTiny(),
-          MyTextFilter(
-            title: 'Entrada',
-            isActive: false,
-            onTap: () {
-              controller.changeESFilter(TipoMovimento.ENTRADA);
-            },
-          ),
-          const Spacer(),
-          TextButton.icon(
-            icon: Icon(Icons.filter_list),
-            label: const Text('Filtrar por'),
-            onPressed: () {
-              // Get.to(ContaDetailsPage(conta: carteiraController.conta!));
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -125,13 +133,10 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
                         child: ShowTransactionPage(
                           movimento: movimento,
                           onEdit: () {
-                            controller.update(['geral']);
-                            controller.pagingController.refresh();
+                            controller.updateGeral();
                           },
                           onConfirmar: () {
-                            print('terminando');
-                            controller.pagingController.refresh();
-                            controller.update(['geral']);
+                            controller.updateGeral();
                           },
                         ),
                       );

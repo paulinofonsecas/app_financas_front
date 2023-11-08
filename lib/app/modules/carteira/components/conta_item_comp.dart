@@ -21,37 +21,39 @@ class ContaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        margin: EdgeInsets.symmetric(
-          horizontal: kDefaultPadding / 2,
-          vertical: isActive ? 0 : kDefaultPadding * 1.5,
-        ),
-        decoration: BoxDecoration(
-          color: kAzulForteColor,
-          borderRadius: BorderRadius.circular(10),
-          gradient: isActive
-              ? LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: const [
-                    Colors.pinkAccent,
-                    Colors.blue,
-                  ],
-                )
-              : null,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerSection(),
-              const Spacer(),
-              bottomSection(),
-            ],
+    return Material(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: EdgeInsets.symmetric(
+            horizontal: kDefaultPadding / 2,
+            vertical: isActive ? 0 : kDefaultPadding * 1.5,
+          ),
+          decoration: BoxDecoration(
+            color: kAzulForteColor,
+            borderRadius: BorderRadius.circular(10),
+            gradient: isActive
+                ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: const [
+                      Colors.pinkAccent,
+                      Colors.blue,
+                    ],
+                  )
+                : null,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(kDefaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                headerSection(),
+                const Spacer(),
+                bottomSection(),
+              ],
+            ),
           ),
         ),
       ),

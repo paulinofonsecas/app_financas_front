@@ -87,6 +87,7 @@ class ContaDetailsPageController extends GetxController {
 
     if (result is Right) {
       conta = result.getOrElse(() => Conta.fake());
+      pagingController.refresh();
       update(['geral']);
     } else {
       showErrorMessage('Error', 'Erro desconhecido ao atualizar a tela');

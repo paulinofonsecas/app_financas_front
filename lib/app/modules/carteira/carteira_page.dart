@@ -26,18 +26,11 @@ class CarteiraPage extends StatefulWidget {
 }
 
 class _CarteiraPageState extends State<CarteiraPage> {
-  late final PageController pageController;
   late final CarteiraPageController carteiraController;
-  int currentIndex = 0;
 
   @override
   void initState() {
     carteiraController = Get.put(CarteiraPageController());
-    pageController = PageController(
-      initialPage: 0,
-      viewportFraction: 0.85,
-      keepPage: true,
-    );
 
     super.initState();
   }
@@ -52,7 +45,7 @@ class _CarteiraPageState extends State<CarteiraPage> {
           children: [
             headerSection(),
             const Gutter(),
-            cardsSection(),
+            const CarteiraCardSection(),
             const GutterLarge(),
             movimentoSection(),
           ],
@@ -105,8 +98,12 @@ class _CarteiraPageState extends State<CarteiraPage> {
                         child: ShowTransactionPage(
                           movimento: movimento,
                           onEdit: () {
-                            // controller.update(['geral']);
-                            // controller.pagingController.refresh();
+                            carteiraController.update(['geral']);
+                            carteiraController.pagingController.refresh();
+                          },
+                          onConfirmar: () {
+                            carteiraController.pagingController.refresh();
+                            carteiraController.update(['geral']);
                           },
                         ),
                       );
@@ -121,97 +118,136 @@ class _CarteiraPageState extends State<CarteiraPage> {
     );
   }
 
-  Row headerMovimentoSection() {
-    return Row(
-      children: [
-        MyTextFilter(
-          title: 'Tudo',
-          isActive: carteiraController.esFilter == 0,
-          onTap: () {
-            carteiraController.changeESFilter(0);
-          },
+  Widget headerMovimentoSection() {
+    return Hero(
+      tag: 'header_movimento',
+      child: Material(
+        child: Row(
+          children: [
+            MyTextFilter(
+              title: 'Tudo',
+              isActive: carteiraController.esFilter == 0,
+              onTap: () {
+                carteiraController.changeESFilter(0);
+              },
+            ),
+            const GutterTiny(),
+            MyTextFilter(
+              title: 'Saídas',
+              isActive: carteiraController.esFilter == TipoMovimento.SAIDA,
+              onTap: () {
+                carteiraController.changeESFilter(TipoMovimento.SAIDA);
+              },
+            ),
+            const GutterTiny(),
+            MyTextFilter(
+              title: 'Entrada',
+              isActive: carteiraController.esFilter == TipoMovimento.ENTRADA,
+              onTap: () {
+                carteiraController.changeESFilter(TipoMovimento.ENTRADA);
+              },
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () {
+                Get.to(ContaDetailsPage(conta: carteiraController.conta!));
+              },
+              child: const Text('Ver mais'),
+            ),
+          ],
         ),
-        const GutterTiny(),
-        MyTextFilter(
-          title: 'Saídas',
-          isActive: carteiraController.esFilter == TipoMovimento.SAIDA,
-          onTap: () {
-            carteiraController.changeESFilter(TipoMovimento.SAIDA);
-          },
-        ),
-        const GutterTiny(),
-        MyTextFilter(
-          title: 'Entrada',
-          isActive: carteiraController.esFilter == TipoMovimento.ENTRADA,
-          onTap: () {
-            carteiraController.changeESFilter(TipoMovimento.ENTRADA);
-          },
-        ),
-        const Spacer(),
-        TextButton(
-          onPressed: () {
-            Get.to(ContaDetailsPage(conta: carteiraController.conta!));
-          },
-          child: const Text('Ver mais'),
-        ),
-      ],
-    );
-  }
-
-  SizedBox cardsSection() {
-    return SizedBox(
-      height: 230,
-      child: FutureBuilder<List<Conta>>(
-        future: carteiraController.getContas(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.error != null) {
-            return Text('${snapshot.error}');
-          }
-
-          var contas = snapshot.data ?? [];
-
-          return PageView.builder(
-            controller: pageController,
-            onPageChanged: (index) {
-              carteiraController.updateContaIndex(contas[index].id);
-              carteiraController.updateConta(contas[index]);
-              setState(() {
-                currentIndex = index;
-              });
-            },
-            scrollDirection: Axis.horizontal,
-            itemCount: contas.length,
-            itemBuilder: (context, index) {
-              var conta = contas[index];
-
-              return ContaItem(
-                conta: conta,
-                isActive: index == currentIndex,
-                onTap: () {
-                  if (index == currentIndex) {
-                    Get.to(
-                      ContaDetailsPage(
-                        conta: conta,
-                      ),
-                    )?.then((value) {
-                      setState(() {});
-                      carteiraController.pagingController.refresh();
-                      carteiraController.update(['geral']);
-                    });
-                  }
-                },
-              );
-            },
-          );
-        },
       ),
     );
   }
 }
 
+class CarteiraCardSection extends StatefulWidget {
+  const CarteiraCardSection({super.key});
+
+  @override
+  State<CarteiraCardSection> createState() => _CarteiraCardSectionState();
+}
+
+class _CarteiraCardSectionState extends State<CarteiraCardSection> {
+  late final CarteiraPageController carteiraController;
+  late final PageController pageController;
+  int currentIndex = 0;
+
+  @override
+  void initState() {
+    carteiraController = Get.find<CarteiraPageController>();
+    pageController = PageController(
+      initialPage: 0,
+      viewportFraction: 0.85,
+      keepPage: true,
+    );
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder(
+      init: carteiraController,
+      id: 'geral',
+      builder: (context) {
+        return SizedBox(
+          height: 230,
+          child: FutureBuilder<List<Conta>>(
+            future: carteiraController.getContas(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (snapshot.error != null) {
+                return Text('${snapshot.error}');
+              }
+
+              var contas = snapshot.data ?? [];
+
+              return PageView.builder(
+                controller: pageController,
+                onPageChanged: (index) {
+                  carteiraController.updateContaIndex(contas[index].id);
+                  carteiraController.updateConta(contas[index]);
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                scrollDirection: Axis.horizontal,
+                itemCount: contas.length,
+                itemBuilder: (context, index) {
+                  var conta = contas[index];
+
+                  return Hero(
+                    tag: 'conta_${conta.id}',
+                    child: ContaItem(
+                      conta: conta,
+                      isActive: index == currentIndex,
+                      onTap: () {
+                        if (index == currentIndex) {
+                          Get.to(
+                            ContaDetailsPage(
+                              conta: conta,
+                            ),
+                          )?.then((value) {
+                            setState(() {});
+                            carteiraController.pagingController.refresh();
+                            carteiraController.update(['geral']);
+                          });
+                        }
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}
