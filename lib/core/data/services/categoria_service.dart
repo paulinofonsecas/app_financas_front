@@ -30,8 +30,13 @@ class CategoriaService extends ICategoriaService {
   }
 
   @override
-  Future<Either<Failure, Categoria>> getCategoria(int id) {
-    return provider.getCategoria(id);
+  Future<Either<Failure, Categoria>> getEntradaCategoria(int id) {
+    return provider.getEntradaCategoria(id);
+  }
+
+  @override
+  Future<Either<Failure, Categoria>> getSaidaCategoria(int id) {
+    return provider.getSaidaCategoria(id);
   }
 
   @override

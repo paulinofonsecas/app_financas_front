@@ -35,11 +35,11 @@ class CategoriaItem extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        leading: const CircleAvatar(
-          backgroundColor: Colors.redAccent,
+        leading: CircleAvatar(
+          backgroundColor: categoria.color ?? Get.theme.colorScheme.primary,
           child: Icon(
-            Icons.phone,
-            color: Colors.white,
+            categoria.icon ?? Icons.icecream,
+            color:  Colors.white,
             size: 16,
           ),
         ),

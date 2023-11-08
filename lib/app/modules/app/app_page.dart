@@ -57,7 +57,6 @@ class _AppPageState extends State<AppPage> {
             constraints: const BoxConstraints.tightFor(),
             child: BottomEscolherTipoMovimento(
               cloused: () {
-                print('passou');
                 Get.find<HomePageController>().update(['geral']);
                 Get.find<CarteiraPageController>().update(['geral']);
                 Get.back(closeOverlays: true);

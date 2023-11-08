@@ -33,62 +33,62 @@ class CategoryListItemComponent extends StatelessWidget {
               ),
             ),
             child: GetBuilder(
-              init: controller,
-              id: 'category',
-              builder: (context) {
-                return FutureBuilder<Categoria?>(
-                  future: controller.getCategoriaSelecionada(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(
-                        child: Text(
-                          'Error',
-                          style: TextStyle(color: Colors.red),
-                        ),
+                init: controller,
+                id: 'category',
+                builder: (context) {
+                  return FutureBuilder<Categoria?>(
+                    future: controller.getCategoriaSelecionada(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: Text(
+                            'Error',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (snapshot.hasData && snapshot.data == null) {
+                        return const Center(
+                          child: Text(
+                            'Categoria invalida',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+
+                      if (snapshot.hasData &&
+                          snapshot.data == Categoria.fake()) {
+                        return const Center(
+                          child: Text(
+                            'Categoria invalida',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+
+                      var category = snapshot.data!;
+
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            category.icon ?? Icons.category_outlined,
+                            size: 18,
+                          ),
+                          const GutterSmall(),
+                          Text(category.name),
+                        ],
                       );
-                    }
-
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-
-                    if (snapshot.hasData && snapshot.data == null) {
-                      return const Center(
-                        child: Text(
-                          'Categoria invalida',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      );
-                    }
-
-                    if (snapshot.hasData && snapshot.data == Categoria.fake()) {
-                      return const Center(
-                        child: Text(
-                          'Categoria invalida',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      );
-                    }
-
-                    var category = snapshot.data!;
-
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.phone,
-                          size: 18,
-                        ),
-                        const GutterSmall(),
-                        Text(category.name),
-                      ],
-                    );
-                  },
-                );
-              }
-            ),
+                    },
+                  );
+                }),
           ),
           const Spacer(),
           const Icon(Icons.chevron_right),

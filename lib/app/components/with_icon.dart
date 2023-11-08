@@ -8,10 +8,12 @@ class WithIcon extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.child,
+    this.color,
   }) : super(key: key);
 
   final IconData icon;
   final Widget child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class WithIcon extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Get.theme.iconTheme.color?.withOpacity(.8),
+          color: color ?? Get.theme.iconTheme.color?.withOpacity(.8),
           size: 22,
         ),
         const Gutter(),

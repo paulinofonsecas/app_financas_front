@@ -66,6 +66,8 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
 
   @override
   Widget build(BuildContext context) {
+    controller.changeTipoCategoria(widget.tipoCategoria);
+    
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -100,6 +102,7 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
                     return CategoriaListComponent(
                       categorias: categorias,
                       selectedCategoriaId: widget.selectedCategoriaId,
+                      tipoCategoria: widget.tipoCategoria,
                     );
                   },
                 );

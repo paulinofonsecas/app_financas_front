@@ -25,7 +25,7 @@ class RegistarTransacaoController extends GetxController {
   var confirmado = true.obs;
 
   var date = DateTime.now();
-  late int categoriaMovimentoId;
+  late int categoriaSelectedId;
   late int cartaoId;
   var salvandoMovimento = false.obs;
   var salvo = false;
@@ -48,7 +48,7 @@ class RegistarTransacaoController extends GetxController {
     valorTextController = TextEditingController();
     obsTextController = TextEditingController();
 
-    categoriaMovimentoId = 1;
+    categoriaSelectedId = 1;
     cartaoId = getCards().first.id;
   }
 
@@ -135,7 +135,7 @@ class RegistarTransacaoController extends GetxController {
       descricao: descricaoMovimento,
       cartaoId: cartaoId,
       tipoMovimentoId: movimentoType,
-      categoriaMovimentoId: categoriaMovimentoId,
+      categoriaMovimentoId: categoriaSelectedId,
       obsMovimento: obsMovimento,
       confirmado: confirmado.value,
     );
@@ -191,7 +191,26 @@ class RegistarTransacaoController extends GetxController {
   }
 
   Future<Categoria?> getCategoriaSelecionada() async {
-    var result = await categoriaService.getCategoria(categoriaMovimentoId);
+    if (movimentoType == 1) {
+      return await getCategoriaEntradaSelecionada();
+    } else {
+      return await getCategoriaSaidaSelecionada();
+    }
+  }
+
+  Future<Categoria?> getCategoriaEntradaSelecionada() async {
+    var result =
+        await categoriaService.getEntradaCategoria(categoriaSelectedId);
+
+    if (result is Right) {
+      return result.getOrElse(() => Categoria.fake());
+    } else {
+      return null;
+    }
+  }
+
+  Future<Categoria?> getCategoriaSaidaSelecionada() async {
+    var result = await categoriaService.getSaidaCategoria(categoriaSelectedId);
 
     if (result is Right) {
       return result.getOrElse(() => Categoria.fake());
@@ -204,13 +223,13 @@ class RegistarTransacaoController extends GetxController {
     var categoria = await BottomCategoryComponent.openModalBottomSheet(
       context,
       movimentoType == 1 ? TipoCategoria.entrada : TipoCategoria.saida,
-      categoriaMovimentoId,
+      categoriaSelectedId,
     );
 
     if (categoria != null) {
-      categoriaMovimentoId = categoria.id;
+      categoriaSelectedId = categoria.id;
     } else {
-      categoriaMovimentoId = 1;
+      categoriaSelectedId = 1;
     }
 
     update(['category']);

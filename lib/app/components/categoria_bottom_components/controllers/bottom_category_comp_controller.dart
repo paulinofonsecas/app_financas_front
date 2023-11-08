@@ -75,4 +75,8 @@ class BottomCategoryCompController extends GetxController {
 
     return list;
   }
+
+  void changeTipoCategoria(TipoCategoria tipoCategoria) {
+    this.tipoCategoria = tipoCategoria;
+  }
 }
