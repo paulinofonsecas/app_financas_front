@@ -1,17 +1,16 @@
+import 'package:app_financas/app/components/editar_categoria/controllers/editar_categoria_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/criar_categoria_controller.dart';
-
 class SelectOutrosIconsComponent extends StatelessWidget {
   const SelectOutrosIconsComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<CriarCategoriaController>();
+    var controller = Get.find<EditarCategoriaController>();
 
     return InkWell(
       onTap: () async {

@@ -43,4 +43,14 @@ class CategoriaService extends ICategoriaService {
   Future<Either<Failure, List<Categoria>>> listCategorias() {
     return provider.listCategorias();
   }
+
+  @override
+  Future<Either<Failure, bool>> editEntradaCategoria(Categoria categoria) {
+    return provider.editEntradaCategoria(categoria);
+  }
+
+  @override
+  Future<Either<Failure, bool>> editSaidaCategoria(Categoria categoria) {
+    return provider.editSaidaCategoria(categoria);
+  }
 }

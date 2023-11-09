@@ -24,7 +24,7 @@ class HeaderComp extends StatelessWidget {
                   Get.back();
                 },
                 child: Text(
-                  'Cancelar',
+                  'Fechar',
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     color: Colors.white,

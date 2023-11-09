@@ -7,6 +7,8 @@ abstract class ICategoriaProvider {
   Future<Either<Failure, List<Categoria>>> listCategoriasSaidas();
   Future<Either<Failure, bool>> saveEntradaCategoria(Categoria categoria);
   Future<Either<Failure, bool>> saveSaidaCategoria(Categoria categoria);
+  Future<Either<Failure, bool>> editEntradaCategoria(Categoria categoria);
+  Future<Either<Failure, bool>> editSaidaCategoria(Categoria categoria);
   Future<Either<Failure, List<Categoria>>> listCategorias();
   Future<Either<Failure, Categoria>> getEntradaCategoria(int id);
   Future<Either<Failure, Categoria>> getSaidaCategoria(int id);

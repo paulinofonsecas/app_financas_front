@@ -1,8 +1,8 @@
+import 'package:app_financas/app/components/editar_categoria/controllers/editar_categoria_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import '../controllers/criar_categoria_controller.dart';
 import 'icon_item_comp.dart';
 import 'select_outros_icons_comp.dart';
 
@@ -11,7 +11,7 @@ class IconPickerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<CriarCategoriaController>();
+    var controller = Get.find<EditarCategoriaController>();
 
     return GetBuilder(
       init: controller,

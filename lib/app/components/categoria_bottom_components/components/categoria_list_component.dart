@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/app/components/my_divider.dart';
 import 'package:app_financas/app/modules/gerir_categorias/gerir_categorias_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,7 +10,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 import 'bottom_category_comp_controller.dart';
-import '../criar_categoria/criar_categoria_component.dart';
+import '../../criar_categoria/criar_categoria_component.dart';
 import 'categoria_item_component.dart';
 
 class CategoriaListComponent extends StatelessWidget {
@@ -46,6 +48,10 @@ class CategoriaListComponent extends StatelessWidget {
                 );
               }).toList(),
 
+              const Gutter(),
+              const MyDivider(),
+              const Gutter(),
+
               // listItem actions
               CustomListTileAction(
                 title: 'Criar categoria',
@@ -68,9 +74,15 @@ class CategoriaListComponent extends StatelessWidget {
                 title: 'Gerenciar categorias',
                 icon: Icons.settings,
                 onTap: () {
-                  Get.to(GerirCategoriasPage(tipoCategoria: tipoCategoria));
+                  Get.to(GerirCategoriasPage(tipoCategoria: tipoCategoria))
+                      ?.then((value) {
+                    controller.update(['categoriaList']);
+                  });
                 },
               ),
+              const GutterLarge(),
+              const GutterLarge(),
+              const GutterLarge(),
             ],
           );
         });

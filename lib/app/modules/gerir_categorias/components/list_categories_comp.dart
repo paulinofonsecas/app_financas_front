@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/app/components/criar_categoria/criar_categoria_component.dart';
+import 'package:app_financas/app/components/editar_categoria/editar_categoria_component.dart';
 import 'package:app_financas/app/modules/gerir_categorias/controllers/gerir_categoria_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
@@ -49,7 +51,18 @@ class ListCategoriesComp extends StatelessWidget {
                   itemBuilder: (c, i) {
                     var categoria = categorias[i];
 
-                    return CategoriaItem(categoria: categoria);
+                    return CategoriaItem(
+                      categoria: categoria,
+                      onTap: () {
+                        EditarCategoriaComponent.openModalBottomSheet(
+                          context: context,
+                          tipoCategoria: controller.tipoCategoria,
+                          categoria: categoria,
+                        ).then((value) {
+                          controller.update(['geral']);
+                        });
+                      },
+                    );
                   },
                 );
               },

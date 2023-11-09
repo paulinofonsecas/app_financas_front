@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
-import '../../components/categoria_bottom_components/criar_categoria/criar_categoria_component.dart';
+import '../../components/criar_categoria/criar_categoria_component.dart';
 import 'components/header_comp.dart';
 import 'components/list_categories_comp.dart';
 import 'components/tipo_categoria_switch_comp.dart';

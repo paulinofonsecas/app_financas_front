@@ -166,4 +166,31 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
     return Right(entradas + saidas);
   }
+
+  @override
+  Future<Either<Failure, bool>> editEntradaCategoria(
+      Categoria categoria) async {
+    try {
+      await initCategoriaEntradasDb();
+
+      var map = categoria.toMap();
+      await _categoriasEntradaBox.put(categoria.id, map);
+      return const Right(true);
+    } catch (e) {
+      return const Right(false);
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> editSaidaCategoria(Categoria categoria) async {
+    try {
+      await initCategoriaSaidasDb();
+
+      var map = categoria.toMap();
+      await _categoriasSaidaBox.put(categoria.id, map);
+      return const Right(true);
+    } catch (e) {
+      return const Right(false);
+    }
+  }
 }
