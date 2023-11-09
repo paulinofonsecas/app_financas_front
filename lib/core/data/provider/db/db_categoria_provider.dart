@@ -72,11 +72,14 @@ class DbCategoriaProvider implements ICategoriaProvider {
       return listCategoriasEntradas();
     }
 
-    return Right(
-      result.values
-          .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
-          .toList(),
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
     );
+
+    return Right(finalResult);
   }
 
   @override
@@ -97,11 +100,14 @@ class DbCategoriaProvider implements ICategoriaProvider {
       return listCategoriasSaidas();
     }
 
-    return Right(
-      result.values
-          .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
-          .toList(),
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
     );
+
+    return Right(finalResult);
   }
 
   @override
