@@ -1,5 +1,7 @@
 import 'package:app_financas/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -34,6 +36,14 @@ class HeaderComp extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.archivebox,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const GutterTiny(),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(

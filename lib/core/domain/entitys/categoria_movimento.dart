@@ -11,10 +11,12 @@ class Categoria {
   String name;
   Color? color;
   IconData? icon;
+  bool isArchived;
 
   Categoria({
     required this.id,
     required this.name,
+    this.isArchived = false,
     this.color,
     this.icon,
   });
@@ -23,12 +25,14 @@ class Categoria {
     required String name,
     Color? color,
     IconData? icon,
+    isArchived = false,
   }) {
     return Categoria(
       id: -1,
       name: name,
       color: color,
       icon: icon,
+      isArchived: isArchived,
     );
   }
 
@@ -46,12 +50,14 @@ class Categoria {
     String? name,
     Color? color,
     IconData? icon,
+    bool? isArchived,
   }) {
     return Categoria(
       id: id ?? this.id,
       name: name ?? this.name,
       color: color ?? this.color,
       icon: icon ?? this.icon,
+      isArchived: isArchived ?? this.isArchived,
     );
   }
 
@@ -61,6 +67,7 @@ class Categoria {
       'name': name,
       'color': color?.value,
       'icon': icon != null ? serializeIcon(icon!) : null,
+      'isArchived': isArchived
     };
   }
 
@@ -69,6 +76,7 @@ class Categoria {
       id: map['id'] as int,
       name: map['name'] as String,
       color: map['color'] != null ? Color(map['color'] as int) : null,
+      isArchived: map['isArchived'] as bool? ?? false,
       icon: map['icon'] != null
           ? deserializeIcon(map['icon'].cast<String, dynamic>())
           : null,
@@ -82,7 +90,8 @@ class Categoria {
 
   @override
   String toString() {
-    return 'Categoria(id: $id, name: $name, color: $color, icon: $icon)';
+    return 'Categoria(id: $id, name: $name, color: $color, '
+        'icon: $icon, isArchived: $isArchived)';
   }
 
   @override
@@ -92,11 +101,16 @@ class Categoria {
     return other.id == id &&
         other.name == name &&
         other.color == color &&
+        other.isArchived == isArchived &&
         other.icon == icon;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ color.hashCode ^ icon.hashCode;
+    return id.hashCode ^
+        name.hashCode ^
+        color.hashCode ^
+        icon.hashCode ^
+        isArchived.hashCode;
   }
 }

@@ -1,13 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_financas/app/components/criar_categoria/criar_categoria_component.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:app_financas/app/components/editar_categoria/editar_categoria_component.dart';
 import 'package:app_financas/app/modules/gerir_categorias/controllers/gerir_categoria_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ListCategoriesComp extends StatelessWidget {
   const ListCategoriesComp({super.key});
@@ -62,6 +64,39 @@ class ListCategoriesComp extends StatelessWidget {
                           controller.update(['geral']);
                         });
                       },
+                      onActionTap: () {
+                        Get.defaultDialog(
+                          title: 'Arquivar categoria',
+                          content: Text(
+                            'Deseja realmente arquivar\n a categoria ${categoria.name}?',
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: kVerdeAccentColor,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancelar'),
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: kVermelhaAccentColor,
+                              ),
+                              onPressed: () {
+                                controller.arquivarCategoria(categoria.id).then(
+                                  (value) {
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              },
+                              child: const Text('Arquivar'),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                 );
@@ -79,10 +114,12 @@ class CategoriaItem extends StatelessWidget {
     Key? key,
     required this.categoria,
     this.onTap,
+    this.onActionTap,
   }) : super(key: key);
 
   final Categoria categoria;
   final GestureTapCallback? onTap;
+  final GestureTapCallback? onActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +152,9 @@ class CategoriaItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: onActionTap,
               icon: Icon(
-                Icons.more_horiz,
+                CupertinoIcons.archivebox,
               ),
             ),
           ],

@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'categoria_movimento.dart';
+
 class Movimento {
   final int id;
   final double valor;
@@ -10,6 +12,7 @@ class Movimento {
   final int cartaoId;
   final int tipoMovimentoId;
   final int categoriaMovimentoId;
+  final Categoria? categoria;
   final String? obsMovimento;
   final bool confirmado;
   final DateTime createdAt;
@@ -24,6 +27,7 @@ class Movimento {
     required this.cartaoId,
     required this.tipoMovimentoId,
     required this.categoriaMovimentoId,
+    this.categoria,
     required this.obsMovimento,
     required this.confirmado,
     required this.createdAt,
@@ -85,6 +89,7 @@ class Movimento {
     int? cartaoId,
     int? tipoMovimentoId,
     int? categoriaMovimentoId,
+    Categoria? categoria,
     String? obsMovimento,
     bool? confirmado,
     DateTime? createdAt,
@@ -99,6 +104,7 @@ class Movimento {
       cartaoId: cartaoId ?? this.cartaoId,
       tipoMovimentoId: tipoMovimentoId ?? this.tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId ?? this.categoriaMovimentoId,
+      categoria: categoria,
       obsMovimento: obsMovimento ?? this.obsMovimento,
       confirmado: confirmado ?? this.confirmado,
       createdAt: createdAt ?? this.createdAt,

@@ -33,6 +33,17 @@ class GerirCategoriaController extends GetxController {
     update(['geral', 'switch_categoria_actions']);
   }
 
+  Future<void> arquivarCategoria(int categoriaId) async {
+    var result = await service.arquivarCategoria(categoriaId);
+
+    if (result is Right) {
+      update(['geral']);
+      showSucessMessage('Sucesso', 'Categoria arquivada com sucesso');
+    } else {
+      showErrorMessage('Erro', 'Erro ao arquivar categoria');
+    }
+  }
+
   Future<List<Categoria>> listCategoriasEntradas() async {
     var result = await service.listCategoriasEntradas();
 

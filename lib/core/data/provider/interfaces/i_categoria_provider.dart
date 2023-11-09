@@ -12,4 +12,8 @@ abstract class ICategoriaProvider {
   Future<Either<Failure, List<Categoria>>> listCategorias();
   Future<Either<Failure, Categoria>> getEntradaCategoria(int id);
   Future<Either<Failure, Categoria>> getSaidaCategoria(int id);
+  Future<Either<Failure, bool>> arquivarCategoriaEntrada(int categoriaId);
+  Future<Either<Failure, bool>> arquivarCategoriaSaida(int categoriaId);
+  Future<Either<Failure, bool>> desarquivarCategoriaEntrada(int categoriaId);
+  Future<Either<Failure, bool>> desarquivarCategoriaSaida(int categoriaId);
 }

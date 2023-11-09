@@ -5,12 +5,14 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../controllers/criar_categoria_controller.dart';
+
 class SelectOutrosIconsComponent extends StatelessWidget {
   const SelectOutrosIconsComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<EditarCategoriaController>();
+    var controller = Get.find<CriarCategoriaController>();
 
     return InkWell(
       onTap: () async {

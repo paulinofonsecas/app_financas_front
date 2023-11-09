@@ -31,16 +31,16 @@ class TipoCategoriaSwitchComp extends StatelessWidget {
               SelectableCategoriaItem(
                 title: 'Dispesas',
                 onTap: () {
-                  controller.changeTipoCategoria(TipoCategoria.entrada);
+                  controller.changeTipoCategoria(TipoCategoria.saida);
                 },
-                isSelected: controller.tipoCategoria == TipoCategoria.entrada,
+                isSelected: controller.tipoCategoria == TipoCategoria.saida,
               ),
               SelectableCategoriaItem(
                 title: 'Receitas',
                 onTap: () {
-                  controller.changeTipoCategoria(TipoCategoria.saida);
+                  controller.changeTipoCategoria(TipoCategoria.entrada);
                 },
-                isSelected: controller.tipoCategoria == TipoCategoria.saida,
+                isSelected: controller.tipoCategoria == TipoCategoria.entrada,
               ),
             ],
           );
