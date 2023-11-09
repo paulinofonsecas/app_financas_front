@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
-import '../controllers/bottom_category_comp_controller.dart';
+import 'bottom_category_comp_controller.dart';
 import '../criar_categoria/criar_categoria_component.dart';
 import 'categoria_item_component.dart';
 
