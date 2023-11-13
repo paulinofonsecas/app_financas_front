@@ -98,6 +98,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
       for (var cat in categoriasPadrao) {
         await saveSaidaCategoria(Categoria(id: -1, name: cat));
       }
+
       return listCategoriasSaidas();
     }
 
@@ -105,6 +106,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
         .where((element) => !element.isArchived)
         .toList();
+        
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
     );

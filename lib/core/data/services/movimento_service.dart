@@ -98,4 +98,14 @@ class MovimentoService implements IMovimentoService {
       return result;
     }
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada() {
+    return provider.listMovimentosEntrada();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida() {
+    return provider.listMovimentosSaida();
+  }
 }

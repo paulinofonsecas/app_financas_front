@@ -62,11 +62,13 @@ class DbMovimentoProvider implements IMovimentoProvider {
   Future<Either<Failure, List<Movimento>>> listMovimentos() async {
     await initDb();
     var data = _movimentosBox.toMap();
+
     var movimentos = data.values
         .map<Movimento>(
           (e) => Movimento.fromMap(e.cast<String, dynamic>()),
         )
         .toList();
+
     return Right(movimentos);
   }
 
@@ -150,5 +152,35 @@ class DbMovimentoProvider implements IMovimentoProvider {
       int currentIndex, int page, int pageSize) {
     // TODO: implement listPaginatedMovimentos
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada() async {
+    await initDb();
+    var data = _movimentosBox.toMap();
+
+    var movimentos = data.values
+        .map<Movimento>(
+          (e) => Movimento.fromMap(e.cast<String, dynamic>()),
+        )
+        .where((element) => element.tipoMovimentoId == 1)
+        .toList();
+
+    return Right(movimentos);
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida() async {
+    await initDb();
+    var data = _movimentosBox.toMap();
+
+    var movimentos = data.values
+        .map<Movimento>(
+          (e) => Movimento.fromMap(e.cast<String, dynamic>()),
+        )
+        .where((element) => element.tipoMovimentoId == 2)
+        .toList();
+
+    return Right(movimentos);
   }
 }

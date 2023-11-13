@@ -56,7 +56,7 @@ class EditTransacaoController extends GetxController {
   }
 
   void init() {
-    categoriaSelectedId = 1;
+    categoriaSelectedId = movimento.categoriaMovimentoId;
 
     descricaoTextController.text = movimento.descricao;
     dateTextController.text = getSelectedDate();
@@ -127,7 +127,7 @@ class EditTransacaoController extends GetxController {
       descricao: descricaoMovimento,
       cartaoId: cartaoId,
       tipoMovimentoId: movimentoType,
-      categoriaMovimentoId: categoriaMovimentoId,
+      categoriaMovimentoId: categoriaSelectedId,
       obsMovimento: obsMovimento,
       confirmado: confirmado.value,
     );
