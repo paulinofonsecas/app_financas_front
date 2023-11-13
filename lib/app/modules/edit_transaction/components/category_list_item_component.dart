@@ -1,4 +1,3 @@
-import 'package:app_financas/app/components/editar_categoria/controllers/editar_categoria_controller.dart';
 import 'package:app_financas/app/modules/edit_transaction/controllers/edit_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
