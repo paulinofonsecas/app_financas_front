@@ -7,7 +7,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'components/archived_categoria_list_component.dart';
-import 'controllers/bottom_category_archived_controller.dart';
+import 'controllers/archived_bottom_category_controller.dart';
 
 class BottomCategoryArchivedComponent extends StatefulWidget {
   const BottomCategoryArchivedComponent({

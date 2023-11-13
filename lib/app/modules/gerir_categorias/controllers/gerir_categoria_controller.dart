@@ -31,7 +31,6 @@ class GerirCategoriaController extends GetxController {
 
   void changeTipoCategoria(TipoCategoria tipo) {
     tipoCategoria = tipo;
-    print(tipo);
     update(['geral', 'switch_categoria_actions']);
   }
 

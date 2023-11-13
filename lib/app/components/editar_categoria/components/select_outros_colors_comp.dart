@@ -21,7 +21,7 @@ class SelectOutrosColorsComponent extends StatelessWidget {
             title: const Text('Selecionar cor'),
             content: SingleChildScrollView(
               child: MaterialPicker(
-                pickerColor: Colors.blue,
+                pickerColor: controller.categoria.color ?? Colors.blue,
                 onColorChanged: (c) {
                   controller.changeColorFromPicker(c);
                   Get.back();

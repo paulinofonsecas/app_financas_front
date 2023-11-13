@@ -64,7 +64,19 @@ class Body extends StatelessWidget {
                             () => Switch(
                               value: controller.confirmado.value,
                               onChanged: (c) {
-                                controller.confirmado.value = c;
+                                if (controller.date.isAfter(DateTime.now())) {
+                                  controller.confirmado.value = false;
+                                  showErrorMessage(
+                                    'Impossível confirmar',
+                                    'Aguarde até a data selecionada para confirmar '
+                                        'a ${isReceita(controller.movimentoType) ? 'receita' : 'despesa'} '
+                                        'ou selecione uma data igual ou inferior a de hoje.',
+                                    duration: const Duration(seconds: 7),
+                                    backgroundColor: Colors.orange[700],
+                                  );
+                                } else {
+                                  controller.confirmado.value = c;
+                                }
                               },
                               activeColor: Colors.white,
                               activeTrackColor:

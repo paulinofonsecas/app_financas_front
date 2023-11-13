@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
-import '../controllers/bottom_category_archived_controller.dart';
+import '../../editar_categoria/editar_categoria_component.dart';
+import '../controllers/archived_bottom_category_controller.dart';
 import 'archived_categoria_item_component.dart';
 
 class CategoriaArchivedListComponent extends StatelessWidget {
@@ -33,10 +34,17 @@ class CategoriaArchivedListComponent extends StatelessWidget {
                 var categoria = categorias[i];
 
                 return ArchivedCategoriaItem(
-                  onTap: () {},
-                  onIconTap: () {
-                    controller.desarquivarCategoria(categoria.id);
-                    controller.update(['categoriaList']);
+                  onTap: () {
+                    EditarCategoriaComponent.openModalBottomSheet(
+                      context: context,
+                      tipoCategoria: controller.tipoCategoria,
+                      categoria: categoria,
+                    ).then((value) {
+                      controller.update(['geral', 'categoriaList']);
+                    });
+                  },
+                  onIconTap: () async {
+                    await controller.desarquivarCategoria(categoria.id);
                     Get.back();
                   },
                   categoria: categoria,

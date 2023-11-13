@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/app/modules/app/controllers/app_page_controller.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

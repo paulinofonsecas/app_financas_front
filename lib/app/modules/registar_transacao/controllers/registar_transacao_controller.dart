@@ -1,4 +1,5 @@
 import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -60,11 +61,28 @@ class RegistarTransacaoController extends GetxController {
     DateTime? dateTime = await showOmniDateTimePicker(
       context: context,
       is24HourMode: true,
+      initialDate: date,
+      isForce2Digits: true,
+      separator: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: FilledButton.icon(
+          onPressed: () {
+            Navigator.pop(context, DateTime.now());
+          },
+          icon: const Icon(Icons.today),
+          label: const Text('Agora'),
+        ),
+      ),
     );
 
     if (dateTime != null) {
       date = dateTime;
       dateTextController.text = getSelectedDate();
+
+      if (confirmado.value && dateTime.isAfter(DateTime.now())) {
+        confirmado.value = false;
+      }
+
       update();
     }
   }

@@ -7,6 +7,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import '../controllers/edit_transacao_controller.dart';
+import 'category_list_item_component.dart';
 import 'edit_transaction_header.dart';
 import 'select_date_component.dart';
 
@@ -93,33 +94,9 @@ class Body extends StatelessWidget {
                       const GutterTiny(),
                       const MyDivider(),
                       const GutterTiny(),
-                      WithIcon(
+                      const WithIcon(
                         icon: Icons.label_outline,
-                        child: GetBuilder(
-                          init: controller,
-                          id: 'category',
-                          builder: (c) => DropdownButton<int>(
-                            isExpanded: true,
-                            value: controller.categoriaMovimentoId,
-                            onChanged: (int? value) {
-                              if (value == null) {
-                                return;
-                              }
-                              controller.categoriaMovimentoId = value;
-                              controller.update(['category']);
-                            },
-                            borderRadius: BorderRadius.circular(8),
-                            padding: const EdgeInsets.all(kDefaultPadding / 4),
-                            hint: const Text('Categoria de movimento'),
-                            items: controller
-                                .getCategories()
-                                .map((c) => DropdownMenuItem(
-                                      value: c.id,
-                                      child: Text(c.name),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
+                        child: CategoryListItemComponent(),
                       ),
                       const GutterTiny(),
                       const MyDivider(),

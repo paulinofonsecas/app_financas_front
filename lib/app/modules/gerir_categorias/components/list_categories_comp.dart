@@ -53,51 +53,7 @@ class ListCategoriesComp extends StatelessWidget {
                   itemBuilder: (c, i) {
                     var categoria = categorias[i];
 
-                    return CategoriaItem(
-                      categoria: categoria,
-                      onTap: () {
-                        EditarCategoriaComponent.openModalBottomSheet(
-                          context: context,
-                          tipoCategoria: controller.tipoCategoria,
-                          categoria: categoria,
-                        ).then((value) {
-                          controller.update(['geral']);
-                        });
-                      },
-                      onActionTap: () {
-                        Get.defaultDialog(
-                          title: 'Arquivar categoria',
-                          content: Text(
-                            'Deseja realmente arquivar\n a categoria ${categoria.name}?',
-                            textAlign: TextAlign.center,
-                          ),
-                          actions: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: kVerdeAccentColor,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Cancelar'),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: kVermelhaAccentColor,
-                              ),
-                              onPressed: () {
-                                controller.arquivarCategoria(categoria.id).then(
-                                  (value) {
-                                    Navigator.of(context).pop();
-                                  },
-                                );
-                              },
-                              child: const Text('Arquivar'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    return _buildCategoriaItem(categoria, context, controller);
                   },
                 );
               },
@@ -105,6 +61,55 @@ class ListCategoriesComp extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  CategoriaItem _buildCategoriaItem(Categoria categoria, BuildContext context,
+      GerirCategoriaController controller) {
+    return CategoriaItem(
+      categoria: categoria,
+      onTap: () {
+        EditarCategoriaComponent.openModalBottomSheet(
+          context: context,
+          tipoCategoria: controller.tipoCategoria,
+          categoria: categoria,
+        ).then((value) {
+          controller.update(['geral']);
+        });
+      },
+      onActionTap: () {
+        Get.defaultDialog(
+          title: 'Arquivar categoria',
+          content: Text(
+            'Deseja realmente arquivar\n a categoria ${categoria.name}?',
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: kVerdeAccentColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: kVermelhaAccentColor,
+              ),
+              onPressed: () {
+                controller.arquivarCategoria(categoria.id).then(
+                  (value) {
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+              child: const Text('Arquivar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

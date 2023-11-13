@@ -28,6 +28,7 @@ dependencies:
   u_credit_card: ^1.1.0
   flutter_colorpicker: ^1.0.3
   flutter_iconpicker: ^3.2.4
+  fl_chart: ^0.64.0
   
 
 dev_dependencies:

@@ -1,4 +1,4 @@
-import 'package:app_financas/app/components/categorias_arquivadas/bottom_category_component.dart';
+import 'package:app_financas/app/components/categorias_arquivadas/archived_bottom_category_component.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

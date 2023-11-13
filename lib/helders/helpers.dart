@@ -6,13 +6,14 @@ bool isReceita(int movimentoType) => movimentoType == 1;
 bool isDarkMode(BuildContext context) =>
     Theme.of(context).brightness == Brightness.dark;
 
-void showErrorMessage(String title, String message) {
+void showErrorMessage(String title, String message,
+    {Duration? duration, Color? backgroundColor}) {
   Get.showSnackbar(
     GetSnackBar(
       title: title,
       message: message,
-      duration: const Duration(seconds: 2),
-      backgroundColor: Colors.red,
+      duration: duration ?? const Duration(seconds: 2),
+      backgroundColor: backgroundColor ?? Colors.red,
       isDismissible: true,
     ),
   );
@@ -31,7 +32,7 @@ void showSucessMessage(String title, String message) {
 }
 
 List<Color> get randomColors {
-    List<Color> myColors = List.from(Colors.primaries);
-    myColors.shuffle();
-    return myColors;
-  }
+  List<Color> myColors = List.from(Colors.primaries);
+  myColors.shuffle();
+  return myColors;
+}
