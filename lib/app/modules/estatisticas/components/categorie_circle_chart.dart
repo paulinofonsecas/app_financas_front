@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import '../../controller/estatisticas_page_controller.dart';
+import '../controller/estatisticas_page_controller.dart';
 
 class CategoriesCircleChart extends StatelessWidget {
   const CategoriesCircleChart({
