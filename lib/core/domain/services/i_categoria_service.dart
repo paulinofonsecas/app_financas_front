@@ -12,5 +12,8 @@ abstract class ICategoriaService {
   Future<Either<Failure, bool>> saveSaidaCategoria(Categoria categoria);
   Future<Either<Failure, bool>> editEntradaCategoria(Categoria categoria);
   Future<Either<Failure, bool>> editSaidaCategoria(Categoria categoria);
-  Future<Either<Failure, bool>> arquivarCategoria(int categoriaId);
+  Future<Either<Failure, bool>> arquivarCategoriaEntrada(int categoriaId);
+  Future<Either<Failure, bool>> arquivarCategoriaSaida(int categoriaId);
+  Future<Either<Failure, bool>> desarquivarCategoriaEntrada(int categoriaId);
+  Future<Either<Failure, bool>> desarquivarCategoriaSaida(int categoriaId);
 }

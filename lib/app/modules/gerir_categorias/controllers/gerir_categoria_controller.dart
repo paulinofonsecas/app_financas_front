@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -30,17 +31,39 @@ class GerirCategoriaController extends GetxController {
 
   void changeTipoCategoria(TipoCategoria tipo) {
     tipoCategoria = tipo;
+    print(tipo);
     update(['geral', 'switch_categoria_actions']);
   }
 
   Future<void> arquivarCategoria(int categoriaId) async {
-    var result = await service.arquivarCategoria(categoriaId);
+    late Either<Failure, bool> result;
+    if (tipoCategoria == TipoCategoria.entrada) {
+      result = await service.arquivarCategoriaEntrada(categoriaId);
+    } else {
+      result = await service.arquivarCategoriaSaida(categoriaId);
+    }
 
     if (result is Right) {
       update(['geral']);
       showSucessMessage('Sucesso', 'Categoria arquivada com sucesso');
     } else {
       showErrorMessage('Erro', 'Erro ao arquivar categoria');
+    }
+  }
+
+  Future<void> desarquivarCategoria(int categoriaId) async {
+    late Either<Failure, bool> result;
+    if (tipoCategoria == TipoCategoria.entrada) {
+      result = await service.desarquivarCategoriaEntrada(categoriaId);
+    } else {
+      result = await service.desarquivarCategoriaSaida(categoriaId);
+    }
+
+    if (result is Right) {
+      update(['geral']);
+      showSucessMessage('Sucesso', 'Categoria desarquivada com sucesso');
+    } else {
+      showErrorMessage('Erro', 'Erro ao desarquivar categoria');
     }
   }
 

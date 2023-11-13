@@ -74,6 +74,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => !element.isArchived)
         .toList();
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
@@ -102,6 +103,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => !element.isArchived)
         .toList();
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
@@ -200,6 +202,29 @@ class DbCategoriaProvider implements ICategoriaProvider {
     await initCategoriaEntradasDb();
 
     try {
+      var categoria0 = _categoriasEntradaBox.get(categoriaId);
+
+      if (categoria0 == null) {
+        return const Right(false);
+      }
+
+      var categoria = Categoria.fromMap(categoria0.cast<String, dynamic>());
+
+      categoria = categoria.copyWith(isArchived: true);
+
+      var map = categoria.toMap();
+      await _categoriasEntradaBox.put(categoria.id, map);
+      return const Right(true);
+    } catch (e) {
+      return const Right(false);
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> arquivarCategoriaSaida(int categoriaId) async {
+    await initCategoriaSaidasDb();
+
+    try {
       var categoria0 = _categoriasSaidaBox.get(categoriaId);
 
       if (categoria0 == null) {
@@ -219,11 +244,12 @@ class DbCategoriaProvider implements ICategoriaProvider {
   }
 
   @override
-  Future<Either<Failure, bool>> arquivarCategoria(int categoriaId) async {
+  Future<Either<Failure, bool>> desarquivarCategoriaEntrada(
+      int categoriaId) async {
     await initCategoriaSaidasDb();
 
     try {
-      var categoria0 = await _categoriasSaidaBox.get(categoriaId);
+      var categoria0 = _categoriasEntradaBox.get(categoriaId);
 
       if (categoria0 == null) {
         return const Right(false);
@@ -231,10 +257,10 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
       var categoria = Categoria.fromMap(categoria0.cast<String, dynamic>());
 
-      categoria = categoria.copyWith(isArchived: true);
+      categoria = categoria.copyWith(isArchived: false);
 
       var map = categoria.toMap();
-      await _categoriasSaidaBox.put(categoria.id, map);
+      await _categoriasEntradaBox.put(categoria.id, map);
       return const Right(true);
     } catch (e) {
       return const Right(false);
@@ -242,20 +268,26 @@ class DbCategoriaProvider implements ICategoriaProvider {
   }
 
   @override
-  Future<Either<Failure, bool>> arquivarCategoriaSaida(int categoriaId) {
-    // TODO: implement arquivarCategoriaSaida
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, bool>> desarquivarCategoriaSaida(
+      int categoriaId) async {
+    await initCategoriaSaidasDb();
 
-  @override
-  Future<Either<Failure, bool>> desarquivarCategoriaEntrada(int categoriaId) {
-    // TODO: implement desarquivarCategoriaEntrada
-    throw UnimplementedError();
-  }
+    try {
+      var categoria0 = _categoriasSaidaBox.get(categoriaId);
 
-  @override
-  Future<Either<Failure, bool>> desarquivarCategoriaSaida(int categoriaId) {
-    // TODO: implement desarquivarCategoriaSaida
-    throw UnimplementedError();
+      if (categoria0 == null) {
+        return const Right(false);
+      }
+
+      var categoria = Categoria.fromMap(categoria0.cast<String, dynamic>());
+
+      categoria = categoria.copyWith(isArchived: false);
+
+      var map = categoria.toMap();
+      await _categoriasSaidaBox.put(categoria.id, map);
+      return const Right(true);
+    } catch (e) {
+      return const Right(false);
+    }
   }
 }

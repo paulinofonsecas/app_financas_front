@@ -4,7 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/Serialization/iconDataSerialization.dart';
 
-enum TipoCategoria { entrada, saida, todas }
+enum TipoCategoria {
+  entrada,
+  saida,
+  todas,
+}
 
 class Categoria {
   int id;

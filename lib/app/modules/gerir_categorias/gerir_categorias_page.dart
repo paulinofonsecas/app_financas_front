@@ -57,6 +57,7 @@ class _GerirCategoriasPageState extends State<GerirCategoriasPage> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            foregroundColor: Colors.white,
             backgroundColor: c.tipoCategoria == TipoCategoria.entrada
                 ? kVerdeAccentColor
                 : kVermelhaColor,
