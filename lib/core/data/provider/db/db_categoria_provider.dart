@@ -290,4 +290,65 @@ class DbCategoriaProvider implements ICategoriaProvider {
       return const Right(false);
     }
   }
+
+  @override
+  Future<Either<Failure, List<Categoria>>>
+      listArchivedCategoriasEntradas() async {
+    await initCategoriaEntradasDb();
+    var result = _categoriasEntradaBox.toMap();
+
+    if (result.isEmpty) {
+      var categoriasPadrao = [
+        'Salário',
+        'Horas Extras',
+        'Rendimento',
+        'Devolução',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveEntradaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasEntradas();
+    }
+
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => element.isArchived)
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
+    );
+
+    return Right(finalResult);
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listArchivedCategoriasSaidas() async {
+    await initCategoriaSaidasDb();
+    var result = _categoriasSaidaBox.toMap();
+
+    if (result.isEmpty) {
+      var categoriasPadrao = [
+        'Pagamento',
+        'Emprestimo',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasSaidas();
+    }
+
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => element.isArchived)
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
+    );
+
+    return Right(finalResult);
+  }
 }

@@ -5,6 +5,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
@@ -14,6 +15,8 @@ class HomePageController extends GetxController {
   late IContaProvider contaProvider;
   var showMoneyOnCards = false.obs;
   var cartoes = <Conta>[];
+
+  late BuildContext context;
 
   @override
   void onInit() {
@@ -87,5 +90,9 @@ class HomePageController extends GetxController {
   Future<void> refreshSaldosDeCartoes() async {
     await getCartoes();
     update();
+  }
+
+  void setContext(BuildContext context) {
+    this.context = context;
   }
 }

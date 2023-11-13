@@ -1,9 +1,12 @@
+import 'package:app_financas/app/components/categorias_arquivadas/bottom_category_component.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../controllers/gerir_categoria_controller.dart';
 
 class HeaderComp extends StatelessWidget {
   const HeaderComp({
@@ -12,6 +15,7 @@ class HeaderComp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<GerirCategoriaController>();
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Stack(
@@ -37,7 +41,14 @@ class HeaderComp extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      BottomCategoryArchivedComponent.openModalBottomSheet(
+                        context,
+                        controller.tipoCategoria,
+                      ).then((value) {
+                        controller.update(['geral', 'categoriaList']);
+                      });
+                    },
                     icon: const Icon(
                       CupertinoIcons.archivebox,
                       color: Colors.white,

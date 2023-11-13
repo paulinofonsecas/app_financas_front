@@ -25,7 +25,7 @@ class GerirCategoriasPage extends StatefulWidget {
 }
 
 class _GerirCategoriasPageState extends State<GerirCategoriasPage> {
-  late final GerirCategoriaController controller;
+  late GerirCategoriaController controller;
 
   @override
   void initState() {

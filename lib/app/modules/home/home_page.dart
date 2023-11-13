@@ -30,6 +30,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setContext(context);
+
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       body: GetBuilder(

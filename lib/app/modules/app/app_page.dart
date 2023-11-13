@@ -24,6 +24,13 @@ class _AppPageState extends State<AppPage> {
   late final List<Widget> telas;
 
   @override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    controller.setContext(context);
+  }
+
+  @override
   void initState() {
     controller = Get.put(AppPageController());
 
