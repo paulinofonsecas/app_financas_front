@@ -6,6 +6,8 @@ abstract class ICategoriaService {
   Future<Either<Failure, Categoria>> getEntradaCategoria(int id);
   Future<Either<Failure, Categoria>> getSaidaCategoria(int id);
   Future<Either<Failure, List<Categoria>>> listCategorias();
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas();
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasSaidas();
   Future<Either<Failure, List<Categoria>>> listCategoriasEntradas();
   Future<Either<Failure, List<Categoria>>> listCategoriasSaidas();
   Future<Either<Failure, List<Categoria>>> listArchivedCategoriasSaidas();

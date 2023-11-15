@@ -37,12 +37,13 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   @override
   void initState() {
     controller = Get.put(ShowTransactionController());
-    controller.setMovimento(widget.movimento);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.setMovimento(widget.movimento);
+
     return CustomBottomSheet(
       child: Container(
         color: Get.theme.scaffoldBackgroundColor,
@@ -186,16 +187,35 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
 
   Widget _buildCategoriaInput() {
     var controller = Get.find<ShowTransactionController>();
-    return InfoWidget(
-      desc: 'Categoria',
-      value:
-          controller.getCategoryName(controller.movimento.categoriaMovimentoId),
-      icon: Icon(
-        Icons.category_outlined,
-        color: Get.theme.iconTheme.color,
-        size: 20,
-      ),
-    );
+
+    return FutureBuilder<String?>(
+        future: controller
+            .getCategoryName(controller.movimento.categoriaMovimentoId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+
+          if (snapshot.hasError) {
+            return const Text('Error');
+          }
+
+          if (snapshot.data == null) {
+            return const Text('Error');
+          }
+
+          var nome = snapshot.data ?? '';
+
+          return InfoWidget(
+            desc: 'Categoria',
+            value: nome,
+            icon: Icon(
+              Icons.category_outlined,
+              color: Get.theme.iconTheme.color,
+              size: 20,
+            ),
+          );
+        });
   }
 
   Widget _buildValorInput() {

@@ -2,10 +2,10 @@ import 'package:app_financas/app/modules/estatisticas/controller/estatisticas_pa
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'chart_categorie.dart';
+import 'category_item_pie_chart.dart';
 
-class CategoriesBarChart extends StatelessWidget {
-  const CategoriesBarChart({
+class CategoriesPieChart extends StatelessWidget {
+  const CategoriesPieChart({
     Key? key,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class CategoriesBarChart extends StatelessWidget {
             },
             itemBuilder: (context, index) {
               var categoria = categorias[index];
-              return ChartCategory(categoria: categoria);
+              return CategoryItemPieChart(categoria: categoria);
             },
           ),
         );

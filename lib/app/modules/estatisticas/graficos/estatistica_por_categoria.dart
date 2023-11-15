@@ -1,16 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/app/modules/carteira/components/my_text_filter.dart';
-import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'package:app_financas/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controller/estatisticas_page_controller.dart';
-import 'categorie_circle_chart.dart';
-import 'categories_bar_chart.dart';
+import '../components/categorie_circle_chart.dart';
+import '../components/categories_bar_chart.dart';
 
 class EstatisticaPorCategoria extends StatelessWidget {
   const EstatisticaPorCategoria({super.key});
@@ -28,13 +27,27 @@ class EstatisticaPorCategoria extends StatelessWidget {
         id: 'geral',
         builder: (context) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildFilters(),
               const GutterLarge(),
+              headerSection(),
+              const Gutter(),
               _buildCategoriaChartData(),
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget headerSection() {
+    var controller = Get.find<EstatisticasPageController>();
+
+    return Text(
+      '${controller.esFilter == 1 ? 'Receitas' : 'Despesas'} por categoria',
+      style: GoogleFonts.inter(
+        fontSize: 26,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -58,43 +71,14 @@ class EstatisticaPorCategoria extends StatelessWidget {
 
         return Column(
           children: [
-            CategoriesCircleChart(
+            BuildCategoriesPieChart(
               data: contas,
             ),
             const GutterLarge(),
-            const CategoriesBarChart(),
+            const CategoriesPieChart(),
           ],
         );
       },
-    );
-  }
-
-  Widget _buildFilters() {
-    var controller = Get.find<EstatisticasPageController>();
-
-    return Material(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const GutterTiny(),
-          MyTextFilter(
-            title: 'Saídas',
-            isActive: controller.esFilter == TipoMovimento.SAIDA,
-            onTap: () {
-              controller.changeESFilter(TipoMovimento.SAIDA);
-            },
-          ),
-          const GutterTiny(),
-          MyTextFilter(
-            title: 'Entrada',
-            isActive: controller.esFilter == TipoMovimento.ENTRADA,
-            onTap: () {
-              controller.changeESFilter(TipoMovimento.ENTRADA);
-            },
-          ),
-        ],
-      ),
     );
   }
 }

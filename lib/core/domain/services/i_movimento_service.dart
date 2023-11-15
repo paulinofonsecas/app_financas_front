@@ -7,8 +7,8 @@ abstract class IMovimentoService {
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento);
   Future<Either<Failure, Movimento>> getMovimento(int id);
   Future<Either<Failure, List<Movimento>>> listMovimentos();
-  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada();
-  Future<Either<Failure, List<Movimento>>> listMovimentosSaida();
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date});
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date});
   Future<Either<Failure, List<Movimento>>> listPaginatedMovimentos(
     int page,
     int pageSize,

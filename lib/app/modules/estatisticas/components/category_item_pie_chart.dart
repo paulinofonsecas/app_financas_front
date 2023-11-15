@@ -3,8 +3,8 @@ import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
-class ChartCategory extends StatelessWidget {
-  const ChartCategory({
+class CategoryItemPieChart extends StatelessWidget {
+  const CategoryItemPieChart({
     Key? key,
     required this.categoria,
   }) : super(key: key);

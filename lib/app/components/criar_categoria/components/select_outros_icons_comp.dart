@@ -1,4 +1,3 @@
-import 'package:app_financas/app/components/editar_categoria/controllers/editar_categoria_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';

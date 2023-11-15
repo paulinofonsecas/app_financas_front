@@ -74,7 +74,6 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
-        .where((element) => !element.isArchived)
         .toList();
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
@@ -104,9 +103,8 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
-        .where((element) => !element.isArchived)
         .toList();
-        
+
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
     );
@@ -326,7 +324,8 @@ class DbCategoriaProvider implements ICategoriaProvider {
   }
 
   @override
-  Future<Either<Failure, List<Categoria>>> listArchivedCategoriasSaidas() async {
+  Future<Either<Failure, List<Categoria>>>
+      listArchivedCategoriasSaidas() async {
     await initCategoriaSaidasDb();
     var result = _categoriasSaidaBox.toMap();
 
@@ -346,6 +345,64 @@ class DbCategoriaProvider implements ICategoriaProvider {
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
         .where((element) => element.isArchived)
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
+    );
+
+    return Right(finalResult);
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas() async {
+    await initCategoriaSaidasDb();
+    var result = _categoriasSaidaBox.toMap();
+
+    if (result.isEmpty) {
+      var categoriasPadrao = [
+        'Pagamento',
+        'Emprestimo',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasSaidas();
+    }
+
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => !element.isArchived)
+        .toList();
+    finalResult.sort(
+      (a, b) => a.name.compareTo(b.name),
+    );
+
+    return Right(finalResult);
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasSaidas() async {
+    await initCategoriaSaidasDb();
+    var result = _categoriasSaidaBox.toMap();
+
+    if (result.isEmpty) {
+      var categoriasPadrao = [
+        'Pagamento',
+        'Emprestimo',
+        'Outro',
+      ];
+
+      for (var cat in categoriasPadrao) {
+        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+      }
+      return listCategoriasSaidas();
+    }
+
+    var finalResult = result.values
+        .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
+        .where((element) => !element.isArchived)
         .toList();
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),

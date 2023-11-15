@@ -20,6 +20,16 @@ class CategoriaService extends ICategoriaService {
   }
 
   @override
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas() {
+    return provider.listValidCategoriasEntradas();
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasSaidas() {
+    return provider.listValidCategoriasSaidas();
+  }
+
+  @override
   Future<Either<Failure, bool>> saveEntradaCategoria(Categoria categoria) {
     return provider.saveEntradaCategoria(categoria);
   }

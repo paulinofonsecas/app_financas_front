@@ -67,7 +67,7 @@ class GerirCategoriaController extends GetxController {
   }
 
   Future<List<Categoria>> listCategoriasEntradas() async {
-    var result = await service.listCategoriasEntradas();
+    var result = await service.listValidCategoriasEntradas();
 
     if (result is Right) {
       return result.getOrElse(() => []);
@@ -78,7 +78,7 @@ class GerirCategoriaController extends GetxController {
   }
 
   Future<List<Categoria>> listCategoriasSaidas() async {
-    var result = await service.listCategoriasSaidas();
+    var result = await service.listValidCategoriasSaidas();
 
     if (result is Right) {
       return result.getOrElse(() => []);

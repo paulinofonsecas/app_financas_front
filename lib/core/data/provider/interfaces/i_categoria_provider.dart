@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 abstract class ICategoriaProvider {
   Future<Either<Failure, List<Categoria>>> listCategoriasEntradas();
   Future<Either<Failure, List<Categoria>>> listCategoriasSaidas();
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas();
+  Future<Either<Failure, List<Categoria>>> listValidCategoriasSaidas();
   Future<Either<Failure, List<Categoria>>> listArchivedCategoriasSaidas();
   Future<Either<Failure, List<Categoria>>> listArchivedCategoriasEntradas();
   Future<Either<Failure, bool>> saveEntradaCategoria(Categoria categoria);

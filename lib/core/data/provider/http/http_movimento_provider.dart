@@ -184,13 +184,13 @@ class HttpMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada() {
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date}) {
     // TODO: implement listMovimentosEntrada
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosSaida() {
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date}) {
     // TODO: implement listMovimentosSaida
     throw UnimplementedError();
   }
