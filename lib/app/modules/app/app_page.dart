@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../estatisticas/controller/estatisticas_page_controller.dart';
+import '../estatisticas/estatisticas_page.dart';
 import '../home/controllers/home_page_controller.dart';
 
 class AppPage extends StatefulWidget {
@@ -24,13 +26,20 @@ class _AppPageState extends State<AppPage> {
   late final List<Widget> telas;
 
   @override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+
+    controller.setContext(context);
+  }
+
+  @override
   void initState() {
     controller = Get.put(AppPageController());
 
     telas = const [
       HomePage(),
       CarteiraPage(),
-      Center(child: Text('Estatisticas')),
+      EstatisticasPage(),
       SettingPage(),
     ];
 
@@ -70,39 +79,55 @@ class _AppPageState extends State<AppPage> {
           color: Get.theme.floatingActionButtonTheme.foregroundColor,
         ),
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            currentIndex: controller.index.value,
-            onTap: (i) => controller.index.value = i,
-            type: BottomNavigationBarType.fixed,
-            useLegacyColorScheme: false,
-            backgroundColor: Get.theme.bottomAppBarTheme.color,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.home,
-                ),
-                label: 'Home',
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex: controller.index.value,
+          onTap: (i) {
+            controller.index.value = i;
+
+            switch (i) {
+              case 0:
+                Get.find<HomePageController>().update(['geral']);
+                break;
+              case 1:
+                Get.find<CarteiraPageController>().update(['geral']);
+                break;
+              case 2:
+                Get.find<EstatisticasPageController>().update(['geral']);
+                break;
+            }
+          },
+          type: BottomNavigationBarType.fixed,
+          useLegacyColorScheme: false,
+          backgroundColor: Get.theme.bottomAppBarTheme.color,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                CupertinoIcons.home,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.wallet,
-                ),
-                label: 'Carteira',
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.wallet,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.timeline,
-                ),
-                label: 'Estatisticas',
+              label: 'Carteira',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.timeline,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.person_alt,
-                ),
-                label: 'Perfil',
+              label: 'Estatisticas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CupertinoIcons.person_alt,
               ),
-            ],
-          )),
+              label: 'Perfil',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,15 +1,14 @@
-import 'package:app_financas/app/components/categoria_bottom_components/criar_categoria/components/icon_picker_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'icon_picker_list.dart';
 
 class IconFieldComp extends StatelessWidget {
   const IconFieldComp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,

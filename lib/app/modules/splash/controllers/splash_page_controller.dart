@@ -24,13 +24,11 @@ class SplashPageController extends GetxController {
   }
 
   Future<void> init() async {
-    // var syncService = SyncDataService();
-    // await syncService.syncData();
-
     isLoading.value = true;
     var categoriaEntradasResult =
-        await categoriaService.listCategoriasEntradas();
-    var categoriasSaidasResult = await categoriaService.listCategoriasSaidas();
+        await categoriaService.listValidCategoriasEntradas();
+    var categoriasSaidasResult =
+        await categoriaService.listValidCategoriasSaidas();
     var contaResult = await contaService.listContas();
 
     var categoriaEntradasList = categoriaEntradasResult.getOrElse(() => []);

@@ -62,11 +62,13 @@ class DbMovimentoProvider implements IMovimentoProvider {
   Future<Either<Failure, List<Movimento>>> listMovimentos() async {
     await initDb();
     var data = _movimentosBox.toMap();
+
     var movimentos = data.values
         .map<Movimento>(
           (e) => Movimento.fromMap(e.cast<String, dynamic>()),
         )
         .toList();
+
     return Right(movimentos);
   }
 
@@ -150,5 +152,53 @@ class DbMovimentoProvider implements IMovimentoProvider {
       int currentIndex, int page, int pageSize) {
     // TODO: implement listPaginatedMovimentos
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada(
+      {DateTime? date}) async {
+    await initDb();
+    var data = _movimentosBox.toMap();
+
+    var movimentos = data.values
+        .map<Movimento>(
+          (e) => Movimento.fromMap(e.cast<String, dynamic>()),
+        )
+        .where((element) => element.tipoMovimentoId == 1 && element.confirmado)
+        .toList();
+
+    if (date != null) {
+      movimentos = movimentos
+          .where((element) =>
+              element.data.year == date.year &&
+              element.data.month == date.month)
+          .toList();
+    }
+
+    return Right(movimentos);
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida(
+      {DateTime? date}) async {
+    await initDb();
+    var data = _movimentosBox.toMap();
+
+    var movimentos = data.values
+        .map<Movimento>(
+          (e) => Movimento.fromMap(e.cast<String, dynamic>()),
+        )
+        .where((element) => element.tipoMovimentoId == 2 && element.confirmado)
+        .toList();
+
+    if (date != null) {
+      movimentos = movimentos
+          .where((element) =>
+              element.data.year == date.year &&
+              element.data.month == date.month)
+          .toList();
+    }
+
+    return Right(movimentos);
   }
 }

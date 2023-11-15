@@ -5,6 +5,7 @@ import 'package:app_financas/app/components/my_divider.dart';
 import 'package:app_financas/app/components/with_icon.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,7 +156,18 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
   Widget _buildActionButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        controller.alterarTransacao();
+        if (controller.date.isAfter(DateTime.now())) {
+          showErrorMessage(
+            'Impossível confirmar',
+            'Aguarde até a data selecionada para confirmar '
+                'a ${isReceita(controller.movimento.tipoMovimentoId) ? 'receita' : 'despesa'} '
+                'ou selecione uma data igual ou inferior a de hoje.',
+            duration: const Duration(seconds: 7),
+            backgroundColor: Colors.orange[700],
+          );
+        } else {
+          controller.alterarTransacao();
+        }
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: widget.movimento.tipoMovimentoId == 1

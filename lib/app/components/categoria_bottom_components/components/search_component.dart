@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/bottom_category_comp_controller.dart';
+import 'bottom_category_comp_controller.dart';
 
 class SearchComponent extends StatelessWidget {
   const SearchComponent({

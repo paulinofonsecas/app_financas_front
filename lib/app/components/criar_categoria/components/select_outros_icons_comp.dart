@@ -27,8 +27,6 @@ class SelectOutrosIconsComponent extends StatelessWidget {
 
         if (icon != null) {
           controller.changeIconFromPicker(icon);
-
-          debugPrint('Picked Icon:  $icon');
         }
       },
       child: Container(

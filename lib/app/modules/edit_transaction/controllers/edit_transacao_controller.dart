@@ -1,8 +1,11 @@
+import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/app/modules/home/home_page.dart';
+import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/helders/format_helpers.dart';
@@ -14,6 +17,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class EditTransacaoController extends GetxController {
   late final IMovimentoService movimentoService;
+  late final ICategoriaService categoriaService;
   late final SetupConfiguration setupConfiguration;
 
   late final TextEditingController descricaoTextController;
@@ -26,6 +30,7 @@ class EditTransacaoController extends GetxController {
 
   var date = DateTime.now();
   late int categoriaMovimentoId;
+  late int categoriaSelectedId;
   late int cartaoId;
   var alterandoTransacao = false.obs;
   var salvo = false;
@@ -39,6 +44,8 @@ class EditTransacaoController extends GetxController {
   void onInit() {
     movimentoService = Get.find();
     setupConfiguration = Get.find();
+    categoriaService = Get.find();
+
     descricaoTextController = TextEditingController(text: movimento.descricao);
     dateTextController = TextEditingController(text: getSelectedDate());
     valorTextController = TextEditingController(
@@ -50,6 +57,8 @@ class EditTransacaoController extends GetxController {
   }
 
   void init() {
+    categoriaSelectedId = movimento.categoriaMovimentoId;
+
     descricaoTextController.text = movimento.descricao;
     dateTextController.text = getSelectedDate();
     valorTextController.text = movimento.valor.toString();
@@ -68,6 +77,18 @@ class EditTransacaoController extends GetxController {
     DateTime? dateTime = await showOmniDateTimePicker(
       context: context,
       is24HourMode: true,
+      initialDate: date,
+      isForce2Digits: true,
+      separator: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: FilledButton.icon(
+          onPressed: () {
+            Navigator.pop(context, DateTime.now());
+          },
+          icon: const Icon(Icons.today),
+          label: const Text('Agora'),
+        ),
+      ),
     );
 
     if (dateTime != null) {
@@ -119,7 +140,7 @@ class EditTransacaoController extends GetxController {
       descricao: descricaoMovimento,
       cartaoId: cartaoId,
       tipoMovimentoId: movimentoType,
-      categoriaMovimentoId: categoriaMovimentoId,
+      categoriaMovimentoId: categoriaSelectedId,
       obsMovimento: obsMovimento,
       confirmado: confirmado.value,
     );
@@ -160,7 +181,7 @@ class EditTransacaoController extends GetxController {
 
   void switchTransactionType() {
     movimentoType = movimentoType == 1 ? 2 : 1;
-    update(['geral']);
+    update(['geral', 'category']);
   }
 
   void showErrorMessage(String title, String message) {
@@ -198,6 +219,51 @@ class EditTransacaoController extends GetxController {
         print(error.message);
       }
       showErrorMessage('Erro', 'Erro desconhecido ao deletar a transação');
+    }
+  }
+
+  void selectCategory(BuildContext context) async {
+    var categoria = await BottomCategoryComponent.openModalBottomSheet(
+      context,
+      movimentoType == 1 ? TipoCategoria.entrada : TipoCategoria.saida,
+      categoriaSelectedId,
+    );
+
+    if (categoria != null) {
+      categoriaSelectedId = categoria.id;
+    } else {
+      categoriaSelectedId = 1;
+    }
+
+    update(['category']);
+  }
+
+  Future<Categoria?> getCategoriaSelecionada() async {
+    if (movimentoType == 1) {
+      return await getCategoriaEntradaSelecionada();
+    } else {
+      return await getCategoriaSaidaSelecionada();
+    }
+  }
+
+  Future<Categoria?> getCategoriaEntradaSelecionada() async {
+    var result =
+        await categoriaService.getEntradaCategoria(categoriaSelectedId);
+
+    if (result is Right) {
+      return result.getOrElse(() => Categoria.fake());
+    } else {
+      return null;
+    }
+  }
+
+  Future<Categoria?> getCategoriaSaidaSelecionada() async {
+    var result = await categoriaService.getSaidaCategoria(categoriaSelectedId);
+
+    if (result is Right) {
+      return result.getOrElse(() => Categoria.fake());
+    } else {
+      return null;
     }
   }
 }

@@ -143,9 +143,10 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       return Left(HttpException('Erro ao listar os movimentos \n ${e.error}'));
     }
   }
-  
+
   @override
-  Future<Either<Failure, List<Movimento>>> listPaginatedMovimentos(int page, int pageSize) async {
+  Future<Either<Failure, List<Movimento>>> listPaginatedMovimentos(
+      int page, int pageSize) async {
     try {
       var result = await dio.get(
         '/paginated/movimento?page=$page&pageSize=$pageSize',
@@ -158,25 +159,39 @@ class HttpMovimentoProvider implements IMovimentoProvider {
       if (kDebugMode) {
         print(e.error);
       }
-      return Left(HttpException('Erro ao listar os movimentos paginados\n ${e.error}'));
+      return Left(
+          HttpException('Erro ao listar os movimentos paginados\n ${e.error}'));
     }
   }
-  
+
   @override
   Future<Either<Failure, double>> getSaldo(int id) {
     // TODO: implement getSaldo
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, bool>> deleteMovimento(int id) {
     // TODO: implement deleteMovimento
     throw UnimplementedError();
   }
-  
+
   @override
-  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(int currentIndex, int page, int pageSize) {
+  Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
+      int currentIndex, int page, int pageSize) {
     // TODO: implement listPaginatedContaMovimentos
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date}) {
+    // TODO: implement listMovimentosEntrada
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date}) {
+    // TODO: implement listMovimentosSaida
     throw UnimplementedError();
   }
 }

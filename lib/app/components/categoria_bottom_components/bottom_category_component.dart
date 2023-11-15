@@ -10,7 +10,7 @@ import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 import 'components/categoria_list_component.dart';
 import 'components/search_component.dart';
-import 'controllers/bottom_category_comp_controller.dart';
+import 'components/bottom_category_comp_controller.dart';
 
 class BottomCategoryComponent extends StatefulWidget {
   const BottomCategoryComponent({

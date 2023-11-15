@@ -14,7 +14,8 @@ abstract class IMovimentoProvider {
   Future<Either<Failure, bool>> editMovimento(Movimento movimento);
   Future<Either<Failure, double>> getSaldo(int id);
   Future<Either<Failure, bool>> deleteMovimento(int id);
-
   Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
       int currentIndex, int page, int pageSize);
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date});
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date});
 }
