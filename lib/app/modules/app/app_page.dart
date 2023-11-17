@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/app/bloc/app/app_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,6 @@ import 'package:app_financas/app/modules/home/home_page.dart';
 import 'package:app_financas/app/modules/setting/setting_page.dart';
 import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
 
-import '../../bloc/bloc/app_bloc.dart';
 import '../estatisticas/estatisticas_page.dart';
 import '../home/controllers/home_page_controller.dart';
 

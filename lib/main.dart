@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import 'app/bloc/bloc/app_bloc.dart';
+import 'app/bloc/app/app_bloc.dart';
 
 Future<void> main() async {
   initializeDateFormatting('pt_BR', null);
