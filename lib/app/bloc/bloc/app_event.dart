@@ -3,8 +3,8 @@ part of 'app_bloc.dart';
 @immutable
 sealed class AppEvent {}
 
-class ChangeAppBottomNavEvent extends AppEvent {
+class AppChangeBottomNavIndexEvent extends AppEvent {
   final int index;
 
-  ChangeAppBottomNavEvent(this.index);
+  AppChangeBottomNavIndexEvent(this.index);
 }

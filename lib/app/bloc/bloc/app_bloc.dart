@@ -9,7 +9,7 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppInitial()) {
-    on<ChangeAppBottomNavEvent>(onAppChangeBottomNav);
+    on<AppChangeBottomNavIndexEvent>(onAppChangeBottomNav);
   }
 
   void onAppChangeBottomNav(event, emit) {

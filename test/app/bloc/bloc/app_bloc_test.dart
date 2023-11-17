@@ -26,7 +26,7 @@ void main() {
     blocTest<AppBloc, AppState>(
       'emits AppBottomNavChanged when ChangeAppBottomNavEvent is added.',
       build: () => appBloc,
-      act: (bloc) => bloc.add(ChangeAppBottomNavEvent(2)),
+      act: (bloc) => bloc.add(AppChangeBottomNavIndexEvent(2)),
       expect: () => const <AppState>[AppBottomNavChanged(2)],
     );
   });
