@@ -40,16 +40,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               ActionBar(),
               SizedBox(height: kDefaultPadding * 2),
+              ShowCards(),
+              SizedBox(height: kDefaultPadding),
               EntradasESaidas(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ShowCards(),
-                  HomeScreenMovimentosWidget(),
-                ],
-              ),
+              SizedBox(height: kDefaultPadding),
+              HomeScreenMovimentosWidget(),
             ],
           );
         },

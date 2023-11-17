@@ -18,6 +18,30 @@ final class MovimentoGetPaginatedListByContaError extends MovimentoState {
   List<Object> get props => [errorMessage];
 }
 
+final class MovimentoGetPaginatedListByContaLoading extends MovimentoState {}
+
+final class MovimentoGetPaginatedListByContaLoadingError
+    extends MovimentoState {}
+
+// movimentos of day
+final class MovimentoGetMovimentosListOfDayLoading extends MovimentoState {}
+
+final class MovimentoGetMovimentosListOfDayLoadingError
+    extends MovimentoState {}
+
+final class MovimentoGetMovimentosListOfDayEmpty extends MovimentoState {}
+
+final class MovimentoGetMovimentosListOfDaySucess extends MovimentoState {
+  final List<Movimento> movimentos;
+
+  const MovimentoGetMovimentosListOfDaySucess(this.movimentos);
+
+  @override
+  List<Object> get props => [movimentos];
+}
+
+// end movimentos of day
+
 final class MovimentoGetLastPaginatedListByContaSuccess extends MovimentoState {
   final List<Movimento> movimentos;
 

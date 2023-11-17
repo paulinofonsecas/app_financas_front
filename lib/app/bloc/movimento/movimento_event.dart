@@ -7,6 +7,8 @@ sealed class MovimentoEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class MovimentoGetMovimentosListOfDayEvent extends MovimentoEvent {}
+
 class MovimentoGetPaginatedListEvent extends MovimentoEvent {
   final int page;
   final int pageSize;

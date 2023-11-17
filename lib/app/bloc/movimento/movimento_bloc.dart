@@ -14,11 +14,14 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
 
   MovimentoBloc(this.movimentoService) : super(MovimentoInitial()) {
     on<MovimentoGetPaginatedListByContaEvent>(
-      _onMovimentoGetPaginatedListByConta,
+      _onMovimentoGetPaginatedListByContaEvent,
+    );
+    on<MovimentoGetMovimentosListOfDayEvent>(
+      _onMovimentoGetMovimentosListOfDayEvent,
     );
   }
 
-  void _onMovimentoGetPaginatedListByConta(event, emit) async {
+  void _onMovimentoGetPaginatedListByContaEvent(event, emit) async {
     final page = event.page;
     final pageSize = event.pageSize;
 
@@ -47,6 +50,18 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     }
   }
 
+  void _onMovimentoGetMovimentosListOfDayEvent(event, emit) async {
+    emit(MovimentoGetMovimentosListOfDayLoading());
+    var movimentos = await listMovimentosDoDia();
+
+    if (movimentos.isEmpty) {
+      emit(MovimentoGetMovimentosListOfDayEmpty());
+      return;
+    }
+
+    emit(MovimentoGetMovimentosListOfDaySucess(movimentos));
+  }
+
   Future<List<Movimento>?> _getPaginatedMovimentos(
       int page, int pageSize) async {
     var result = await movimentoService.listPaginatedMovimentos(page, pageSize);
@@ -55,6 +70,23 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
       return result.getOrElse(() => []);
     } else {
       return null;
+    }
+  }
+
+  Future<List<Movimento>> listMovimentosDoDia() async {
+    var result = await movimentoService.listMovimentos();
+
+    if (result is Right) {
+      var list = result.getOrElse(() => [])
+        ..sort((a, b) => a.data.compareTo(b.data));
+      list = list.reversed.toList();
+      if (list.length > 10) {
+        return list.sublist(0, 6);
+      } else {
+        return list;
+      }
+    } else {
+      return [];
     }
   }
 }

@@ -1,9 +1,9 @@
+import 'package:app_financas/app/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/app/modules/home/abbas/movimentos.dart';
-import 'package:app_financas/app/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/app/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class HomeScreenMovimentosWidget extends StatelessWidget {
@@ -13,32 +13,38 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<HomePageController>();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         children: [
           const SizedBox(height: kDefaultPadding * 2),
-          FutureBuilder<List<Movimento>>(
-            future: controller.listMovimentosDoDia(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+          BlocBuilder<MovimentoBloc, MovimentoState>(
+            bloc: context.read<MovimentoBloc>()
+              ..add(MovimentoGetMovimentosListOfDayEvent()),
+            buildWhen: (previous, current) => previous != current,
+            builder: (context, state) {
+              if (state is MovimentoGetMovimentosListOfDayLoading) {
+                return const CircularProgressIndicator();
               }
-              if (snapshot.hasData) {
+
+              if (state is MovimentoGetMovimentosListOfDayLoadingError) {
+                return const Text('Ocorreu um erro ao buscar os movimentos');
+              }
+
+              if (state is MovimentoGetMovimentosListOfDayEmpty) {
+                return const Text('Sem movimentos para apresentar');
+              }
+
+              if (state is MovimentoGetMovimentosListOfDaySucess) {
                 return MovimentosAtHomePage(
-                  movimentos: snapshot.data ?? [],
+                  movimentos: state.movimentos,
                   verMaisAction: () {
                     Get.to(const MovimentosScreen());
                   },
                 );
-              } else {
-                return const Align(
-                  alignment: Alignment.topCenter,
-                  child: CircularProgressIndicator(),
-                );
               }
+
+              return const Text('Estado desconhecido');
             },
           ),
         ],

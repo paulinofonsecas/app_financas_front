@@ -20,11 +20,10 @@ var locator = GetIt.instance;
 
 Future<void> dependencyInitialize() async {
   locator.registerLazySingleton<Dio>(() => makeDefaultDio());
-  locator
-      .registerLazySingleton<DbMovimentoProvider>(() => DbMovimentoProvider());
 
   // Movimentos
-  locator.registerLazySingleton<IMovimentoProvider>(() => locator());
+  locator
+      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider());
   locator.registerLazySingleton<IMovimentoService>(
       () => MovimentoService(provider: locator()));
 
