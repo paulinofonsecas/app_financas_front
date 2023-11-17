@@ -1,5 +1,6 @@
 import 'package:app_financas/app/bindings/init_bindings.dart';
 import 'package:app_financas/app/modules/splash/splash_page.dart';
+import 'package:app_financas/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -8,16 +9,26 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'app/bloc/app/app_bloc.dart';
+import 'app/bloc/movimento/movimento_bloc.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dependencyInitialize();
+
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
-
   await Hive.initFlutter('./app_financas_db');
 
   runApp(
-    BlocProvider(
-      create: (_) => AppBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => locator<AppBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<MovimentoBloc>(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );

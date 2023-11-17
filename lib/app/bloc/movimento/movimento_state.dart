@@ -2,9 +2,38 @@ part of 'movimento_bloc.dart';
 
 sealed class MovimentoState extends Equatable {
   const MovimentoState();
-  
+
   @override
   List<Object> get props => [];
 }
 
 final class MovimentoInitial extends MovimentoState {}
+
+final class MovimentoGetPaginatedListByContaError extends MovimentoState {
+  final String errorMessage;
+
+  const MovimentoGetPaginatedListByContaError(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+final class MovimentoGetLastPaginatedListByContaSuccess extends MovimentoState {
+  final List<Movimento> movimentos;
+
+  const MovimentoGetLastPaginatedListByContaSuccess(this.movimentos);
+
+  @override
+  List<Object> get props => [movimentos];
+}
+
+final class MovimentoGetPaginatedListByContaSuccess extends MovimentoState {
+  final List<Movimento> movimentos;
+  final int nextPageKey;
+
+  const MovimentoGetPaginatedListByContaSuccess(
+      this.movimentos, this.nextPageKey);
+
+  @override
+  List<Object> get props => [movimentos, nextPageKey];
+}
