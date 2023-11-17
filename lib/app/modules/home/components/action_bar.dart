@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app_financas/app/bloc/app/app_bloc.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_page_controller.dart';
@@ -50,9 +52,17 @@ class ActionBar extends StatelessWidget {
           // Cupertino alert icons
           IconButton(
             onPressed: () {
-              Get.isDarkMode
-                  ? Get.changeTheme(ThemeData.light(useMaterial3: true))
-                  : Get.changeTheme(ThemeData.dark(useMaterial3: true));
+              // Get.isDarkMode
+              //     ? Get.changeTheme(ThemeData.light(useMaterial3: true))
+              //     : Get.changeTheme(ThemeData.dark(useMaterial3: true));
+
+              var themeTarget = Theme.of(context).brightness == Brightness.dark
+                  ? ThemeMode.light
+                  : ThemeMode.dark;
+
+              context
+                  .read<AppBloc>()
+                  .add(AppChangeThemeModeEvent(ThemeMode.light));
             },
             icon: Icon(
               isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,

@@ -39,14 +39,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Kwanzagest',
-      debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      theme: ThemeData.dark(useMaterial3: true),
-      themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      initialBinding: InitBingings(),
-      home: const SplashScreen(),
+    return BlocBuilder<AppBloc, AppState>(
+      bloc: locator<AppBloc>(),
+      builder: (context, state) {
+        late ThemeMode themeMode;
+
+        if (state is AppThemeModeChanged) {
+          themeMode = state.themeMode;
+        } else {
+          themeMode = ThemeMode.system;
+        }
+
+        print('teste');
+
+        return GetMaterialApp(
+          title: 'Kwanzagest',
+          debugShowCheckedModeBanner: false,
+          darkTheme: ThemeData.dark(useMaterial3: true),
+          theme: ThemeData.dark(useMaterial3: true),
+          themeMode: themeMode,
+          initialBinding: InitBingings(),
+          home: const SplashScreen(),
+        );
+      },
     );
   }
 }
