@@ -24,6 +24,7 @@ class EntradasESaidas extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           child: Container(
             width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 12.0),
             decoration: BoxDecoration(
               color: kBlackColor,
             ),
