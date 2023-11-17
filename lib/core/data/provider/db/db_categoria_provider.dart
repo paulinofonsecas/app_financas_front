@@ -355,20 +355,22 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas() async {
-    await initCategoriaSaidasDb();
-    var result = _categoriasSaidaBox.toMap();
+    await initCategoriaEntradasDb();
+    var result = _categoriasEntradaBox.toMap();
 
     if (result.isEmpty) {
       var categoriasPadrao = [
-        'Pagamento',
-        'Emprestimo',
+        'Salário',
+        'Horas Extras',
+        'Rendimento',
+        'Devolução',
         'Outro',
       ];
 
       for (var cat in categoriasPadrao) {
-        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+        await saveEntradaCategoria(Categoria(id: -1, name: cat));
       }
-      return listCategoriasSaidas();
+      return listCategoriasEntradas();
     }
 
     var finalResult = result.values

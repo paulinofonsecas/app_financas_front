@@ -83,7 +83,7 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
               const GutterLarge(),
               Obx(
                 () => Text(
-                  '${controller.getMonthName(controller.periodoMes.value)} ${DateTime.now().year}',
+                  '${controller.mygetMonthName(controller.periodoMes.value)} ${DateTime.now().year}',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

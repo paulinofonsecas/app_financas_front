@@ -100,12 +100,14 @@ class MovimentoService implements IMovimentoService {
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date}) {
-    return provider.listMovimentosEntrada();
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada(
+      {DateTime? date}) {
+    return provider.listMovimentosEntrada(date: date);
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date}) {
-    return provider.listMovimentosSaida();
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida(
+      {DateTime? date}) {
+    return provider.listMovimentosSaida(date: date);
   }
 }

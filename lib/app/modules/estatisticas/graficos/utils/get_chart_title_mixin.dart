@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 mixin EstatisticaLineSemanaHelper {
-  
   Widget bottomTitleWidgets(
     double value,
     TitleMeta meta,
@@ -121,7 +120,8 @@ mixin EstatisticaLineSemanaHelper {
     }
   }
 
-  String getHorasTitle(double value) {
+  String getHorasTitle(double value0) {
+    var value = value0.round();
     if (value == 0) {
       return '0H';
     }
@@ -221,19 +221,19 @@ mixin EstatisticaLineSemanaHelper {
   String getWeekTitle(double value) {
     switch (value.toInt()) {
       case 1:
-        return 'D';
-      case 2:
         return 'S';
-      case 3:
+      case 2:
         return 'T';
+      case 3:
+        return 'Q';
       case 4:
         return 'Q';
       case 5:
-        return 'Q';
+        return 'S';
       case 6:
         return 'S';
       case 7:
-        return 'S';
+        return 'D';
       default:
         return '';
     }

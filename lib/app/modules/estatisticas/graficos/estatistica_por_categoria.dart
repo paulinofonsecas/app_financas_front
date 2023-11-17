@@ -33,6 +33,8 @@ class EstatisticaPorCategoria extends StatelessWidget {
               headerSection(),
               const Gutter(),
               _buildCategoriaChartData(),
+              const GutterLarge(),
+              const GutterLarge(),
             ],
           );
         },
@@ -71,9 +73,7 @@ class EstatisticaPorCategoria extends StatelessWidget {
 
         return Column(
           children: [
-            BuildCategoriesPieChart(
-              data: contas,
-            ),
+            BuildCategoriesPieChart(data: contas),
             const GutterLarge(),
             const CategoriesPieChart(),
           ],

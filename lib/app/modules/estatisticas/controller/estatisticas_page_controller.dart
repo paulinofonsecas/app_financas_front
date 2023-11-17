@@ -36,6 +36,7 @@ class EstatisticasPageController extends GetxController
   void onInit() {
     movimentoService = Get.find();
     categoriaService = Get.find();
+    periodoMes.value = DateTime.now().month;
 
     periodoId = 0;
     super.onInit();
@@ -50,7 +51,7 @@ class EstatisticasPageController extends GetxController
     update(['geral']);
   }
 
-  String getMonthName(int month) {
+  String mygetMonthName(int month) {
     return getMonthName(month);
   }
 
@@ -192,14 +193,20 @@ class EstatisticasPageController extends GetxController
   }
 
   Future<List<Movimento>?> getMovimentos() async {
+    DateTime? date = DateTime(DateTime.now().year, periodoMes.value);
+
+    if (periodoId == 3 || periodoId == 4) {
+      date = null;
+    }
+
     late Either<Failure, List<Movimento>> result;
     if (esFilter == 1) {
       result = await movimentoService.listMovimentosEntrada(
-        date: DateTime(DateTime.now().year, periodoMes.value),
+        date: date,
       );
     } else if (esFilter == 2) {
       result = await movimentoService.listMovimentosSaida(
-        date: DateTime(DateTime.now().year, periodoMes.value),
+        date: date,
       );
     }
 
