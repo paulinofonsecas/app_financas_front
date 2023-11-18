@@ -54,13 +54,7 @@ class ActionBar extends StatelessWidget {
             builder: (context, state) {
               return IconButton(
                 onPressed: () {
-                  var themeMode = state.themeMode;
-
-                  var themeTarget = themeMode == ThemeMode.dark
-                      ? ThemeMode.light
-                      : ThemeMode.dark;
-
-                  context.read<AppThemeCubit>().changeThemeMode(themeTarget);
+                  context.read<AppThemeCubit>().toggleTheme();
                 },
                 icon: Icon(
                   isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,

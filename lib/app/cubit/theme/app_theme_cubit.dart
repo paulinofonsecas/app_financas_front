@@ -12,4 +12,13 @@ class AppThemeCubit extends Cubit<AppThemeState> {
   void changeThemeMode(ThemeMode themeMode) {
     emit(AppThemeChanged(themeMode));
   }
+
+  void toggleTheme() {
+    var themeMode = state.themeMode;
+
+    var themeTarget =
+        themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+
+    emit(AppThemeChanged(themeTarget));
+  }
 }
