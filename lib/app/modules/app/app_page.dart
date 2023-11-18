@@ -78,7 +78,7 @@ class _AppPageState extends State<AppPage> {
         },
         child: Icon(
           CupertinoIcons.add,
-          color: Get.theme.floatingActionButtonTheme.foregroundColor,
+          color: Theme.of(context).floatingActionButtonTheme.foregroundColor,
         ),
       ),
       bottomNavigationBar: BlocBuilder<AppBloc, AppState>(
@@ -112,7 +112,7 @@ class BottomNavBar extends StatelessWidget {
       onTap: onTap,
       type: BottomNavigationBarType.fixed,
       useLegacyColorScheme: false,
-      backgroundColor: Get.theme.bottomAppBarTheme.color,
+      backgroundColor: Theme.of(context).bottomAppBarTheme.color,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(

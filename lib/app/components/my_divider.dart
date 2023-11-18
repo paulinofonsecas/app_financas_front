@@ -7,7 +7,7 @@ class MyDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Get.theme.dividerColor.withOpacity(.1),
+      color: Theme.of(context).dividerColor.withOpacity(.1),
       height: 1,
     );
   }

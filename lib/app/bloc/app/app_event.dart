@@ -16,12 +16,3 @@ class AppChangeBottomNavIndexEvent extends AppEvent {
   @override
   List<Object> get props => [index];
 }
-
-class AppChangeThemeModeEvent extends AppEvent {
-  final ThemeMode target;
-
-  const AppChangeThemeModeEvent(this.target);
-
-  @override
-  List<Object> get props => [target];
-}

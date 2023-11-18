@@ -71,13 +71,19 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
+                style: IconButton.styleFrom(
+                  backgroundColor: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(.8),
+                ),
                 onPressed: () {
                   controller.previousMonth();
                 },
                 icon: Icon(
                   Icons.keyboard_arrow_left_rounded,
                   size: 35,
-                  color: Get.theme.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               const GutterLarge(),
@@ -87,23 +93,31 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Get.theme.primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
               const GutterLarge(),
               IconButton(
+                style: IconButton.styleFrom(
+                  backgroundColor: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(.8),
+                ),
                 onPressed: () {
                   controller.nextMonth();
                 },
                 icon: Icon(
                   Icons.keyboard_arrow_right_rounded,
                   size: 35,
-                  color: Get.theme.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
-          )
+          ),
+          const Gutter(),
+          Divider(color: Theme.of(context).colorScheme.primaryContainer),
         ],
       ),
     );

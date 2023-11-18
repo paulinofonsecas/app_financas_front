@@ -46,7 +46,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
 
     return CustomBottomSheet(
       child: Container(
-        color: Get.theme.scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
@@ -211,7 +211,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
             value: nome,
             icon: Icon(
               Icons.category_outlined,
-              color: Get.theme.iconTheme.color,
+              color: Theme.of(context).iconTheme.color,
               size: 20,
             ),
           );
@@ -238,7 +238,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
       value: controller.getAccountName(controller.movimento.cartaoId),
       icon: Icon(
         Icons.wallet,
-        color: Get.theme.iconTheme.color,
+        color: Theme.of(context).iconTheme.color,
         size: 20,
       ),
     );
@@ -251,7 +251,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
       value: dateFormat.format(controller.movimento.data),
       icon: Icon(
         Icons.calendar_month,
-        color: Get.theme.iconTheme.color,
+        color: Theme.of(context).iconTheme.color,
         size: 20,
       ),
     );
@@ -264,7 +264,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
       value: controller.movimento.descricao,
       icon: Icon(
         Icons.create_outlined,
-        color: Get.theme.iconTheme.color,
+        color: Theme.of(context).iconTheme.color,
         size: 20,
       ),
     );

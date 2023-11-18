@@ -12,7 +12,7 @@ Future<dynamic> customShowModalBottomSheet(
   return showModalBottomSheet(
     context: context,
     isScrollControlled: isScrollControlled,
-    backgroundColor: Get.theme.dialogBackgroundColor,
+    backgroundColor: Theme.of(context).dialogBackgroundColor,
     showDragHandle: showDragHandle ?? true,
     useSafeArea: true,
     useRootNavigator: true,

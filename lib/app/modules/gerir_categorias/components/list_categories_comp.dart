@@ -22,7 +22,7 @@ class ListCategoriesComp extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(top: kDefaultPadding),
         decoration: BoxDecoration(
-          color: Get.theme.dialogBackgroundColor,
+          color: Theme.of(context).dialogBackgroundColor,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(25),
           ),

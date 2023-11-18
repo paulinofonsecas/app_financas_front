@@ -1,4 +1,5 @@
 import 'package:app_financas/app/bindings/init_bindings.dart';
+import 'package:app_financas/app/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:app_financas/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,9 @@ Future<void> main() async {
         BlocProvider(
           create: (context) => locator<MovimentoBloc>(),
         ),
+        BlocProvider(
+          create: (context) => locator<AppThemeCubit>(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -39,29 +43,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(
-      bloc: locator<AppBloc>(),
-      builder: (context, state) {
-        late ThemeMode themeMode;
+    var themeModeState = context.watch<AppThemeCubit>().state;
 
-        if (state is AppThemeModeChanged) {
-          themeMode = state.themeMode;
-        } else {
-          themeMode = ThemeMode.system;
-        }
-
-        print('teste');
-
-        return GetMaterialApp(
-          title: 'Kwanzagest',
-          debugShowCheckedModeBanner: false,
-          darkTheme: ThemeData.dark(useMaterial3: true),
-          theme: ThemeData.dark(useMaterial3: true),
-          themeMode: themeMode,
-          initialBinding: InitBingings(),
-          home: const SplashScreen(),
-        );
-      },
+    return GetMaterialApp(
+      title: 'Kwanzagest',
+      debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
+      ).copyWith(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ),
+        brightness: Brightness.dark,
+      ),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ),
+      ),
+      themeMode: themeModeState.themeMode,
+      initialBinding: InitBingings(),
+      home: const SplashScreen(),
     );
   }
 }

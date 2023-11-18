@@ -41,7 +41,7 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
       borderRadius: BorderRadius.circular(30),
       child: CustomBottomSheet(
         child: Container(
-          color: Get.theme.dialogBackgroundColor,
+          color: Theme.of(context).dialogBackgroundColor,
           child: Padding(
             padding: EdgeInsets.all(kDefaultPadding * 1.5),
             child: Column(
@@ -142,7 +142,8 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
         const Gutter(),
         TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Get.theme.colorScheme.surfaceTint.withOpacity(.1),
+            backgroundColor:
+                Theme.of(context).colorScheme.surfaceTint.withOpacity(.1),
           ),
           onPressed: () {
             controller.selecionarDateTime(context);

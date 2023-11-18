@@ -32,7 +32,7 @@ class BottomCategoryComponent extends StatefulWidget {
     return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Get.theme.dialogBackgroundColor,
+      backgroundColor: Theme.of(context).dialogBackgroundColor,
       showDragHandle: true,
       useSafeArea: true,
       useRootNavigator: true,
@@ -67,7 +67,7 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
   @override
   Widget build(BuildContext context) {
     controller.changeTipoCategoria(widget.tipoCategoria);
-    
+
     return SizedBox(
       width: double.infinity,
       child: Column(

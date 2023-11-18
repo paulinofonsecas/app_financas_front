@@ -64,7 +64,7 @@ class MovimentoItem extends StatelessWidget {
                 vertical: kDefaultPadding,
               ),
               decoration: BoxDecoration(
-                color: Get.theme.colorScheme.onInverseSurface,
+                color: Theme.of(context).colorScheme.onInverseSurface,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

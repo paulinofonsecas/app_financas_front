@@ -38,7 +38,7 @@ class EstatisticasPageController extends GetxController
     categoriaService = Get.find();
     periodoMes.value = DateTime.now().month;
 
-    periodoId = 0;
+    periodoId = 1;
     super.onInit();
   }
 

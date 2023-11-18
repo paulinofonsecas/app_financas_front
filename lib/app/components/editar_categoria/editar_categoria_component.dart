@@ -37,7 +37,7 @@ class EditarCategoriaComponent extends StatefulWidget {
     return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Get.theme.dialogBackgroundColor,
+      backgroundColor: Theme.of(context).dialogBackgroundColor,
       showDragHandle: true,
       useSafeArea: true,
       useRootNavigator: false,

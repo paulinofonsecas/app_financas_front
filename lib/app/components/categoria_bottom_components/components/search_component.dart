@@ -27,7 +27,7 @@ class SearchComponent extends StatelessWidget {
           color: Colors.grey,
         ),
         filled: true,
-        fillColor: Get.isDarkMode
+        fillColor: Theme.of(context).brightness == Brightness.dark
             ? Theme.of(context).cardColor.withOpacity(.7)
             : Colors.grey.shade300,
         border: const OutlineInputBorder(

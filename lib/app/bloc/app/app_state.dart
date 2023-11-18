@@ -17,9 +17,3 @@ final class AppBottomNavChanged extends AppState {
 
   const AppBottomNavChanged(this.index) : super(bottomNavIndex: index);
 }
-
-final class AppThemeModeChanged extends AppState {
-  final ThemeMode themeMode;
-
-  const AppThemeModeChanged(this.themeMode);
-}

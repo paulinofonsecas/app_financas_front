@@ -36,7 +36,8 @@ class SelectDateComponent extends StatelessWidget {
         const Gutter(),
         TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Get.theme.colorScheme.surfaceTint.withOpacity(.1),
+            backgroundColor:
+                Theme.of(context).colorScheme.surfaceTint.withOpacity(.1),
           ),
           onPressed: () {
             controller.selecionarDateTime(context);

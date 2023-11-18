@@ -36,10 +36,11 @@ class CategoriaItem extends StatelessWidget {
           ),
         ),
         leading: CircleAvatar(
-          backgroundColor: categoria.color ?? Get.theme.colorScheme.primary,
+          backgroundColor:
+              categoria.color ?? Theme.of(context).colorScheme.primary,
           child: Icon(
             categoria.icon ?? Icons.icecream,
-            color:  Colors.white,
+            color: Colors.white,
             size: 16,
           ),
         ),

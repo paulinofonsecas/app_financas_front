@@ -22,7 +22,7 @@ class WithIcon extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: color ?? Get.theme.iconTheme.color?.withOpacity(.8),
+          color: color ?? Theme.of(context).iconTheme.color?.withOpacity(.8),
           size: 22,
         ),
         const Gutter(),

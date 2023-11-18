@@ -23,7 +23,7 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
       width: double.infinity,
       height: size.height * .25,
       decoration: BoxDecoration(
-        color: Get.theme.dialogBackgroundColor,
+        color: Theme.of(context).dialogBackgroundColor,
       ),
       child: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),

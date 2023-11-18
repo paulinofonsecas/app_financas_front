@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/app/bloc/app/app_bloc.dart';
+import 'package:app_financas/app/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +20,7 @@ class ActionBar extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.menu,
-              color: Get.theme.iconTheme.color,
+              color: Theme.of(context).iconTheme.color,
             ),
             onPressed: () {
               var controller = Get.find<HomePageController>();
@@ -50,25 +50,25 @@ class ActionBar extends StatelessWidget {
           ),
           Spacer(),
           // Cupertino alert icons
-          IconButton(
-            onPressed: () {
-              // Get.isDarkMode
-              //     ? Get.changeTheme(ThemeData.light(useMaterial3: true))
-              //     : Get.changeTheme(ThemeData.dark(useMaterial3: true));
+          BlocBuilder<AppThemeCubit, AppThemeState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  var themeMode = state.themeMode;
 
-              var themeTarget = Theme.of(context).brightness == Brightness.dark
-                  ? ThemeMode.light
-                  : ThemeMode.dark;
+                  var themeTarget = themeMode == ThemeMode.dark
+                      ? ThemeMode.light
+                      : ThemeMode.dark;
 
-              context
-                  .read<AppBloc>()
-                  .add(AppChangeThemeModeEvent(ThemeMode.light));
+                  context.read<AppThemeCubit>().changeThemeMode(themeTarget);
+                },
+                icon: Icon(
+                  isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 26,
+                ),
+              );
             },
-            icon: Icon(
-              isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,
-              color: Get.theme.iconTheme.color,
-              size: 26,
-            ),
           ),
         ],
       ),

@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
               minHeight: size.height * .9,
             ),
             decoration: BoxDecoration(
-              color: Get.theme.scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(30),
               ),

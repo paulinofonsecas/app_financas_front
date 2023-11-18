@@ -20,7 +20,7 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
     var controller = Get.put(MovimentoScreenController());
 
     return Scaffold(
-      backgroundColor: Get.theme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GetBuilder(
         init: controller,
         id: 'geral',
@@ -67,7 +67,7 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor:
-                      Get.theme.colorScheme.surfaceTint.withOpacity(.1),
+                      Theme.of(context).colorScheme.surfaceTint.withOpacity(.1),
                 ),
                 onPressed: () {
                   controller.selecionarDateTime(context);

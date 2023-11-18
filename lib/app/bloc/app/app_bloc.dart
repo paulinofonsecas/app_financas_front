@@ -10,14 +10,9 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppInitial()) {
     on<AppChangeBottomNavIndexEvent>(onAppChangeBottomNav);
-    on<AppChangeThemeModeEvent>(onAppChangeThemeMode);
   }
 
   void onAppChangeBottomNav(event, emit) {
     emit(AppBottomNavChanged(event.index));
-  }
-
-  void onAppChangeThemeMode(event, emit) {
-    emit(AppThemeModeChanged(event.target));
   }
 }
