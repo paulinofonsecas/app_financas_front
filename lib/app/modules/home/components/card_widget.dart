@@ -107,7 +107,9 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.primaryContainer
+          : Theme.of(context).colorScheme.onInverseSurface,
     );
   }
 }
