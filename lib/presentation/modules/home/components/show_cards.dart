@@ -1,9 +1,9 @@
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/home/components/card_widget.dart';
-import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowCards extends StatefulWidget {
   const ShowCards({super.key});
@@ -13,17 +13,12 @@ class ShowCards extends StatefulWidget {
 }
 
 class _ShowCardsState extends State<ShowCards> {
-  late final HomePageController controller;
-  var pageController = PageController(
-    initialPage: 0,
-    viewportFraction: 0.9,
-  );
+  late final HomePageCubit homePageCubit;
 
   @override
   void initState() {
-    controller = Get.find<HomePageController>();
+    homePageCubit = locator();
 
-    controller.getCartoes;
     super.initState();
   }
 
@@ -31,46 +26,51 @@ class _ShowCardsState extends State<ShowCards> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return SizedBox(
-            width: size.width,
-            height: size.height * 0.23,
-            child: FutureBuilder<List<Conta>>(
-              future: controller.getCartoes(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+    return SizedBox(
+      width: size.width,
+      height: size.height * 0.23,
+      child: BlocBuilder<HomePageCubit, HomePageState>(
+        bloc: homePageCubit..getContas(),
+        buildWhen: (previous, current) {
+          return previous != current && current is HomePageListarContasState;
+        },
+        builder: (context, state) {
+          if (state is HomePageListarContasLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-                var cartoes = snapshot.data ?? [];
+          if (state is HomePageListarContasError) {
+            return const Center(child: Text('Erro ao buscar contas'));
+          }
 
-                if (cartoes.isEmpty) {
-                  return const Center(
-                    child: Text('Nenhum cartão cadastrado'),
-                  );
-                }
+          if (state is HomePageListarContasEmpty) {
+            return const Center(
+              child: Text('Nenhum cartão cadastrado'),
+            );
+          }
 
-                return LayoutBuilder(
-                  builder: (c, constraines) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding,
-                      ),
-                      child: CardWidget(
-                        width: size.width * 0.85,
-                        height: 176,
-                      ),
-                    );
-                  },
+          if (state is HomePageListarContasSuccess) {
+            return LayoutBuilder(
+              builder: (c, constraines) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: kDefaultPadding,
+                  ),
+                  child: CardWidget(
+                    height: 176,
+                    width: size.width * 0.85,
+                    contas: state.contas,
+                  ),
                 );
               },
-            ),
-          );
-        });
+            );
+          }
+
+          return Container();
+        },
+      ),
+    );
   }
 }

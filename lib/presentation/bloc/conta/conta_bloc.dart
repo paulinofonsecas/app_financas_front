@@ -1,0 +1,39 @@
+import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+
+part 'conta_event.dart';
+part 'conta_state.dart';
+
+class ContaBloc extends Bloc<ContaEvent, ContaState> {
+  late final IContaService contaService;
+
+  ContaBloc() : super(ContaInitial()) {
+    contaService = locator();
+
+    on<ListarContasEvent>(_onListarContas);
+  }
+
+  _onListarContas(event, emit) async {
+    emit(ListarContasLoading());
+    var contas = await contaService.listContas();
+
+    if (contas is Right) {
+      if (contas.getOrElse(() => []).isNotEmpty) {
+        emit(ListarContasSuccess(contas.getOrElse(() => [])));
+      } else {
+        emit(ListarContasEmpty());
+      }
+    } else {
+      emit(
+        ListarContasError(
+          errorMessage: contas.fold((l) => l.toString(), (r) => ''),
+        ),
+      );
+    }
+  }
+}

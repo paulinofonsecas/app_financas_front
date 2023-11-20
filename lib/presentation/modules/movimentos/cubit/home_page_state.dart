@@ -38,3 +38,25 @@ final class HomePageGetLastPaginatedListSuccess extends HomePageState {
   @override
   List<Object> get props => [movimentos];
 }
+
+abstract class HomePageListarContasState extends HomePageState {
+  const HomePageListarContasState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomePageListarContasLoading extends HomePageListarContasState {}
+
+final class HomePageListarContasError extends HomePageListarContasState {}
+
+final class HomePageListarContasEmpty extends HomePageListarContasState {}
+
+final class HomePageListarContasSuccess extends HomePageListarContasState {
+  final List<Conta> contas;
+
+  const HomePageListarContasSuccess(this.contas);
+
+  @override
+  List<Object> get props => [contas];
+}

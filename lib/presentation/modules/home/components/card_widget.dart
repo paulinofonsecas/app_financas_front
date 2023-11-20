@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -17,10 +18,18 @@ class CardWidget extends StatelessWidget {
     Key? key,
     required this.width,
     required this.height,
+    required this.contas,
   }) : super(key: key);
 
   final double width;
   final double height;
+  final List<Conta> contas;
+
+  double getSaldoDisponivel() {
+    return contas.fold(0.0, (previousValue, element) {
+      return previousValue + element.saldo;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,29 +59,14 @@ class CardWidget extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  FutureBuilder<double>(
-                    future: controller.getSaldoDisponivel(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Obx(
-                          () => Text(
-                            controller.showMoneyOnCards.value
-                                ? numberFormat.format(snapshot.data ?? 0.0)
-                                : '**********',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
+                  Text(
+                    controller.showMoneyOnCards.value
+                        ? numberFormat.format(getSaldoDisponivel())
+                        : '**********',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   GutterTiny(),
                   // mostrar icon de olhos para ver o valor

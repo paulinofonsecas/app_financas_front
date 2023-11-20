@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
@@ -42,7 +43,10 @@ Future<void> dependencyInitialize() async {
 
   // blocs
   locator.registerLazySingleton<AppBloc>(() => AppBloc());
-  locator.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());
+  locator.registerLazySingleton<ContaBloc>(() => ContaBloc());
   locator.registerLazySingleton<MovimentoBloc>(() => MovimentoBloc(locator()));
+
+  // cubits
+  locator.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());
   locator.registerLazySingleton<HomePageCubit>(() => HomePageCubit());
 }
