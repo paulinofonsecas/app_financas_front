@@ -114,7 +114,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, Categoria>> getEntradaCategoria(int id) async {
-    var result = await listCategoriasEntradas();
+    var result = await listValidCategoriasEntradas();
 
     if (result is Right) {
       var categorias = result.getOrElse(() => []);
@@ -137,7 +137,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, Categoria>> getSaidaCategoria(int id) async {
-    var result = await listCategoriasSaidas();
+    var result = await listValidCategoriasSaidas();
 
     if (result is Right) {
       var categorias = result.getOrElse(() => []);
