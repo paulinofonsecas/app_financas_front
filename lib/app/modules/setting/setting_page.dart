@@ -14,9 +14,6 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Configurações'),
-        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: ListView(
@@ -33,4 +30,3 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 }
-
