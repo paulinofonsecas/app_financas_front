@@ -33,8 +33,20 @@ dependencies:
   flutter_bloc_hooks: ^0.0.2+1
   bloc_test: ^9.1.5
   get_it: ^7.6.4
-  equatable: ^2.0.5
-  
+  equatable: ^2.0.5  
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/imgs/logo.jpg"
+  web:
+    generate: true
+    image_path: "assets/imgs/logo.jpg"
+  windows:
+    generate: true
+    image_path: "assets/imgs/logo.jpg"
+    icon_size: 48 # min:48, max:256, default: 48
 
 dev_dependencies:
   flutter_test:

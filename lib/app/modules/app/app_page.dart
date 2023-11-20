@@ -134,9 +134,9 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            CupertinoIcons.person_alt,
+            CupertinoIcons.settings,
           ),
-          label: 'Perfil',
+          label: 'Settings',
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:app_financas/app/bindings/init_bindings.dart';
 import 'package:app_financas/app/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/app/modules/splash/splash_page.dart';
 import 'package:app_financas/dependency/dep_injection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -63,6 +64,11 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
         ),
       ),
+      scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      }),
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),
