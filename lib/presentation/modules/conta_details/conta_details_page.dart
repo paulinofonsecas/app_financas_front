@@ -6,7 +6,7 @@ import 'package:app_financas/presentation/modules/conta_details/controllers/cont
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/constants.dart';

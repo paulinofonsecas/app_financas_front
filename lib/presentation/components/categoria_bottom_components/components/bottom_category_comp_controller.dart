@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
-import 'package:app_financas/helders/helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 
 class BottomCategoryCompController extends GetxController {
   late final TextEditingController searchTextController;

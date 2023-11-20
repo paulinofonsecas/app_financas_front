@@ -4,7 +4,7 @@
 import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 

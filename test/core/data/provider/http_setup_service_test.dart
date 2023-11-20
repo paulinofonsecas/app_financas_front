@@ -1,6 +1,6 @@
 import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
-import 'package:app_financas/helders/http_helpers.dart';
+import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 

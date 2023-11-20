@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/presentation/modules/edit_transaction/components/body.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/edit_transacao_controller.dart';
 

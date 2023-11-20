@@ -3,7 +3,7 @@ import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
-import 'package:app_financas/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

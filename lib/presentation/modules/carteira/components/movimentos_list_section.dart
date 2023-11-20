@@ -3,7 +3,7 @@ import 'package:app_financas/presentation/modules/carteira/controllers/carteira_
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';

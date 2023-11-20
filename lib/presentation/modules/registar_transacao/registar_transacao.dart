@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/registar_transacao_controller.dart';
 

@@ -8,7 +8,7 @@ import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'category_list_item_component.dart';
 import 'register_despesa_header.dart';

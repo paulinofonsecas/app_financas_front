@@ -1,7 +1,7 @@
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';

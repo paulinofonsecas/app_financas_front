@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/format_helpers.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 
 import '../controllers/home_page_controller.dart';
 

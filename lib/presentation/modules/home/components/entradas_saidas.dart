@@ -2,7 +2,7 @@
 
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/helders/format_helpers.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';

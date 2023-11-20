@@ -12,7 +12,7 @@ import 'package:app_financas/presentation/modules/carteira/carteira_page.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/home_page.dart';
 import 'package:app_financas/presentation/modules/setting/setting_page.dart';
-import 'package:app_financas/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 
 import '../estatisticas/estatisticas_page.dart';
 import '../home/controllers/home_page_controller.dart';

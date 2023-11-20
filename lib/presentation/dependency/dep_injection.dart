@@ -14,7 +14,7 @@ import 'package:app_financas/core/data/services/movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
-import 'package:app_financas/helders/http_helpers.dart';
+import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:dio/dio.dart';
 
 var locator = GetIt.instance;
