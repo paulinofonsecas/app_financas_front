@@ -9,20 +9,6 @@ sealed class MovimentoState extends Equatable {
 
 final class MovimentoInitial extends MovimentoState {}
 
-final class MovimentoGetPaginatedListByContaError extends MovimentoState {
-  final String errorMessage;
-
-  const MovimentoGetPaginatedListByContaError(this.errorMessage);
-
-  @override
-  List<Object> get props => [errorMessage];
-}
-
-final class MovimentoGetPaginatedListByContaLoading extends MovimentoState {}
-
-final class MovimentoGetPaginatedListByContaLoadingError
-    extends MovimentoState {}
-
 // movimentos of day
 final class MovimentoGetMovimentosListOfDayLoading extends MovimentoState {}
 
@@ -42,6 +28,7 @@ final class MovimentoGetMovimentosListOfDaySucess extends MovimentoState {
 
 // end movimentos of day
 
+// movimentos paginated by conta
 final class MovimentoGetLastPaginatedListByContaSuccess extends MovimentoState {
   final List<Movimento> movimentos;
 
@@ -61,3 +48,52 @@ final class MovimentoGetPaginatedListByContaSuccess extends MovimentoState {
   @override
   List<Object> get props => [movimentos, nextPageKey];
 }
+
+final class MovimentoGetPaginatedListByContaError extends MovimentoState {
+  final String errorMessage;
+
+  const MovimentoGetPaginatedListByContaError(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+final class MovimentoGetPaginatedListByContaLoading extends MovimentoState {}
+
+// end movimentos paginated by conta
+
+
+// movimentos paginated
+
+final class MovimentoGetPaginatedListSuccess extends MovimentoState {
+  final List<Movimento> movimentos;
+  final int nextPageKey;
+
+  const MovimentoGetPaginatedListSuccess(
+      this.movimentos, this.nextPageKey);
+
+  @override
+  List<Object> get props => [movimentos, nextPageKey];
+}
+
+final class MovimentoGetLastPaginatedListSuccess extends MovimentoState {
+  final List<Movimento> movimentos;
+
+  const MovimentoGetLastPaginatedListSuccess(this.movimentos);
+
+  @override
+  List<Object> get props => [movimentos];
+}
+
+final class MovimentoGetPaginatedListError extends MovimentoState {
+  final String errorMessage;
+
+  const MovimentoGetPaginatedListError(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+final class MovimentoGetPaginatedListLoading extends MovimentoState {}
+
+// end movimentos paginated

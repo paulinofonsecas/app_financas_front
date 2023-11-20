@@ -32,30 +32,11 @@ class MovimentosListSection extends StatelessWidget {
               child: PagedListView<int, Movimento>(
                 pagingController: carteiraController.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<Movimento>(
-                  itemBuilder: (context, movimento, index) => MovimentoItem(
-                    movimento: movimento,
-                    asset: 'assets/svgs/categories/desktop.svg',
-                    title: movimento.descricao,
-                    conta: 'Tecnologia',
-                    valor: movimento.valor,
-                    tipoMovimentoId: movimento.tipoMovimentoId,
-                    avatarBgColor: kAmarelhoColor,
-                    onTap: () {
-                      customShowModalBottomSheet(
-                        context,
-                        child: ShowTransactionPage(
-                          movimento: movimento,
-                          onEdit: () {
-                            carteiraController.update(['geral']);
-                            carteiraController.pagingController.refresh();
-                          },
-                          onConfirmar: () {
-                            carteiraController.pagingController.refresh();
-                            carteiraController.update(['geral']);
-                          },
-                        ),
-                      );
-                    },
+                  itemBuilder: (context, movimento, index) =>
+                      _buildMovimentoItem(
+                    movimento,
+                    context,
+                    carteiraController,
                   ),
                 ),
               ),
@@ -63,6 +44,35 @@ class MovimentosListSection extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  MovimentoItem _buildMovimentoItem(Movimento movimento, BuildContext context,
+      CarteiraPageController carteiraController) {
+    return MovimentoItem(
+      movimento: movimento,
+      asset: 'assets/svgs/categories/desktop.svg',
+      title: movimento.descricao,
+      conta: 'Tecnologia',
+      valor: movimento.valor,
+      tipoMovimentoId: movimento.tipoMovimentoId,
+      avatarBgColor: kAmarelhoColor,
+      onTap: () {
+        customShowModalBottomSheet(
+          context,
+          child: ShowTransactionPage(
+            movimento: movimento,
+            onEdit: () {
+              carteiraController.update(['geral']);
+              carteiraController.pagingController.refresh();
+            },
+            onConfirmar: () {
+              carteiraController.pagingController.refresh();
+              carteiraController.update(['geral']);
+            },
+          ),
+        );
+      },
     );
   }
 }

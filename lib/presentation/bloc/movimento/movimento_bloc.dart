@@ -14,14 +14,17 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
 
   MovimentoBloc(this.movimentoService) : super(MovimentoInitial()) {
     on<MovimentoGetPaginatedListByContaEvent>(
-      _onMovimentoGetPaginatedListByContaEvent,
+      _onMovimentoGetPaginatedListEvent,
     );
     on<MovimentoGetMovimentosListOfDayEvent>(
       _onMovimentoGetMovimentosListOfDayEvent,
     );
+    on<MovimentoGetPaginatedListEvent>(
+      _onMovimentoGetPaginatedListEvent,
+    );
   }
 
-  void _onMovimentoGetPaginatedListByContaEvent(event, emit) async {
+  void _onMovimentoGetPaginatedListEvent(event, emit) async {
     final page = event.page;
     final pageSize = event.pageSize;
 
@@ -30,7 +33,7 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
 
       if (newItems == null) {
         emit(
-          const MovimentoGetPaginatedListByContaError(
+          const MovimentoGetPaginatedListError(
             'Erro ao buscar movimentos',
           ),
         );
@@ -40,13 +43,13 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
       final isLastPage = newItems.length < pageSize;
 
       if (isLastPage) {
-        emit(MovimentoGetLastPaginatedListByContaSuccess(newItems));
+        emit(MovimentoGetLastPaginatedListSuccess(newItems));
       } else {
         final nextPageKey = page + 1;
-        emit(MovimentoGetPaginatedListByContaSuccess(newItems, nextPageKey));
+        emit(MovimentoGetPaginatedListSuccess(newItems, nextPageKey));
       }
     } catch (error) {
-      emit(MovimentoGetPaginatedListByContaError(error.toString()));
+      emit(MovimentoGetPaginatedListError(error.toString()));
     }
   }
 

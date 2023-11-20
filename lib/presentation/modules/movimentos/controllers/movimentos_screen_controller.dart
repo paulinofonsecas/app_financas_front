@@ -18,7 +18,7 @@ class MovimentoScreenController extends GetxController {
   void onInit() {
     service = Get.find();
     pagingController = PagingController(firstPageKey: 1);
-    date = DateTime.now();
+    date = DateTime.now(); 
 
     pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);
