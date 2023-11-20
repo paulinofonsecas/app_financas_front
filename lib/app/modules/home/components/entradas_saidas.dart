@@ -26,11 +26,12 @@ class EntradasESaidas extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.symmetric(horizontal: 12.0),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
               color: kBlackColor,
             ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FutureBuilder<double>(
@@ -88,46 +89,49 @@ class EntradaOuSaidaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomePageController>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(asset, width: 16),
-            SizedBox(width: kDefaultPadding / 4),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Colors.white,
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(asset, width: 16),
+              SizedBox(width: kDefaultPadding / 4),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        GutterTiny(),
-        Obx(
-          () => Text(
-            controller.showMoneyOnCards.value
-                ? numberFormat.format(valor)
-                : '********',
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+                ],
+              ),
+            ],
+          ),
+          GutterTiny(),
+          Obx(
+            () => Text(
+              controller.showMoneyOnCards.value
+                  ? numberFormat.format(valor)
+                  : '********',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
