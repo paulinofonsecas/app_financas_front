@@ -1,4 +1,3 @@
-import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../controllers/movimentos_screen_controller.dart';
+import '../cubit/home_page_cubit.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -25,24 +25,21 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   late final PagingController<int, Movimento> pagingController;
-  late final MovimentoBloc movimentoBloc;
+  late final HomePageCubit homePageCubit;
 
   var page = 1;
   var pageSize = 10;
 
   @override
   void initState() {
-    movimentoBloc = locator();
+    homePageCubit = locator();
     pagingController = PagingController(firstPageKey: 1);
 
     pagingController.addPageRequestListener((pageKey) {
-      movimentoBloc.add(
-        MovimentoGetPaginatedListEvent(
-          pageKey,
-          pageSize,
-        ),
-      );
+      homePageCubit.getPaginatedMovimentos(pageKey);
     });
+
+    homePageCubit.getPaginatedMovimentos(page);
 
     super.initState();
   }
@@ -52,33 +49,36 @@ class _BodyState extends State<Body> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: BlocConsumer<MovimentoBloc, MovimentoState>(
-          bloc: movimentoBloc
-            ..add(MovimentoGetPaginatedListEvent(page, pageSize)),
-          listener: (BuildContext context, MovimentoState state) {
-            if (state is MovimentoGetPaginatedListSuccess) {
+        child: BlocConsumer<HomePageCubit, HomePageState>(
+          bloc: homePageCubit,
+          listener: (BuildContext context, HomePageState state) {
+            if (state is HomePageGetPaginatedListSuccess) {
               pagingController.appendPage(state.movimentos, state.nextPageKey);
             }
 
-            if (state is MovimentoGetLastPaginatedListSuccess) {
+            if (state is HomePageGetLastPaginatedListSuccess) {
               pagingController.appendLastPage(state.movimentos);
             }
           },
+          buildWhen: (previous, current) {
+            return current is HomePageGetLastPaginatedListSuccess ||
+                current is HomePageGetPaginatedListSuccess;
+          },
           builder: (context, state) {
-            if (state is MovimentoGetPaginatedListLoading) {
+            if (state is HomePageLoadingMovimentosState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if (state is MovimentoGetPaginatedListError) {
+            if (state is HomePageGetPaginatedListError) {
               return Center(
                 child: Text(state.errorMessage),
               );
             }
 
-            if (state is MovimentoGetPaginatedListSuccess ||
-                state is MovimentoGetLastPaginatedListSuccess) {
+            if (state is HomePageGetPaginatedListSuccess ||
+                state is HomePageGetLastPaginatedListSuccess) {
               return PagedListView<int, Movimento>(
                 pagingController: pagingController,
                 builderDelegate: PagedChildBuilderDelegate<Movimento>(

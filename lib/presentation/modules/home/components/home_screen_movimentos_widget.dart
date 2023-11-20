@@ -1,5 +1,5 @@
-import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/home/abbas/movimentos_at_home_page.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,24 +18,23 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: kDefaultPadding * 2),
-          BlocBuilder<MovimentoBloc, MovimentoState>(
-            bloc: context.read<MovimentoBloc>()
-              ..add(MovimentoGetMovimentosListOfDayEvent()),
-            buildWhen: (previous, current) => previous != current,
+          BlocBuilder<LastMovimentosCubit, LastMovimentosState>(
+            bloc: context.read<LastMovimentosCubit>()..getLastMovimentos(),
             builder: (context, state) {
-              if (state is MovimentoGetMovimentosListOfDayLoading) {
+              if (state is LastMovimentosLoading ||
+                  state is LastMovimentosInitialState) {
                 return const CircularProgressIndicator();
               }
 
-              if (state is MovimentoGetMovimentosListOfDayLoadingError) {
+              if (state is LastMovimentosError) {
                 return const Text('Ocorreu um erro ao buscar os movimentos');
               }
 
-              if (state is MovimentoGetMovimentosListOfDayEmpty) {
+              if (state is LastMovimentosEmpty) {
                 return const Text('Sem movimentos para apresentar');
               }
 
-              if (state is MovimentoGetMovimentosListOfDaySucess) {
+              if (state is LastMovimentosSuccess) {
                 return MovimentosAtHomePage(
                   movimentos: state.movimentos,
                   verMaisAction: () {

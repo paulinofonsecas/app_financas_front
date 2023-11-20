@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +36,21 @@ class _AppPageState extends State<AppPage> {
 
   @override
   void initState() {
-    telas = const [
-      HomePage(),
-      CarteiraPage(),
-      EstatisticasPage(),
-      SettingPage(),
+    telas = [
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => HomePageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => LastMovimentosCubit(),
+          ),
+        ],
+        child: const HomePage(),
+      ),
+      const CarteiraPage(),
+      const EstatisticasPage(),
+      const SettingPage(),
     ];
 
     super.initState();
