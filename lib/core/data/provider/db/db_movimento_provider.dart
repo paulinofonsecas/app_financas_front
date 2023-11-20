@@ -1,12 +1,20 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
 class DbMovimentoProvider implements IMovimentoProvider {
   late Box<Map<dynamic, dynamic>> _movimentosBox;
+  late final ICategoriaService categoriaService;
+
+  DbMovimentoProvider() {
+    categoriaService = locator();
+  }
 
   Future<void> initDb() async {
     _movimentosBox = await Hive.openBox(kMovimentosBox);
@@ -69,7 +77,24 @@ class DbMovimentoProvider implements IMovimentoProvider {
         )
         .toList();
 
+    movimentos = await populateCategories(movimentos);
+
     return Right(movimentos);
+  }
+
+  Future<List<Movimento>> populateCategories(List<Movimento> movimentos) async {
+    var saida = <Movimento>[];
+
+    for (var mov in movimentos) {
+      var result = mov.tipoMovimentoId == 1
+          ? await categoriaService.getEntradaCategoria(mov.categoriaMovimentoId)
+          : await categoriaService.getSaidaCategoria(mov.categoriaMovimentoId);
+      var categoria = result.getOrElse(() => Categoria.fake());
+
+      saida.add(mov.copyWith(categoria: categoria));
+    }
+
+    return saida;
   }
 
   @override
@@ -175,6 +200,8 @@ class DbMovimentoProvider implements IMovimentoProvider {
           .toList();
     }
 
+    movimentos = await populateCategories(movimentos);
+
     return Right(movimentos);
   }
 
@@ -198,6 +225,8 @@ class DbMovimentoProvider implements IMovimentoProvider {
               element.data.month == date.month)
           .toList();
     }
+
+    movimentos = await populateCategories(movimentos);
 
     return Right(movimentos);
   }

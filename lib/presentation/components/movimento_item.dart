@@ -93,7 +93,7 @@ class MovimentoItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Bebida & Comida',
+                            movimento.categoria?.name ?? '',
                             style: GoogleFonts.inter(
                               fontSize: 11,
                             ),
