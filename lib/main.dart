@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
     var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
-      title: 'Kwanzagest',
+      title: 'Kwanza Gest',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(
         useMaterial3: true,
