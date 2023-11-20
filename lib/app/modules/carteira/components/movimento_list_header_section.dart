@@ -1,5 +1,4 @@
 import 'package:app_financas/app/modules/carteira/controllers/carteira_page_controller.dart';
-import 'package:app_financas/app/modules/conta_details/conta_details_page.dart';
 import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -19,7 +18,8 @@ class HeaderMovimentoSection extends StatelessWidget {
     return Hero(
       tag: 'header_movimento',
       child: Material(
-        child: Row(
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             MyTextFilter(
               title: 'Tudo',
@@ -43,13 +43,6 @@ class HeaderMovimentoSection extends StatelessWidget {
               onTap: () {
                 carteiraController.changeESFilter(TipoMovimento.ENTRADA);
               },
-            ),
-            const Spacer(),
-            TextButton(
-              onPressed: () {
-                Get.to(ContaDetailsPage(conta: carteiraController.conta!));
-              },
-              child: const Text('Ver mais'),
             ),
           ],
         ),

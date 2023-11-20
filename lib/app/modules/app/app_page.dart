@@ -45,6 +45,7 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.size);
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: const MyDrawer(),

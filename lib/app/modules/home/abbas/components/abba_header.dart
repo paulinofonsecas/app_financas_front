@@ -14,12 +14,14 @@ class AbbaHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
+
     return Row(
       children: [
         Text(
           title,
           style: GoogleFonts.inter(
-            fontSize: 26,
+            fontSize: theme.titleLarge!.fontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -29,7 +31,7 @@ class AbbaHeader extends StatelessWidget {
           child: Text(
             'Ver mais',
             style: GoogleFonts.inter(
-              fontSize: 22,
+              fontSize: theme.titleMedium!.fontSize,
               color: Theme.of(context).colorScheme.onBackground,
             ),
           ),

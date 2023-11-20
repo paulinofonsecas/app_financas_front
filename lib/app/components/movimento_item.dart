@@ -33,14 +33,13 @@ class MovimentoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     int wordLimit() {
-      var width = MediaQuery.of(context).size.width;
-
       if (width < 500) {
         return 20;
-      } else if (width < 550) {
+      } else if (width > 550 && width < 6000) {
         return 25;
-      } else if (width < 600) {
+      } else if (width > 600) {
         return 30;
       }
 
@@ -104,32 +103,7 @@ class MovimentoItem extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        tipoMovimentoId == 1
-                            ? numberFormat.format(valor)
-                            : '- ${numberFormat.format(valor)}',
-                        style: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: tipoMovimentoId == 1
-                              ? kVerdeAccentColor
-                              : kVermelhaColor,
-                        ),
-                      ),
-                      Text(
-                        movimento.data.day == DateTime.now().day
-                            ? 'Hoje ${DateFormat('hh:mm').format(movimento.data)}'
-                            : dateFormat.format(movimento.data),
-                        style: GoogleFonts.inter(
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  )
+                  if (width > 388) buildMovimentoDetails()
                 ],
               ),
             ),
@@ -137,6 +111,33 @@ class MovimentoItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildMovimentoDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          tipoMovimentoId == 1
+              ? numberFormat.format(valor)
+              : '- ${numberFormat.format(valor)}',
+          style: GoogleFonts.inter(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: tipoMovimentoId == 1 ? kVerdeAccentColor : kVermelhaColor,
+          ),
+        ),
+        Text(
+          movimento.data.day == DateTime.now().day
+              ? 'Hoje ${DateFormat('hh:mm').format(movimento.data)}'
+              : dateFormat.format(movimento.data),
+          style: GoogleFonts.inter(
+            fontSize: 11,
+          ),
+        ),
+      ],
     );
   }
 }

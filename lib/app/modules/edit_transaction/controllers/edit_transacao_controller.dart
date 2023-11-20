@@ -1,4 +1,5 @@
 import 'package:app_financas/app/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/app/modules/app/app_page.dart';
 import 'package:app_financas/app/modules/home/home_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
@@ -212,7 +213,7 @@ class EditTransacaoController extends GetxController {
     var result = await movimentoService.deleteMovimento(movimento.id);
 
     if (result is Right && result.getOrElse(() => false)) {
-      Get.off(() => const HomePage());
+      Get.off(() => const AppPage());
     } else {
       var error = result.swap().getOrElse(() => HttpException('message'));
       if (kDebugMode) {
