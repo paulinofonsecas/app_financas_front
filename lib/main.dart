@@ -1,6 +1,8 @@
-import 'package:app_financas/app/bindings/init_bindings.dart';
-import 'package:app_financas/app/cubit/theme/app_theme_cubit.dart';
-import 'package:app_financas/app/modules/splash/splash_page.dart';
+import 'package:app_financas/presentation/bindings/init_bindings.dart';
+import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
+import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/dependency/dep_injection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +12,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import 'app/bloc/app/app_bloc.dart';
-import 'app/bloc/movimento/movimento_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

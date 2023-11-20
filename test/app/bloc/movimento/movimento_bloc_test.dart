@@ -1,4 +1,4 @@
-import 'package:app_financas/app/bloc/movimento/movimento_bloc.dart';
+import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/core/data/services/movimento_service.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';

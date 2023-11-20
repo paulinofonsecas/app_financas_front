@@ -1,4 +1,4 @@
-import 'package:app_financas/app/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,7 +26,7 @@ void main() {
     blocTest<AppBloc, AppState>(
       'emits AppBottomNavChanged when ChangeAppBottomNavEvent is added.',
       build: () => appBloc,
-      act: (bloc) => bloc.add(AppChangeBottomNavIndexEvent(2)),
+      act: (bloc) => bloc.add(const AppChangeBottomNavIndexEvent(2)),
       expect: () => const <AppState>[AppBottomNavChanged(2)],
     );
   });
