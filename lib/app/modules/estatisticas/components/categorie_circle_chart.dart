@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controller/estatisticas_page_controller.dart';
 
@@ -23,6 +24,7 @@ class BuildCategoriesPieChart extends StatelessWidget {
         ? Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              headerSection(),
               SizedBox(
                 height: 250,
                 child: PieChart(
@@ -75,5 +77,17 @@ class BuildCategoriesPieChart extends StatelessWidget {
               ],
             ),
           );
+  }
+
+  Widget headerSection() {
+    var controller = Get.find<EstatisticasPageController>();
+
+    return Text(
+      '${controller.esFilter == 1 ? 'Receitas' : 'Despesas'} por categoria',
+      style: GoogleFonts.inter(
+        fontSize: Get.textTheme.titleLarge!.fontSize,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

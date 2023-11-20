@@ -32,7 +32,7 @@ class MovimentosAtHomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AbbaHeader(
-          title: 'Ultimos Movimentos',
+          title: 'Ultimos mov...',
           verMaisAction: verMaisAction,
         ),
         Gutter(),

@@ -68,36 +68,33 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Row(
             children: [
-              MyTextFilter(
-                title: 'Tudo',
-                isActive: true,
-                onTap: () {
-                  controller.changeESFilter(0);
-                },
-              ),
-              const GutterTiny(),
-              MyTextFilter(
-                title: 'Saídas',
-                isActive: false,
-                onTap: () {
-                  controller.changeESFilter(TipoMovimento.SAIDA);
-                },
-              ),
-              const GutterTiny(),
-              MyTextFilter(
-                title: 'Entrada',
-                isActive: false,
-                onTap: () {
-                  controller.changeESFilter(TipoMovimento.ENTRADA);
-                },
-              ),
-              const Spacer(),
-              TextButton.icon(
-                icon: Icon(Icons.filter_list),
-                label: const Text('Filtrar por'),
-                onPressed: () {
-                  // Get.to(ContaDetailsPage(conta: carteiraController.conta!));
-                },
+              Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  MyTextFilter(
+                    title: 'Tudo',
+                    isActive: true,
+                    onTap: () {
+                      controller.changeESFilter(0);
+                    },
+                  ),
+                  const GutterTiny(),
+                  MyTextFilter(
+                    title: 'Saídas',
+                    isActive: false,
+                    onTap: () {
+                      controller.changeESFilter(TipoMovimento.SAIDA);
+                    },
+                  ),
+                  const GutterTiny(),
+                  MyTextFilter(
+                    title: 'Entrada',
+                    isActive: false,
+                    onTap: () {
+                      controller.changeESFilter(TipoMovimento.ENTRADA);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

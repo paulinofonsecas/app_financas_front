@@ -30,26 +30,11 @@ class EstatisticaPorCategoria extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const GutterLarge(),
-              headerSection(),
-              const Gutter(),
               _buildCategoriaChartData(),
-              const GutterLarge(),
               const GutterLarge(),
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget headerSection() {
-    var controller = Get.find<EstatisticasPageController>();
-
-    return Text(
-      '${controller.esFilter == 1 ? 'Receitas' : 'Despesas'} por categoria',
-      style: GoogleFonts.inter(
-        fontSize: 26,
-        fontWeight: FontWeight.bold,
       ),
     );
   }
