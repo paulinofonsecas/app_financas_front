@@ -17,7 +17,7 @@ import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/core/domain/services/i_setup_service.dart';
-import 'package:app_financas/helders/http_helpers.dart';
+import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
