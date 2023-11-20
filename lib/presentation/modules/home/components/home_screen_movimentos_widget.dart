@@ -1,5 +1,5 @@
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
-import 'package:app_financas/presentation/modules/home/abbas/movimentos.dart';
+import 'package:app_financas/presentation/modules/home/abbas/movimentos_at_home_page.dart';
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
