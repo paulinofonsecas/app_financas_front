@@ -1,9 +1,9 @@
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
-import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/pages/app/cubit/app_theme_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

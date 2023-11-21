@@ -1,5 +1,5 @@
-import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/setting/setting_page.dart';
+import 'package:app_financas/presentation/pages/app/cubit/app_theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
