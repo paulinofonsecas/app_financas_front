@@ -68,16 +68,19 @@ class _AppPageState extends State<AppPage> {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: const MyDrawer(),
-      body: BlocBuilder<AppBloc, AppState>(
-        buildWhen: (previous, current) {
-          return previous.bottomNavIndex != current.bottomNavIndex;
-        },
-        builder: (context, state) {
-          return IndexedStack(
-            index: state.bottomNavIndex,
-            children: telas,
-          );
-        },
+      body: SafeArea(
+        bottom: false,
+        child: BlocBuilder<AppBloc, AppState>(
+          buildWhen: (previous, current) {
+            return previous.bottomNavIndex != current.bottomNavIndex;
+          },
+          builder: (context, state) {
+            return IndexedStack(
+              index: state.bottomNavIndex,
+              children: telas,
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
