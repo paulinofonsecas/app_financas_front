@@ -39,15 +39,18 @@ class EditTransactionPage extends StatelessWidget {
           backgroundColor: isReceita(controller.movimentoType)
               ? kVerdeColor
               : kVermelhaColor,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              Body(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SuspendedButton(),
-              ),
-            ],
+          body: SafeArea(
+            bottom: false,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Body(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SuspendedButton(),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -71,7 +74,10 @@ class SuspendedButton extends StatelessWidget {
                     await controller.alterarTransacao();
                   },
                   style: OutlinedButton.styleFrom(
-                    minimumSize: Size(Get.size.width / 1.9, 45),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Get.size.width / 6,
+                      vertical: 20,
+                    ),
                     backgroundColor: isReceita(controller.movimentoType)
                         ? kVerdeForteColor
                         : kVermelhaForteColor,

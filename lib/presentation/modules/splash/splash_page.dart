@@ -25,43 +25,46 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const Spacer(),
-          Align(
-            alignment: Alignment.center,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-              child: Image.asset(
-                'assets/imgs/logo.jpg',
-                width: 200,
-                height: 200,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const Spacer(),
+            Align(
+              alignment: Alignment.center,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: Image.asset(
+                  'assets/imgs/logo.jpg',
+                  width: 200,
+                  height: 200,
+                ),
               ),
             ),
-          ),
-          const Spacer(),
-          Obx(
-            () => c.isLoading.value
-                ? const CircularProgressIndicator()
-                : c.loadingError.value
-                    ? TextButton.icon(
-                        style: TextButton.styleFrom(
-                          primary: Colors.green,
-                        ),
-                        onPressed: () {
-                          Get.back();
-                          c.init();
-                        },
-                        icon: Icon(Icons.refresh, color: Colors.green[700]),
-                        label: const Text('Tentar novamente'),
-                      )
-                    : const Text(''),
-          ),
-          GutterLarge(),
-          GutterLarge(),
-          GutterLarge(),
-        ],
+            const Spacer(),
+            Obx(
+              () => c.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : c.loadingError.value
+                      ? TextButton.icon(
+                          style: TextButton.styleFrom(
+                            primary: Colors.green,
+                          ),
+                          onPressed: () {
+                            Get.back();
+                            c.init();
+                          },
+                          icon: Icon(Icons.refresh, color: Colors.green[700]),
+                          label: const Text('Tentar novamente'),
+                        )
+                      : const Text(''),
+            ),
+            GutterLarge(),
+            GutterLarge(),
+            GutterLarge(),
+          ],
+        ),
       ),
     );
   }

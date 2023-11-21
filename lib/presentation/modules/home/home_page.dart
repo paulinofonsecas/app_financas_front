@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
 import 'components/home_screen_movimentos_widget.dart';
-import 'components/show_cards.dart';
+import 'components/saldo_disponivel_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,22 +32,25 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
-      body: GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return ListView(
-            children: [
-              ActionBar(),
-              SizedBox(height: kDefaultPadding * 2),
-              ShowCards(),
-              SizedBox(height: kDefaultPadding),
-              EntradasESaidas(),
-              SizedBox(height: kDefaultPadding),
-              HomeScreenMovimentosWidget(),
-            ],
-          );
-        },
+      body: SafeArea(
+        bottom: false,
+        child: GetBuilder(
+          init: controller,
+          id: 'geral',
+          builder: (context) {
+            return ListView(
+              children: [
+                ActionBar(),
+                SizedBox(height: kDefaultPadding * 2),
+                SaldoDisponivelCardWidget(),
+                SizedBox(height: kDefaultPadding),
+                EntradasESaidas(),
+                SizedBox(height: kDefaultPadding),
+                HomeScreenMovimentosWidget(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

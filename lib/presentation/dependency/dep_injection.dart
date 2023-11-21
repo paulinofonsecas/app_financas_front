@@ -1,3 +1,5 @@
+import 'package:app_financas/core/data/services/saldos_service.dart';
+import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -40,6 +42,9 @@ Future<void> dependencyInitialize() async {
   locator
       .registerLazySingleton<IContaProvider>(() => DbContaProvider(locator()));
   locator.registerLazySingleton<IContaService>(() => ContaService(locator()));
+
+  // saldos
+  locator.registerLazySingleton<ISaldosService>(() => SaldosService(locator()));
 
   // blocs
   locator.registerLazySingleton<AppBloc>(() => AppBloc());

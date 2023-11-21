@@ -4,14 +4,15 @@ import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,10 @@ Future<void> main() async {
           create: (context) => locator<AppThemeCubit>(),
         ),
       ],
-      child: const MyApp(),
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (c) => const MyApp(),
+      ),
     ),
   );
 }
@@ -47,7 +51,7 @@ class MyApp extends StatelessWidget {
     var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
-      title: 'Kwanza Gest',
+      title: 'KzGest',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(
         useMaterial3: true,
@@ -69,6 +73,15 @@ class MyApp extends StatelessWidget {
         PointerDeviceKind.mouse,
         PointerDeviceKind.trackpad,
       }),
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: (context, widget) {
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: widget!,
+        );
+      },
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),

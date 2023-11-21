@@ -2,6 +2,7 @@
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,9 @@ class _AppPageState extends State<AppPage> {
           BlocProvider(
             create: (context) => LastMovimentosCubit(),
           ),
+          BlocProvider(
+            create: (context) => ShowMoneyCubit(),
+          ),
         ],
         child: const HomePage(),
       ),
@@ -64,16 +68,19 @@ class _AppPageState extends State<AppPage> {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: const MyDrawer(),
-      body: BlocBuilder<AppBloc, AppState>(
-        buildWhen: (previous, current) {
-          return previous.bottomNavIndex != current.bottomNavIndex;
-        },
-        builder: (context, state) {
-          return IndexedStack(
-            index: state.bottomNavIndex,
-            children: telas,
-          );
-        },
+      body: SafeArea(
+        bottom: false,
+        child: BlocBuilder<AppBloc, AppState>(
+          buildWhen: (previous, current) {
+            return previous.bottomNavIndex != current.bottomNavIndex;
+          },
+          builder: (context, state) {
+            return IndexedStack(
+              index: state.bottomNavIndex,
+              children: telas,
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(

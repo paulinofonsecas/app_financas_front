@@ -2,26 +2,27 @@
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 part 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   late final MovimentoBloc _movimentoBloc;
-  late final ContaBloc _contaBloc;
+  late final ISaldosService _saldosService;
   final int page = 1;
   final int pageSize = 10;
 
   HomePageCubit() : super(HomePageInitialState()) {
     _movimentoBloc = locator();
-    _contaBloc = locator();
+    _saldosService = locator();
 
     _movimentoBloc.stream.listen(onMovimento);
-    _contaBloc.stream.listen(onConta);
   }
 
   void onConta(event) {
@@ -67,8 +68,39 @@ class HomePageCubit extends Cubit<HomePageState> {
     _movimentoBloc.add(MovimentoGetPaginatedListEvent(pageKey, pageSize));
   }
 
-  void getContas() {
-    _contaBloc.add(ListarContasEvent());
+  void getSaldoTotal() async {
+    emit(HomePageSaldoDisponivelLoading());
+    var result = await _saldosService.getSaldoDisponivel();
+
+    if (result is Right) {
+      emit(HomePageSaldoDisponivelSuccess(result.getOrElse(() => 0)));
+    } else if (result is Left) {
+      emit(HomePageSaldoDisponivelError());
+    }
+  }
+
+  void getSaldoTotalEntradas() {
+    emit(HomePageGetEntradasLoading());
+
+    _saldosService.getEntradas().then((value) {
+      if (value is Right) {
+        emit(HomePageGetEntradasSuccess(value.getOrElse(() => 0)));
+      } else if (value is Left) {
+        emit(HomePageGetSaidasError());
+      }
+    });
+  }
+
+  void getSaldoTotalSaidas() {
+    emit(HomePageGetSaidasLoading());
+
+    _saldosService.getEntradas().then((value) {
+      if (value is Right) {
+        emit(HomePageGetSaidasSuccess(value.getOrElse(() => 0)));
+      } else if (value is Left) {
+        emit(HomePageGetSaidasError());
+      }
+    });
   }
 
   void dispose() {

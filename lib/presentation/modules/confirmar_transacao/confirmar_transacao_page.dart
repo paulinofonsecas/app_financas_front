@@ -103,6 +103,7 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
                 ),
                 const Gutter(),
                 MyDivider(),
+                const GutterLarge(),
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +176,10 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
             ? kVerdeForteColor
             : kVermelhaForteColor,
         foregroundColor: Colors.white,
-        minimumSize: Size(Get.size.width / 2.5, 50),
+        padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding * 3,
+          vertical: kDefaultPadding,
+        ),
       ),
       child: Text(
         widget.movimento.tipoMovimentoId == 1 ? 'Receber' : 'Pagar',
@@ -189,7 +193,6 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
         Get.back(canPop: true);
       },
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(Get.size.width / 2.5, 50),
         padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding * 3,
           vertical: kDefaultPadding,

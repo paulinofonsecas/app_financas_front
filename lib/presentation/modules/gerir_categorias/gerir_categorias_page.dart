@@ -46,6 +46,7 @@ class _GerirCategoriasPageState extends State<GerirCategoriasPage> {
               ? kVerdeAccentColor
               : kVermelhaColor,
           body: const SafeArea(
+        bottom: false,
             child: Column(
               children: [
                 HeaderComp(),
