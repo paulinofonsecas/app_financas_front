@@ -19,6 +19,7 @@ jobs:
         run: flutter build web --no-tree-shake-icons
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entrypoint: /build/web
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KZGEST }}'
           projectId: kzgest
