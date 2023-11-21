@@ -23,18 +23,14 @@ class CardSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        height: 280,
         width: double.infinity,
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.pinkAccent,
               Colors.blue,
+              Color.fromARGB(255, 17, 107, 180),
             ],
           ),
         ),
@@ -51,7 +47,7 @@ class CardSection extends StatelessWidget {
                 Text(
                   conta.nome,
                   style: GoogleFonts.inter(
-                    fontSize: 28,
+                    fontSize: 22,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -66,7 +62,7 @@ class CardSection extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: kDefaultPadding * 3),
             BottomSection(conta: conta),
           ],
         ),
@@ -87,12 +83,7 @@ class BottomSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Wrap(
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.center,
-          runSpacing: kDefaultPadding,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: kDefaultPadding,
+        Row(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -110,13 +101,14 @@ class BottomSection extends StatelessWidget {
                 Text(
                   numberFormat.format(conta.saldo),
                   style: GoogleFonts.inter(
-                    fontSize: 32,
+                    fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
+            Spacer(),
             IconButton(
               onPressed: () {
                 customShowModalBottomSheet(

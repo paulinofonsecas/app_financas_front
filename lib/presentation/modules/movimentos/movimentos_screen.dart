@@ -21,25 +21,28 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              PageActionBar(
-                title: 'Movimentos',
-                actionBack: () {
-                  Get.back();
-                },
-              ),
-              _buildHeaderPage(),
-              const SizedBox(height: kDefaultPadding),
-              Body(controller: controller),
-            ],
-          );
-        },
+      body: SafeArea(
+        bottom: false,
+        child: GetBuilder(
+          init: controller,
+          id: 'geral',
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                PageActionBar(
+                  title: 'Movimentos',
+                  actionBack: () {
+                    Get.back();
+                  },
+                ),
+                _buildHeaderPage(),
+                const SizedBox(height: kDefaultPadding),
+                Body(controller: controller),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

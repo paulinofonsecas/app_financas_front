@@ -38,8 +38,8 @@ class ContaItem extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: const [
-                      Colors.pinkAccent,
                       Colors.blue,
+                      Color.fromARGB(255, 17, 107, 180),
                     ],
                   )
                 : null,

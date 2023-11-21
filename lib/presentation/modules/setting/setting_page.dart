@@ -14,16 +14,19 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: const [
-              SizedBox(height: 24),
-              Align(
-                alignment: Alignment.topCenter,
-                child: LimparDadosWidget(),
-              )
-            ],
+        body: SafeArea(
+        bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: ListView(
+              children: const [
+                SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: LimparDadosWidget(),
+                )
+              ],
+            ),
           ),
         ),
       ),

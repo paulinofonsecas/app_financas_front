@@ -32,22 +32,25 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
-      body: GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return ListView(
-            children: [
-              ActionBar(),
-              SizedBox(height: kDefaultPadding * 2),
-              SaldoDisponivelCardWidget(),
-              SizedBox(height: kDefaultPadding),
-              EntradasESaidas(),
-              SizedBox(height: kDefaultPadding),
-              HomeScreenMovimentosWidget(),
-            ],
-          );
-        },
+      body: SafeArea(
+        bottom: false,
+        child: GetBuilder(
+          init: controller,
+          id: 'geral',
+          builder: (context) {
+            return ListView(
+              children: [
+                ActionBar(),
+                SizedBox(height: kDefaultPadding * 2),
+                SaldoDisponivelCardWidget(),
+                SizedBox(height: kDefaultPadding),
+                EntradasESaidas(),
+                SizedBox(height: kDefaultPadding),
+                HomeScreenMovimentosWidget(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -39,23 +39,26 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (context) {
-          return Column(
-            children: [
-              Hero(
-                tag: 'conta_${controller.conta.id}',
-                child: CardSection(
-                  conta: controller.conta,
+      body: SafeArea(
+        bottom: false,
+        child: GetBuilder(
+          init: controller,
+          id: 'geral',
+          builder: (context) {
+            return Column(
+              children: [
+                Hero(
+                  tag: 'conta_${controller.conta.id}',
+                  child: CardSection(
+                    conta: controller.conta,
+                  ),
                 ),
-              ),
-              Gutter(),
-              movimentoSection(),
-            ],
-          );
-        },
+                Gutter(),
+                movimentoSection(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -31,23 +31,26 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-        child: SingleChildScrollView(
-          child: GetBuilder(
-            init: controller,
-            id: 'geral',
-            builder: (context) {
-              return Column(
-                children: [
-                  headerSection(),
-                  const Gutter(),
-                  _buildFilters(),
-                  const Gutter(),
-                  const EstatisticaDeLinhaComFiltros(),
-                  const Gutter(),
-                  const EstatisticaPorCategoria(),
-                ],
-              );
-            },
+        child: SafeArea(
+        bottom: false,
+          child: SingleChildScrollView(
+            child: GetBuilder(
+              init: controller,
+              id: 'geral',
+              builder: (context) {
+                return Column(
+                  children: [
+                    headerSection(),
+                    const Gutter(),
+                    _buildFilters(),
+                    const Gutter(),
+                    const EstatisticaDeLinhaComFiltros(),
+                    const Gutter(),
+                    const EstatisticaPorCategoria(),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -58,6 +61,7 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Estatisticas',
