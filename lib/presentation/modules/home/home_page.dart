@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'components/action_bar.dart';
 import 'components/entradas_saidas.dart';
 import 'components/home_screen_movimentos_widget.dart';
-import 'components/show_cards.dart';
+import 'components/saldo_disponivel_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -29,7 +29,6 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
 
     return SizedBox(
       width: size.width,
-      height: size.height * 0.23,
       child: BlocBuilder<HomePageCubit, HomePageState>(
         bloc: homePageCubit..getSaldoTotal(),
         buildWhen: (previous, current) {

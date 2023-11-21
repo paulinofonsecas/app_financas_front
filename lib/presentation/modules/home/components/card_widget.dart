@@ -34,60 +34,53 @@ class SaldoDisponivelCard extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
-      child: SizedBox(
+      child: Container(
+        color: Theme.of(context).brightness == Brightness.light
+            ? Theme.of(context).colorScheme.primaryContainer
+            : Theme.of(context).colorScheme.onInverseSurface,
         width: width,
-        height: height,
-        child: Stack(
-          alignment: Alignment.center,
-          fit: StackFit.expand,
-          children: [
-            Background(),
-            Padding(
-              padding: const EdgeInsets.all(kDefaultPadding * 1.3),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Saldo disponivel em contas",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 18,
-                    ),
-                  ),
-                  Spacer(),
-                  BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
-                    builder: (context, state) {
-                      return Text(
-                        state.value ? numberFormat.format(saldo) : '**********',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    },
-                  ),
-                  GutterTiny(),
-                  // mostrar icon de olhos para ver o valor
-                  IconButton(
-                    onPressed: () {
-                      context.read<ShowMoneyCubit>().changeValue();
-                    },
-                    icon: Obx(
-                      () => Icon(
-                        controller.showMoneyOnCards.value
-                            ? CupertinoIcons.eye_slash
-                            : CupertinoIcons.eye,
-                        color: Colors.grey,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding * 1.3),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Saldo disponivel em contas",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                ),
               ),
-            ),
-          ],
+              GutterLarge(),
+              BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
+                builder: (context, state) {
+                  return Text(
+                    state.value ? numberFormat.format(saldo) : '**********',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+              GutterTiny(),
+              IconButton(
+                onPressed: () {
+                  context.read<ShowMoneyCubit>().changeValue();
+                },
+                icon: Obx(
+                  () => Icon(
+                    controller.showMoneyOnCards.value
+                        ? CupertinoIcons.eye_slash
+                        : CupertinoIcons.eye,
+                    color: Colors.grey,
+                    size: 32,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
