@@ -5,7 +5,6 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -70,13 +69,14 @@ class MovimentoItem extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: kBlackColor.withOpacity(.5),
-                        radius: 22,
+                        backgroundColor: movimento.categoria?.color ??
+                            kBlackColor.withOpacity(.5),
+                        radius: 15,
                         child: Center(
-                          child: SvgPicture.asset(
-                            asset,
-                            // ignore: deprecated_member_use
+                          child: Icon(
+                            movimento.categoria?.icon ?? Icons.more_horiz,
                             color: Colors.white,
+                            size: 15,
                           ),
                         ),
                       ),
@@ -88,14 +88,14 @@ class MovimentoItem extends StatelessWidget {
                           Text(
                             compressString(movimento.descricao, wordLimit()),
                             style: GoogleFonts.inter(
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             movimento.categoria?.name ?? '',
                             style: GoogleFonts.inter(
-                              fontSize: 11,
+                              fontSize: 9,
                             ),
                           ),
                         ],
@@ -103,7 +103,7 @@ class MovimentoItem extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  if (width > 388) buildMovimentoDetails()
+                  if (width > 300) buildMovimentoDetails()
                 ],
               ),
             ),
@@ -124,7 +124,7 @@ class MovimentoItem extends StatelessWidget {
               ? numberFormat.format(valor)
               : '- ${numberFormat.format(valor)}',
           style: GoogleFonts.inter(
-            fontSize: 15,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
             color: tipoMovimentoId == 1 ? kVerdeAccentColor : kVermelhaColor,
           ),
@@ -134,7 +134,7 @@ class MovimentoItem extends StatelessWidget {
               ? 'Hoje ${DateFormat('hh:mm').format(movimento.data)}'
               : dateFormat.format(movimento.data),
           style: GoogleFonts.inter(
-            fontSize: 11,
+            fontSize: 9,
           ),
         ),
       ],
