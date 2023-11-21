@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
-      title: 'Kz Gest',
+      title: 'KzGest',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(
         useMaterial3: true,
