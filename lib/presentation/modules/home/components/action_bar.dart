@@ -27,7 +27,7 @@ class ActionBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Olá, bom dia',
+                'Olá, bem vindo de volta',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
