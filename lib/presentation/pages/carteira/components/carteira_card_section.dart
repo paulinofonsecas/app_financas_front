@@ -31,12 +31,14 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+
     return GetBuilder(
       init: carteiraController,
       id: 'geral',
       builder: (context) {
         return SizedBox(
-          height: 230,
+          height: height < 300 ? 200 : 220,
           child: FutureBuilder<List<Conta>>(
             future: carteiraController.getContas(),
             builder: (context, snapshot) {

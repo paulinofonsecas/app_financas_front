@@ -50,7 +50,7 @@ class ContaItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 headerSection(),
-                const Spacer(),
+                Spacer(),
                 bottomSection(),
               ],
             ),

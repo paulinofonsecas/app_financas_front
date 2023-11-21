@@ -75,6 +75,13 @@ class MyApp extends StatelessWidget {
       }),
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
+      builder: (context, widget) {
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: widget!,
+        );
+      },
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),
