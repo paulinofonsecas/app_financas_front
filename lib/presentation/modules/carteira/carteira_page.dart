@@ -37,7 +37,7 @@ class _CarteiraPageState extends State<CarteiraPage> {
             Gutter(),
             CarteiraCardSection(),
             GutterLarge(),
-            MovimentosListSection()
+            MovimentosListSection(),
           ],
         );
       },

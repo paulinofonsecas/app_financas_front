@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
@@ -33,6 +34,9 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => locator<AppThemeCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<ContaBloc>(),
         ),
       ],
       child: DevicePreview(
@@ -75,13 +79,14 @@ class MyApp extends StatelessWidget {
       }),
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
-      builder: (context, widget) {
-        return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: widget!,
-        );
-      },
+      builder: DevicePreview.appBuilder,
+      // builder: (context, widget) {
+      //   return MediaQuery(
+      //     data: MediaQuery.of(context)
+      //         .copyWith(textScaler: const TextScaler.linear(1.0)),
+      //     child: widget!,
+      //   );
+      // },
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),

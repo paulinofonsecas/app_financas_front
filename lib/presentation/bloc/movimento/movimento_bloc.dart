@@ -92,4 +92,10 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
       return [];
     }
   }
+
+  void updateMovimentosList() {
+    add(const MovimentoGetPaginatedListEvent(1, 10));
+    add(MovimentoGetMovimentosListOfDayEvent());
+  }
+
 }
