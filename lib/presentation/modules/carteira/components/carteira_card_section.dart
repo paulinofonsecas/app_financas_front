@@ -1,10 +1,9 @@
-import 'package:app_financas/presentation/modules/conta_details/conta_details_page.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/modules/carteira/components/conta_item_comp.dart';
+import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/conta_details/conta_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../controllers/carteira_page_controller.dart';
-import 'conta_item_comp.dart';
 
 class CarteiraCardSection extends StatefulWidget {
   const CarteiraCardSection({super.key});
@@ -32,12 +31,14 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+
     return GetBuilder(
       init: carteiraController,
       id: 'geral',
       builder: (context) {
         return SizedBox(
-          height: 230,
+          height: height < 300 ? 200 : 220,
           child: FutureBuilder<List<Conta>>(
             future: carteiraController.getContas(),
             builder: (context, snapshot) {

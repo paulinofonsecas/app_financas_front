@@ -3,7 +3,7 @@ import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
-import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
