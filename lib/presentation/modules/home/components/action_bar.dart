@@ -4,9 +4,6 @@ import 'package:app_financas/presentation/cubit/theme/app_theme_cubit.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-
-import '../controllers/home_page_controller.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({super.key});
@@ -22,10 +19,7 @@ class ActionBar extends StatelessWidget {
               Icons.menu,
               color: Theme.of(context).iconTheme.color,
             ),
-            onPressed: () {
-              var controller = Get.find<HomePageController>();
-              Scaffold.of(controller.context).openDrawer();
-            },
+            onPressed: () {},
           ),
           SizedBox(width: 10),
           Column(

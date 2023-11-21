@@ -1,9 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/core/domain/entitys/conta.dart';
+// ignore: unused_import
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,23 +16,17 @@ import 'package:app_financas/presentation/helders/format_helpers.dart';
 
 import '../controllers/home_page_controller.dart';
 
-class CardWidget extends StatelessWidget {
-  const CardWidget({
+class SaldoDisponivelCard extends StatelessWidget {
+  const SaldoDisponivelCard({
     Key? key,
     required this.width,
     required this.height,
-    required this.contas,
+    required this.saldo,
   }) : super(key: key);
 
   final double width;
   final double height;
-  final List<Conta> contas;
-
-  double getSaldoDisponivel() {
-    return contas.fold(0.0, (previousValue, element) {
-      return previousValue + element.saldo;
-    });
-  }
+  final double saldo;
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +56,23 @@ class CardWidget extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Text(
-                    controller.showMoneyOnCards.value
-                        ? numberFormat.format(getSaldoDisponivel())
-                        : '**********',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
+                    builder: (context, state) {
+                      return Text(
+                        state.value ? numberFormat.format(saldo) : '**********',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
                   ),
                   GutterTiny(),
                   // mostrar icon de olhos para ver o valor
                   IconButton(
-                    onPressed: controller.changeViewManyCards,
+                    onPressed: () {
+                      context.read<ShowMoneyCubit>().changeValue();
+                    },
                     icon: Obx(
                       () => Icon(
                         controller.showMoneyOnCards.value

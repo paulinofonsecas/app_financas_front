@@ -5,14 +5,15 @@ import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cub
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ShowCards extends StatefulWidget {
-  const ShowCards({super.key});
+class SaldoDisponivelCardWidget extends StatefulWidget {
+  const SaldoDisponivelCardWidget({super.key});
 
   @override
-  State<ShowCards> createState() => _ShowCardsState();
+  State<SaldoDisponivelCardWidget> createState() =>
+      _SaldoDisponivelCardWidgetState();
 }
 
-class _ShowCardsState extends State<ShowCards> {
+class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
   late final HomePageCubit homePageCubit;
 
   @override
@@ -30,38 +31,38 @@ class _ShowCardsState extends State<ShowCards> {
       width: size.width,
       height: size.height * 0.23,
       child: BlocBuilder<HomePageCubit, HomePageState>(
-        bloc: homePageCubit..getContas(),
+        bloc: homePageCubit..getSaldoTotal(),
         buildWhen: (previous, current) {
-          return previous != current && current is HomePageListarContasState;
+          return previous != current && current is HomePageSaldoDisponivelState;
         },
         builder: (context, state) {
-          if (state is HomePageListarContasLoading) {
+          if (state is HomePageSaldoDisponivelLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          if (state is HomePageListarContasError) {
+          if (state is HomePageSaldoDisponivelError) {
             return const Center(child: Text('Erro ao buscar contas'));
           }
 
-          if (state is HomePageListarContasEmpty) {
+          if (state is HomePageSaldoDisponivelEmpty) {
             return const Center(
               child: Text('Nenhum cartão cadastrado'),
             );
           }
 
-          if (state is HomePageListarContasSuccess) {
+          if (state is HomePageSaldoDisponivelSuccess) {
             return LayoutBuilder(
               builder: (c, constraines) {
                 return Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: kDefaultPadding,
                   ),
-                  child: CardWidget(
+                  child: SaldoDisponivelCard(
                     height: 176,
                     width: size.width * 0.85,
-                    contas: state.contas,
+                    saldo: state.saldo,
                   ),
                 );
               },

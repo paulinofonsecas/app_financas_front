@@ -11,6 +11,7 @@ final class HomePageInitialState extends HomePageState {}
 
 final class HomePageLoadingMovimentosState extends HomePageState {}
 
+// movimentos
 final class HomePageGetPaginatedListError extends HomePageState {
   final String errorMessage;
 
@@ -39,6 +40,9 @@ final class HomePageGetLastPaginatedListSuccess extends HomePageState {
   List<Object> get props => [movimentos];
 }
 
+// end movimentos
+
+// contas
 abstract class HomePageListarContasState extends HomePageState {
   const HomePageListarContasState();
 
@@ -60,3 +64,82 @@ final class HomePageListarContasSuccess extends HomePageListarContasState {
   @override
   List<Object> get props => [contas];
 }
+// end contas
+
+// saldos
+abstract class HomePageSaldoDisponivelState extends HomePageState {
+  const HomePageSaldoDisponivelState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomePageSaldoDisponivelLoading
+    extends HomePageSaldoDisponivelState {}
+
+final class HomePageSaldoDisponivelError extends HomePageSaldoDisponivelState {}
+
+final class HomePageSaldoDisponivelEmpty extends HomePageSaldoDisponivelState {}
+
+final class HomePageSaldoDisponivelSuccess
+    extends HomePageSaldoDisponivelState {
+  final double saldo;
+
+  const HomePageSaldoDisponivelSuccess(this.saldo);
+
+  @override
+  List<Object> get props => [saldo];
+}
+
+// end saldos
+
+// entradas
+abstract class HomePageGetEntradasState extends HomePageState {
+  const HomePageGetEntradasState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomePageGetEntradasLoading extends HomePageGetEntradasState {}
+
+final class HomePageGetEntradasError extends HomePageGetEntradasState {}
+
+final class HomePageGetEntradasEmpty extends HomePageGetEntradasState {}
+
+final class HomePageGetEntradasSuccess extends HomePageGetEntradasState {
+  final double entradas;
+
+  const HomePageGetEntradasSuccess(this.entradas);
+
+  @override
+  List<Object> get props => [entradas];
+}
+
+// end entradas
+
+// saidas
+abstract class HomePageGetSaidasState extends HomePageState {
+  const HomePageGetSaidasState();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class HomePageGetSaidasLoading extends HomePageGetSaidasState {}
+
+final class HomePageGetSaidasError extends HomePageGetSaidasState {}
+
+final class HomePageGetSaidasEmpty extends HomePageGetSaidasState {}
+
+final class HomePageGetSaidasSuccess extends HomePageGetSaidasState {
+  final double saidas;
+
+  const HomePageGetSaidasSuccess(this.saidas);
+
+  @override
+  List<Object> get props => [saidas];
+}
+
+// end saidas
+

@@ -2,6 +2,7 @@
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,9 @@ class _AppPageState extends State<AppPage> {
           ),
           BlocProvider(
             create: (context) => LastMovimentosCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ShowMoneyCubit(),
           ),
         ],
         child: const HomePage(),
