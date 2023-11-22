@@ -41,9 +41,7 @@ class RegistarTransacao extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Body(
-                  contaId: contaId,
-                ),
+                Body(contaId: contaId),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SuspendedButton(),

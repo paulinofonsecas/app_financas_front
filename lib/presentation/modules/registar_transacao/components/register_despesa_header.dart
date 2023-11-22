@@ -134,10 +134,8 @@ class SwitchTransactionButton extends StatelessWidget {
                 ),
               ),
               const Gutter(),
-              Icon(
-                isReceita(controller.movimentoType)
-                    ? CupertinoIcons.chevron_up
-                    : CupertinoIcons.chevron_down,
+              const Icon(
+                Icons.sync,
                 color: Colors.white,
                 weight: 1,
               ),
