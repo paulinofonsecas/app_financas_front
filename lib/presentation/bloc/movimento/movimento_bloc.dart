@@ -16,12 +16,13 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     on<MovimentoGetPaginatedListByContaEvent>(
       _onMovimentoGetPaginatedListEvent,
     );
-    on<MovimentoGetMovimentosListOfDayEvent>(
-      _onMovimentoGetMovimentosListOfDayEvent,
-    );
     on<MovimentoGetPaginatedListEvent>(
       _onMovimentoGetPaginatedListEvent,
     );
+    on<MovimentoGetMovimentosListOfDayEvent>(
+      _onMovimentoGetMovimentosListOfDayEvent,
+    );
+    
   }
 
   void _onMovimentoGetPaginatedListEvent(event, emit) async {
