@@ -17,7 +17,7 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         children: [
-          const SizedBox(height: kDefaultPadding * 2),
+          const SizedBox(height: kDefaultPadding),
           BlocBuilder<LastMovimentosCubit, LastMovimentosState>(
             bloc: context.read<LastMovimentosCubit>()..getLastMovimentos(),
             builder: (context, state) {
