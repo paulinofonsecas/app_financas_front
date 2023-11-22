@@ -34,7 +34,7 @@ class InfoWidget extends StatelessWidget {
               ),
             ),
             Text(
-              compressString(value, 22),
+              compressString(value, 15),
               softWrap: false,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

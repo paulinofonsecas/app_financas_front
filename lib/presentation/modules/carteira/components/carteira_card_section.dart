@@ -1,8 +1,10 @@
-import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/modules/carteira/components/conta_item_comp.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta_details/conta_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class CarteiraCardSection extends StatefulWidget {
@@ -31,65 +33,81 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-
     return GetBuilder(
       init: carteiraController,
       id: 'geral',
-      builder: (context) {
+      builder: (c) {
         return SizedBox(
-          height: height < 300 ? 200 : 220,
-          child: FutureBuilder<List<Conta>>(
-            future: carteiraController.getContas(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
+          height: 190,
+          child: BlocBuilder<ContasCubit, ContasState>(
+            bloc: context.read<ContasCubit>()..getContas(),
+            buildWhen: (previous, current) =>
+                previous != current && current is ContasListarContas,
+            builder: (context, state) {
+              if (state is ContasListarContasLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              if (snapshot.error != null) {
-                return Text('${snapshot.error}');
+              if (state is ContasListarContasError) {
+                return Text('${state.errorMessage}');
               }
 
-              var contas = snapshot.data ?? [];
+              if (state is ContasListarContasEmpty) {
+                return const Text('Sem contas para apresentar');
+              }
 
-              return PageView.builder(
-                controller: pageController,
-                onPageChanged: (index) {
-                  carteiraController.updateContaIndex(contas[index].id);
-                  carteiraController.updateConta(contas[index]);
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-                scrollDirection: Axis.horizontal,
-                itemCount: contas.length,
-                itemBuilder: (context, index) {
-                  var conta = contas[index];
+              if (state is ContasListarContasSuccess) {
+                var contas = state.contas;
+                var changeContas = context.read<ChangeContaCubit>();
+                if (changeContas.state is ChageContaInitial) {
+                  changeContas.updateContaIndex(contas.first.id);
+                }
 
-                  return Hero(
-                    tag: 'conta_${conta.id}',
-                    child: ContaItem(
-                      conta: conta,
-                      isActive: index == currentIndex,
-                      onTap: () {
-                        if (index == currentIndex) {
-                          Get.to(
-                            ContaDetailsPage(
-                              conta: conta,
-                            ),
-                          )?.then((value) {
-                            setState(() {});
-                            carteiraController.pagingController.refresh();
-                            carteiraController.update(['geral']);
-                          });
-                        }
-                      },
-                    ),
-                  );
-                },
-              );
+                return PageView.builder(
+                  controller: pageController,
+                  onPageChanged: (index) {
+                    context
+                        .read<ChangeContaCubit>()
+                        .updateContaIndex(contas[index].id);
+                    carteiraController.updateContaIndex(contas[index].id);
+                    carteiraController.updateConta(contas[index]);
+
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  scrollDirection: Axis.horizontal,
+                  itemCount: contas.length,
+                  itemBuilder: (context, index) {
+                    var conta = contas[index];
+
+                    return Hero(
+                      tag: 'conta_${conta.id}',
+                      child: ContaItem(
+                        conta: conta,
+                        isActive: index == currentIndex,
+                        onTap: () {
+                          if (index == currentIndex) {
+                            Get.to(
+                              ContaDetailsPage(
+                                conta: conta,
+                              ),
+                            )?.then((value) {
+                              setState(() {});
+                              carteiraController.pagingController.refresh();
+                              carteiraController.update(['geral']);
+                            });
+                          }
+                        },
+                      ),
+                    );
+                  },
+                );
+              }
+
+              return const SizedBox();
             },
           ),
         );

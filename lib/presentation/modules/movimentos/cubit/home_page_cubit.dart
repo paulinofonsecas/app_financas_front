@@ -15,7 +15,6 @@ part 'home_page_state.dart';
 class HomePageCubit extends Cubit<HomePageState> {
   late final MovimentoBloc _movimentoBloc;
   late final ISaldosService _saldosService;
-  final int page = 1;
   final int pageSize = 10;
 
   HomePageCubit() : super(HomePageInitialState()) {
@@ -94,7 +93,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   void getSaldoTotalSaidas() {
     emit(HomePageGetSaidasLoading());
 
-    _saldosService.getEntradas().then((value) {
+    _saldosService.getSaidas().then((value) {
       if (value is Right) {
         emit(HomePageGetSaidasSuccess(value.getOrElse(() => 0)));
       } else if (value is Left) {

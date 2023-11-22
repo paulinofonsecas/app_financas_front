@@ -49,7 +49,7 @@ class EditTransacaoController extends GetxController {
     descricaoTextController = TextEditingController(text: movimento.descricao);
     dateTextController = TextEditingController(text: getSelectedDate());
     valorTextController = TextEditingController(
-      text: movimento.valor.toString(),
+      text: movimento.valor.toStringAsFixed(0),
     );
     obsTextController = TextEditingController(text: movimento.obsMovimento);
 
@@ -61,8 +61,8 @@ class EditTransacaoController extends GetxController {
 
     descricaoTextController.text = movimento.descricao;
     dateTextController.text = getSelectedDate();
-    valorTextController.text = movimento.valor.toString();
-    obsTextController.text = movimento.obsMovimento ?? ' ';
+    valorTextController.text = movimento.valor.toStringAsFixed(0);
+    obsTextController.text = movimento.obsMovimento ?? '';
     categoriaMovimentoId = movimento.categoriaMovimentoId;
     cartaoId = movimento.cartaoId;
     date = movimento.data;

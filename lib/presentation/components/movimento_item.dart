@@ -61,8 +61,8 @@ class MovimentoItem extends StatelessWidget {
                 vertical: kDefaultPadding,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onInverseSurface,
-                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
@@ -88,14 +88,14 @@ class MovimentoItem extends StatelessWidget {
                           Text(
                             compressString(movimento.descricao, wordLimit()),
                             style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             movimento.categoria?.name ?? '',
                             style: GoogleFonts.inter(
-                              fontSize: 9,
+                              fontSize: 10,
                             ),
                           ),
                         ],

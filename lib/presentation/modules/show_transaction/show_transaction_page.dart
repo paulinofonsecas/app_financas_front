@@ -50,7 +50,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
               HeaderInfo(movimento: controller.movimento),
@@ -71,6 +71,7 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
                       _buildContaInput(),
                     ],
                   ),
+                  const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -188,34 +189,16 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   Widget _buildCategoriaInput() {
     var controller = Get.find<ShowTransactionController>();
 
-    return FutureBuilder<String?>(
-        future: controller
-            .getCategoryName(controller.movimento.categoriaMovimentoId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          }
-
-          if (snapshot.hasError) {
-            return const Text('Error');
-          }
-
-          if (snapshot.data == null) {
-            return const Text('Error');
-          }
-
-          var nome = snapshot.data ?? '';
-
-          return InfoWidget(
-            desc: 'Categoria',
-            value: nome,
-            icon: Icon(
-              Icons.category_outlined,
-              color: Theme.of(context).iconTheme.color,
-              size: 20,
-            ),
-          );
-        });
+    return InfoWidget(
+      desc: 'Categoria',
+      value: controller.movimento.categoria?.name ?? 'Invalido',
+      icon: Icon(
+        controller.movimento.categoria?.icon ?? Icons.category_outlined,
+        color: controller.movimento.categoria?.color ??
+            Theme.of(context).iconTheme.color,
+        size: 20,
+      ),
+    );
   }
 
   Widget _buildValorInput() {

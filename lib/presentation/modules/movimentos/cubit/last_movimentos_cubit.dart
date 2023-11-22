@@ -37,4 +37,6 @@ class LastMovimentosCubit extends Cubit<LastMovimentosState> {
     emit(LastMovimentosLoading());
     _movimentoBloc.add(MovimentoGetMovimentosListOfDayEvent());
   }
+
+  
 }
