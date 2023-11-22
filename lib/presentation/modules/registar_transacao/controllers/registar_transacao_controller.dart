@@ -8,6 +8,7 @@ import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -161,39 +162,20 @@ class RegistarTransacaoController extends GetxController {
     var result = await movimentoService.saveMovimento(movimento);
 
     if (result is Right) {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Sucesso',
-          message: 'Movimento registrado com sucesso',
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.green,
-          isDismissible: true,
-        ),
-      );
+      showSucessMessage('Sucesso', 'Movimento registrado com sucesso');
       salvo = true;
     } else {
-      if (result is Left &&
-          result.swap().getOrElse(() => HttpException('message'))
-              is SaldoInsuficiente) {
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Saldo insuficiente',
-            message:
-                'O saldo do cartão é insuficiente para realizar o movimento',
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-          ),
+      var error = result.swap().getOrElse(() => HttpException('message'));
+
+      if (result is Left && error is SaldoInsuficiente) {
+        showErrorMessage(
+          'Saldo insuficiente',
+          'O saldo do cartão é insuficiente para realizar o movimento',
         );
       } else {
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Erro',
-            message: 'Erro ao registrar movimento',
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.red,
-            isDismissible: true,
-          ),
+        showErrorMessage(
+          'Erro',
+          'Erro ao registrar movimento',
         );
       }
       salvandoMovimento.value = false;

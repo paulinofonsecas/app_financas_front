@@ -49,8 +49,7 @@ class MovimentoItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 4,
+          vertical: 5,
         ),
         child: Stack(
           fit: StackFit.loose,

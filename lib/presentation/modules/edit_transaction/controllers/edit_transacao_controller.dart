@@ -52,6 +52,7 @@ class EditTransacaoController extends GetxController {
       text: movimento.valor.toStringAsFixed(0),
     );
     obsTextController = TextEditingController(text: movimento.obsMovimento);
+    confirmado.value = movimento.confirmado;
 
     super.onInit();
   }
