@@ -93,7 +93,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   void getSaldoTotalSaidas() {
     emit(HomePageGetSaidasLoading());
 
-    _saldosService.getEntradas().then((value) {
+    _saldosService.getSaidas().then((value) {
       if (value is Right) {
         emit(HomePageGetSaidasSuccess(value.getOrElse(() => 0)));
       } else if (value is Left) {
