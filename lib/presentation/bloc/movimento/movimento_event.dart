@@ -23,11 +23,13 @@ class MovimentoGetPaginatedListByContaEvent extends MovimentoEvent {
   final int page;
   final int pageSize;
   final int contaId;
+  final int? tipoMovimentoId;
 
   const MovimentoGetPaginatedListByContaEvent(
     this.page,
     this.pageSize,
     this.contaId,
+    [this.tipoMovimentoId = 0]
   );
 
   @override

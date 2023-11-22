@@ -2,6 +2,7 @@
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
@@ -66,6 +67,9 @@ class _AppPageState extends State<AppPage> {
           ),
           BlocProvider(
             create: (context) => locator<ChangeContaCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => locator<ChangeTipoMovimentoCubit>(),
           ),
         ],
         child: const CarteiraPage(),

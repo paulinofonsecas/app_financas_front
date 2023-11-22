@@ -2,6 +2,7 @@ import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/constants.dart';
@@ -39,7 +40,13 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
       if (pageKey == 1) {
         return;
       }
-      movimentosCubit.getMovimentosByConta(pageKey, contaId);
+      var tipoMovimentoState = context.read<ChangeTipoMovimentoCubit>().state;
+
+      movimentosCubit.getMovimentosByConta(
+        pageKey,
+        contaId,
+        tipoMovimentoState.index,
+      );
     });
 
     super.initState();
@@ -49,18 +56,40 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
   Widget build(BuildContext context) {
     var carteiraController = Get.find<CarteiraPageController>();
 
-    return BlocListener<ChangeContaCubit, ChangeContaState>(
-      listener: (context, state) {
-        if (state is ContasUpdateContaIndex) {
-          setState(() {
-            contaId = state.index;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ChangeContaCubit, ChangeContaState>(
+          listener: (context, state) {
+            if (state is ContasUpdateContaIndex) {
+              setState(() {
+                contaId = state.index;
 
-            page = 1;
-            pagingController.refresh();
-            movimentosCubit.getMovimentosByConta(1, contaId);
-          });
-        }
-      },
+                var tipoMovimentoState =
+                    context.read<ChangeTipoMovimentoCubit>().state;
+                page = 1;
+                pagingController.refresh();
+                movimentosCubit.getMovimentosByConta(
+                  1,
+                  contaId,
+                  tipoMovimentoState.index,
+                );
+              });
+            }
+          },
+        ),
+        BlocListener<ChangeTipoMovimentoCubit, ChangeTipoMovimentoState>(
+          listener: (context, state) {
+            if (state is ChangeTipoMovimentoChanged) {
+              setState(() {
+                page = 1;
+                pagingController.refresh();
+                movimentosCubit.getMovimentosByConta(
+                    page, contaId, state.index);
+              });
+            }
+          },
+        ),
+      ],
       child: Expanded(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
@@ -88,7 +117,7 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
                   }
 
                   if (state is MovimentosByContaError) {
-                    return Text('${state.errorMessage}');
+                    return Text('//${state.errorMessage}');
                   }
 
                   if (state is MovimentosByContaEmpty) {

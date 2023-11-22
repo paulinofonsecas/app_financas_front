@@ -1,15 +1,20 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import 'change_tipo_movimento_cubit.dart';
+
 part 'movimentos_by_conta_state.dart';
 
 class MovimentosByContaCubit extends Cubit<MovimentosByContaState> {
   late final MovimentoBloc _movimentoBloc;
+  late final ChangeTipoMovimentoCubit _changeTipoMovimentoCubit;
   var pageSize = 10;
 
-  MovimentosByContaCubit(this._movimentoBloc)
+  MovimentosByContaCubit(this._movimentoBloc, this._changeTipoMovimentoCubit)
       : super(MovimentosByContaInitial()) {
     _movimentoBloc.stream.listen(
       (state) {
@@ -36,11 +41,16 @@ class MovimentosByContaCubit extends Cubit<MovimentosByContaState> {
     );
   }
 
-  void getMovimentosByConta(int page, int contaId) {
+  void getMovimentosByConta(int page, int contaId, [int tipoMovimento = 0]) {
+    if (tipoMovimento > 2) {
+      tipoMovimento = 0;
+    }
+
     _movimentoBloc.add(MovimentoGetPaginatedListByContaEvent(
       page,
       pageSize,
       contaId,
+      tipoMovimento,
     ));
   }
 }

@@ -28,11 +28,12 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     final page = event.page;
     final pageSize = event.pageSize;
     final contaId = event.contaId;
+    final tipoMovimentoId = event.tipoMovimentoId;
 
     emit(MovimentoGetPaginatedListByContaLoading());
 
     try {
-      final newItems = await _getPaginatedMovimentosByConta(
+      var newItems = await _getPaginatedMovimentosByConta(
         contaId,
         page,
         pageSize,
@@ -50,6 +51,18 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
       if (newItems.isEmpty) {
         emit(MovimentoGetPaginatedListByContaEmpty());
         return;
+      }
+
+      if (tipoMovimentoId == 1) {
+        newItems = (newItems
+              ..removeWhere((movimento) => movimento.tipoMovimentoId == 2))
+            .toList();
+      }
+
+      if (tipoMovimentoId == 2) {
+        newItems = (newItems
+              ..removeWhere((movimento) => movimento.tipoMovimentoId == 1))
+            .toList();
       }
 
       final isLastPage = newItems.length < pageSize;

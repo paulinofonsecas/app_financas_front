@@ -1,8 +1,7 @@
-import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
-import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 
 import 'my_text_filter.dart';
 
@@ -13,7 +12,7 @@ class HeaderMovimentoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var carteiraController = Get.find<CarteiraPageController>();
+    var state = context.watch<ChangeTipoMovimentoCubit>().state;
 
     return Hero(
       tag: 'header_movimento',
@@ -23,25 +22,25 @@ class HeaderMovimentoSection extends StatelessWidget {
           children: [
             MyTextFilter(
               title: 'Tudo',
-              isActive: carteiraController.esFilter == 0,
+              isActive: state.index == 0,
               onTap: () {
-                carteiraController.changeESFilter(0);
+                context.read<ChangeTipoMovimentoCubit>().updateTipoMovimento(0);
               },
             ),
             const GutterTiny(),
             MyTextFilter(
               title: 'Saídas',
-              isActive: carteiraController.esFilter == TipoMovimento.SAIDA,
+              isActive: state.index == 2,
               onTap: () {
-                carteiraController.changeESFilter(TipoMovimento.SAIDA);
+                context.read<ChangeTipoMovimentoCubit>().updateTipoMovimento(2);
               },
             ),
             const GutterTiny(),
             MyTextFilter(
               title: 'Entrada',
-              isActive: carteiraController.esFilter == TipoMovimento.ENTRADA,
+              isActive: state.index == 1,
               onTap: () {
-                carteiraController.changeESFilter(TipoMovimento.ENTRADA);
+                context.read<ChangeTipoMovimentoCubit>().updateTipoMovimento(1);
               },
             ),
           ],
