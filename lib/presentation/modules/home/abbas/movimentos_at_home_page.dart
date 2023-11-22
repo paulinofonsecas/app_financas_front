@@ -56,7 +56,8 @@ class MovimentosAtHomePage extends StatelessWidget {
                 ),
               )
               .toList(),
-        )
+        ),
+        SizedBox(height: kDefaultPadding * 2),
       ],
     );
   }
