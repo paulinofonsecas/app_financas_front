@@ -5,16 +5,13 @@ import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'change_tipo_movimento_cubit.dart';
-
 part 'movimentos_by_conta_state.dart';
 
 class MovimentosByContaCubit extends Cubit<MovimentosByContaState> {
   late final MovimentoBloc _movimentoBloc;
-  late final ChangeTipoMovimentoCubit _changeTipoMovimentoCubit;
   var pageSize = 10;
 
-  MovimentosByContaCubit(this._movimentoBloc, this._changeTipoMovimentoCubit)
+  MovimentosByContaCubit(this._movimentoBloc)
       : super(MovimentosByContaInitial()) {
     _movimentoBloc.stream.listen(
       (state) {

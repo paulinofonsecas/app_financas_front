@@ -61,5 +61,5 @@ Future<void> dependencyInitialize() async {
   locator.registerLazySingleton<ChangeTipoMovimentoCubit>(
       () => ChangeTipoMovimentoCubit());
   locator.registerLazySingleton<MovimentosByContaCubit>(
-      () => MovimentosByContaCubit(locator(), locator()));
+      () => MovimentosByContaCubit(locator()));
 }
