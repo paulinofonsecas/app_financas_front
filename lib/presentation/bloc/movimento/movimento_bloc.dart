@@ -14,7 +14,7 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
 
   MovimentoBloc(this.movimentoService) : super(MovimentoInitial()) {
     on<MovimentoGetPaginatedListByContaEvent>(
-      _onMovimentoGetPaginatedListEvent,
+      _onMovimentoGetPaginatedListByContaEvent,
     );
     on<MovimentoGetPaginatedListEvent>(
       _onMovimentoGetPaginatedListEvent,
@@ -22,7 +22,40 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     on<MovimentoGetMovimentosListOfDayEvent>(
       _onMovimentoGetMovimentosListOfDayEvent,
     );
-    
+  }
+
+  void _onMovimentoGetPaginatedListByContaEvent(event, emit) async {
+    final page = event.page;
+    final pageSize = event.pageSize;
+    final contaId = event.contaId;
+
+    try {
+      final newItems = await _getPaginatedMovimentosByConta(
+        page,
+        pageSize,
+        contaId,
+      );
+
+      if (newItems == null) {
+        emit(
+          const MovimentoGetPaginatedListByContaError(
+            'Erro ao buscar movimentos',
+          ),
+        );
+        return;
+      }
+
+      final isLastPage = newItems.length < pageSize;
+
+      if (isLastPage) {
+        emit(MovimentoGetLastPaginatedListByContaSuccess(newItems));
+      } else {
+        final nextPageKey = page + 1;
+        emit(MovimentoGetPaginatedListByContaSuccess(newItems, nextPageKey));
+      }
+    } catch (error) {
+      emit(MovimentoGetPaginatedListByContaError(error.toString()));
+    }
   }
 
   void _onMovimentoGetPaginatedListEvent(event, emit) async {
@@ -77,6 +110,24 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     }
   }
 
+  Future<List<Movimento>?> _getPaginatedMovimentosByConta(
+    int page,
+    int pageSize,
+    int contaId,
+  ) async {
+    var result = await movimentoService.listPaginatedContaMovimentos(
+      page,
+      pageSize,
+      contaId,
+    );
+
+    if (result is Right) {
+      return result.getOrElse(() => []);
+    } else {
+      return null;
+    }
+  }
+
   Future<List<Movimento>> listMovimentosDoDia() async {
     var result = await movimentoService.listMovimentos();
 
@@ -98,5 +149,4 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     add(const MovimentoGetPaginatedListEvent(1, 10));
     add(MovimentoGetMovimentosListOfDayEvent());
   }
-
 }
