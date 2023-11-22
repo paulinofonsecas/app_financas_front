@@ -15,7 +15,6 @@ part 'home_page_state.dart';
 class HomePageCubit extends Cubit<HomePageState> {
   late final MovimentoBloc _movimentoBloc;
   late final ISaldosService _saldosService;
-  final int page = 1;
   final int pageSize = 10;
 
   HomePageCubit() : super(HomePageInitialState()) {

@@ -1,47 +1,122 @@
 import 'package:app_financas/presentation/components/movimento_item.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'movimento_list_header_section.dart';
 
-class MovimentosListSection extends StatelessWidget {
+class MovimentosListSection extends StatefulWidget {
   const MovimentosListSection({
     super.key,
   });
 
   @override
+  State<MovimentosListSection> createState() => _MovimentosListSectionState();
+}
+
+class _MovimentosListSectionState extends State<MovimentosListSection> {
+  late final PagingController<int, Movimento> pagingController;
+  late final MovimentosByContaCubit movimentosCubit;
+  var contaId = 0;
+  var page = 1;
+
+  @override
+  void initState() {
+    movimentosCubit = locator();
+    pagingController = PagingController(firstPageKey: 1);
+
+    pagingController.addPageRequestListener((pageKey) {
+      if (pageKey == 1) {
+        return;
+      }
+      movimentosCubit.getMovimentosByConta(pageKey, contaId);
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var carteiraController = Get.find<CarteiraPageController>();
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const HeaderMovimentoSection(),
-            const GutterTiny(),
-            Expanded(
-              child: PagedListView<int, Movimento>(
-                pagingController: carteiraController.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Movimento>(
-                  itemBuilder: (context, movimento, index) =>
-                      _buildMovimentoItem(
-                    movimento,
-                    context,
-                    carteiraController,
-                  ),
-                ),
+    return BlocListener<ChangeContaCubit, ChangeContaState>(
+      listener: (context, state) {
+        if (state is ContasUpdateContaIndex) {
+          setState(() {
+            contaId = state.index;
+
+            page = 1;
+            pagingController.refresh();
+            movimentosCubit.getMovimentosByConta(1, contaId);
+          });
+        }
+      },
+      child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const HeaderMovimentoSection(),
+              const GutterTiny(),
+              BlocConsumer<MovimentosByContaCubit, MovimentosByContaState>(
+                listener: (context, state) {
+                  if (state is MovimentosByContaSuccess) {
+                    pagingController.appendPage(
+                        state.movimentos, state.nextPageKey);
+                  }
+
+                  if (state is MovimentosByContaLastSuccess) {
+                    pagingController.appendLastPage(state.movimentos);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is MovimentosByContaLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (state is MovimentosByContaError) {
+                    return Text('${state.errorMessage}');
+                  }
+
+                  if (state is MovimentosByContaEmpty) {
+                    return const Text('Sem movimentos para apresentar');
+                  }
+
+                  if (state is MovimentosByContaSuccess ||
+                      state is MovimentosByContaLastSuccess) {
+                    return Expanded(
+                      child: PagedListView<int, Movimento>(
+                        pagingController: pagingController,
+                        builderDelegate: PagedChildBuilderDelegate<Movimento>(
+                          itemBuilder: (context, movimento, index) =>
+                              _buildMovimentoItem(
+                            movimento,
+                            context,
+                            carteiraController,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
+                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

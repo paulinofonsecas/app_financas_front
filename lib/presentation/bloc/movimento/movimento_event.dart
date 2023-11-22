@@ -22,9 +22,14 @@ class MovimentoGetPaginatedListEvent extends MovimentoEvent {
 class MovimentoGetPaginatedListByContaEvent extends MovimentoEvent {
   final int page;
   final int pageSize;
+  final int contaId;
 
-  const MovimentoGetPaginatedListByContaEvent(this.page, this.pageSize);
+  const MovimentoGetPaginatedListByContaEvent(
+    this.page,
+    this.pageSize,
+    this.contaId,
+  );
 
   @override
-  List<Object> get props => [page, pageSize];
+  List<Object> get props => [page, pageSize, contaId];
 }

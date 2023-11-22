@@ -29,11 +29,13 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     final pageSize = event.pageSize;
     final contaId = event.contaId;
 
+    emit(MovimentoGetPaginatedListByContaLoading());
+
     try {
       final newItems = await _getPaginatedMovimentosByConta(
+        contaId,
         page,
         pageSize,
-        contaId,
       );
 
       if (newItems == null) {
@@ -42,6 +44,11 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
             'Erro ao buscar movimentos',
           ),
         );
+        return;
+      }
+
+      if (newItems.isEmpty) {
+        emit(MovimentoGetPaginatedListByContaEmpty());
         return;
       }
 
@@ -62,6 +69,8 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     final page = event.page;
     final pageSize = event.pageSize;
 
+    emit(MovimentoGetPaginatedListLoading());
+
     try {
       final newItems = await _getPaginatedMovimentos(page, pageSize);
 
@@ -71,6 +80,11 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
             'Erro ao buscar movimentos',
           ),
         );
+        return;
+      }
+
+      if (newItems.isEmpty) {
+        emit(MovimentoGetPaginatedListEmpty());
         return;
       }
 
@@ -111,14 +125,14 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
   }
 
   Future<List<Movimento>?> _getPaginatedMovimentosByConta(
+    int contaId,
     int page,
     int pageSize,
-    int contaId,
   ) async {
     var result = await movimentoService.listPaginatedContaMovimentos(
+      contaId,
       page,
       pageSize,
-      contaId,
     );
 
     if (result is Right) {

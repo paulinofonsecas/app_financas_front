@@ -9,6 +9,8 @@ sealed class ContaState extends Equatable {
 
 final class ContaInitial extends ContaState {}
 
+// contas
+
 final class ListarContasLoading extends ContaState {}
 
 final class ListarContasSuccess extends ContaState {
@@ -30,3 +32,6 @@ final class ListarContasError extends ContaState {
 }
 
 final class ListarContasEmpty extends ContaState {}
+
+// end listar contas
+

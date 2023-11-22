@@ -4,6 +4,8 @@ import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
@@ -54,4 +56,7 @@ Future<void> dependencyInitialize() async {
   // cubits
   locator.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());
   locator.registerLazySingleton<HomePageCubit>(() => HomePageCubit());
+  locator.registerLazySingleton<ChangeContaCubit>(() => ChangeContaCubit());
+  locator.registerLazySingleton<MovimentosByContaCubit>(
+      () => MovimentosByContaCubit(locator()));
 }

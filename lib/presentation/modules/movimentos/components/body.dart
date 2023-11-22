@@ -28,7 +28,6 @@ class _BodyState extends State<Body> {
   late final HomePageCubit homePageCubit;
 
   var page = 1;
-  var pageSize = 10;
 
   @override
   void initState() {

@@ -60,8 +60,9 @@ final class MovimentoGetPaginatedListByContaError extends MovimentoState {
 
 final class MovimentoGetPaginatedListByContaLoading extends MovimentoState {}
 
-// end movimentos paginated by conta
+final class MovimentoGetPaginatedListByContaEmpty extends MovimentoState {}
 
+// end movimentos paginated by conta
 
 // movimentos paginated
 
@@ -69,8 +70,7 @@ final class MovimentoGetPaginatedListSuccess extends MovimentoState {
   final List<Movimento> movimentos;
   final int nextPageKey;
 
-  const MovimentoGetPaginatedListSuccess(
-      this.movimentos, this.nextPageKey);
+  const MovimentoGetPaginatedListSuccess(this.movimentos, this.nextPageKey);
 
   @override
   List<Object> get props => [movimentos, nextPageKey];
@@ -95,5 +95,7 @@ final class MovimentoGetPaginatedListError extends MovimentoState {
 }
 
 final class MovimentoGetPaginatedListLoading extends MovimentoState {}
+
+final class MovimentoGetPaginatedListEmpty extends MovimentoState {}
 
 // end movimentos paginated

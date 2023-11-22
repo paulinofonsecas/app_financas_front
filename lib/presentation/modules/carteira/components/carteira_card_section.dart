@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/modules/carteira/components/conta_item_comp.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta_details/conta_details_page.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,8 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
           height: 190,
           child: BlocBuilder<ContasCubit, ContasState>(
             bloc: context.read<ContasCubit>()..getContas(),
+            buildWhen: (previous, current) =>
+                previous != current && current is ContasListarContas,
             builder: (context, state) {
               if (state is ContasListarContasLoading) {
                 return const Center(
@@ -57,12 +60,20 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
 
               if (state is ContasListarContasSuccess) {
                 var contas = state.contas;
+                var changeContas = context.read<ChangeContaCubit>();
+                if (changeContas.state is ChageContaInitial) {
+                  changeContas.updateContaIndex(contas.first.id);
+                }
 
                 return PageView.builder(
                   controller: pageController,
                   onPageChanged: (index) {
+                    context
+                        .read<ChangeContaCubit>()
+                        .updateContaIndex(contas[index].id);
                     carteiraController.updateContaIndex(contas[index].id);
                     carteiraController.updateConta(contas[index]);
+
                     setState(() {
                       currentIndex = index;
                     });

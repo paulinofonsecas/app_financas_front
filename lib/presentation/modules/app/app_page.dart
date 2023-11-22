@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
@@ -53,8 +56,18 @@ class _AppPageState extends State<AppPage> {
         ],
         child: const HomePage(),
       ),
-      BlocProvider(
-        create: (c) => ContasCubit(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (c) => ContasCubit(),
+          ),
+          BlocProvider(
+            create: (context) => locator<MovimentosByContaCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => locator<ChangeContaCubit>(),
+          ),
+        ],
         child: const CarteiraPage(),
       ),
       const EstatisticasPage(),
@@ -66,9 +79,6 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print(Get.size);
-    }
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       drawer: const MyDrawer(),

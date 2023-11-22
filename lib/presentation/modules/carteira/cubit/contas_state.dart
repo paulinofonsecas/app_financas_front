@@ -9,9 +9,16 @@ sealed class ContasState extends Equatable {
 
 final class ContasInitial extends ContasState {}
 
-final class ContasListarContasLoading extends ContasState {}
+final class ContasListarContas extends ContasState {
+  const ContasListarContas();
 
-final class ContasListarContasSuccess extends ContasState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ContasListarContasLoading extends ContasListarContas {}
+
+final class ContasListarContasSuccess extends ContasListarContas {
   final List<Conta> contas;
 
   const ContasListarContasSuccess(this.contas);
@@ -20,7 +27,7 @@ final class ContasListarContasSuccess extends ContasState {
   List<Object> get props => [contas];
 }
 
-final class ContasListarContasError extends ContasState {
+final class ContasListarContasError extends ContasListarContas {
   final String? errorMessage;
 
   const ContasListarContasError({this.errorMessage});
@@ -29,4 +36,4 @@ final class ContasListarContasError extends ContasState {
   List<Object> get props => [errorMessage ?? ''];
 }
 
-final class ContasListarContasEmpty extends ContasState {}
+final class ContasListarContasEmpty extends ContasListarContas {}
