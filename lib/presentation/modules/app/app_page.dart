@@ -83,56 +83,62 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.theme.colorScheme.surface,
-      drawer: const MyDrawer(),
-      body: SafeArea(
-        bottom: false,
-        child: BlocBuilder<AppBloc, AppState>(
-          buildWhen: (previous, current) {
-            return previous.bottomNavIndex != current.bottomNavIndex;
-          },
-          builder: (context, state) {
-            return IndexedStack(
+    return BlocBuilder<AppBloc, AppState>(
+      buildWhen: (previous, current) {
+        return previous.bottomNavIndex != current.bottomNavIndex;
+      },
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: context.theme.colorScheme.surface,
+          drawer: const MyDrawer(),
+          body: SafeArea(
+            bottom: false,
+            child: IndexedStack(
               index: state.bottomNavIndex,
               children: telas,
-            );
-          },
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          customShowModalBottomSheet(
-            context,
-            isScrollControlled: false,
-            constraints: const BoxConstraints.tightFor(),
-            child: BottomEscolherTipoMovimento(
-              cloused: () {
-                Get.find<HomePageController>().update(['geral']);
-                Get.find<CarteiraPageController>().update(['geral']);
-                Get.back(closeOverlays: true);
-                setState(() {});
-              },
             ),
-          );
-        },
-        child: Icon(
-          CupertinoIcons.add,
-          color: Theme.of(context).floatingActionButtonTheme.foregroundColor,
-        ),
-      ),
-      bottomNavigationBar: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          return BottomNavBar(
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: canShowFAB(state)
+              ? FloatingActionButton(
+                  onPressed: () {
+                    customShowModalBottomSheet(
+                      context,
+                      isScrollControlled: false,
+                      constraints: const BoxConstraints.tightFor(),
+                      child: BottomEscolherTipoMovimento(
+                        cloused: () {
+                          Get.find<HomePageController>().update(['geral']);
+                          Get.find<CarteiraPageController>().update(['geral']);
+                          Get.back(closeOverlays: true);
+                          setState(() {});
+                        },
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    CupertinoIcons.add,
+                    color: Theme.of(context)
+                        .floatingActionButtonTheme
+                        .foregroundColor,
+                  ),
+                )
+              : null,
+          bottomNavigationBar: BottomNavBar(
             index: state.bottomNavIndex,
             onTap: (index) {
               context.read<AppBloc>().add(AppChangeBottomNavIndexEvent(index));
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  bool canShowFAB(AppState state) {
+    return (state.bottomNavIndex == 0 ||
+                state.bottomNavIndex == 1);
   }
 }
 
