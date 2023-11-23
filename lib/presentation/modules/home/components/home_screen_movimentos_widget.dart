@@ -14,10 +14,10 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Column(
         children: [
-          const SizedBox(height: kDefaultPadding),
+          const SizedBox(height: kDefaultPadding * 2),
           BlocBuilder<LastMovimentosCubit, LastMovimentosState>(
             bloc: context.read<LastMovimentosCubit>()..getLastMovimentos(),
             builder: (context, state) {

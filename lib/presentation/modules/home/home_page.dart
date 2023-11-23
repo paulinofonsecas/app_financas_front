@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ActionBar(),
                 SaldoDisponivelCardWidget(),
-                SizedBox(height: kDefaultPadding * 2),
                 HomeScreenMovimentosWidget(),
               ],
             );
