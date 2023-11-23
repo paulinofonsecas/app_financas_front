@@ -12,6 +12,7 @@ class HeaderSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Carteira',
@@ -20,6 +21,14 @@ class HeaderSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          const Spacer(),
+          IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          )
         ],
       ),
     );

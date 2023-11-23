@@ -35,7 +35,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
         return Left(ValorInvalido('Saldo invalido ${movimento.valor}'));
       }
 
-      if (movimento.confirmado && !(await saldoIsSuficiente(movimento))) {
+      if (!(await saldoIsSuficiente(movimento))) {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
@@ -117,6 +117,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
   }
 
   Future<bool> saldoIsSuficiente(Movimento movimento) async {
+    if (movimento.tipoMovimentoId == 1 || !movimento.confirmado) {
+      return true;
+    }
+
     IContaProvider contaService = locator();
     var result = await contaService.getConta(movimento.cartaoId);
 
@@ -139,7 +143,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
         lastId = _movimentosBox.keys.last + 1;
       }
 
-      if (movimento.confirmado && !(await saldoIsSuficiente(movimento))) {
+      if (!(await saldoIsSuficiente(movimento))) {
         return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
