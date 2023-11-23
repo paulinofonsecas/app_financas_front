@@ -2,6 +2,7 @@
 
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'components/action_bar.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
             return ListView(
               children: [
                 ActionBar(),
+                Gutter(),
                 SaldoDisponivelCardWidget(),
                 HomeScreenMovimentosWidget(),
               ],
