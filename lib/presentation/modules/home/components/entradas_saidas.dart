@@ -10,14 +10,22 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EntradasESaidas extends StatelessWidget {
+import 'omited_text.dart';
+
+class EntradasESaidas extends StatefulWidget {
   const EntradasESaidas({super.key});
 
+  @override
+  State<EntradasESaidas> createState() => _EntradasESaidasState();
+}
+
+class _EntradasESaidasState extends State<EntradasESaidas> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 12.0),
         decoration: BoxDecoration(
@@ -144,13 +152,17 @@ class EntradaOuSaidaWidget extends StatelessWidget {
           GutterTiny(),
           BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
             builder: (context, state) {
-              return Text(
-                state.value ? numberFormat.format(valor) : '********',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
+              return state.value
+                  ? Text(
+                      numberFormat.format(valor),
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  : OmitedText(
+                    padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+                  );
             },
           ),
         ],
