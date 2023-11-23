@@ -3,7 +3,6 @@ import 'package:app_financas/presentation/modules/carteira/components/header_sec
 import 'package:app_financas/presentation/modules/carteira/components/movimentos_list_section.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'components/carteira_card_section.dart';
@@ -35,7 +34,6 @@ class _CarteiraPageState extends State<CarteiraPage> {
           children: [
             HeaderSection(),
             CarteiraCardSection(),
-            Gutter(),
             MovimentosListSection(),
           ],
         );

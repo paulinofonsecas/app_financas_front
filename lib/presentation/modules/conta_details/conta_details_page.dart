@@ -46,9 +46,9 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
           id: 'geral',
           builder: (context) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CardSection(conta: controller.conta),
-                Gutter(),
                 movimentoSection(),
               ],
             );
@@ -59,40 +59,36 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
   }
 
   Widget headerMovimentoSection() {
-    return Hero(
-      tag: 'header_movimento',
-      child: Material(
+    return Material(
+      child: Hero(
+        tag: 'header_movimento',
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  MyTextFilter(
-                    title: 'Tudo',
-                    isActive: true,
-                    onTap: () {
-                      controller.changeESFilter(0);
-                    },
-                  ),
-                  const GutterTiny(),
-                  MyTextFilter(
-                    title: 'Saídas',
-                    isActive: false,
-                    onTap: () {
-                      controller.changeESFilter(TipoMovimento.SAIDA);
-                    },
-                  ),
-                  const GutterTiny(),
-                  MyTextFilter(
-                    title: 'Entrada',
-                    isActive: false,
-                    onTap: () {
-                      controller.changeESFilter(TipoMovimento.ENTRADA);
-                    },
-                  ),
-                ],
+              MyTextFilter(
+                title: 'Tudo',
+                isActive: true,
+                onTap: () {
+                  controller.changeESFilter(0);
+                },
+              ),
+              const GutterTiny(),
+              MyTextFilter(
+                title: 'Saídas',
+                isActive: false,
+                onTap: () {
+                  controller.changeESFilter(TipoMovimento.SAIDA);
+                },
+              ),
+              const GutterTiny(),
+              MyTextFilter(
+                title: 'Entrada',
+                isActive: false,
+                onTap: () {
+                  controller.changeESFilter(TipoMovimento.ENTRADA);
+                },
               ),
             ],
           ),

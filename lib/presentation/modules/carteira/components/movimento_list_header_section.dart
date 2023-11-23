@@ -14,9 +14,9 @@ class HeaderMovimentoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     var state = context.watch<ChangeTipoMovimentoCubit>().state;
 
-    return Hero(
-      tag: 'header_movimento',
-      child: Material(
+    return Material(
+      child: Hero(
+        tag: 'header_movimento',
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [

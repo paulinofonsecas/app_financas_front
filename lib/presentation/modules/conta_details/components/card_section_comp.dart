@@ -21,54 +21,56 @@ class CardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: 'conta_${conta.id}',
-      child: Material(
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.primary,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Hero(
+        tag: 'conta_${conta.id}',
+        child: Material(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(kDefaultPadding * 1.5),
+            margin: const EdgeInsets.all(kDefaultPadding),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).colorScheme.shadow.withOpacity(.2),
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                  spreadRadius: 1,
+                ),
               ],
             ),
-          ),
-          padding: const EdgeInsets.all(kDefaultPadding * 1.5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  BackButton(
-                    color: Theme.of(context).colorScheme.onInverseSurface,
-                  ),
-                  const Gutter(),
-                  Text(
-                    conta.nome,
-                    style: GoogleFonts.inter(
-                      fontSize: 22,
-                      color: Theme.of(context).colorScheme.onInverseSurface,
-                      fontWeight: FontWeight.bold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const BackButton(),
+                    const Gutter(),
+                    Text(
+                      conta.nome,
+                      style: GoogleFonts.inter(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      _showCarteiraOptions(context);
-                    },
-                    icon: Icon(
-                      Icons.more_horiz,
-                      color: Theme.of(context).colorScheme.onInverseSurface,
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        _showCarteiraOptions(context);
+                      },
+                      icon: const Icon(
+                        Icons.more_horiz,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: kDefaultPadding * 3),
-              BottomSection(conta: conta),
-            ],
+                  ],
+                ),
+                const SizedBox(height: kDefaultPadding * 3),
+                BottomSection(conta: conta),
+              ],
+            ),
           ),
         ),
       ),
@@ -148,7 +150,6 @@ class BottomSection extends StatelessWidget {
                   'Saldo atual',
                   style: GoogleFonts.inter(
                     fontSize: 16,
-                    color: Theme.of(context).colorScheme.onInverseSurface,
                     fontWeight: FontWeight.w200,
                   ),
                 ),
@@ -157,13 +158,12 @@ class BottomSection extends StatelessWidget {
                   numberFormat.format(conta.saldo),
                   style: GoogleFonts.inter(
                     fontSize: 24,
-                    color: Theme.of(context).colorScheme.onInverseSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
               onPressed: () {
                 customShowModalBottomSheet(
@@ -182,13 +182,12 @@ class BottomSection extends StatelessWidget {
                   Get.find<ContaDetailsPageController>().updateGeral();
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add,
-                color: Theme.of(context).colorScheme.onInverseSurface,
               ),
               padding: const EdgeInsets.all(kDefaultPadding / .95),
               style: IconButton.styleFrom(
-                backgroundColor: Colors.white.withOpacity(.15),
+                backgroundColor: Colors.grey.withOpacity(.15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -196,10 +195,6 @@ class BottomSection extends StatelessWidget {
             ),
           ],
         ),
-        Divider(
-          color: Colors.white.withOpacity(.3),
-        ),
-        const GutterSmall(),
       ],
     );
   }

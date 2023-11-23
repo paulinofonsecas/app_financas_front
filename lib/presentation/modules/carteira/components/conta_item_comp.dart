@@ -70,7 +70,7 @@ class ContaItem extends StatelessWidget {
         Text(
           numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
-            fontSize: 32,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),

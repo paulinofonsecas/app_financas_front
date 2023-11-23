@@ -3,7 +3,6 @@
 
 // ignore: unused_import
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
