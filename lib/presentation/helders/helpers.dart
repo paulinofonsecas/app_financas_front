@@ -12,7 +12,7 @@ void showErrorMessage(String title, String message,
     GetSnackBar(
       title: title,
       message: message,
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 4),
       backgroundColor: backgroundColor ?? Colors.red,
       isDismissible: true,
     ),

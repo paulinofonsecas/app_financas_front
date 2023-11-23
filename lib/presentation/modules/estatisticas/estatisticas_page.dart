@@ -32,7 +32,7 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: SafeArea(
-        bottom: false,
+          bottom: false,
           child: SingleChildScrollView(
             child: GetBuilder(
               init: controller,
@@ -58,72 +58,70 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
   }
 
   Widget headerSection() {
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Estatisticas',
-            style: GoogleFonts.inter(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Gutter(),
+        Text(
+          'Estatisticas',
+          style: GoogleFonts.inter(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const Gutter(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: Theme.of(context)
+                    .colorScheme
+                    .primaryContainer
+                    .withOpacity(.8),
+              ),
+              onPressed: () {
+                controller.previousMonth();
+              },
+              icon: Icon(
+                Icons.keyboard_arrow_left_rounded,
+                size: 35,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          const Gutter(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                style: IconButton.styleFrom(
-                  backgroundColor: Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(.8),
-                ),
-                onPressed: () {
-                  controller.previousMonth();
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_left_rounded,
-                  size: 35,
+            const GutterLarge(),
+            Obx(
+              () => Text(
+                '${controller.mygetMonthName(controller.periodoMes.value)} ${DateTime.now().year}',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              const GutterLarge(),
-              Obx(
-                () => Text(
-                  '${controller.mygetMonthName(controller.periodoMes.value)} ${DateTime.now().year}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
+            ),
+            const GutterLarge(),
+            IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: Theme.of(context)
+                    .colorScheme
+                    .primaryContainer
+                    .withOpacity(.8),
               ),
-              const GutterLarge(),
-              IconButton(
-                style: IconButton.styleFrom(
-                  backgroundColor: Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(.8),
-                ),
-                onPressed: () {
-                  controller.nextMonth();
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_right_rounded,
-                  size: 35,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+              onPressed: () {
+                controller.nextMonth();
+              },
+              icon: Icon(
+                Icons.keyboard_arrow_right_rounded,
+                size: 35,
+                color: Theme.of(context).colorScheme.primary,
               ),
-            ],
-          ),
-          const Gutter(),
-          Divider(color: Theme.of(context).colorScheme.primaryContainer),
-        ],
-      ),
+            ),
+          ],
+        ),
+        const Gutter(),
+        Divider(color: Theme.of(context).colorScheme.primaryContainer),
+      ],
     );
   }
 

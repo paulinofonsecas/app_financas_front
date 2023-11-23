@@ -32,48 +32,48 @@ void main() {
     });
 
     blocTest<MovimentoBloc, MovimentoState>(
-      'emits MovimentoGetLastPaginatedListByContaSuccess'
-      ' when MovimentoGetPaginatedListByContaEvent is added.',
+      'emits MovimentoGetLastPaginatedListSuccess'
+      ' when MovimentoGetPaginatedListEvent is added.',
       build: () => movimentoBloc,
       act: (bloc) {
         when(() => bloc.movimentoService.listPaginatedMovimentos(1, 10))
             .thenAnswer(((_) async => Right([movimento])));
 
-        bloc.add(const MovimentoGetPaginatedListByContaEvent(1, 10));
+        bloc.add(const MovimentoGetPaginatedListEvent(1, 10));
       },
       expect: () => [
-        MovimentoGetLastPaginatedListByContaSuccess(<Movimento>[movimento])
+        MovimentoGetLastPaginatedListSuccess(<Movimento>[movimento])
       ],
     );
 
     var listResult = List.generate(15, (index) => movimento);
 
     blocTest<MovimentoBloc, MovimentoState>(
-      'emits MovimentoGetPaginatedListByContaSuccess'
-      ' when MovimentoGetPaginatedListByContaEvent is added.',
+      'emits MovimentoGetPaginatedListSuccess'
+      ' when MovimentoGetPaginatedListEvent is added.',
       build: () => movimentoBloc,
       act: (bloc) {
         when(() => bloc.movimentoService.listPaginatedMovimentos(1, 10))
             .thenAnswer(((_) async => Right(listResult)));
 
-        bloc.add(const MovimentoGetPaginatedListByContaEvent(1, 10));
+        bloc.add(const MovimentoGetPaginatedListEvent(1, 10));
       },
-      expect: () => [MovimentoGetPaginatedListByContaSuccess(listResult, 2)],
+      expect: () => [MovimentoGetPaginatedListSuccess(listResult, 2)],
     );
 
     blocTest<MovimentoBloc, MovimentoState>(
-      'emits MovimentoGetPaginatedListByContaError'
-      ' when MovimentoGetPaginatedListByContaEvent is added.',
+      'emits MovimentoGetPaginatedListError'
+      ' when MovimentoGetPaginatedListEvent is added.',
       build: () => movimentoBloc,
       act: (bloc) {
         when(() => bloc.movimentoService.listPaginatedMovimentos(1, 10))
             .thenAnswer(
                 ((_) async => Left(Failure('erro ao buscar os movimentos'))));
 
-        bloc.add(const MovimentoGetPaginatedListByContaEvent(1, 10));
+        bloc.add(const MovimentoGetPaginatedListEvent(1, 10));
       },
       expect: () => [
-        const MovimentoGetPaginatedListByContaError(
+        const MovimentoGetPaginatedListError(
           'Erro ao buscar movimentos',
         )
       ],

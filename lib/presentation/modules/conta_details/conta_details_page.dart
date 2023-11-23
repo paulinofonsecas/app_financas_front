@@ -47,12 +47,7 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
           builder: (context) {
             return Column(
               children: [
-                Hero(
-                  tag: 'conta_${controller.conta.id}',
-                  child: CardSection(
-                    conta: controller.conta,
-                  ),
-                ),
+                CardSection(conta: controller.conta),
                 Gutter(),
                 movimentoSection(),
               ],

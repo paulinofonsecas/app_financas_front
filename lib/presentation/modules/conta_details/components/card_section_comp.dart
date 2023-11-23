@@ -21,50 +21,105 @@ class CardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.blue,
-              Color.fromARGB(255, 17, 107, 180),
+    return Hero(
+      tag: 'conta_${conta.id}',
+      child: Material(
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.primary,
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.all(kDefaultPadding * 1.5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  BackButton(
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                  ),
+                  const Gutter(),
+                  Text(
+                    conta.nome,
+                    style: GoogleFonts.inter(
+                      fontSize: 22,
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      _showCarteiraOptions(context);
+                    },
+                    icon: Icon(
+                      Icons.more_horiz,
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: kDefaultPadding * 3),
+              BottomSection(conta: conta),
             ],
           ),
         ),
-        padding: const EdgeInsets.all(kDefaultPadding * 1.5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const BackButton(
-                  color: Colors.white,
-                ),
-                const Gutter(),
-                Text(
-                  conta.nome,
+      ),
+    );
+  }
+
+  Future<dynamic> _showCarteiraOptions(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (c) => Padding(
+        padding: const EdgeInsets.only(
+          left: kDefaultPadding / 2,
+          right: kDefaultPadding / 2,
+          bottom: kDefaultPadding * 2,
+          top: kDefaultPadding * 2,
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                title: Text(
+                  'Arquivar',
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.red,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.white,
+                titleAlignment: ListTileTitleAlignment.center,
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                title: Text(
+                  'Editar',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: kDefaultPadding * 3),
-            BottomSection(conta: conta),
-          ],
+                titleAlignment: ListTileTitleAlignment.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -93,7 +148,7 @@ class BottomSection extends StatelessWidget {
                   'Saldo atual',
                   style: GoogleFonts.inter(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
                     fontWeight: FontWeight.w200,
                   ),
                 ),
@@ -102,7 +157,7 @@ class BottomSection extends StatelessWidget {
                   numberFormat.format(conta.saldo),
                   style: GoogleFonts.inter(
                     fontSize: 24,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onInverseSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -127,9 +182,9 @@ class BottomSection extends StatelessWidget {
                   Get.find<ContaDetailsPageController>().updateGeral();
                 });
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.add,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onInverseSurface,
               ),
               padding: const EdgeInsets.all(kDefaultPadding / .95),
               style: IconButton.styleFrom(

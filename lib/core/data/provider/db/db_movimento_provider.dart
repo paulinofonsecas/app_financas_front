@@ -1,6 +1,8 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -31,6 +33,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       if (movimento.valor < 0) {
         return Left(ValorInvalido('Saldo invalido ${movimento.valor}'));
+      }
+
+      if (!(await saldoIsSuficiente(movimento))) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
       movimento = movimento.copyWith(
@@ -110,6 +116,22 @@ class DbMovimentoProvider implements IMovimentoProvider {
     throw UnimplementedError();
   }
 
+  Future<bool> saldoIsSuficiente(Movimento movimento) async {
+    if (movimento.tipoMovimentoId == 1 || !movimento.confirmado) {
+      return true;
+    }
+
+    IContaProvider contaService = locator();
+    var result = await contaService.getConta(movimento.cartaoId);
+
+    if (result is Right) {
+      var conta = result.getOrElse(() => Conta.fake());
+      return conta.saldo >= movimento.valor;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento) async {
     try {
@@ -119,6 +141,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       if (_movimentosBox.values.isNotEmpty) {
         lastId = _movimentosBox.keys.last + 1;
+      }
+
+      if (!(await saldoIsSuficiente(movimento))) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
       movimento = movimento.copyWith(id: lastId);

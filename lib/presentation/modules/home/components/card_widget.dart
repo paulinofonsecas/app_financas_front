@@ -69,14 +69,16 @@ class SaldoDisponivelCard extends StatelessWidget {
                 onPressed: () {
                   context.read<ShowMoneyCubit>().changeValue();
                 },
-                icon: Obx(
-                  () => Icon(
-                    controller.showMoneyOnCards.value
-                        ? CupertinoIcons.eye_slash
-                        : CupertinoIcons.eye,
-                    color: Colors.grey,
-                    size: 32,
-                  ),
+                icon: BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
+                  builder: (context, state) {
+                    return Icon(
+                      state.value
+                          ? CupertinoIcons.eye_slash
+                          : CupertinoIcons.eye,
+                      color: Colors.grey,
+                      size: 32,
+                    );
+                  },
                 ),
               ),
             ],

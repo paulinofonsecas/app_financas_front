@@ -34,9 +34,8 @@ class _CarteiraPageState extends State<CarteiraPage> {
         return const Column(
           children: [
             HeaderSection(),
-            Gutter(),
             CarteiraCardSection(),
-            GutterLarge(),
+            Gutter(),
             MovimentosListSection(),
           ],
         );

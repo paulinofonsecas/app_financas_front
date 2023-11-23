@@ -19,7 +19,8 @@ class LimparDadosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return TextButton.icon(
+      icon: Icon(Icons.warning),
       onPressed: () {
         showDialog(
           context: context,
@@ -58,7 +59,7 @@ class LimparDadosWidget extends StatelessWidget {
       style: TextButton.styleFrom(
         foregroundColor: Colors.red,
       ),
-      child: const Text('Limpar dados'),
+      label: const Text('Limpar dados'),
     );
   }
 }

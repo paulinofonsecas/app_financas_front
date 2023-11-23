@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ).copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: Colors.purple,
           brightness: Brightness.dark,
         ),
         brightness: Brightness.dark,
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: Colors.purple,
         ),
       ),
       scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {

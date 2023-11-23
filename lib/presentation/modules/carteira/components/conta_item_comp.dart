@@ -31,15 +31,15 @@ class ContaItem extends StatelessWidget {
             vertical: isActive ? 0 : kDefaultPadding * 1.5,
           ),
           decoration: BoxDecoration(
-            color: kAzulForteColor,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(10),
             gradient: isActive
                 ? LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: const [
-                      Colors.blue,
-                      Color.fromARGB(255, 17, 107, 180),
+                    colors: [
+                      Theme.of(context).colorScheme.inversePrimary,
+                      Theme.of(context).colorScheme.primaryContainer,
                     ],
                   )
                 : null,
@@ -68,7 +68,6 @@ class ContaItem extends StatelessWidget {
           numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
             fontSize: 32,
-            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -85,7 +84,6 @@ class ContaItem extends StatelessWidget {
             Text(
               conta.nome,
               style: GoogleFonts.inter(
-                color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -93,20 +91,11 @@ class ContaItem extends StatelessWidget {
             Text(
               'Hoje, 08 Sept 2023',
               style: GoogleFonts.inter(
-                color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
               ),
             ),
           ],
-        ),
-        const Spacer(),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.more_horiz,
-            color: Colors.white,
-          ),
         ),
       ],
     );

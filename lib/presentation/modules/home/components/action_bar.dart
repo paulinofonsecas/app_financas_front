@@ -14,14 +14,6 @@ class ActionBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 24),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

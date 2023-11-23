@@ -49,8 +49,7 @@ class MovimentoItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 4,
+          vertical: 5,
         ),
         child: Stack(
           fit: StackFit.loose,
@@ -61,7 +60,10 @@ class MovimentoItem extends StatelessWidget {
                 vertical: kDefaultPadding,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondaryContainer,
+                color: Theme.of(context)
+                    .colorScheme
+                    .secondaryContainer
+                    .withOpacity(.4),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -89,7 +91,7 @@ class MovimentoItem extends StatelessWidget {
                             compressString(movimento.descricao, wordLimit()),
                             style: GoogleFonts.inter(
                               fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
