@@ -54,15 +54,9 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
           if (state is HomePageSaldoDisponivelSuccess) {
             return LayoutBuilder(
               builder: (c, constraines) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: kDefaultPadding,
-                  ),
-                  child: SaldoDisponivelCard(
-                    height: 176,
-                    width: size.width * 0.85,
-                    saldo: state.saldo,
-                  ),
+                return SaldoDisponivelCard(
+                  height: 176,
+                  saldo: state.saldo,
                 );
               },
             );

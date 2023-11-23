@@ -41,10 +41,8 @@ class _HomePageState extends State<HomePage> {
             return ListView(
               children: [
                 ActionBar(),
-                SizedBox(height: kDefaultPadding),
                 SaldoDisponivelCardWidget(),
-                SizedBox(height: kDefaultPadding / 2),
-                EntradasESaidas(),
+                SizedBox(height: kDefaultPadding * 2),
                 HomeScreenMovimentosWidget(),
               ],
             );

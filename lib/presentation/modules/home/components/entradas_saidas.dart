@@ -22,9 +22,9 @@ class EntradasESaidas extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 12.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: kBlackColor,
+          color: Theme.of(context).colorScheme.secondaryContainer,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        padding: const EdgeInsets.all(kDefaultPadding),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -46,9 +46,10 @@ class EntradasESaidas extends StatelessWidget {
 
                 if (state is HomePageGetEntradasError) {
                   return Center(
-                      child: Text(
-                    '0.0',
-                  ));
+                    child: Text(
+                      '0.0',
+                    ),
+                  );
                 }
 
                 if (state is HomePageGetEntradasLoading) {
@@ -59,9 +60,6 @@ class EntradasESaidas extends StatelessWidget {
 
                 return Center(child: Text('0.0'));
               },
-            ),
-            VerticalDivider(
-              color: Colors.white,
             ),
             BlocBuilder<HomePageCubit, HomePageState>(
               bloc: context.read<HomePageCubit>()..getSaldoTotalSaidas(),
@@ -135,8 +133,8 @@ class EntradaOuSaidaWidget extends StatelessWidget {
                   Text(
                     title,
                     style: GoogleFonts.inter(
-                      fontSize: 12,
-                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
@@ -150,7 +148,6 @@ class EntradaOuSaidaWidget extends StatelessWidget {
                 state.value ? numberFormat.format(valor) : '********',
                 style: GoogleFonts.inter(
                   fontSize: 16,
-                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               );
