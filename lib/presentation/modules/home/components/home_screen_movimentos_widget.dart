@@ -1,5 +1,7 @@
 import 'package:app_financas/presentation/modules/home/abbas/movimentos_at_home_page.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,8 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: kDefaultPadding * 2),
-          BlocBuilder<LastMovimentosCubit, LastMovimentosState>(
-            bloc: context.read<LastMovimentosCubit>()..getLastMovimentos(),
+          BlocBuilder<ListMovimentosCubit, LastMovimentosState>(
+            bloc: context.read<ListMovimentosCubit>()..getLastMovimentos(),
             builder: (context, state) {
               if (state is LastMovimentosLoading ||
                   state is LastMovimentosInitialState) {
@@ -38,7 +40,17 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
                 return MovimentosAtHomePage(
                   movimentos: state.movimentos,
                   verMaisAction: () {
-                    Get.to(const MovimentosScreen());
+                    Get.to(MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(
+                          value: context.read<HomePageCubit>(),
+                        ),
+                        BlocProvider.value(
+                          value: context.read<ShowMoneyCubit>(),
+                        ),
+                      ],
+                      child: const MovimentosScreen(),
+                    ));
                   },
                 );
               }

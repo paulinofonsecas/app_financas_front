@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PageActionBar extends StatelessWidget {
@@ -26,11 +27,12 @@ class PageActionBar extends StatelessWidget {
               Icons.arrow_back,
             ),
           ),
-          Spacer(),
+          GutterTiny(),
           Text(
             title,
             style: GoogleFonts.plusJakartaSans(
-              fontSize: 28,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Spacer(),

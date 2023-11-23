@@ -8,10 +8,10 @@ import 'package:equatable/equatable.dart';
 
 part 'last_movimentos_state.dart';
 
-class LastMovimentosCubit extends Cubit<LastMovimentosState> {
+class ListMovimentosCubit extends Cubit<LastMovimentosState> {
   late final MovimentoBloc _movimentoBloc;
 
-  LastMovimentosCubit() : super(LastMovimentosInitialState()) {
+  ListMovimentosCubit() : super(LastMovimentosInitialState()) {
     _movimentoBloc = locator();
 
     _movimentoBloc.stream.listen((event) {
@@ -37,6 +37,4 @@ class LastMovimentosCubit extends Cubit<LastMovimentosState> {
     emit(LastMovimentosLoading());
     _movimentoBloc.add(MovimentoGetMovimentosListOfDayEvent());
   }
-
-  
 }

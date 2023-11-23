@@ -106,6 +106,7 @@ class CardSection extends StatelessWidget {
                 ),
                 titleAlignment: ListTileTitleAlignment.center,
               ),
+              const Divider(),
               ListTile(
                 onTap: () {
                   Navigator.of(context).pop();

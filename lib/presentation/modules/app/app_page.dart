@@ -49,7 +49,7 @@ class _AppPageState extends State<AppPage> {
             create: (context) => HomePageCubit(),
           ),
           BlocProvider(
-            create: (context) => LastMovimentosCubit(),
+            create: (context) => ListMovimentosCubit(),
           ),
           BlocProvider(
             create: (context) => ShowMoneyCubit(),
@@ -137,8 +137,7 @@ class _AppPageState extends State<AppPage> {
   }
 
   bool canShowFAB(AppState state) {
-    return (state.bottomNavIndex == 0 ||
-                state.bottomNavIndex == 1);
+    return (state.bottomNavIndex == 0 || state.bottomNavIndex == 1);
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/components/page_action_bar.dart';
+import 'package:app_financas/presentation/modules/home/components/entradas_saidas.dart';
 import 'package:app_financas/presentation/modules/movimentos/controllers/movimentos_screen_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +33,20 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
               children: [
                 PageActionBar(
                   title: 'Movimentos',
+                  rightWidget: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.filter_list,
+                    ),
+                  ),
                   actionBack: () {
                     Get.back();
                   },
                 ),
+                const EntradasESaidas(),
+                const SizedBox(height: kDefaultPadding / 2),
                 _buildHeaderPage(),
-                const SizedBox(height: kDefaultPadding),
+                const SizedBox(height: kDefaultPadding / 2),
                 Body(controller: controller),
               ],
             );
@@ -48,37 +57,25 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
   }
 
   Widget _buildHeaderPage() {
-    var controller = Get.find<MovimentoScreenController>();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                'Filtrar por',
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.surfaceTint.withOpacity(.1),
-                ),
-                onPressed: () {
-                  controller.selecionarDateTime(context);
-                },
-                child: const Text('Selecionar data'),
-              ),
-            ],
-          ),
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   mainAxisSize: MainAxisSize.max,
+          //   children: [
+          //     Text(
+          //       'Filtros: ',
+          //       style: GoogleFonts.inter(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
