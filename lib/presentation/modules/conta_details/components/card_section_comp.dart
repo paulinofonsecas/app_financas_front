@@ -156,7 +156,7 @@ class BottomSection extends StatelessWidget {
                 ),
                 const GutterTiny(),
                 Text(
-                  numberFormat.format(conta.saldo),
+                  numberFormat.format(conta.saldoInicial),
                   style: GoogleFonts.inter(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

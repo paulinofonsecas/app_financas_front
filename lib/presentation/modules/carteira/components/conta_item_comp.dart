@@ -68,7 +68,7 @@ class ContaItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          numberFormat.format(conta.saldo),
+          numberFormat.format(conta.saldoInicial),
           style: GoogleFonts.inter(
             fontSize: 26,
             fontWeight: FontWeight.bold,
