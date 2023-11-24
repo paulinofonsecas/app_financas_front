@@ -6,7 +6,7 @@ import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_sync_data_service.dart';
-import 'package:app_financas/helders/http_helpers.dart';
+import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:hive/hive.dart';
 
 import '../provider/db/db_categoria_provider.dart';

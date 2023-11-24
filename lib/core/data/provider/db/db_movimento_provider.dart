@@ -1,12 +1,22 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
 class DbMovimentoProvider implements IMovimentoProvider {
   late Box<Map<dynamic, dynamic>> _movimentosBox;
+  late final ICategoriaService categoriaService;
+
+  DbMovimentoProvider() {
+    categoriaService = locator();
+  }
 
   Future<void> initDb() async {
     _movimentosBox = await Hive.openBox(kMovimentosBox);
@@ -23,6 +33,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       if (movimento.valor < 0) {
         return Left(ValorInvalido('Saldo invalido ${movimento.valor}'));
+      }
+
+      if (!(await saldoIsSuficiente(movimento))) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
       movimento = movimento.copyWith(
@@ -69,7 +83,24 @@ class DbMovimentoProvider implements IMovimentoProvider {
         )
         .toList();
 
+    movimentos = await populateCategories(movimentos);
+
     return Right(movimentos);
+  }
+
+  Future<List<Movimento>> populateCategories(List<Movimento> movimentos) async {
+    var saida = <Movimento>[];
+
+    for (var mov in movimentos) {
+      var result = mov.tipoMovimentoId == 1
+          ? await categoriaService.getEntradaCategoria(mov.categoriaMovimentoId)
+          : await categoriaService.getSaidaCategoria(mov.categoriaMovimentoId);
+      var categoria = result.getOrElse(() => Categoria.fake());
+
+      saida.add(mov.copyWith(categoria: categoria));
+    }
+
+    return saida;
   }
 
   @override
@@ -85,6 +116,22 @@ class DbMovimentoProvider implements IMovimentoProvider {
     throw UnimplementedError();
   }
 
+  Future<bool> saldoIsSuficiente(Movimento movimento) async {
+    if (movimento.tipoMovimentoId == 1 || !movimento.confirmado) {
+      return true;
+    }
+
+    IContaProvider contaService = locator();
+    var result = await contaService.getConta(movimento.cartaoId);
+
+    if (result is Right) {
+      var conta = result.getOrElse(() => Conta.fake());
+      return conta.saldo >= movimento.valor;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento) async {
     try {
@@ -94,6 +141,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       if (_movimentosBox.values.isNotEmpty) {
         lastId = _movimentosBox.keys.last + 1;
+      }
+
+      if (!(await saldoIsSuficiente(movimento))) {
+        return Left(SaldoInsuficiente('Saldo insuficiente'));
       }
 
       movimento = movimento.copyWith(id: lastId);
@@ -175,6 +226,8 @@ class DbMovimentoProvider implements IMovimentoProvider {
           .toList();
     }
 
+    movimentos = await populateCategories(movimentos);
+
     return Right(movimentos);
   }
 
@@ -198,6 +251,8 @@ class DbMovimentoProvider implements IMovimentoProvider {
               element.data.month == date.month)
           .toList();
     }
+
+    movimentos = await populateCategories(movimentos);
 
     return Right(movimentos);
   }
