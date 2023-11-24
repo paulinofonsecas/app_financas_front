@@ -1,4 +1,5 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/modules/conta/conta.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,8 +27,10 @@ class HeaderSection extends StatelessWidget {
             style: IconButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             ),
-            onPressed: () {},
-            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).push(ContaPage.route());
+            },
+            icon: const Icon(Icons.more_horiz),
           )
         ],
       ),
