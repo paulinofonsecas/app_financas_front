@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
-import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'components/action_bar.dart';
-import 'components/entradas_saidas.dart';
 import 'components/home_screen_movimentos_widget.dart';
 import 'components/saldo_disponivel_card_widget.dart';
 
@@ -41,10 +40,8 @@ class _HomePageState extends State<HomePage> {
             return ListView(
               children: [
                 ActionBar(),
-                SizedBox(height: kDefaultPadding),
+                Gutter(),
                 SaldoDisponivelCardWidget(),
-                SizedBox(height: kDefaultPadding / 2),
-                EntradasESaidas(),
                 HomeScreenMovimentosWidget(),
               ],
             );

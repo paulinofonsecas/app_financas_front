@@ -43,7 +43,9 @@ class ActionBar extends StatelessWidget {
                   context.read<AppThemeCubit>().toggleTheme();
                 },
                 icon: Icon(
-                  isDarkMode(context) ? Icons.nightlight_round : Icons.wb_sunny,
+                  !isDarkMode(context)
+                      ? Icons.nightlight_round
+                      : Icons.wb_sunny,
                   color: Theme.of(context).iconTheme.color,
                   size: 26,
                 ),

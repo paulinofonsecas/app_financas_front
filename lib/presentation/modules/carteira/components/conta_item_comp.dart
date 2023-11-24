@@ -28,21 +28,24 @@ class ContaItem extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           margin: EdgeInsets.symmetric(
             horizontal: kDefaultPadding / 2,
-            vertical: isActive ? 0 : kDefaultPadding * 1.5,
+            vertical: isActive ? 10 : kDefaultPadding * 1.5,
           ),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(10),
-            gradient: isActive
-                ? LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).colorScheme.inversePrimary,
-                      Theme.of(context).colorScheme.primaryContainer,
-                    ],
-                  )
+            color: isActive
+                ? Theme.of(context).colorScheme.background
+                : Theme.of(context).colorScheme.secondaryContainer,
+            boxShadow: isActive
+                ? [
+                    BoxShadow(
+                      color:
+                          Theme.of(context).colorScheme.shadow.withOpacity(.2),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                      spreadRadius: 1,
+                    ),
+                  ]
                 : null,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
             padding: const EdgeInsets.all(kDefaultPadding),
@@ -67,7 +70,7 @@ class ContaItem extends StatelessWidget {
         Text(
           numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
-            fontSize: 32,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),
