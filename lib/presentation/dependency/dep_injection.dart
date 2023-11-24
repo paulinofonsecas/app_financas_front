@@ -29,17 +29,17 @@ var locator = GetIt.instance;
 Future<void> dependencyInitialize() async {
   locator.registerLazySingleton<Dio>(() => makeDefaultDio());
 
-  // Movimentos
-  locator
-      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider());
-  locator.registerLazySingleton<IMovimentoService>(
-      () => MovimentoService(provider: locator()));
-
   // Categoria
   locator
       .registerLazySingleton<ICategoriaProvider>(() => DbCategoriaProvider());
   locator.registerLazySingleton<ICategoriaService>(
       () => CategoriaService(locator()));
+
+  // Movimentos
+  locator
+      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider(locator()));
+  locator.registerLazySingleton<IMovimentoService>(
+      () => MovimentoService(provider: locator()));
 
   // Conta
   locator

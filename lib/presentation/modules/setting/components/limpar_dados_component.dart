@@ -20,7 +20,7 @@ class LimparDadosWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      icon: Icon(Icons.warning),
+      icon: const Icon(Icons.warning),
       onPressed: () {
         showDialog(
           context: context,

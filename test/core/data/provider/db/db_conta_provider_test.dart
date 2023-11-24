@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
-import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +20,15 @@ void main() async {
   late IMovimentoProvider movimentoProvider;
   var path = Directory.current.path;
 
-  locator
-      .registerLazySingleton<ICategoriaProvider>(() => DbCategoriaProvider());
-  locator.registerLazySingleton<ICategoriaService>(
-      () => CategoriaService(locator()));
-
   setUp(() {
     Hive.init('$path/test/hive_testing_path');
-    movimentoProvider = DbMovimentoProvider();
+    var categoriaProvider = DbCategoriaProvider();
+    var categoriaService = CategoriaService(categoriaProvider);
+
+    movimentoProvider = DbMovimentoProvider(categoriaService);
     dbConta = DbContaProvider(movimentoProvider);
+
+    locator.registerSingleton(dbConta);
   });
 
   tearDown(() {
@@ -48,7 +46,7 @@ void main() async {
       valor: 15000,
       data: DateTime.now(),
       descricao: 'Compra de auriculares',
-      cartaoId: newConta.id,
+      contaId: newConta.id,
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',

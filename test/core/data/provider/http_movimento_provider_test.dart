@@ -17,7 +17,6 @@ void main() {
   });
 
   test('Deve retornar a lista de movimentos paginados do usuario', () async {
-    
     var page = 1;
     var pageSize = 12;
 
@@ -41,7 +40,7 @@ void main() {
       valor: 15000,
       data: DateTime.now(),
       descricao: 'Compra de auriculares',
-      cartaoId: 1,
+      contaId: 1,
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',

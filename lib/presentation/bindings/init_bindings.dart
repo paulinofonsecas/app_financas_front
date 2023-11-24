@@ -29,9 +29,15 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    
+    // Categoria
+    Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
+    Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
+        fenix: true);
+
     // Movimentos
     Get.lazyPut<IMovimentoProvider>(
-      () => DbMovimentoProvider(),
+      () => DbMovimentoProvider(Get.find()),
       fenix: true,
     );
     Get.lazyPut<IMovimentoService>(
@@ -39,11 +45,15 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    // Conta
+    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
+    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
+
+    // Setup
     Get.lazyPut<SetupConfiguration>(
       () => SetupConfiguration.local(),
     );
 
-    // Setup
     Get.lazyPut<ISetupProvider>(
       () => HttpSetupProvider(Get.find()),
       fenix: true,
@@ -53,18 +63,11 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    // Saldos
     Get.put<ISaldosService>(
       SaldosService(Get.find()),
       permanent: true,
     );
 
-    // Categoria
-    Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
-    Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
-        fenix: true);
-
-    // Conta
-    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
-    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
   }
 }
