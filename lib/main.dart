@@ -1,4 +1,3 @@
-import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
@@ -23,11 +22,6 @@ Future<void> main() async {
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
   await Hive.initFlutter('./app_financas_db');
-
-  await Hive.deleteBoxFromDisk(kContasBox);
-  await Hive.deleteBoxFromDisk(kMovimentosBox);
-  await Hive.deleteBoxFromDisk(kCategoriasEntradaBox);
-  await Hive.deleteBoxFromDisk(kCategoriasSaidaBox);
 
   runApp(
     MultiBlocProvider(

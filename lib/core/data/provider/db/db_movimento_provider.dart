@@ -124,7 +124,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
     if (result is Right) {
       var conta = result.getOrElse(() => Conta.fake());
-      return conta.saldoInicial >= movimento.valor;
+      return conta.saldo >= movimento.valor;
     } else {
       return false;
     }

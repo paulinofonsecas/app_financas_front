@@ -31,7 +31,7 @@ class ContaItem extends StatelessWidget {
             vertical: isActive ? 10 : kDefaultPadding * 1.5,
           ),
           decoration: BoxDecoration(
-            color: isActive
+            color: !isActive
                 ? Theme.of(context).colorScheme.background
                 : Theme.of(context).colorScheme.secondaryContainer,
             boxShadow: isActive
@@ -68,7 +68,7 @@ class ContaItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          numberFormat.format(conta.saldoInicial),
+          numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
             fontSize: 26,
             fontWeight: FontWeight.bold,
