@@ -157,7 +157,7 @@ class EntradaOuSaidaWidget extends StatelessWidget {
                       numberFormat.format(valor),
                       style: GoogleFonts.inter(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                       ),
                     )
                   : OmitedText(

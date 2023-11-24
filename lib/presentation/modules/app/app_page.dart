@@ -92,7 +92,6 @@ class _AppPageState extends State<AppPage> {
           backgroundColor: context.theme.colorScheme.surface,
           drawer: const MyDrawer(),
           body: SafeArea(
-            bottom: false,
             child: IndexedStack(
               index: state.bottomNavIndex,
               children: telas,
