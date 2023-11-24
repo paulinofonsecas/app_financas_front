@@ -9,7 +9,6 @@ import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cub
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
