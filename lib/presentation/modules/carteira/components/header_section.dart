@@ -1,6 +1,7 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/modules/conta/conta.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeaderSection extends StatelessWidget {
@@ -16,7 +17,7 @@ class HeaderSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Carteira',
+            'Contas',
             style: GoogleFonts.inter(
               fontSize: 32,
               fontWeight: FontWeight.bold,
@@ -24,13 +25,13 @@ class HeaderSection extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            ),
             onPressed: () {
               Navigator.of(context).push(ContaPage.route());
             },
-            icon: const Icon(Icons.more_horiz),
+            icon: const Icon(
+              FontAwesomeIcons.arrowUpRightFromSquare,
+              size: 18,
+            ),
           )
         ],
       ),
