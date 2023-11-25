@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_body.dart';
 
+import '../widgets/conta_header.dart';
+
 /// {@template conta_page}
 /// A description for ContaPage
 /// {@endtemplate}
@@ -19,10 +21,12 @@ class ContaPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ContaBloc(),
       child: const Scaffold(
-        body: ContaView(),
+        body: SafeArea(
+          child: ContaView(),
+        ),
       ),
     );
-  }    
+  }
 }
 
 /// {@template conta_view}
@@ -34,6 +38,11 @@ class ContaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ContaBody();
+    return const Column(
+      children: [
+        ContaHeader(),
+        ContaBody(),
+      ],
+    );
   }
 }

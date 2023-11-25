@@ -1,34 +1,37 @@
 part of 'conta_bloc.dart';
 
-/// {@template conta_state}
-/// ContaState description
-/// {@endtemplate}
-class ContaState extends Equatable {
-  /// {@macro conta_state}
-  const ContaState({
-    this.customProperty = 'Default Value',
-  });
-
-  /// A description for customProperty
-  final String customProperty;
+sealed class GContaState extends Equatable {
+  const GContaState();
 
   @override
-  List<Object> get props => [customProperty];
-
-  /// Creates a copy of the current ContaState with property changes
-  ContaState copyWith({
-    String? customProperty,
-  }) {
-    return ContaState(
-      customProperty: customProperty ?? this.customProperty,
-    );
-  }
+  List<Object> get props => [];
 }
 
-/// {@template conta_initial}
-/// The initial state of ContaState
-/// {@endtemplate}
-class ContaInitial extends ContaState {
-  /// {@macro conta_initial}
-  const ContaInitial() : super();
+final class ContaInitial extends GContaState {}
+
+// contas
+
+final class ListarContasLoading extends GContaState {}
+
+final class ListarContasSuccess extends GContaState {
+  final List<Conta> contas;
+
+  const ListarContasSuccess(this.contas);
+
+  @override
+  List<Object> get props => [contas];
 }
+
+final class ListarContasError extends GContaState {
+  final String? errorMessage;
+
+  const ListarContasError({this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage ?? ''];
+}
+
+final class ListarContasEmpty extends GContaState {}
+
+// end listar contas
+

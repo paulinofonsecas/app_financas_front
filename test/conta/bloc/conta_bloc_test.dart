@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 
@@ -17,14 +16,14 @@ void main() {
 
     test('initial state has default value for customProperty', () {
       final contaBloc = ContaBloc();
-      expect(contaBloc.state.customProperty, equals('Default Value'));
+      expect(contaBloc.state, isA<ContaInitial>());
     });
 
-    blocTest<ContaBloc, ContaState>(
-      'CustomContaEvent emits nothing',
-      build: ContaBloc.new,
-      act: (bloc) => bloc.add(const CustomContaEvent()),
-      expect: () => <ContaState>[],
-    );
+    // blocTest<ContaBloc, ContaState>(
+    //   'ContaState emits nothing',
+    //   build: ContaBloc.new,
+    //   act: (bloc) => bloc.add(add),
+    //   expect: () => <ContaState>[],
+    // );
   });
 }

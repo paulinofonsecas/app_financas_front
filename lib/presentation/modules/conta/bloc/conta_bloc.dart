@@ -1,19 +1,40 @@
-import 'dart:async';
+// ignore_for_file: depend_on_referenced_packages
 
+import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+
 part 'conta_event.dart';
 part 'conta_state.dart';
 
-class ContaBloc extends Bloc<ContaEvent, ContaState> {
-  ContaBloc() : super(const ContaInitial()) {
-    on<CustomContaEvent>(_onCustomContaEvent);
+class ContaBloc extends Bloc<ContaEvent, GContaState> {
+  late final IContaService contaService;
+
+  ContaBloc() : super(ContaInitial()) {
+    contaService = locator();
+
+    on<ListarContasEvent>(_onListarContas);
   }
 
-  FutureOr<void> _onCustomContaEvent(
-    CustomContaEvent event,
-    Emitter<ContaState> emit,
-  ) {
-    // TODO: Add Logic
+  _onListarContas(event, emit) async {
+    emit(ListarContasLoading());
+    var contas = await contaService.listContas();
+
+    if (contas is Right) {
+      if (contas.getOrElse(() => []).isNotEmpty) {
+        emit(ListarContasSuccess(contas.getOrElse(() => [])));
+      } else {
+        emit(ListarContasEmpty());
+      }
+    } else {
+      emit(
+        ListarContasError(
+          errorMessage: contas.fold((l) => l.toString(), (r) => ''),
+        ),
+      );
+    }
   }
 }
