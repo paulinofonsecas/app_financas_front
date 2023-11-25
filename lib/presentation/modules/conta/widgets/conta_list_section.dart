@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
@@ -14,8 +15,12 @@ class ContaListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: contas.length,
+      separatorBuilder: (context, index) => const Divider(
+        indent: kDefaultPadding,
+        endIndent: kDefaultPadding,
+      ),
       itemBuilder: (context, index) => ContaListItem(conta: contas[index]),
     );
   }
