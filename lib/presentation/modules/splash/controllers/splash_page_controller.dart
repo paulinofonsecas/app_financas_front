@@ -47,7 +47,7 @@ class SplashPageController extends GetxController {
 
   Future? _goToHomePage(SetupConfiguration setupConfig) {
     Get.replace(setupConfig);
-    return Get.to(() => const AppPage());
+    return Get.off(() => const AppPage());
   }
 
   void showErrorSnackBar() {

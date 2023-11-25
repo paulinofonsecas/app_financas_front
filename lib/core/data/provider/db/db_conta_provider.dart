@@ -1,9 +1,11 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../interfaces/i_contas_provider.dart';
@@ -42,17 +44,48 @@ class DbContaProvider implements IContaProvider {
 
     if (result.isEmpty) {
       var contasPadrao = [
-        'Familiar',
-        'Empresa',
-        'Gastos gerais',
-        'Poupanças',
-        'Outro',
+        Conta(
+          id: 1,
+          nome: 'Carteira',
+          saldo: 0.0,
+          saldoInicial: 0.0,
+          tipoConta: TipoConta.tipoContas.first,
+          descricao: 'Conta de gastos diversos',
+          color: Colors.orangeAccent,
+        ),
+        Conta(
+          id: 2,
+          nome: 'Salário',
+          saldo: 0.0,
+          saldoInicial: 0.0,
+          tipoConta: TipoConta.tipoContas.first,
+          descricao: 'Conta de gastos diversos',
+          color: Colors.greenAccent,
+        ),
+        Conta(
+          id: 3,
+          nome: 'Poupança',
+          saldo: 0.0,
+          saldoInicial: 0.0,
+          tipoConta: TipoConta.tipoContas.first,
+          descricao: 'Conta de gastos diversos',
+          color: Colors.brown,
+        ),
+        Conta(
+          id: 4,
+          nome: 'Outros',
+          saldo: 0.0,
+          saldoInicial: 0.0,
+          tipoConta: TipoConta.tipoContas.first,
+          descricao: 'Conta de gastos diversos',
+          color: Colors.blueAccent,
+        ),
       ];
 
-      for (var cont in contasPadrao) {
-        await saveConta(Conta(nome: cont, saldo: 0.0, id: -1));
+      for (var conta in contasPadrao) {
+        await saveConta(conta);
       }
-      
+
       return listContas();
     }
 

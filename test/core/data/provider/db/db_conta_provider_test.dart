@@ -1,24 +1,34 @@
 import 'dart:io';
 
+import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 
-void main() {
+void main() async {
   late IContaProvider dbConta;
   late IMovimentoProvider movimentoProvider;
   var path = Directory.current.path;
 
   setUp(() {
     Hive.init('$path/test/hive_testing_path');
-    movimentoProvider = DbMovimentoProvider();
+    var categoriaProvider = DbCategoriaProvider();
+    var categoriaService = CategoriaService(categoriaProvider);
+
+    movimentoProvider = DbMovimentoProvider(categoriaService);
     dbConta = DbContaProvider(movimentoProvider);
+
+    locator.registerSingleton(dbConta);
   });
 
   tearDown(() {
@@ -36,14 +46,14 @@ void main() {
       valor: 15000,
       data: DateTime.now(),
       descricao: 'Compra de auriculares',
-      cartaoId: newConta.id,
+      contaId: newConta.id,
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',
       confirmado: true,
     ));
 
-    var conta = await dbConta.getConta(1);
+    var conta = await dbConta.getConta(newConta.id);
 
     expect(conta, isA<Right>());
     expect(conta.getOrElse(() => Conta.fake()).saldo, 15000);
@@ -64,7 +74,14 @@ void main() {
 Conta _createConta([int id = 1]) {
   return Conta(
     id: id,
+    nome: 'Conta fake',
     saldo: 0.0,
-    nome: 'Pessoal',
+    saldoInicial: 0.0,
+    descricao: 'Conta fake',
+    tipoConta: TipoConta.tipoContas.first,
+    color: Colors.blue,
+    iconAsset: null,
+    showInSoma: null,
+    isArchived: null,
   );
 }

@@ -1,19 +1,19 @@
 part of 'conta_bloc.dart';
 
-sealed class ContaState extends Equatable {
-  const ContaState();
+sealed class GContaState extends Equatable {
+  const GContaState();
 
   @override
   List<Object> get props => [];
 }
 
-final class ContaInitial extends ContaState {}
+final class ContaInitial extends GContaState {}
 
 // contas
 
-final class ListarContasLoading extends ContaState {}
+final class ListarContasLoading extends GContaState {}
 
-final class ListarContasSuccess extends ContaState {
+final class ListarContasSuccess extends GContaState {
   final List<Conta> contas;
 
   const ListarContasSuccess(this.contas);
@@ -22,7 +22,7 @@ final class ListarContasSuccess extends ContaState {
   List<Object> get props => [contas];
 }
 
-final class ListarContasError extends ContaState {
+final class ListarContasError extends GContaState {
   final String? errorMessage;
 
   const ListarContasError({this.errorMessage});
@@ -31,7 +31,7 @@ final class ListarContasError extends ContaState {
   List<Object> get props => [errorMessage ?? ''];
 }
 
-final class ListarContasEmpty extends ContaState {}
+final class ListarContasEmpty extends GContaState {}
 
 // end listar contas
 

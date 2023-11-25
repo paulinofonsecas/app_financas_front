@@ -10,7 +10,7 @@ import 'package:equatable/equatable.dart';
 part 'conta_event.dart';
 part 'conta_state.dart';
 
-class ContaBloc extends Bloc<ContaEvent, ContaState> {
+class ContaBloc extends Bloc<ContaEvent, GContaState> {
   late final IContaService contaService;
 
   ContaBloc() : super(ContaInitial()) {

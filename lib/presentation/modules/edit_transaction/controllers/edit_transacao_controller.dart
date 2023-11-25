@@ -139,7 +139,7 @@ class EditTransacaoController extends GetxController {
       valor: valorMovimento,
       data: dateMovimento,
       descricao: descricaoMovimento,
-      cartaoId: cartaoId,
+      contaId: cartaoId,
       tipoMovimentoId: movimentoType,
       categoriaMovimentoId: categoriaSelectedId,
       obsMovimento: obsMovimento,

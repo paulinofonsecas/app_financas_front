@@ -14,9 +14,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
   late Box<Map<dynamic, dynamic>> _movimentosBox;
   late final ICategoriaService categoriaService;
 
-  DbMovimentoProvider() {
-    categoriaService = locator();
-  }
+  DbMovimentoProvider(this.categoriaService);
 
   Future<void> initDb() async {
     _movimentosBox = await Hive.openBox(kMovimentosBox);

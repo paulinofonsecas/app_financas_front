@@ -1,7 +1,6 @@
 import 'package:app_financas/core/data/services/saldos_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
-import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
@@ -24,22 +23,24 @@ import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:dio/dio.dart';
 
+import '../modules/conta/bloc/bloc.dart';
+
 var locator = GetIt.instance;
 
 Future<void> dependencyInitialize() async {
   locator.registerLazySingleton<Dio>(() => makeDefaultDio());
-
-  // Movimentos
-  locator
-      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider());
-  locator.registerLazySingleton<IMovimentoService>(
-      () => MovimentoService(provider: locator()));
 
   // Categoria
   locator
       .registerLazySingleton<ICategoriaProvider>(() => DbCategoriaProvider());
   locator.registerLazySingleton<ICategoriaService>(
       () => CategoriaService(locator()));
+
+  // Movimentos
+  locator
+      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider(locator()));
+  locator.registerLazySingleton<IMovimentoService>(
+      () => MovimentoService(provider: locator()));
 
   // Conta
   locator

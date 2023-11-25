@@ -31,7 +31,7 @@ class ContaItem extends StatelessWidget {
             vertical: isActive ? 10 : kDefaultPadding * 1.5,
           ),
           decoration: BoxDecoration(
-            color: isActive
+            color: !isActive
                 ? Theme.of(context).colorScheme.background
                 : Theme.of(context).colorScheme.secondaryContainer,
             boxShadow: isActive

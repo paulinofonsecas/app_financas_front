@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/conta/widgets/conta_body.dart';
+
+import '../widgets/conta_header.dart';
+
+/// {@template conta_page}
+/// A description for ContaPage
+/// {@endtemplate}
+class ContaPage extends StatelessWidget {
+  /// {@macro conta_page}
+  const ContaPage({super.key});
+
+  /// The static route for ContaPage
+  static Route<dynamic> route() {
+    return MaterialPageRoute<dynamic>(builder: (_) => const ContaPage());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ContaBloc(),
+      child: const Scaffold(
+        body: SafeArea(
+          child: ContaView(),
+        ),
+      ),
+    );
+  }
+}
+
+/// {@template conta_view}
+/// Displays the Body of ContaView
+/// {@endtemplate}
+class ContaView extends StatelessWidget {
+  /// {@macro conta_view}
+  const ContaView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        ContaHeader(),
+        ContaBody(),
+      ],
+    );
+  }
+}

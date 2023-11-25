@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -28,7 +27,6 @@ class SyncDataService implements ISyncDataService {
     var dio = makeDefaultDio();
     setupService = HttpSetupProvider(dio);
     movimentoService = HttpMovimentoProvider(dio);
-    movimentoService = DbMovimentoProvider();
 
     var setup = await setupService.setup();
     await _syncSetup(setup.getOrElse(() => SetupConfiguration.local()));

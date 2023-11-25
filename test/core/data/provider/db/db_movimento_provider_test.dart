@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +15,8 @@ void main() async {
 
   setUp(() {
     Hive.init('$path/test/hive_testing_path');
-    dbMovimentosProvider = DbMovimentoProvider();
+    dbMovimentosProvider =
+        DbMovimentoProvider(CategoriaService(DbCategoriaProvider()));
   });
 
   tearDown(() {
@@ -44,7 +47,7 @@ void main() async {
       valor: 15000,
       data: DateTime.now(),
       descricao: 'Compra de auriculares',
-      cartaoId: 1,
+      contaId: 1,
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',
@@ -111,7 +114,7 @@ Movimento _makeFakeMovimento() {
     valor: 15000,
     data: DateTime.now(),
     descricao: 'Compra de auriculares',
-    cartaoId: 1,
+    contaId: 1,
     tipoMovimentoId: 2,
     categoriaMovimentoId: 1,
     obsMovimento: 'Silva porto',
