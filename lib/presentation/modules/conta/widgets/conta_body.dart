@@ -15,29 +15,38 @@ class ContaBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<ContaBloc, GContaState>(
-        bloc: context.read<ContaBloc>()..add(ListarContasEvent()),
-        builder: (context, state) {
-          if (state is ListarContasLoading) {
-            return const CircularProgressIndicator();
-          }
+      child: ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+        child: Container(
+          // padding: const EdgeInsets.only(top: kDefaultPadding),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: BlocBuilder<ContaBloc, GContaState>(
+            bloc: context.read<ContaBloc>()..add(ListarContasEvent()),
+            builder: (context, state) {
+              if (state is ListarContasLoading) {
+                return const CircularProgressIndicator();
+              }
 
-          if (state is ListarContasError) {
-            return const Text('Erro ao listar contas');
-          }
+              if (state is ListarContasError) {
+                return const Text('Erro ao listar contas');
+              }
 
-          if (state is ListarContasEmpty) {
-            return const Text('Nenhuma conta cadastrado');
-          }
+              if (state is ListarContasEmpty) {
+                return const Text('Nenhuma conta cadastrado');
+              }
 
-          if (state is ListarContasSuccess) {
-            return ContaListSection(
-              contas: state.contas,
-            );
-          }
+              if (state is ListarContasSuccess) {
+                return ContaListSection(
+                  contas: state.contas,
+                );
+              }
 
-          return const SizedBox();
-        },
+              return const SizedBox();
+            },
+          ),
+        ),
       ),
     );
   }

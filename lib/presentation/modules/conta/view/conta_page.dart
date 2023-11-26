@@ -1,6 +1,12 @@
+import 'package:app_financas/presentation/components/periodo_picker_widget.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_list_header_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_periodo_picker_cubit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_body.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
 import '../widgets/conta_header.dart';
 
@@ -18,10 +24,21 @@ class ContaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ContaBloc(),
-      child: const Scaffold(
-        body: SafeArea(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ContaPeriodoPickerCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ContaListHeaderCubit(locator()),
+        )
+      ],
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: const SafeArea(
           child: ContaView(),
         ),
       ),
@@ -38,10 +55,26 @@ class ContaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        ContaHeader(),
-        ContaBody(),
+        const ContaHeader(),
+        const Gutter(),
+        BlocBuilder<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
+          builder: (context, state) {
+            return PeriodoPickerWidget(
+              periodoMes: getMonthName(state.mes),
+              onLeftTap: () {
+                context.read<ContaPeriodoPickerCubit>().previousMonth();
+              },
+              onRightTap: () {
+                context.read<ContaPeriodoPickerCubit>().nextMonth();
+              },
+              defaultColor: Colors.white,
+            );
+          },
+        ),
+        const Gutter(),
+        const ContaBody(),
       ],
     );
   }

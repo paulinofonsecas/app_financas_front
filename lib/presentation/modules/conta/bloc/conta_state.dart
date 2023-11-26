@@ -35,3 +35,19 @@ final class ListarContasEmpty extends GContaState {}
 
 // end listar contas
 
+// calcular saldo mensal
+final class CalcularSaldoMensalLoading extends GContaState {}
+
+final class CalcularSaldoMensalError extends GContaState {}
+
+final class CalcularSaldoMensalSuccess extends GContaState {
+  final BalancoMensal balanco;
+
+  const CalcularSaldoMensalSuccess(this.balanco);
+
+  @override
+  List<Object> get props => [balanco];
+}
+
+final class CalcularSaldoMensalEmpty extends GContaState {}
+// end calcular saldo mensal

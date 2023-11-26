@@ -8,11 +8,16 @@ class ContaHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var defaultColor = Colors.white;
+
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding / 2),
       child: Row(
         children: [
           IconButton(
+            style: IconButton.styleFrom(
+              foregroundColor: defaultColor,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -23,11 +28,15 @@ class ContaHeader extends StatelessWidget {
             'Contas',
             style: GoogleFonts.inter(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              color: defaultColor,
+              fontWeight: FontWeight.w400,
             ),
           ),
           const Spacer(),
           IconButton(
+            style: IconButton.styleFrom(
+              foregroundColor: defaultColor,
+            ),
             onPressed: () {},
             icon: const Icon(Icons.more_horiz),
           )

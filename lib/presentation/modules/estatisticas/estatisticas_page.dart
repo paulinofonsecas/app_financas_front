@@ -1,5 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/presentation/components/periodo_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
@@ -70,54 +71,16 @@ class _EstatisticasPageState extends State<EstatisticasPage> {
           ),
         ),
         const Gutter(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: Theme.of(context)
-                    .colorScheme
-                    .primaryContainer
-                    .withOpacity(.8),
-              ),
-              onPressed: () {
-                controller.previousMonth();
-              },
-              icon: Icon(
-                Icons.keyboard_arrow_left_rounded,
-                size: 35,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            const GutterLarge(),
-            Obx(
-              () => Text(
-                '${controller.mygetMonthName(controller.periodoMes.value)} ${DateTime.now().year}',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
-            const GutterLarge(),
-            IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: Theme.of(context)
-                    .colorScheme
-                    .primaryContainer
-                    .withOpacity(.8),
-              ),
-              onPressed: () {
-                controller.nextMonth();
-              },
-              icon: Icon(
-                Icons.keyboard_arrow_right_rounded,
-                size: 35,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ],
+        Obx(
+          () => PeriodoPickerWidget(
+            periodoMes: controller.mygetMonthName(controller.periodoMes.value),
+            onLeftTap: () {
+              controller.previousMonth();
+            },
+            onRightTap: () {
+              controller.nextMonth();
+            },
+          ),
         ),
         const Gutter(),
         Divider(color: Theme.of(context).colorScheme.primaryContainer),
