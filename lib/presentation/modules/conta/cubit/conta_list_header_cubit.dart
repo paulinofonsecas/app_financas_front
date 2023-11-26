@@ -36,8 +36,4 @@ class ContaListHeaderCubit extends Cubit<ContaListHeaderState> {
     _contasBloc.add(CalcularSaldoMensalEvent(mesIndex));
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }

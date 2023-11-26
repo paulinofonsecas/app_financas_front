@@ -43,6 +43,8 @@ class _ContaPageState extends State<ContaPage> {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = Theme.of(context).brightness == Brightness.dark;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -56,8 +58,11 @@ class _ContaPageState extends State<ContaPage> {
         ),
       ],
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: isDark
+            ? Theme.of(context).colorScheme.shadow
+            : Theme.of(context).primaryColor,
         body: const SafeArea(
+          bottom: false,
           child: ContaView(),
         ),
       ),

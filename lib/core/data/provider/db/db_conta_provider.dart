@@ -39,53 +39,12 @@ class DbContaProvider implements IContaProvider {
   }
 
   @override
-  Future<Either<Failure, List<Conta>>> listContas() async {
+  Future<Either<Failure, List<Conta>>> listContas([int? mes]) async {
     await initDb();
     var result = _contas.toMap();
 
     if (result.isEmpty) {
-      var contasPadrao = [
-        Conta(
-          id: 1,
-          nome: 'Carteira',
-          saldo: 0.0,
-          saldoInicial: 0.0,
-          tipoConta: TipoConta.tipoContas.first,
-          descricao: 'Conta de gastos diversos',
-          color: Colors.orangeAccent,
-        ),
-        Conta(
-          id: 2,
-          nome: 'Salário',
-          saldo: 0.0,
-          saldoInicial: 0.0,
-          tipoConta: TipoConta.tipoContas.first,
-          descricao: 'Conta de gastos diversos',
-          color: Colors.greenAccent,
-        ),
-        Conta(
-          id: 3,
-          nome: 'Poupança',
-          saldo: 0.0,
-          saldoInicial: 0.0,
-          tipoConta: TipoConta.tipoContas.first,
-          descricao: 'Conta de gastos diversos',
-          color: Colors.brown,
-        ),
-        Conta(
-          id: 4,
-          nome: 'Outros',
-          saldo: 0.0,
-          saldoInicial: 0.0,
-          tipoConta: TipoConta.tipoContas.first,
-          descricao: 'Conta de gastos diversos',
-          color: Colors.blueAccent,
-        ),
-      ];
-
-      for (var conta in contasPadrao) {
-        await saveConta(conta);
-      }
+      await _generateDefaultAccounts();
 
       return listContas();
     }
@@ -96,17 +55,75 @@ class DbContaProvider implements IContaProvider {
         .toList();
 
     for (var conta in contas) {
-      var saldoResult = await _getSaldo(conta.id);
+      var saldoResult = await _getSaldo(conta.id, mes);
+      List<int> totalMovimentos = await _getTotalMovimentos(conta.id);
 
       if (saldoResult.isLeft()) {
         return Left(Failure('Erro ao processar o saldo da conta'));
       } else {
-        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+        conta = conta.copyWith(
+          saldo: saldoResult.getOrElse(() => 0.0),
+          totalDespesas: totalMovimentos.first,
+          totalReceitas: totalMovimentos.last,
+        );
         saida.add(conta);
       }
     }
 
     return Right(saida);
+  }
+
+  Future<void> _generateDefaultAccounts() async {
+    var contasPadrao = [
+      Conta(
+        id: 1,
+        nome: 'Carteira',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.orangeAccent,
+      ),
+      Conta(
+        id: 2,
+        nome: 'Salário',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.greenAccent,
+      ),
+      Conta(
+        id: 3,
+        nome: 'Poupança',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.brown,
+      ),
+      Conta(
+        id: 4,
+        nome: 'Outros',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.blueAccent,
+      ),
+    ];
+
+    for (var conta in contasPadrao) {
+      await saveConta(conta);
+    }
   }
 
   @override
@@ -130,10 +147,15 @@ class DbContaProvider implements IContaProvider {
     }
   }
 
-  Future<Either<Failure, double>> _getSaldo(int contaId) async {
-    var result = await movimentoProvider.getSaldo(contaId);
+  Future<Either<Failure, double>> _getSaldo(int contaId, [int? mes]) async {
+    var result = await movimentoProvider.getSaldo(contaId, mes);
 
     return result;
+  }
+
+  Future<List<int>> _getTotalMovimentos(int contaId) async {
+    var result = await movimentoProvider.getTotalMovimentos(contaId);
+    return result.getOrElse(() => [0, 0]);
   }
 
   @override
@@ -167,10 +189,28 @@ class DbContaProvider implements IContaProvider {
       var saldoReal = movimentos
           .where(
               (element) => element.data.month == mesIndex && element.confirmado)
-          .fold(0.0, (previousValue, element) => previousValue + element.valor);
-      var saldoContabilistico = movimentos
-          .where((element) => element.data.month == mesIndex)
-          .fold(0.0, (previousValue, element) => previousValue + element.valor);
+          .fold(
+        0.0,
+        (previousValue, element) {
+          if (element.tipoMovimentoId == 1) {
+            return previousValue + element.valor;
+          } else {
+            return previousValue - element.valor;
+          }
+        },
+      );
+
+      var saldoContabilistico =
+          movimentos.where((element) => element.data.month == mesIndex).fold(
+        0.0,
+        (previousValue, element) {
+          if (element.tipoMovimentoId == 1) {
+            return previousValue + element.valor;
+          } else {
+            return previousValue - element.valor;
+          }
+        },
+      );
 
       return Right(
         BalancoMensal(

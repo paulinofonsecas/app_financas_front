@@ -165,7 +165,7 @@ class HttpMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, double>> getSaldo(int id) {
+  Future<Either<Failure, double>> getSaldo(int id, [int? mes]) {
     // TODO: implement getSaldo
     throw UnimplementedError();
   }
@@ -192,6 +192,12 @@ class HttpMovimentoProvider implements IMovimentoProvider {
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date}) {
     // TODO: implement listMovimentosSaida
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, List<int>>> getTotalMovimentos(int contaId) {
+    // TODO: implement getTotalMovimentos
     throw UnimplementedError();
   }
 }
