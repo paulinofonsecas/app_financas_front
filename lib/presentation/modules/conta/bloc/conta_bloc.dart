@@ -42,7 +42,7 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
 
   _onCalcularSaldoMensal(event, emit) async {
     emit(CalcularSaldoMensalLoading());
-    var mesIndex = event.mesIndex;
+    var mesIndex = event.mes;
     var result = await contaService.calcularBalancoMensal(mesIndex);
 
     if (result is Right) {

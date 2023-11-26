@@ -6,6 +6,7 @@ import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_list_header_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
@@ -37,8 +38,8 @@ Future<void> dependencyInitialize() async {
       () => CategoriaService(locator()));
 
   // Movimentos
-  locator
-      .registerLazySingleton<IMovimentoProvider>(() => DbMovimentoProvider(locator()));
+  locator.registerLazySingleton<IMovimentoProvider>(
+      () => DbMovimentoProvider(locator()));
   locator.registerLazySingleton<IMovimentoService>(
       () => MovimentoService(provider: locator()));
 

@@ -1,4 +1,8 @@
 import 'package:app_financas/presentation/components/periodo_picker_widget.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_list_header_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_periodo_picker_cubit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_body.dart';
@@ -20,8 +24,18 @@ class ContaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ContaBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ContaPeriodoPickerCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ContaListHeaderCubit(locator()),
+        )
+      ],
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: const SafeArea(
@@ -45,11 +59,19 @@ class ContaView extends StatelessWidget {
       children: [
         const ContaHeader(),
         const Gutter(),
-        PeriodoPickerWidget(
-          periodoMes: 'Novembro',
-          onLeftTap: () {},
-          onRightTap: () {},
-          defaultColor: Colors.white,
+        BlocBuilder<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
+          builder: (context, state) {
+            return PeriodoPickerWidget(
+              periodoMes: getMonthName(state.mes),
+              onLeftTap: () {
+                context.read<ContaPeriodoPickerCubit>().previousMonth();
+              },
+              onRightTap: () {
+                context.read<ContaPeriodoPickerCubit>().nextMonth();
+              },
+              defaultColor: Colors.white,
+            );
+          },
         ),
         const Gutter(),
         const ContaBody(),

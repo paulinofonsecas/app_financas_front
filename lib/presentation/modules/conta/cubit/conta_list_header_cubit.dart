@@ -31,6 +31,6 @@ class ContaListHeaderCubit extends Cubit<ContaListHeaderState> {
   }
 
   void loadData(int mesIndex) {
-    _contasBloc.add(const CalcularSaldoMensalEvent(1));
+    _contasBloc.add(CalcularSaldoMensalEvent(mesIndex));
   }
 }
