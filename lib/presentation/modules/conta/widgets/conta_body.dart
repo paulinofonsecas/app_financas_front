@@ -18,7 +18,6 @@ class ContaBody extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         child: Container(
-          // padding: const EdgeInsets.only(top: kDefaultPadding),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
           ),

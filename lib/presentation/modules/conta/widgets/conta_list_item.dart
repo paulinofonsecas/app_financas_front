@@ -122,27 +122,6 @@ class _ContaItemWidget extends StatelessWidget {
                   ],
                 ),
                 const GutterTiny(),
-                Row(
-                  children: [
-                    Text(
-                      'Saldo previsto',
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      numberFormat.format(conta.saldo),
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),

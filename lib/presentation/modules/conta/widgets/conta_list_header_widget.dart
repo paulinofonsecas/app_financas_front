@@ -18,6 +18,7 @@ class ContaListHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ContaListHeaderCubit>().loadData(DateTime.now().month);
+
     return BlocConsumer<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
       listener: (context, state) {
         if (state is ContaPeriodoPickerChanged) {
