@@ -1,6 +1,8 @@
+import 'package:app_financas/presentation/components/periodo_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_body.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
 import '../widgets/conta_header.dart';
 
@@ -20,8 +22,9 @@ class ContaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ContaBloc(),
-      child: const Scaffold(
-        body: SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: const SafeArea(
           child: ContaView(),
         ),
       ),
@@ -38,10 +41,18 @@ class ContaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        ContaHeader(),
-        ContaBody(),
+        const ContaHeader(),
+        const Gutter(),
+        PeriodoPickerWidget(
+          periodoMes: 'Novembro',
+          onLeftTap: () {},
+          onRightTap: () {},
+          defaultColor: Colors.white,
+        ),
+        const Gutter(),
+        const ContaBody(),
       ],
     );
   }

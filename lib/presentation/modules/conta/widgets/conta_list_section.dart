@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_list_item.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
+
+import 'conta_list_header_widget.dart';
 
 class ContaListSection extends StatelessWidget {
   const ContaListSection({
@@ -15,13 +18,20 @@ class ContaListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: contas.length,
-      separatorBuilder: (context, index) => const Divider(
-        indent: kDefaultPadding,
-        endIndent: kDefaultPadding,
-      ),
-      itemBuilder: (context, index) => ContaListItem(conta: contas[index]),
+    return Column(
+      children: [
+        const ContaListHeaderWidget(),
+        const Divider(indent: kDefaultPadding, endIndent: kDefaultPadding),
+        const GutterTiny(),
+        Expanded(
+          child: ListView.separated(
+            itemCount: contas.length,
+            separatorBuilder: (context, index) => const GutterSmall(),
+            itemBuilder: (context, index) =>
+                ContaListItem(conta: contas[index]),
+          ),
+        ),
+      ],
     );
   }
 }
