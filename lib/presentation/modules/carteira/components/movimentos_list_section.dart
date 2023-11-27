@@ -4,6 +4,7 @@ import 'package:app_financas/presentation/modules/carteira/controllers/carteira_
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -89,6 +90,21 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
             }
           },
         ),
+        BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
+          listener: (context, state) {
+            if (state is ReajustarSaldoSuccess) {
+              setState(() {
+                page = 1;
+                pagingController.refresh();
+                movimentosCubit.getMovimentosByConta(
+                  1,
+                  contaId,
+                  0,
+                );
+              });
+            }
+          },
+        )
       ],
       child: Expanded(
         child: Padding(
