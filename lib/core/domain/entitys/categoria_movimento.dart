@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/Serialization/iconDataSerialization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum TipoCategoria {
   entrada,
@@ -46,6 +47,15 @@ class Categoria {
       name: '',
       color: null,
       icon: null,
+    );
+  }
+
+  factory Categoria.ajuste(int tipoMovimentoId) {
+    return Categoria(
+      id: 303030,
+      name: 'Reajuste',
+      color: tipoMovimentoId == 1 ? Colors.green : Colors.red,
+      icon: FontAwesomeIcons.tools,
     );
   }
 

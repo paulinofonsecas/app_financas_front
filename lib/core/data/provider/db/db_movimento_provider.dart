@@ -95,6 +95,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
           : await categoriaService.getSaidaCategoria(mov.categoriaMovimentoId);
       var categoria = result.getOrElse(() => Categoria.fake());
 
+      if (mov.categoriaMovimentoId == 303030) {
+        categoria = Categoria.ajuste(mov.tipoMovimentoId);
+      }
+
       saida.add(mov.copyWith(categoria: categoria));
     }
 

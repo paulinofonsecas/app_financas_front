@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_literals_to_create_immutables
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +14,9 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+
+import '../cubit/reajustar_saldo_cubit.dart';
+import '../dialogs/reajustar_saldo_dialog.dart';
 
 class ContaMonstDetailsPage extends StatelessWidget {
   const ContaMonstDetailsPage({
@@ -29,7 +35,20 @@ class ContaMonstDetailsPage extends StatelessWidget {
           isDarkMode ? Theme.of(context).colorScheme.shadow : kVerdeColor,
       body: SafeArea(
         bottom: false,
-        child: ContaDetailsBody(conta: conta),
+        child: BlocBuilder<ContaBloc, GContaState>(
+          buildWhen: (prev, state) => state is ListarContasSuccess,
+          builder: (context, state) {
+            if (state is ListarContasSuccess) {
+              var contas = state.contas;
+              var newConta = contas.firstWhere(
+                  (element) => element.id == conta.id,
+                  orElse: () => conta);
+              return ContaDetailsBody(conta: newConta);
+            } else {
+              return ContaDetailsBody(conta: conta);
+            }
+          },
+        ),
       ),
     );
   }
@@ -182,7 +201,22 @@ class _MainInfoWidget extends StatelessWidget {
         Gutter(),
         DefaultActionButton(
           text: 'Reajustar',
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  contentPadding: EdgeInsets.all(kDefaultPadding),
+                  content: BlocProvider(
+                    create: (context) => ReajustarSaldoCubit(),
+                    child: ReajustarSaldoDialog(
+                      conta: conta,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
           backgroundColor: kVerdeColor,
         ),
       ],

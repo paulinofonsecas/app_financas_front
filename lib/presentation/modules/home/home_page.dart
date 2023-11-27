@@ -37,15 +37,13 @@ class _HomePageState extends State<HomePage> {
           init: controller,
           id: 'geral',
           builder: (context) {
-            return widget(
-              child: ListView(
-                children: [
-                  ActionBar(),
-                  Gutter(),
-                  SaldoDisponivelCardWidget(),
-                  HomeScreenMovimentosWidget(),
-                ],
-              ),
+            return ListView(
+              children: [
+                ActionBar(),
+                Gutter(),
+                SaldoDisponivelCardWidget(),
+                HomeScreenMovimentosWidget(),
+              ],
             );
           },
         ),
