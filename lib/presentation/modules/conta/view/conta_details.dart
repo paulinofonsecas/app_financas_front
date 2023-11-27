@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_literals_to_create_immutables
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -207,11 +208,8 @@ class _MainInfoWidget extends StatelessWidget {
               builder: (context) {
                 return AlertDialog(
                   contentPadding: EdgeInsets.all(kDefaultPadding),
-                  content: BlocProvider(
-                    create: (context) => ReajustarSaldoCubit(),
-                    child: ReajustarSaldoDialog(
-                      conta: conta,
-                    ),
+                  content: ReajustarSaldoDialog(
+                    conta: conta,
                   ),
                 );
               },

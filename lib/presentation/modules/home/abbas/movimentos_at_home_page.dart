@@ -41,6 +41,7 @@ class MovimentosAtHomePage extends StatelessWidget {
               .map(
                 (movimento) => MovimentoItem(
                   onTap: () {
+                    if (movimento.categoriaMovimentoId == 303030) return;
                     customShowModalBottomSheet(
                       context,
                       child: ShowTransactionPage(movimento: movimento),

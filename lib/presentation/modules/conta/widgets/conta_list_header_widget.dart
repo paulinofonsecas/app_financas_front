@@ -11,6 +11,7 @@ import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_list_header_cubit.dart';
 
 import '../cubit/conta_periodo_picker_cubit_cubit.dart';
+import '../cubit/reajustar_saldo_cubit.dart';
 
 class ContaListHeaderWidget extends StatelessWidget {
   const ContaListHeaderWidget({super.key});
@@ -19,18 +20,25 @@ class ContaListHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ContaListHeaderCubit>().loadData(DateTime.now().month);
 
-    return BlocConsumer<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
+    return BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
       listener: (context, state) {
-        if (state is ContaPeriodoPickerChanged) {
-          context.read<ContaListHeaderCubit>().loadData(state.mes);
+        if (state is ReajustarSaldoSuccess) {
+          context.read<ContaListHeaderCubit>().loadData(DateTime.now().month);
         }
       },
-      buildWhen: (oldState, newState) => oldState.mes != newState.mes,
-      builder: (context, state) {
-        return _ContaListHeaderView(
-          mes: state.mes,
-        );
-      },
+      child: BlocConsumer<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
+        listener: (context, state) {
+          if (state is ContaPeriodoPickerChanged) {
+            context.read<ContaListHeaderCubit>().loadData(state.mes);
+          }
+        },
+        buildWhen: (oldState, newState) => oldState.mes != newState.mes,
+        builder: (context, state) {
+          return _ContaListHeaderView(
+            mes: state.mes,
+          );
+        },
+      ),
     );
   }
 }

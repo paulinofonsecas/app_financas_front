@@ -42,8 +42,8 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
   }
 
   _onListarContasAt(event, emit) async {
-    emit(ListarContasLoading());
     var mes = event.mes;
+    emit(ListarContasLoading());
 
     var contas = await contaService.listContas(mes);
 
