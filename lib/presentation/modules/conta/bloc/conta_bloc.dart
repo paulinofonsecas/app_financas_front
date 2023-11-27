@@ -18,12 +18,34 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
     contaService = locator();
 
     on<ListarContasEvent>(_onListarContas);
+    on<ListarContasAtEvent>(_onListarContasAt);
     on<CalcularSaldoMensalEvent>(_onCalcularSaldoMensal);
   }
 
   _onListarContas(event, emit) async {
     emit(ListarContasLoading());
     var contas = await contaService.listContas();
+
+    if (contas is Right) {
+      if (contas.getOrElse(() => []).isNotEmpty) {
+        emit(ListarContasSuccess(contas.getOrElse(() => [])));
+      } else {
+        emit(ListarContasEmpty());
+      }
+    } else {
+      emit(
+        ListarContasError(
+          errorMessage: contas.fold((l) => l.toString(), (r) => ''),
+        ),
+      );
+    }
+  }
+
+  _onListarContasAt(event, emit) async {
+    emit(ListarContasLoading());
+    var mes = event.mes;
+
+    var contas = await contaService.listContas(mes);
 
     if (contas is Right) {
       if (contas.getOrElse(() => []).isNotEmpty) {

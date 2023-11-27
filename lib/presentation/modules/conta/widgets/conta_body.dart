@@ -1,6 +1,8 @@
+import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
+import 'conta_list_header_widget.dart';
 import 'conta_list_section.dart';
 
 /// {@template conta_body}
@@ -18,33 +20,16 @@ class ContaBody extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         child: Container(
-          // padding: const EdgeInsets.only(top: kDefaultPadding),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
-          child: BlocBuilder<ContaBloc, GContaState>(
-            bloc: context.read<ContaBloc>()..add(ListarContasEvent()),
-            builder: (context, state) {
-              if (state is ListarContasLoading) {
-                return const CircularProgressIndicator();
-              }
-
-              if (state is ListarContasError) {
-                return const Text('Erro ao listar contas');
-              }
-
-              if (state is ListarContasEmpty) {
-                return const Text('Nenhuma conta cadastrado');
-              }
-
-              if (state is ListarContasSuccess) {
-                return ContaListSection(
-                  contas: state.contas,
-                );
-              }
-
-              return const SizedBox();
-            },
+          child: const Column(
+            children: [
+              ContaListHeaderWidget(),
+              Divider(indent: kDefaultPadding, endIndent: kDefaultPadding),
+              GutterTiny(),
+              Expanded(child: ContaListSection()),
+            ],
           ),
         ),
       ),

@@ -185,6 +185,8 @@ Conta _createConta([int id = 1]) {
     nome: 'Conta fake',
     saldo: 0.0,
     saldoInicial: 0.0,
+    totalDespesas: 0,
+    totalReceitas: 0,
     descricao: 'Conta fake',
     tipoConta: TipoConta.tipoContas.first,
     color: Colors.blue,

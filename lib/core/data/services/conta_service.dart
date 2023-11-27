@@ -11,8 +11,8 @@ class ContaService implements IContaService {
   ContaService(this.provider);
 
   @override
-  Future<Either<Failure, List<Conta>>> listContas() {
-    return provider.listContas();
+  Future<Either<Failure, List<Conta>>> listContas([int? mes]) {
+    return provider.listContas(mes);
   }
 
   @override
@@ -29,4 +29,10 @@ class ContaService implements IContaService {
   Future<Either<Failure, BalancoMensal>> calcularBalancoMensal(int mesIndex) {
     return provider.calcularBalancoMensal(mesIndex);
   }
+  
+  @override
+  Future<Either<Failure, bool>> updateConta(Conta conta) {
+    return provider.updateConta(conta);
+  }
+
 }

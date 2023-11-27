@@ -12,6 +12,8 @@ class ContaListHeaderCubit extends Cubit<ContaListHeaderState> {
   ContaListHeaderCubit(this._contasBloc)
       : super(const ContaListHeaderInitial(BalancoMensal(0, 0))) {
     _contasBloc.stream.listen((state) {
+      if (isClosed) return;
+      
       if (state is CalcularSaldoMensalSuccess) {
         emit(ContaListHeaderSuccess(state.balanco));
       }
@@ -33,4 +35,5 @@ class ContaListHeaderCubit extends Cubit<ContaListHeaderState> {
   void loadData(int mesIndex) {
     _contasBloc.add(CalcularSaldoMensalEvent(mesIndex));
   }
+
 }

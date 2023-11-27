@@ -95,6 +95,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
           : await categoriaService.getSaidaCategoria(mov.categoriaMovimentoId);
       var categoria = result.getOrElse(() => Categoria.fake());
 
+      if (mov.categoriaMovimentoId == 303030) {
+        categoria = Categoria.ajuste(mov.tipoMovimentoId);
+      }
+
       saida.add(mov.copyWith(categoria: categoria));
     }
 
@@ -156,7 +160,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, double>> getSaldo(int contaId) async {
+  Future<Either<Failure, double>> getSaldo(int contaId, [int? mes]) async {
     await initDb();
 
     var result = await listMovimentos();
@@ -164,6 +168,11 @@ class DbMovimentoProvider implements IMovimentoProvider {
     if (result.isRight()) {
       var movimentos = result.getOrElse(() => []).where(
           (element) => element.confirmado && element.cartaoId == contaId);
+
+      if (mes != null) {
+        movimentos = movimentos.where(
+            (element) => element.data.month == mes && element.confirmado);
+      }
 
       var entradas = 0.0;
       var saidas = 0.0;
@@ -253,5 +262,33 @@ class DbMovimentoProvider implements IMovimentoProvider {
     movimentos = await populateCategories(movimentos);
 
     return Right(movimentos);
+  }
+
+  @override
+  Future<Either<Failure, List<int>>> getTotalMovimentos(int contaId) async {
+    var result = await listMovimentos();
+
+    if (result is Right) {
+      var movimentos = result
+          .getOrElse(() => [])
+          .where((element) => element.confirmado)
+          .where((element) => element.cartaoId == contaId)
+          .toList();
+
+      var entradas = 0;
+      var saidas = 0;
+
+      for (var mov in movimentos) {
+        if (mov.confirmado && mov.tipoMovimentoId == 1) {
+          entradas++;
+        } else if (mov.confirmado && mov.tipoMovimentoId == 2) {
+          saidas++;
+        }
+      }
+
+      return Right([saidas, entradas]);
+    } else {
+      return Left(Failure('Erro ao processar o total de movimentos'));
+    }
   }
 }

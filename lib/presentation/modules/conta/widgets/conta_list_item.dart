@@ -10,15 +10,20 @@ import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 
 class ContaListItem extends StatelessWidget {
-  const ContaListItem({super.key, required this.conta});
+  const ContaListItem({
+    Key? key,
+    required this.conta,
+    this.onTap,
+  }) : super(key: key);
 
   final Conta conta;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Dismissible(
           key: ValueKey(conta.id),
           direction: DismissDirection.endToStart,
@@ -63,7 +68,7 @@ class _ContaItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(
         top: kDefaultPadding,
         bottom: kDefaultPadding / 4,
@@ -104,7 +109,7 @@ class _ContaItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Saldo atual',
+                      'Saldo',
                       style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -122,27 +127,6 @@ class _ContaItemWidget extends StatelessWidget {
                   ],
                 ),
                 const GutterTiny(),
-                Row(
-                  children: [
-                    Text(
-                      'Saldo previsto',
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      numberFormat.format(conta.saldo),
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),

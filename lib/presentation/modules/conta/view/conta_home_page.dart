@@ -13,7 +13,7 @@ import '../widgets/conta_header.dart';
 /// {@template conta_page}
 /// A description for ContaPage
 /// {@endtemplate}
-class ContaPage extends StatelessWidget {
+class ContaPage extends StatefulWidget {
   /// {@macro conta_page}
   const ContaPage({super.key});
 
@@ -23,7 +23,28 @@ class ContaPage extends StatelessWidget {
   }
 
   @override
+  State<ContaPage> createState() => _ContaPageState();
+}
+
+class _ContaPageState extends State<ContaPage> {
+  late final ContaListHeaderCubit headerCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    headerCubit = ContaListHeaderCubit(locator());
+  }
+
+  @override
+  void dispose() {
+    headerCubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var isDark = Theme.of(context).brightness == Brightness.dark;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -32,13 +53,16 @@ class ContaPage extends StatelessWidget {
         BlocProvider(
           create: (context) => ContaPeriodoPickerCubit(),
         ),
-        BlocProvider(
-          create: (context) => ContaListHeaderCubit(locator()),
-        )
+        BlocProvider.value(
+          value: headerCubit,
+        ),
       ],
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: isDark
+            ? Theme.of(context).colorScheme.shadow
+            : Theme.of(context).primaryColor,
         body: const SafeArea(
+          bottom: false,
           child: ContaView(),
         ),
       ),

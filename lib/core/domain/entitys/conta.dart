@@ -14,6 +14,8 @@ class Conta {
   final TipoConta tipoConta;
   final Color color;
   final String? iconAsset;
+  final int totalDespesas;
+  final int totalReceitas;
   final bool? showInSoma;
   final bool? isArchived;
 
@@ -24,6 +26,8 @@ class Conta {
     required this.saldoInicial,
     required this.descricao,
     required this.tipoConta,
+    required this.totalDespesas,
+    required this.totalReceitas,
     required this.color,
     this.iconAsset,
     this.showInSoma = true,
@@ -36,6 +40,8 @@ class Conta {
       nome: 'Conta fake',
       saldo: 0.0,
       saldoInicial: 0.0,
+      totalDespesas: 0,
+      totalReceitas: 0,
       descricao: 'Conta fake',
       tipoConta: TipoConta.tipoContas.first,
       color: Colors.blue,
@@ -53,6 +59,8 @@ class Conta {
     String? descricao,
     TipoConta? tipoConta,
     Color? color,
+    int? totalDespesas,
+    int? totalReceitas,
     String? iconAsset,
     bool? showInSoma,
     bool? isArchived,
@@ -65,6 +73,8 @@ class Conta {
       descricao: descricao ?? this.descricao,
       tipoConta: tipoConta ?? this.tipoConta,
       color: color ?? this.color,
+      totalDespesas: totalDespesas ?? this.totalDespesas,
+      totalReceitas: totalReceitas ?? this.totalReceitas,
       iconAsset: iconAsset ?? this.iconAsset,
       showInSoma: showInSoma ?? this.showInSoma,
       isArchived: isArchived ?? this.isArchived,
@@ -80,6 +90,8 @@ class Conta {
       'descricao': descricao,
       'tipoConta': tipoConta.id,
       'color': color.value,
+      'totalDespesas': totalDespesas,
+      'totalReceitas': totalReceitas,
       'iconAsset': iconAsset,
       'showInSoma': showInSoma,
       'isArchived': isArchived,
@@ -96,6 +108,8 @@ class Conta {
       tipoConta: TipoConta.tipoContas
           .firstWhere((element) => element.id == map['tipoConta'] as int),
       color: Color(map['color'] as int),
+      totalDespesas: map['totalDespesas'] as int? ?? 0,
+      totalReceitas: map['totalReceitas'] as int? ?? 0,
       iconAsset: map['iconAsset'] != null ? map['iconAsset'] as String : null,
       showInSoma: map['showInSoma'] != null ? map['showInSoma'] as bool : null,
       isArchived: map['isArchived'] != null ? map['isArchived'] as bool : null,
@@ -123,6 +137,8 @@ class Conta {
         other.descricao == descricao &&
         other.tipoConta == tipoConta &&
         other.color == color &&
+        other.totalDespesas == totalDespesas &&
+        other.totalReceitas == totalReceitas &&
         other.iconAsset == iconAsset &&
         other.showInSoma == showInSoma &&
         other.isArchived == isArchived;

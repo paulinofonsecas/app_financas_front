@@ -106,6 +106,33 @@ void main() async {
     expect(result2.descricao, 'Compra de computador');
     expect(result2.tipoMovimentoId, 1);
   });
+
+  group('Quatidade de transacoes', () {
+    test('Deve retornar a zero quantidade de despesas e receitas por conta', () async {
+    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => []), isA<List<int>>());
+    expect(result.getOrElse(() => []).length, 2);
+    expect(result.getOrElse(() => []).first, 0);
+    expect(result.getOrElse(() => []).last, 0);
+  });
+
+  test('Deve retornar a quantidade de despesas e receitas por conta', () async {
+    var movimento = _makeFakeMovimento();
+
+    await dbMovimentosProvider.saveMovimento(movimento);
+    await dbMovimentosProvider.saveMovimento(movimento);
+
+    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => []), isA<List<int>>());
+    expect(result.getOrElse(() => []).length, 2);
+    expect(result.getOrElse(() => []).first, 2);
+    expect(result.getOrElse(() => []).last, 0);
+  });
+  });
 }
 
 Movimento _makeFakeMovimento() {

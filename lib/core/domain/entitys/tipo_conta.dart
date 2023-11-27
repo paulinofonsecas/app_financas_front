@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TipoConta {
   final int id;
@@ -12,27 +13,27 @@ class TipoConta {
       TipoConta(
         id: 1,
         nome: 'Conta corrente',
-        icon: Icons.arrow_upward,
+        icon: FontAwesomeIcons.solidCreditCard,
       ),
       TipoConta(
         id: 2,
         nome: 'Dinheiro',
-        icon: Icons.arrow_downward,
+        icon: Icons.attach_money,
       ),
       TipoConta(
         id: 3,
         nome: 'Poupança',
-        icon: Icons.arrow_downward,
+        icon: FontAwesomeIcons.piggyBank,
       ),
       TipoConta(
         id: 4,
         nome: 'Investimento',
-        icon: Icons.arrow_downward,
+        icon: FontAwesomeIcons.chartLine,
       ),
       TipoConta(
         id: 5,
         nome: 'Outros',
-        icon: Icons.arrow_downward,
+        icon: FontAwesomeIcons.bars,
       ),
     ];
   }
