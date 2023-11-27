@@ -162,6 +162,7 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
       tipoMovimentoId: movimento.tipoMovimentoId,
       avatarBgColor: kAmarelhoColor,
       onTap: () {
+        if (movimento.categoriaMovimentoId == 303030) return;
         customShowModalBottomSheet(
           context,
           child: ShowTransactionPage(
