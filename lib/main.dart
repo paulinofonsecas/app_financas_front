@@ -2,6 +2,7 @@ import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/foundation.dart';
@@ -38,6 +39,9 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => locator<ContaBloc>(),
+        ),
+        BlocProvider(
+          create: (c) => locator<ReajustarSaldoCubit>(),
         ),
       ],
       child: DevicePreview(

@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,35 +22,47 @@ class ContaListSection extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ContaBloc>().add(ListarContasAtEvent(DateTime.now().month));
 
-    return BlocConsumer<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
-      listener: (context, state) {
-        if (state is ContaPeriodoPickerChanged) {
-          context.read<ContaBloc>().add(ListarContasAtEvent(state.mes));
-        }
-      },
-      builder: (context, state) {
-        return BlocBuilder<ContaBloc, GContaState>(
-          builder: (context, state) {
-            if (state is ListarContasLoading) {
-              return const CircularProgressIndicator();
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
+          listener: (context, state) {
+            if (state is ContaPeriodoPickerChanged) {
+              context.read<ContaBloc>().add(ListarContasAtEvent(state.mes));
             }
-
-            if (state is ListarContasError) {
-              return const Text('Erro ao listar contas');
-            }
-
-            if (state is ListarContasEmpty) {
-              return const Text('Nenhuma conta cadastrado');
-            }
-
-            if (state is ListarContasSuccess) {
-              return _ContentBody(contas: state.contas);
-            }
-
-            return const SizedBox();
           },
-        );
-      },
+        ),
+        BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
+          listener: (context, state) {
+            if (state is ReajustarSaldoSuccess) {
+              context
+                  .read<ContaBloc>()
+                  .add(ListarContasAtEvent(DateTime.now().month));
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<ContaBloc, GContaState>(
+        buildWhen: (prev, state) => prev != state,
+        builder: (context, state) {
+          if (state is ListarContasLoading) {
+            return const CircularProgressIndicator();
+          }
+
+          if (state is ListarContasError) {
+            return const Text('Erro ao listar contas');
+          }
+
+          if (state is ListarContasEmpty) {
+            return const Text('Nenhuma conta cadastrado');
+          }
+
+          if (state is ListarContasSuccess) {
+            return _ContentBody(contas: state.contas);
+          }
+
+          return const SizedBox();
+        },
+      ),
     );
   }
 }

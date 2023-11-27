@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_financas/presentation/components/my_divider.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
@@ -43,111 +44,114 @@ class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ReajustarSaldoCubit, ReajustarSaldoState>(
-      listener: (context, state) {
-        if (state is ReajustarSaldoSuccess) {
-          context
-              .read<ContaBloc>()
-              .add(ListarContasAtEvent(DateTime.now().month));
-          Navigator.of(context).pop();
-        }
-      },
-      builder: (context, state) {
-        return SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Reajustar saldo',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<ReajustarSaldoCubit>()
-                          .reajustarSaldo(widget.conta);
-                    },
-                    icon: const Icon(
-                      FontAwesomeIcons.circleCheck,
-                      size: 18,
-                    ),
-                  ),
-                ],
-              ),
-              const Gutter(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Novo saldo',
-                    style: GoogleFonts.inter(
-                      fontSize: 11,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _newSaldoController,
-                          style: GoogleFonts.inter(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.zero,
-                            hintText: '0,00',
-                          ),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
+    return BlocProvider.value(
+      value: locator<ReajustarSaldoCubit>(),
+      child: BlocConsumer<ReajustarSaldoCubit, ReajustarSaldoState>(
+        listenWhen: (old, state) =>
+            old != state && state is ReajustarSaldoSuccess,
+        listener: (context, state) {
+          if (state is ReajustarSaldoSuccess) {
+            context.read<ContaBloc>().add(ListarContasEvent());
+            Navigator.of(context).pop();
+          }
+        },
+        builder: (context, state) {
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Reajustar saldo',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
                       ),
-                      IconButton(
-                        onPressed: () {
-                          _newSaldoController.clear();
-                        },
-                        icon: const Icon(
-                          FontAwesomeIcons.circleXmark,
-                          size: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const GutterTiny(),
-              MyDivider(),
-              const GutterTiny(),
-              BlocBuilder<ReajustarSaldoCubit, ReajustarSaldoState>(
-                buildWhen: (prev, state) =>
-                    state is SaldoChanged && prev.saldo != state.saldo,
-                builder: (context, state) {
-                  return Text(
-                    _getReajusteMessage(state),
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
                     ),
-                  );
-                },
-              ),
-              const Gutter(),
-              _TransacaoDeReajusteWidget(conta: widget.conta),
-            ],
-          ),
-        );
-      },
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        context
+                            .read<ReajustarSaldoCubit>()
+                            .reajustarSaldo(widget.conta);
+                      },
+                      icon: const Icon(
+                        FontAwesomeIcons.circleCheck,
+                        size: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                const Gutter(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Novo saldo',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _newSaldoController,
+                            style: GoogleFonts.inter(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.zero,
+                              hintText: '0,00',
+                            ),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _newSaldoController.clear();
+                          },
+                          icon: const Icon(
+                            FontAwesomeIcons.circleXmark,
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const GutterTiny(),
+                MyDivider(),
+                const GutterTiny(),
+                BlocBuilder<ReajustarSaldoCubit, ReajustarSaldoState>(
+                  buildWhen: (prev, state) =>
+                      state is SaldoChanged && prev.saldo != state.saldo,
+                  builder: (context, state) {
+                    return Text(
+                      _getReajusteMessage(state),
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                      ),
+                    );
+                  },
+                ),
+                const Gutter(),
+                _TransacaoDeReajusteWidget(conta: widget.conta),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
