@@ -55,7 +55,7 @@ class Categoria {
       id: 303030,
       name: 'Reajuste',
       color: tipoMovimentoId == 1 ? Colors.green : Colors.red,
-      icon: FontAwesomeIcons.tools,
+      icon: FontAwesomeIcons.screwdriverWrench,
     );
   }
 

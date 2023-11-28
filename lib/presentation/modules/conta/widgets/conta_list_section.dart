@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/view/create_conta_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -98,7 +97,11 @@ class _ContentBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  CreateContaPage.route(),
+                );
+              },
               child: const Text(
                 'Cadastrar conta',
               ),

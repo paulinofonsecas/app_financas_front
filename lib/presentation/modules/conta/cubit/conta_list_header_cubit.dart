@@ -1,5 +1,5 @@
 import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../bloc/conta_bloc.dart';

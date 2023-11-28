@@ -3,7 +3,6 @@
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'contas_state.dart';

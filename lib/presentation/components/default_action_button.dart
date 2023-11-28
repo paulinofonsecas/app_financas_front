@@ -20,7 +20,6 @@ class DefaultActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       style: FilledButton.styleFrom(
-        backgroundColor: backgroundColor ?? Theme.of(context).primaryColor,
         padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding * 2.8,
           vertical: kDefaultPadding / 1.5,
@@ -31,7 +30,7 @@ class DefaultActionButton extends StatelessWidget {
         text,
         style: GoogleFonts.inter(
           fontSize: 16,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );

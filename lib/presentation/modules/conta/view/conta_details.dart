@@ -1,8 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_literals_to_create_immutables
-// ignore_for_file: prefer_const_constructors
-
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +11,6 @@ import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 
-import '../cubit/reajustar_saldo_cubit.dart';
 import '../dialogs/reajustar_saldo_dialog.dart';
 
 class ContaMonstDetailsPage extends StatelessWidget {
@@ -70,7 +64,7 @@ class ContaDetailsBody extends StatelessWidget {
         _ContaDetailsHeader(
           conta: conta,
         ),
-        Gutter(),
+        const Gutter(),
         Expanded(
           child: _ContaDetailsContent(conta: conta),
         )
@@ -98,16 +92,16 @@ class _ContaDetailsContent extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding,
           vertical: kDefaultPadding,
         ),
         child: Column(
           children: [
-            Gutter(),
+            const Gutter(),
             _MainInfoWidget(conta: conta),
-            GutterLarge(),
-            Gutter(),
+            const GutterLarge(),
+            const Gutter(),
             Row(
               children: [
                 Expanded(
@@ -117,22 +111,22 @@ class _ContaDetailsContent extends StatelessWidget {
                     subtitle: conta.tipoConta.nome,
                   ),
                 ),
-                Gutter(),
+                const Gutter(),
                 Expanded(
                   child: _ContaInforWidget(
-                    icon: Icon(FontAwesomeIcons.genderless),
+                    icon: const Icon(FontAwesomeIcons.genderless),
                     title: 'Saldo inicial',
                     subtitle: numberFormat.format(conta.saldoInicial),
                   ),
                 ),
               ],
             ),
-            GutterLarge(),
+            const GutterLarge(),
             Row(
               children: [
                 Expanded(
                   child: _ContaInforWidget(
-                    icon: Icon(
+                    icon: const Icon(
                       CupertinoIcons.sort_down,
                       color: kVermelhaColor,
                     ),
@@ -141,10 +135,10 @@ class _ContaDetailsContent extends StatelessWidget {
                     subtitle: '${conta.totalDespesas} despesas',
                   ),
                 ),
-                Gutter(),
+                const Gutter(),
                 Expanded(
                   child: _ContaInforWidget(
-                    icon: Icon(
+                    icon: const Icon(
                       CupertinoIcons.sort_up,
                       color: kVerdeColor,
                     ),
@@ -155,7 +149,7 @@ class _ContaDetailsContent extends StatelessWidget {
                 ),
               ],
             ),
-            GutterLarge(),
+            const GutterLarge(),
             // SwitchListTile(
             //   value: true,
             //   onChanged: (v) {},
@@ -191,7 +185,7 @@ class _MainInfoWidget extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-        GutterSmall(),
+        const GutterSmall(),
         Text(
           numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
@@ -199,7 +193,7 @@ class _MainInfoWidget extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        Gutter(),
+        const Gutter(),
         DefaultActionButton(
           text: 'Reajustar',
           onPressed: () {
@@ -207,7 +201,7 @@ class _MainInfoWidget extends StatelessWidget {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  contentPadding: EdgeInsets.all(kDefaultPadding),
+                  contentPadding: const EdgeInsets.all(kDefaultPadding),
                   content: ReajustarSaldoDialog(
                     conta: conta,
                   ),
@@ -253,7 +247,7 @@ class _ContaInforWidget extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            GutterTiny(),
+            const GutterTiny(),
             Text(
               subtitle,
               style: GoogleFonts.inter(
@@ -306,7 +300,7 @@ class _ContaDetailsHeader extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 FontAwesomeIcons.scaleBalanced,
                 color: Colors.white,
                 size: 18,
