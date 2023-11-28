@@ -1,0 +1,81 @@
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
+import 'package:app_financas/core/erros/failure.dart';
+import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'helpers/db_hive_box_names.dart';
+
+class DbBancoProvider implements IBancoProvider {
+  DbBancoProvider();
+
+  late Box<Map<dynamic, dynamic>> _bancoBox;
+
+  Future<void> initDb() async {
+    await Hive.openBox(kBancoBox);
+  }
+
+  @override
+  Future<Either<Failure, List<Banco>>> listBancos() async {
+    try {
+      await initDb();
+      var data = _bancoBox.values.toList();
+      var result = data.map<Banco>(Banco.fromMap).toList();
+
+      if (result.isEmpty) {
+        await _populateDefaultBancos();
+        return listBancos();
+      }
+
+      return Right(result);
+    } on Exception {
+      return Left(Failure('Erro ao buscar os bancos'));
+    }
+  }
+
+  Future<void> _populateDefaultBancos() async {
+    await initDb();
+
+    // Bancos angolanos
+    var bancos = [
+      Banco(
+        id: 1,
+        nome: 'Banco Angolano de Investimos',
+        acronimo: 'BAI',
+      ),
+      Banco(
+        id: 2,
+        nome: 'Banco de Poupança e Crédito',
+        acronimo: 'BPC',
+      ),
+      Banco(
+        id: 3,
+        nome: 'Banco de Fomento de Angola',
+      ),
+      Banco(
+        id: 4,
+        nome: 'Banco Millennium Atlântico',
+        acronimo: 'Atlântico',
+      ),
+      Banco(
+        id: 5,
+        nome: 'Caixa Geral de Angola SA',
+        acronimo: 'Caixa',
+      ),
+      Banco(
+        id: 6,
+        nome: 'Banco de Negócios Internacional',
+        acronimo: 'BNI',
+      ),
+      Banco(
+        id: 7,
+        nome: 'Banco BIC Angola',
+        acronimo: 'BIC',
+      ),
+    ];
+
+    for (var banco in bancos) {
+      _bancoBox.put(banco.id, banco.toMap());
+    }
+  }
+}
