@@ -206,24 +206,11 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
         if (state is InstituicaoFinanceiraSelecionada) {
           banco = state.banco;
 
-          return ListTile(
+          return BancoListItem(
             onTap: () {
               InstitFinBottomSheet.openModalBottomSheet(context: context);
             },
-            title: Text(
-              banco.acronimo ?? banco.nome,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            subtitle: banco.acronimo != null ? Text(banco.nome) : null,
-            leading: banco.imgAsset != null
-                ? SvgPicture.asset(banco.imgAsset!)
-                : null,
-            trailing: const Icon(
-              FontAwesomeIcons.chevronRight,
-              size: 16,
-            ),
+            banco: banco,
           );
         }
 
@@ -300,7 +287,7 @@ class _IncluirNaTelaInicialWidget extends StatelessWidget {
     return ListTile(
       onTap: () {},
       title: const Text(
-        'Tipo de conta',
+        'Mostrar na tela inicial',
       ),
       leading: const Icon(
         FontAwesomeIcons.circleInfo,

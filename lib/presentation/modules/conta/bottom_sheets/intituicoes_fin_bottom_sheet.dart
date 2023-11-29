@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/presentation/modules/conta/conta.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InstitFinBottomSheet extends StatefulWidget {
   const InstitFinBottomSheet({
@@ -25,7 +26,7 @@ class InstitFinBottomSheet extends StatefulWidget {
       useSafeArea: true,
       useRootNavigator: false,
       constraints: BoxConstraints.expand(
-        height: size.height * 0.8,
+        height: size.height * 0.5,
       ),
       builder: (BuildContext context) {
         return BlocProvider.value(
@@ -45,7 +46,7 @@ class _InstitFinBottomSheetState extends State<InstitFinBottomSheet> {
 
   @override
   void initState() {
-    _instCubit = context.read<InstituicaoFinanceiraCubit>();
+    _instCubit = locator();
     super.initState();
   }
 
@@ -104,11 +105,35 @@ class BancoListItem extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading:
-          banco.imgAsset != null ? SvgPicture.asset(banco.imgAsset!) : null,
+          banco.imgAsset != null ? _buildImageWidget() : _buildDefaultIcon(),
       title: Text(
         banco.acronimo ?? banco.nome,
       ),
       subtitle: banco.acronimo != null ? Text(banco.nome) : null,
+      trailing: const Icon(
+        FontAwesomeIcons.chevronRight,
+        size: 16,
+      ),
+    );
+  }
+
+  SizedBox _buildDefaultIcon() {
+    return const SizedBox(
+      width: 32,
+      height: 32,
+      child: Icon(FontAwesomeIcons.buildingColumns),
+    );
+  }
+
+  Widget _buildImageWidget() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(90),
+      child: Image.asset(
+        banco.imgAsset!,
+        width: 32,
+        height: 32,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

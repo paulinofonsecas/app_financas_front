@@ -42,21 +42,25 @@ class DbBancoProvider implements IBancoProvider {
         id: 1,
         nome: 'Banco Angolano de Investimos',
         acronimo: 'BAI',
+        imgAsset: 'assets/imgs/bancos/BAI.png',
       ),
       Banco(
         id: 2,
         nome: 'Banco de Poupança e Crédito',
         acronimo: 'BPC',
+        imgAsset: 'assets/imgs/bancos/BPC.png',
       ),
       Banco(
         id: 3,
         nome: 'Banco de Fomento de Angola',
         acronimo: 'BFA',
+        imgAsset: 'assets/imgs/bancos/BFA.png',
       ),
       Banco(
         id: 4,
         nome: 'Banco Millennium Atlântico',
         acronimo: 'Atlântico',
+        imgAsset: 'assets/imgs/bancos/ATLANTICO.png',
       ),
       Banco(
         id: 5,
@@ -72,6 +76,7 @@ class DbBancoProvider implements IBancoProvider {
         id: 7,
         nome: 'Banco BIC Angola',
         acronimo: 'BIC',
+        imgAsset: 'assets/imgs/bancos/BIC.png',
       ),
     ];
 
