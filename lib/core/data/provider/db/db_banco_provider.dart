@@ -12,7 +12,7 @@ class DbBancoProvider implements IBancoProvider {
   late Box<Map<dynamic, dynamic>> _bancoBox;
 
   Future<void> initDb() async {
-    await Hive.openBox(kBancoBox);
+    _bancoBox = await Hive.openBox(kBancoBox);
   }
 
   @override
@@ -76,6 +76,22 @@ class DbBancoProvider implements IBancoProvider {
 
     for (var banco in bancos) {
       _bancoBox.put(banco.id, banco.toMap());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Banco>> getBanco(int id) async {
+    try {
+      await initDb();
+
+      var data = _bancoBox.get(id);
+
+      if (data == null) return Left(Failure('Banco inexistente'));
+
+      var banco = Banco.fromMap(data);
+      return Right(banco);
+    } catch (e) {
+      return Left(Failure('Ocorreu um erro ao buscar o banco'));
     }
   }
 }
