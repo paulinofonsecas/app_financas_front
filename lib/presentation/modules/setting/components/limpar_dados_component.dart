@@ -15,6 +15,7 @@ class LimparDadosWidget extends StatelessWidget {
     await Hive.deleteBoxFromDisk(kContasBox);
     await Hive.deleteBoxFromDisk(kCategoriasEntradaBox);
     await Hive.deleteBoxFromDisk(kCategoriasSaidaBox);
+    await Hive.deleteBoxFromDisk(kBancoBox);
   }
 
   @override

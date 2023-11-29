@@ -12,7 +12,7 @@ class DbBancoProvider implements IBancoProvider {
   late Box<Map<dynamic, dynamic>> _bancoBox;
 
   Future<void> initDb() async {
-    await Hive.openBox(kBancoBox);
+    _bancoBox = await Hive.openBox(kBancoBox);
   }
 
   @override
@@ -42,20 +42,25 @@ class DbBancoProvider implements IBancoProvider {
         id: 1,
         nome: 'Banco Angolano de Investimos',
         acronimo: 'BAI',
+        imgAsset: 'assets/imgs/bancos/BAI.png',
       ),
       Banco(
         id: 2,
         nome: 'Banco de Poupança e Crédito',
         acronimo: 'BPC',
+        imgAsset: 'assets/imgs/bancos/BPC.png',
       ),
       Banco(
         id: 3,
         nome: 'Banco de Fomento de Angola',
+        acronimo: 'BFA',
+        imgAsset: 'assets/imgs/bancos/BFA.png',
       ),
       Banco(
         id: 4,
         nome: 'Banco Millennium Atlântico',
         acronimo: 'Atlântico',
+        imgAsset: 'assets/imgs/bancos/ATLANTICO.png',
       ),
       Banco(
         id: 5,
@@ -71,11 +76,28 @@ class DbBancoProvider implements IBancoProvider {
         id: 7,
         nome: 'Banco BIC Angola',
         acronimo: 'BIC',
+        imgAsset: 'assets/imgs/bancos/BIC.png',
       ),
     ];
 
     for (var banco in bancos) {
       _bancoBox.put(banco.id, banco.toMap());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Banco>> getBanco(int id) async {
+    try {
+      await initDb();
+
+      var data = _bancoBox.get(id);
+
+      if (data == null) return Left(Failure('Banco inexistente'));
+
+      var banco = Banco.fromMap(data);
+      return Right(banco);
+    } catch (e) {
+      return Left(Failure('Ocorreu um erro ao buscar o banco'));
     }
   }
 }

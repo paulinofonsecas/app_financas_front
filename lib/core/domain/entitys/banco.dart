@@ -20,11 +20,15 @@ class Banco {
     };
   }
 
+  factory Banco.fake() {
+    return Banco(id: -1, nome: '', acronimo: '', imgAsset: '');
+  }
+
   factory Banco.fromMap(Map<dynamic, dynamic> map) {
     return Banco(
       id: map['id'] as int,
       nome: map['nome'] as String,
-      acronimo: map['acronimo'] as String,
+      acronimo: map['acronimo'] as String?,
       imgAsset: map['imgAsset'] != null ? map['imgAsset'] as String : null,
     );
   }

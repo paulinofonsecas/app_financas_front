@@ -1,4 +1,8 @@
+import 'package:app_financas/core/data/provider/db/db_banco_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
+import 'package:app_financas/core/data/services/banco_service.dart';
 import 'package:app_financas/core/data/services/saldos_service.dart';
+import 'package:app_financas/core/domain/services/i_banco_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -6,6 +10,7 @@ import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -30,6 +35,10 @@ var locator = GetIt.instance;
 
 Future<void> dependencyInitialize() async {
   locator.registerLazySingleton<Dio>(() => makeDefaultDio());
+
+  // Banco
+  locator.registerLazySingleton<IBancoProvider>(() => DbBancoProvider());
+  locator.registerLazySingleton<IBancoService>(() => BancoService(locator()));
 
   // Categoria
   locator
@@ -66,4 +75,6 @@ Future<void> dependencyInitialize() async {
       () => ChangeTipoMovimentoCubit());
   locator.registerLazySingleton<MovimentosByContaCubit>(
       () => MovimentosByContaCubit(locator()));
+  locator.registerLazySingleton<InstituicaoFinanceiraCubit>(
+      () => InstituicaoFinanceiraCubit(locator()));
 }

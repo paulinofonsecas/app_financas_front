@@ -1,7 +1,11 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/components/default_money_textfield.dart';
+import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -175,18 +179,42 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {},
-      title: const Text(
-        'Instituição financeira',
-      ),
-      leading: const Icon(
-        FontAwesomeIcons.building,
-      ),
-      trailing: const Icon(
-        FontAwesomeIcons.chevronRight,
-        size: 16,
-      ),
+    return BlocBuilder<InstituicaoFinanceiraCubit, InstituicaoFinanceiraState>(
+      buildWhen: (p, current) => current is InstituicaoFinanceiraSelecionada,
+      builder: (context, state) {
+        late Banco banco;
+
+        if (state is InstituicaoFinanceiraInitial) {
+          return ListTile(
+            onTap: () {
+              InstitFinBottomSheet.openModalBottomSheet(context: context);
+            },
+            title: const Text(
+              'Instituição financeira',
+            ),
+            leading: const Icon(
+              FontAwesomeIcons.building,
+            ),
+            trailing: const Icon(
+              FontAwesomeIcons.chevronRight,
+              size: 16,
+            ),
+          );
+        }
+
+        if (state is InstituicaoFinanceiraSelecionada) {
+          banco = state.banco;
+
+          return BancoListItem(
+            onTap: () {
+              InstitFinBottomSheet.openModalBottomSheet(context: context);
+            },
+            banco: banco,
+          );
+        }
+
+        return const SizedBox();
+      },
     );
   }
 }
@@ -258,7 +286,7 @@ class _IncluirNaTelaInicialWidget extends StatelessWidget {
     return ListTile(
       onTap: () {},
       title: const Text(
-        'Tipo de conta',
+        'Mostrar na tela inicial',
       ),
       leading: const Icon(
         FontAwesomeIcons.circleInfo,

@@ -1,3 +1,5 @@
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/create_conta_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +20,15 @@ class CreateContaPage extends StatefulWidget {
 class _CreateContaPageState extends State<CreateContaPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateContaThemeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CreateContaThemeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => locator<InstituicaoFinanceiraCubit>(),
+        ),
+      ],
       child: const CreateContaView(),
     );
   }
