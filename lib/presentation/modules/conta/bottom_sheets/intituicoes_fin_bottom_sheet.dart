@@ -2,7 +2,6 @@
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/presentation/modules/conta/conta.dart';
@@ -107,10 +106,6 @@ class BancoListItem extends StatelessWidget {
           banco.imgAsset != null ? SvgPicture.asset(banco.imgAsset!) : null,
       title: Text(
         banco.acronimo ?? banco.nome,
-        style: GoogleFonts.inter(
-          fontSize: 22,
-          fontWeight: FontWeight.w400,
-        ),
       ),
       subtitle: banco.acronimo != null ? Text(banco.nome) : null,
     );

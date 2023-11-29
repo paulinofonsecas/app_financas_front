@@ -51,6 +51,7 @@ class DbBancoProvider implements IBancoProvider {
       Banco(
         id: 3,
         nome: 'Banco de Fomento de Angola',
+        acronimo: 'BFA',
       ),
       Banco(
         id: 4,
