@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/create_conta_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,9 @@ class _CreateContaPageState extends State<CreateContaPage> {
         ),
         BlocProvider(
           create: (context) => locator<InstituicaoFinanceiraCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<TipoContaCubit>(),
         ),
       ],
       child: const CreateContaView(),

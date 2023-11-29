@@ -12,6 +12,7 @@ import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_mov
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
@@ -77,4 +78,6 @@ Future<void> dependencyInitialize() async {
       () => MovimentosByContaCubit(locator()));
   locator.registerLazySingleton<InstituicaoFinanceiraCubit>(
       () => InstituicaoFinanceiraCubit(locator()));
+  locator.registerLazySingleton<TipoContaCubit>(
+      () => TipoContaCubit());
 }

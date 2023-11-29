@@ -10,6 +10,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../bottom_sheets/tipo_conta_bottom_sheet.dart';
 import 'color_picker_widget.dart';
 
 class CreateContaBody extends StatelessWidget {
@@ -213,7 +214,21 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
           );
         }
 
-        return const SizedBox();
+        return ListTile(
+          onTap: () {
+            InstitFinBottomSheet.openModalBottomSheet(context: context);
+          },
+          title: const Text(
+            'Instituição financeira',
+          ),
+          leading: const Icon(
+            FontAwesomeIcons.building,
+          ),
+          trailing: const Icon(
+            FontAwesomeIcons.chevronRight,
+            size: 16,
+          ),
+        );
       },
     );
   }
@@ -249,7 +264,9 @@ class _TipoContaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        TipoContaBottomSheet.openModalBottomSheet(context: context);
+      },
       title: const Text(
         'Tipo de conta',
       ),
