@@ -207,7 +207,9 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
           banco = state.banco;
 
           return ListTile(
-            onTap: () {},
+            onTap: () {
+              InstitFinBottomSheet.openModalBottomSheet(context: context);
+            },
             title: Text(
               banco.acronimo ?? banco.nome,
               style: GoogleFonts.inter(

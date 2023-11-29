@@ -102,6 +102,7 @@ class BancoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading:
           banco.imgAsset != null ? SvgPicture.asset(banco.imgAsset!) : null,
       title: Text(
