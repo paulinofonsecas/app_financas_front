@@ -42,7 +42,7 @@ class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
 
       var conta = Conta(
         id: 0,
-        saldo: saldo,
+        saldo: 0,
         saldoInicial: saldo,
         nome: nome,
         descricao: descricao,
