@@ -23,11 +23,36 @@ class ContaMonstDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: conta.color,
+          brightness: Theme.of(context).brightness,
+        ),
+      ),
+      child: ContentView(
+        conta: conta,
+      ),
+    );
+  }
+}
+
+class ContentView extends StatelessWidget {
+  const ContentView({
+    super.key,
+    required this.conta,
+  });
+
+  final Conta conta;
+
+  @override
+  Widget build(BuildContext context) {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor:
-          isDarkMode ? Theme.of(context).colorScheme.shadow : kVerdeColor,
+      backgroundColor: isDarkMode
+          ? Theme.of(context).colorScheme.shadow
+          : Theme.of(context).primaryColor,
       body: SafeArea(
         bottom: false,
         child: BlocBuilder<ContaBloc, GContaState>(

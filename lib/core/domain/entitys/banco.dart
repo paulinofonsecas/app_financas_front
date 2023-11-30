@@ -20,8 +20,8 @@ class Banco {
     };
   }
 
-  factory Banco.fake() {
-    return Banco(id: -1, nome: '', acronimo: '', imgAsset: '');
+  factory Banco.fake([int id = 1]) {
+    return Banco(id: id, nome: '', acronimo: '', imgAsset: '');
   }
 
   factory Banco.fromMap(Map<dynamic, dynamic> map) {

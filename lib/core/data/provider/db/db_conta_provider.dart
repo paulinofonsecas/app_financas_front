@@ -1,6 +1,8 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -13,9 +15,10 @@ import '../interfaces/i_contas_provider.dart';
 
 class DbContaProvider implements IContaProvider {
   final IMovimentoProvider movimentoProvider;
+  final IBancoProvider _bancoProvider;
   late Box<Map<dynamic, dynamic>> _contas;
 
-  DbContaProvider(this.movimentoProvider);
+  DbContaProvider(this.movimentoProvider, this._bancoProvider);
 
   Future<void> initDb() async {
     _contas = await Hive.openBox(kContasBox);
@@ -57,6 +60,7 @@ class DbContaProvider implements IContaProvider {
     for (var conta in contas) {
       var saldoResult = await _getSaldo(conta.id, mes);
       List<int> totalMovimentos = await _getTotalMovimentos(conta.id);
+      var banco = await _getBanco(conta.banco.id);
 
       if (saldoResult.isLeft()) {
         return Left(Failure('Erro ao processar o saldo da conta'));
@@ -65,6 +69,7 @@ class DbContaProvider implements IContaProvider {
           saldo: saldoResult.getOrElse(() => 0.0),
           totalDespesas: totalMovimentos.first,
           totalReceitas: totalMovimentos.last,
+          banco: banco,
         );
         saida.add(conta);
       }
@@ -82,6 +87,7 @@ class DbContaProvider implements IContaProvider {
         saldoInicial: 0.0,
         totalDespesas: 0,
         totalReceitas: 0,
+        banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
         descricao: 'Conta de gastos diversos',
         color: Colors.orangeAccent,
@@ -93,6 +99,7 @@ class DbContaProvider implements IContaProvider {
         saldoInicial: 0.0,
         totalDespesas: 0,
         totalReceitas: 0,
+        banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
         descricao: 'Conta de gastos diversos',
         color: Colors.greenAccent,
@@ -104,6 +111,7 @@ class DbContaProvider implements IContaProvider {
         saldoInicial: 0.0,
         totalDespesas: 0,
         totalReceitas: 0,
+        banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
         descricao: 'Conta de gastos diversos',
         color: Colors.brown,
@@ -115,6 +123,7 @@ class DbContaProvider implements IContaProvider {
         saldoInicial: 0.0,
         totalDespesas: 0,
         totalReceitas: 0,
+        banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
         descricao: 'Conta de gastos diversos',
         color: Colors.blueAccent,
@@ -137,14 +146,24 @@ class DbContaProvider implements IContaProvider {
     } else {
       var conta = Conta.fromMap(data.cast<String, dynamic>());
       var saldoResult = await _getSaldo(id);
+      var banco = await _getBanco(conta.banco.id);
 
       if (saldoResult.isLeft()) {
         return Left(Failure('Saldo inválido'));
       } else {
-        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+        conta = conta.copyWith(
+          saldo: saldoResult.getOrElse(() => 0.0),
+          banco: banco,
+        );
       }
       return Right(conta);
     }
+  }
+
+  Future<Banco> _getBanco(int id) async {
+    await _bancoProvider.listBancos();
+    var result = await _bancoProvider.getBanco(id);
+    return result.getOrElse(() => Banco.fake());
   }
 
   Future<Either<Failure, double>> _getSaldo(int contaId, [int? mes]) async {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorPickerWidget extends StatelessWidget {
-  const ColorPickerWidget({super.key});
+  const ColorPickerWidget({super.key, this.defaultColor = Colors.blue});
+
+  final Color defaultColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,28 @@ class ColorPickerWidget extends StatelessWidget {
 
     return BlocBuilder<CreateContaThemeCubit, CreateContaThemeState>(
       buildWhen: (previous, current) {
-        return previous.color != current.color &&
-            current is CreateContaThemeChanged;
+        return previous != current && current is CreateContaThemeChanged;
       },
       builder: (context, state) {
+        if (state is CreateContaThemeChanged) {
+          return Row(
+            children: colors
+                .map((e) => _ColorItem(
+                      color: e,
+                      isSelected: state.color == e,
+                      onTap: () {
+                        context.read<CreateContaThemeCubit>().changeColor(e);
+                      },
+                    ))
+                .toList(),
+          );
+        }
+
         return Row(
           children: colors
               .map((e) => _ColorItem(
                     color: e,
-                    isSelected: state.color == e,
+                    isSelected: defaultColor == e,
                     onTap: () {
                       context.read<CreateContaThemeCubit>().changeColor(e);
                     },

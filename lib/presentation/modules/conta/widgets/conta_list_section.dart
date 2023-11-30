@@ -97,7 +97,7 @@ class _ContentBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).push(
                   CreateContaPage.route(),
                 );

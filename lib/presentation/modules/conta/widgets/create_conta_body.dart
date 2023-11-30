@@ -1,15 +1,23 @@
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/banco.dart';
-import 'package:app_financas/presentation/components/default_action_button.dart';
-import 'package:app_financas/presentation/components/default_money_textfield.dart';
-import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
-import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_inicial_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
+import 'package:app_financas/presentation/components/default_action_button.dart';
+import 'package:app_financas/presentation/components/default_money_textfield.dart';
+import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+
+import '../bottom_sheets/tipo_conta_bottom_sheet.dart';
 import 'color_picker_widget.dart';
 
 class CreateContaBody extends StatelessWidget {
@@ -19,18 +27,25 @@ class CreateContaBody extends StatelessWidget {
   Widget build(BuildContext context) {
     var isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark
-          ? Theme.of(context).colorScheme.shadow
-          : Theme.of(context).primaryColor,
-      body: const SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _HeaderWidget(),
-            _SaldoTextFieldWidget(),
-            _MainContentWidget(),
-          ],
+    return BlocListener<CreateContaBloc, CreateContaState>(
+      listener: (context, state) {
+        if (state is CreateContaSuccess) {
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: isDark
+            ? Theme.of(context).colorScheme.shadow
+            : Theme.of(context).primaryColor,
+        body: const SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              _HeaderWidget(),
+              _SaldoTextFieldWidget(),
+              _MainContentWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -124,14 +139,23 @@ class _SaldoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultMoneyTextField(
-      controller: TextEditingController(),
-      onChanged: (value) {},
+      onChanged: (value) {
+        context.read<SaldoInicialTextCubit>().onTextChange(value);
+      },
     );
   }
 }
 
-class _MainContentWidget extends StatelessWidget {
+class _MainContentWidget extends StatefulWidget {
   const _MainContentWidget();
+
+  @override
+  State<_MainContentWidget> createState() => _MainContentWidgetState();
+}
+
+class _MainContentWidgetState extends State<_MainContentWidget> {
+  // final TextEditingController descricaoController = TextEditingController();
+  final TextEditingController nomeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +178,14 @@ class _MainContentWidget extends StatelessWidget {
               children: [
                 const _InstituicaoFinanceiraWidget(),
                 const Divider(),
-                const _DescriptionTextFieldWidget(),
+                _NomeTextFieldWidget(
+                  textController: nomeController,
+                ),
                 const Divider(),
+                // _DescriptionTextFieldWidget(
+                //   textController: descricaoController,
+                // ),
+                // const Divider(),
                 const _TipoContaWidget(),
                 const Divider(),
                 const _CorContaWidget(),
@@ -163,7 +193,14 @@ class _MainContentWidget extends StatelessWidget {
                 const _IncluirNaTelaInicialWidget(),
                 const Divider(),
                 const GutterLarge(),
-                const _BotaoSalvarWidget(),
+                _BotaoSalvarWidget(onTap: () {
+                  var createContaBloc = context.read<CreateContaBloc>();
+
+                  createContaBloc.add(GravarContaEvent(
+                    context: context,
+                    nomeConta: nomeController.text,
+                  ));
+                }),
                 SizedBox(height: heightPadding),
               ],
             ),
@@ -187,7 +224,10 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
         if (state is InstituicaoFinanceiraInitial) {
           return ListTile(
             onTap: () {
-              InstitFinBottomSheet.openModalBottomSheet(context: context);
+              InstitFinBottomSheet.openModalBottomSheet(
+                context: context,
+                cubit: context.read<InstituicaoFinanceiraCubit>(),
+              );
             },
             title: const Text(
               'Instituição financeira',
@@ -207,36 +247,69 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
 
           return BancoListItem(
             onTap: () {
-              InstitFinBottomSheet.openModalBottomSheet(context: context);
+              InstitFinBottomSheet.openModalBottomSheet(
+                context: context,
+                cubit: context.read<InstituicaoFinanceiraCubit>(),
+              );
             },
             banco: banco,
           );
         }
 
-        return const SizedBox();
+        return ListTile(
+          onTap: () {
+            InstitFinBottomSheet.openModalBottomSheet(
+              context: context,
+              cubit: context.read<InstituicaoFinanceiraCubit>(),
+            );
+          },
+          title: const Text(
+            'Instituição financeira',
+          ),
+          leading: const Icon(
+            FontAwesomeIcons.building,
+          ),
+          trailing: const Icon(
+            FontAwesomeIcons.chevronRight,
+            size: 16,
+          ),
+        );
       },
     );
   }
 }
 
-class _DescriptionTextFieldWidget extends StatelessWidget {
-  const _DescriptionTextFieldWidget();
+class _NomeTextFieldWidget extends StatelessWidget {
+  const _NomeTextFieldWidget({
+    Key? key,
+    required this.textController,
+  }) : super(key: key);
+
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      textAlignVertical: TextAlignVertical.center,
-      decoration: InputDecoration(
-        hintText: 'Descrição',
-        hintStyle: GoogleFonts.inter(
-          fontSize: 12,
-          fontWeight: FontWeight.w300,
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0),
+      child: TextField(
+        controller: textController,
+        textAlignVertical: TextAlignVertical.center,
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
         ),
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.zero,
-        prefixIcon: const Icon(
-          FontAwesomeIcons.fileLines,
-          size: 20,
+        decoration: InputDecoration(
+          hintText: 'Nome da conta',
+          hintStyle: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+          prefixIcon: const Icon(
+            FontAwesomeIcons.fileSignature,
+            size: 20,
+          ),
         ),
       ),
     );
@@ -248,18 +321,51 @@ class _TipoContaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {},
-      title: const Text(
-        'Tipo de conta',
-      ),
-      leading: const Icon(
-        FontAwesomeIcons.buildingColumns,
-      ),
-      trailing: const Icon(
-        FontAwesomeIcons.chevronRight,
-        size: 16,
-      ),
+    var cubit = context.read<TipoContaCubit>()..changeTipoConta(1);
+
+    return BlocBuilder<TipoContaCubit, TipoContaState>(
+      bloc: cubit,
+      builder: (context, state) {
+        if (state is TipoContaChanged) {
+          var tipoConta = cubit.getTipoContaById(state.tipoContaId);
+
+          return ListTile(
+            onTap: () {
+              TipoContaBottomSheet.openModalBottomSheet(
+                context: context,
+                cubit: context.read<TipoContaCubit>(),
+              );
+            },
+            title: Text(tipoConta.nome),
+            leading: Icon(
+              tipoConta.icon,
+            ),
+            trailing: const Icon(
+              FontAwesomeIcons.chevronRight,
+              size: 16,
+            ),
+          );
+        }
+
+        return ListTile(
+          onTap: () {
+            TipoContaBottomSheet.openModalBottomSheet(
+              context: context,
+              cubit: cubit,
+            );
+          },
+          title: const Text(
+            'Tipo de conta',
+          ),
+          leading: const Icon(
+            FontAwesomeIcons.buildingColumns,
+          ),
+          trailing: const Icon(
+            FontAwesomeIcons.chevronRight,
+            size: 16,
+          ),
+        );
+      },
     );
   }
 }
@@ -269,11 +375,14 @@ class _CorContaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      title: Text('Cor'),
-      subtitle: ColorPickerWidget(),
-      leading: Icon(FontAwesomeIcons.palette),
-      trailing: Icon(FontAwesomeIcons.chevronRight, size: 16),
+    return BlocProvider(
+      create: (context) => context.read<CreateContaThemeCubit>(),
+      child: const ListTile(
+        title: Text('Cor'),
+        subtitle: ColorPickerWidget(),
+        leading: Icon(FontAwesomeIcons.palette),
+        trailing: Icon(FontAwesomeIcons.chevronRight, size: 16),
+      ),
     );
   }
 }
@@ -283,29 +392,43 @@ class _IncluirNaTelaInicialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {},
-      title: const Text(
-        'Mostrar na tela inicial',
-      ),
-      leading: const Icon(
-        FontAwesomeIcons.circleInfo,
-      ),
-      trailing: Switch(
-        value: true,
-        onChanged: (value) {},
-      ),
+    return BlocBuilder<MostrarNaTelaInicialCubit, MostrarNaTelaInicialState>(
+      builder: (context, state) {
+        return ListTile(
+          onTap: () {
+            context
+                .read<MostrarNaTelaInicialCubit>()
+                .changeMostrarNaTelaicial();
+          },
+          title: const Text(
+            'Mostrar na tela inicial',
+          ),
+          leading: const Icon(
+            FontAwesomeIcons.circleInfo,
+          ),
+          trailing: Switch(
+            value: state.mostrarNaTelaicial,
+            onChanged: (value) {
+              context
+                  .read<MostrarNaTelaInicialCubit>()
+                  .changeMostrarNaTelaicial();
+            },
+          ),
+        );
+      },
     );
   }
 }
 
 class _BotaoSalvarWidget extends StatelessWidget {
-  const _BotaoSalvarWidget();
+  const _BotaoSalvarWidget({required this.onTap});
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return DefaultActionButton(
-      onPressed: () {},
+      onPressed: onTap,
       text: 'Salvar',
     );
   }

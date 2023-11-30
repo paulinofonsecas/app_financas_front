@@ -1,8 +1,11 @@
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_inicial_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/create_conta_body.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/create_conta_theme_cubit.dart';
 
@@ -26,7 +29,19 @@ class _CreateContaPageState extends State<CreateContaPage> {
           create: (context) => CreateContaThemeCubit(),
         ),
         BlocProvider(
-          create: (context) => locator<InstituicaoFinanceiraCubit>(),
+          create: (context) => InstituicaoFinanceiraCubit(locator()),
+        ),
+        BlocProvider(
+          create: (context) => TipoContaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CreateContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SaldoInicialTextCubit(),
+        ),
+        BlocProvider(
+          create: (context) => MostrarNaTelaInicialCubit(),
         ),
       ],
       child: const CreateContaView(),

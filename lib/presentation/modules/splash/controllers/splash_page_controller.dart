@@ -24,6 +24,8 @@ class SplashPageController extends GetxController {
   }
 
   Future<void> init() async {
+    
+    
     isLoading.value = true;
     var categoriaEntradasResult =
         await categoriaService.listValidCategoriasEntradas();

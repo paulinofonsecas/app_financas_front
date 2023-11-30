@@ -48,7 +48,7 @@ class SyncDataService implements ISyncDataService {
     }
 
     print('salvando contas');
-    contaService = DbContaProvider(movimentoService);
+    // contaService = DbContaProvider(movimentoService);
     for (var conta in contas) {
       await contaService.saveConta(conta);
     }
