@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
@@ -12,6 +13,7 @@ class Conta {
   final double saldoInicial;
   final String descricao;
   final TipoConta tipoConta;
+  final Banco banco;
   final Color color;
   final String? iconAsset;
   final int totalDespesas;
@@ -26,6 +28,7 @@ class Conta {
     required this.saldoInicial,
     required this.descricao,
     required this.tipoConta,
+    required this.banco,
     required this.totalDespesas,
     required this.totalReceitas,
     required this.color,
@@ -44,6 +47,7 @@ class Conta {
       totalReceitas: 0,
       descricao: 'Conta fake',
       tipoConta: TipoConta.tipoContas.first,
+      banco: Banco.fake(),
       color: Colors.blue,
       iconAsset: null,
       showInSoma: null,
@@ -58,6 +62,7 @@ class Conta {
     double? saldoInicial,
     String? descricao,
     TipoConta? tipoConta,
+    Banco? banco,
     Color? color,
     int? totalDespesas,
     int? totalReceitas,
@@ -72,6 +77,7 @@ class Conta {
       saldoInicial: saldoInicial ?? this.saldoInicial,
       descricao: descricao ?? this.descricao,
       tipoConta: tipoConta ?? this.tipoConta,
+      banco: banco ?? this.banco,
       color: color ?? this.color,
       totalDespesas: totalDespesas ?? this.totalDespesas,
       totalReceitas: totalReceitas ?? this.totalReceitas,
@@ -89,6 +95,7 @@ class Conta {
       'saldoInicial': saldoInicial,
       'descricao': descricao,
       'tipoConta': tipoConta.id,
+      'banco': banco.id,
       'color': color.value,
       'totalDespesas': totalDespesas,
       'totalReceitas': totalReceitas,
@@ -105,6 +112,7 @@ class Conta {
       saldo: map['saldo'] as double,
       saldoInicial: map['saldoInicial'] as double,
       descricao: map['descricao'] as String,
+      banco: Banco.fake(map['banco'] as int),
       tipoConta: TipoConta.tipoContas
           .firstWhere((element) => element.id == map['tipoConta'] as int),
       color: Color(map['color'] as int),
@@ -136,6 +144,7 @@ class Conta {
         other.saldoInicial == saldoInicial &&
         other.descricao == descricao &&
         other.tipoConta == tipoConta &&
+        other.banco == banco &&
         other.color == color &&
         other.totalDespesas == totalDespesas &&
         other.totalReceitas == totalReceitas &&
@@ -152,6 +161,7 @@ class Conta {
         saldoInicial.hashCode ^
         descricao.hashCode ^
         tipoConta.hashCode ^
+        banco.hashCode ^
         color.hashCode ^
         iconAsset.hashCode ^
         showInSoma.hashCode ^

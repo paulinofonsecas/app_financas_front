@@ -6,11 +6,11 @@ class DefaultMoneyTextField extends StatelessWidget {
   const DefaultMoneyTextField({
     super.key,
     this.onChanged,
-    required this.controller,
+    this.controller,
   });
 
   final Function(String)? onChanged;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {

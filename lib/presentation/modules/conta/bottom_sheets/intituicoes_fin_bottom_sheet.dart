@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/core/domain/entitys/banco.dart';
@@ -14,6 +13,7 @@ class InstitFinBottomSheet extends StatefulWidget {
 
   static Future<dynamic> openModalBottomSheet({
     required BuildContext context,
+    required InstituicaoFinanceiraCubit cubit,
   }) async {
     var size = MediaQuery.of(context).size;
 
@@ -29,7 +29,7 @@ class InstitFinBottomSheet extends StatefulWidget {
       ),
       builder: (BuildContext context) {
         return BlocProvider.value(
-          value: locator<InstituicaoFinanceiraCubit>(),
+          value: cubit,
           child: const InstitFinBottomSheet(),
         );
       },
@@ -41,20 +41,15 @@ class InstitFinBottomSheet extends StatefulWidget {
 }
 
 class _InstitFinBottomSheetState extends State<InstitFinBottomSheet> {
-  late final InstituicaoFinanceiraCubit _instCubit;
-
   @override
   void initState() {
-    _instCubit = locator();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<InstituicaoFinanceiraCubit, InstituicaoFinanceiraState>(
-      bloc: _instCubit..listBancos(),
-      buildWhen: (previous, current) =>
-          current is! InstituicaoFinanceiraSelecionada,
+      bloc: context.read<InstituicaoFinanceiraCubit>()..listBancos(),
       builder: (context, state) {
         if (state is InstituicaoFinanceiraLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -75,7 +70,9 @@ class _InstitFinBottomSheetState extends State<InstitFinBottomSheet> {
               return BancoListItem(
                 banco: bancos[i],
                 onTap: () {
-                  _instCubit.selecionarBanco(bancos[i]);
+                  context
+                      .read<InstituicaoFinanceiraCubit>()
+                      .selecionarBanco(bancos[i]);
                   Navigator.of(context).pop();
                 },
               );

@@ -1,7 +1,9 @@
+import 'package:app_financas/core/data/provider/db/db_banco_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
@@ -45,8 +47,10 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    Get.lazyPut<IBancoProvider>(() => DbBancoProvider(), fenix: true);
+
     // Conta
-    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
+    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find(), Get.find()), fenix: true);
     Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
 
     // Setup

@@ -1,3 +1,4 @@
+import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +9,9 @@ class TipoContaCubit extends Cubit<TipoContaState> {
 
   void changeTipoConta(int tipoContaId) {
     emit(TipoContaChanged(tipoContaId));
+  }
 
-    // TODO: implementar a logica de comunicacao com o BLoC
+  TipoConta getTipoContaById(id) {
+    return TipoConta.tipoContas.firstWhere((element) => element.id == id);
   }
 }

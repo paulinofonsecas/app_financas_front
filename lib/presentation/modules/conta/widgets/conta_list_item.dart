@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,7 +50,7 @@ class ContaListItem extends StatelessWidget {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          title: Text('Deletar conta'),
+          title: Text('Arquivar conta'),
         );
       },
     );
@@ -78,11 +77,20 @@ class _ContaItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          conta.iconAsset != null
-              ? SvgPicture.asset('teste')
+          conta.banco.imgAsset != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(90),
+                  child: Image.asset(
+                    conta.banco.imgAsset!,
+                    width: 32,
+                    height: 32,
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const Icon(
-                  FontAwesomeIcons.moneyBill,
+                  FontAwesomeIcons.building,
                   color: kVerdeAccentColor,
+                  size: 20,
                 ),
           const Gutter(),
           Expanded(

@@ -10,8 +10,10 @@ import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -54,8 +56,8 @@ Future<void> dependencyInitialize() async {
       () => MovimentoService(provider: locator()));
 
   // Conta
-  locator
-      .registerLazySingleton<IContaProvider>(() => DbContaProvider(locator()));
+  locator.registerLazySingleton<IContaProvider>(
+      () => DbContaProvider(locator(), locator()));
   locator.registerLazySingleton<IContaService>(() => ContaService(locator()));
 
   // saldos
@@ -76,8 +78,10 @@ Future<void> dependencyInitialize() async {
       () => ChangeTipoMovimentoCubit());
   locator.registerLazySingleton<MovimentosByContaCubit>(
       () => MovimentosByContaCubit(locator()));
-  locator.registerLazySingleton<InstituicaoFinanceiraCubit>(
+  locator.registerFactory<InstituicaoFinanceiraCubit>(
       () => InstituicaoFinanceiraCubit(locator()));
-  locator.registerLazySingleton<TipoContaCubit>(
-      () => TipoContaCubit());
+  locator.registerFactory<CreateContaThemeCubit>(() => CreateContaThemeCubit());
+  locator.registerFactory<CreateContaBloc>(() => CreateContaBloc());
+  locator.registerFactory<SaldoInicialTextCubit>(() => SaldoInicialTextCubit());
+  locator.registerFactory<TipoContaCubit>(() => TipoContaCubit());
 }
