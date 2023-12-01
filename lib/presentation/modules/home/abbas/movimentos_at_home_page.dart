@@ -37,26 +37,27 @@ class MovimentosAtHomePage extends StatelessWidget {
         ),
         Gutter(),
         Column(
-          children: movimentos
-              .map(
-                (movimento) => MovimentoItem(
-                  onTap: () {
-                    if (movimento.categoriaMovimentoId == 303030) return;
-                    customShowModalBottomSheet(
-                      context,
-                      child: ShowTransactionPage(movimento: movimento),
-                    ).then((value) => controller.update(['geral']));
-                  },
-                  movimento: movimento,
-                  asset: 'assets/svgs/categories/desktop.svg',
-                  title: movimento.descricao,
-                  conta: 'Tecnologia',
-                  valor: movimento.valor,
-                  tipoMovimentoId: movimento.tipoMovimentoId,
-                  avatarBgColor: kAmarelhoColor,
-                ),
-              )
-              .toList(),
+          children: movimentos.map(
+            (movimento) {
+              return MovimentoItem(
+                onTap: () {
+                  if (movimento.categoriaMovimentoId == 303030) return;
+                  if (movimento.categoriaMovimentoId == 303040) return;
+                  customShowModalBottomSheet(
+                    context,
+                    child: ShowTransactionPage(movimento: movimento),
+                  ).then((value) => controller.update(['geral']));
+                },
+                movimento: movimento,
+                asset: 'assets/svgs/categories/desktop.svg',
+                title: movimento.descricao,
+                conta: 'Tecnologia',
+                valor: movimento.valor,
+                tipoMovimentoId: movimento.tipoMovimentoId,
+                avatarBgColor: kAmarelhoColor,
+              );
+            },
+          ).toList(),
         ),
         SizedBox(height: kDefaultPadding * 2),
       ],

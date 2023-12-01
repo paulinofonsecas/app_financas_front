@@ -99,6 +99,10 @@ class DbMovimentoProvider implements IMovimentoProvider {
         categoria = Categoria.ajuste(mov.tipoMovimentoId);
       }
 
+      if (mov.categoriaMovimentoId == 303040) {
+        categoria = Categoria.ajuste(mov.tipoMovimentoId);
+      }
+
       saida.add(mov.copyWith(categoria: categoria));
     }
 

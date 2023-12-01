@@ -2,6 +2,7 @@ import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
@@ -16,6 +17,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
 
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
+import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +44,12 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (c) => locator<ReajustarSaldoCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => CreateContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ContaMostrarNaTelaInicialCubit(),
         ),
       ],
       child: DevicePreview(
@@ -85,7 +93,6 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),

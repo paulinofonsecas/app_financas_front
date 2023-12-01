@@ -16,7 +16,7 @@ class ContaService implements IContaService {
   }
 
   @override
-  Future<Either<Failure, bool>> saveConta(Conta categoria) {
+  Future<Either<Failure, int>> saveConta(Conta categoria) {
     return provider.saveConta(categoria);
   }
 

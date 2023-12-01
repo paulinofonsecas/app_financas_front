@@ -131,7 +131,10 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     var result = await movimentoService.listPaginatedMovimentos(page, pageSize);
 
     if (result is Right) {
-      return result.getOrElse(() => []);
+      return result
+          .getOrElse(() => [])
+          .where((element) => element.categoriaMovimentoId < 3030)
+          .toList();
     } else {
       return null;
     }
@@ -149,7 +152,10 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     );
 
     if (result is Right) {
-      return result.getOrElse(() => []);
+      return result
+          .getOrElse(() => [])
+          .where((element) => element.categoriaMovimentoId < 3030)
+          .toList();
     } else {
       return null;
     }
@@ -163,10 +169,12 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
         ..sort((a, b) => a.data.compareTo(b.data));
       list = list.reversed.toList();
       if (list.length > 10) {
-        return list.sublist(0, 6);
-      } else {
-        return list;
+        list = list.sublist(0, 6);
       }
+
+      return list
+          .where((element) => element.categoriaMovimentoId < 3030)
+          .toList();
     } else {
       return [];
     }

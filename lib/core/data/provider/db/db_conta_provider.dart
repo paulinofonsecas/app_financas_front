@@ -25,7 +25,7 @@ class DbContaProvider implements IContaProvider {
   }
 
   @override
-  Future<Either<Failure, bool>> saveConta(
+  Future<Either<Failure, int>> saveConta(
     Conta conta,
   ) async {
     try {
@@ -35,9 +35,9 @@ class DbContaProvider implements IContaProvider {
       conta = conta.copyWith(id: lastId);
       var map = conta.toMap();
       await _contas.put(lastId, map);
-      return const Right(true);
+      return Right(lastId);
     } catch (e) {
-      return const Right(false);
+      return const Right(-1);
     }
   }
 
@@ -101,31 +101,19 @@ class DbContaProvider implements IContaProvider {
         totalReceitas: 0,
         banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de gastos diversos',
-        color: Colors.greenAccent,
-      ),
-      Conta(
-        id: 3,
-        nome: 'Poupança',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de gastos diversos',
+        descricao: 'Conta salarial',
         color: Colors.brown,
       ),
       Conta(
-        id: 4,
-        nome: 'Outros',
+        id: 3,
+        nome: 'Pupança',
         saldo: 0.0,
         saldoInicial: 0.0,
         totalDespesas: 0,
         totalReceitas: 0,
         banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de gastos diversos',
+        descricao: 'Conta de pupança à curto prazo',
         color: Colors.blueAccent,
       ),
     ];

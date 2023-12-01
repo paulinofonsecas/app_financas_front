@@ -26,3 +26,12 @@ class CalcularSaldoMensalEvent extends ContaEvent {
   @override
   List<Object> get props => [mes];
 }
+
+class ChangeViewSaldoInHomePage extends ContaEvent {
+  final Conta conta;
+
+  const ChangeViewSaldoInHomePage(this.conta);
+
+  @override
+  List<Object> get props => [conta];
+}

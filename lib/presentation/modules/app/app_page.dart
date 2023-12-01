@@ -179,9 +179,9 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            CupertinoIcons.settings,
+            FontAwesomeIcons.ellipsis,
           ),
-          label: 'Settings',
+          label: 'Mais',
         ),
       ],
     );

@@ -59,6 +59,15 @@ class Categoria {
     );
   }
 
+  factory Categoria.saldoInicial(int tipoMovimentoId) {
+    return Categoria(
+      id: 303040,
+      name: 'Saldo inicial',
+      color: tipoMovimentoId == 1 ? Colors.green : Colors.red,
+      icon: FontAwesomeIcons.digitalOcean,
+    );
+  }
+
   Categoria copyWith({
     int? id,
     String? name,
