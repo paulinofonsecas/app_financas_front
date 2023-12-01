@@ -27,7 +27,7 @@ class _SettingPageState extends State<SettingPage> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: LimparDadosWidget(),
-                )
+                ),
               ],
             ),
           ),
