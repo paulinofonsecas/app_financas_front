@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -127,68 +128,123 @@ class _ContaDetailsContent extends StatelessWidget {
             _MainInfoWidget(conta: conta),
             const GutterLarge(),
             const Gutter(),
-            Row(
-              children: [
-                Expanded(
-                  child: _ContaInforWidget(
-                    icon: Icon(conta.tipoConta.icon, size: 18),
-                    title: 'Tipo da conta',
-                    subtitle: conta.tipoConta.nome,
-                  ),
-                ),
-                const Gutter(),
-                Expanded(
-                  child: _ContaInforWidget(
-                    icon: const Icon(FontAwesomeIcons.genderless),
-                    title: 'Saldo inicial',
-                    subtitle: numberFormat.format(conta.saldoInicial),
-                  ),
-                ),
-              ],
-            ),
+            _FirstRowWidget(conta: conta),
             const GutterLarge(),
-            Row(
-              children: [
-                Expanded(
-                  child: _ContaInforWidget(
-                    icon: const Icon(
-                      CupertinoIcons.sort_down,
-                      color: kVermelhaColor,
-                    ),
-                    title: 'Qtd de despesas',
-                    subtitleColor: kVermelhaColor,
-                    subtitle: '${conta.totalDespesas} despesas',
-                  ),
-                ),
-                const Gutter(),
-                Expanded(
-                  child: _ContaInforWidget(
-                    icon: const Icon(
-                      CupertinoIcons.sort_up,
-                      color: kVerdeColor,
-                    ),
-                    title: 'Qtd de receitas',
-                    subtitleColor: kVerdeColor,
-                    subtitle: '${conta.totalReceitas} receitas',
-                  ),
-                ),
-              ],
-            ),
+            _SecondRow(conta: conta),
             const GutterLarge(),
-            // SwitchListTile(
-            //   value: true,
-            //   onChanged: (v) {},
-            //   activeColor: kVerdeColor,
-            //   title: Text(
-            //     'Mostrar na tela inicial',
-            //     style: GoogleFonts.inter(
-            //       fontWeight: FontWeight.w600,
-            //     ),
-            //   ),
-            // ),
+            _MostrarNaTelaInicialWidget(conta: conta)
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MostrarNaTelaInicialWidget extends StatelessWidget {
+  const _MostrarNaTelaInicialWidget({required this.conta});
+
+  final Conta conta;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ContaMostrarNaTelaInicialCubit,
+        ContaMostrarNaTelaInicialState>(
+      bloc: context.read<ContaMostrarNaTelaInicialCubit>()..revelState(conta),
+      buildWhen: (prev, state) => prev.value != state.value,
+      builder: (context, state) {
+        return ListTile(
+          onTap: () {
+            context
+                .read<ContaMostrarNaTelaInicialCubit>()
+                .changeMostrarNaTelaicial(conta);
+          },
+          title: const Text(
+            'Mostrar na tela inicial',
+          ),
+          leading: const Icon(
+            FontAwesomeIcons.circleInfo,
+          ),
+          trailing: Switch(
+            value: state.value,
+            onChanged: (value) {
+              context
+                  .read<ContaMostrarNaTelaInicialCubit>()
+                  .changeMostrarNaTelaicial(conta);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _SecondRow extends StatelessWidget {
+  const _SecondRow({
+    required this.conta,
+  });
+
+  final Conta conta;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _ContaInforWidget(
+            icon: const Icon(
+              CupertinoIcons.sort_down,
+              color: kVermelhaColor,
+            ),
+            title: 'Qtd de despesas',
+            subtitleColor: kVermelhaColor,
+            subtitle: '${conta.totalDespesas} despesas',
+          ),
+        ),
+        const Gutter(),
+        Expanded(
+          child: _ContaInforWidget(
+            icon: const Icon(
+              CupertinoIcons.sort_up,
+              color: kVerdeColor,
+            ),
+            title: 'Qtd de receitas',
+            subtitleColor: kVerdeColor,
+            subtitle: '${conta.totalReceitas} receitas',
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _FirstRowWidget extends StatelessWidget {
+  const _FirstRowWidget({
+    super.key,
+    required this.conta,
+  });
+
+  final Conta conta;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _ContaInforWidget(
+            icon: Icon(conta.tipoConta.icon, size: 18),
+            title: 'Tipo da conta',
+            subtitle: conta.tipoConta.nome,
+          ),
+        ),
+        const Gutter(),
+        Expanded(
+          child: _ContaInforWidget(
+            icon: const Icon(FontAwesomeIcons.genderless),
+            title: 'Saldo inicial',
+            subtitle: numberFormat.format(conta.saldoInicial),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/view/create_conta_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,6 +42,15 @@ class ContaListSection extends StatelessWidget {
         BlocListener<CreateContaBloc, CreateContaState>(
           listener: (context, state) {
             if (state is CreateContaSuccess) {
+              context
+                  .read<ContaBloc>()
+                  .add(ListarContasAtEvent(DateTime.now().month));
+            }
+          },
+        ),
+        BlocListener<ContaMostrarNaTelaInicialCubit, ContaMostrarNaTelaInicialState>(
+          listener: (context, state) {
+            if (state is ContaMostrarNaTelaChanged) {
               context
                   .read<ContaBloc>()
                   .add(ListarContasAtEvent(DateTime.now().month));

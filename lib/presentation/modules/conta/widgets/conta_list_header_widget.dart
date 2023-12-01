@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -36,6 +37,16 @@ class ContaListHeaderWidget extends StatelessWidget {
         BlocListener<CreateContaBloc, CreateContaState>(
           listener: (context, state) {
             if (state is CreateContaSuccess) {
+              context
+                  .read<ContaBloc>()
+                  .add(ListarContasAtEvent(DateTime.now().month));
+            }
+          },
+        ),
+        BlocListener<ContaMostrarNaTelaInicialCubit,
+            ContaMostrarNaTelaInicialState>(
+          listener: (context, state) {
+            if (state is ContaMostrarNaTelaChanged) {
               context
                   .read<ContaBloc>()
                   .add(ListarContasAtEvent(DateTime.now().month));

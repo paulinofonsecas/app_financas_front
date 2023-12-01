@@ -51,3 +51,11 @@ final class CalcularSaldoMensalSuccess extends GContaState {
 
 final class CalcularSaldoMensalEmpty extends GContaState {}
 // end calcular saldo mensal
+
+// change mostrar saldo na tela incial
+
+final class ChangeViewSaldoInHomePageState extends GContaState {}
+
+final class ChangeViewSaldoInHomePageSuccess extends ChangeViewSaldoInHomePageState {}
+
+final class ChangeViewSaldoInHomePageError extends ChangeViewSaldoInHomePageState {}

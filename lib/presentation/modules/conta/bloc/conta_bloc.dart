@@ -20,6 +20,7 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
     on<ListarContasEvent>(_onListarContas);
     on<ListarContasAtEvent>(_onListarContasAt);
     on<CalcularSaldoMensalEvent>(_onCalcularSaldoMensal);
+    on<ChangeViewSaldoInHomePage>(_onChangeViewSaldoInHomePage);
   }
 
   _onListarContas(event, emit) async {
@@ -78,6 +79,18 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
       emit(
         CalcularSaldoMensalError(),
       );
+    }
+  }
+
+  _onChangeViewSaldoInHomePage(event, emit) async {
+    var conta = event.conta;
+
+    var result = await contaService.updateConta(conta);
+
+    if (result is Right) {
+      emit(ChangeViewSaldoInHomePageSuccess());
+    } else {
+      emit(ChangeViewSaldoInHomePageError());
     }
   }
 }
