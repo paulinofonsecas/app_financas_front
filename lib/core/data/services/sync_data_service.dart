@@ -9,7 +9,6 @@ import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:hive/hive.dart';
 
 import '../provider/db/db_categoria_provider.dart';
-import '../provider/db/db_conta_provider.dart';
 import '../provider/interfaces/i_categoria_provider.dart';
 import '../provider/interfaces/i_contas_provider.dart';
 import '../provider/interfaces/i_movimento_provider.dart';

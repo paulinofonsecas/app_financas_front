@@ -1,3 +1,4 @@
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/view/create_conta_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,10 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta_list_item.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
-import '../bloc/conta_bloc.dart';
 import '../cubit/conta_periodo_picker_cubit_cubit.dart';
 import '../view/conta_details.dart';
 
@@ -33,6 +32,15 @@ class ContaListSection extends StatelessWidget {
         BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
           listener: (context, state) {
             if (state is ReajustarSaldoSuccess) {
+              context
+                  .read<ContaBloc>()
+                  .add(ListarContasAtEvent(DateTime.now().month));
+            }
+          },
+        ),
+        BlocListener<CreateContaBloc, CreateContaState>(
+          listener: (context, state) {
+            if (state is CreateContaSuccess) {
               context
                   .read<ContaBloc>()
                   .add(ListarContasAtEvent(DateTime.now().month));

@@ -35,9 +35,6 @@ class _CreateContaPageState extends State<CreateContaPage> {
           create: (context) => TipoContaCubit(),
         ),
         BlocProvider(
-          create: (context) => CreateContaBloc(),
-        ),
-        BlocProvider(
           create: (context) => SaldoInicialTextCubit(),
         ),
         BlocProvider(

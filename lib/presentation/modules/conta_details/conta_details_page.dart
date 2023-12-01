@@ -120,6 +120,7 @@ class _ContaDetailsPageState extends State<ContaDetailsPage> {
                     avatarBgColor: kAmarelhoColor,
                     onTap: () {
                       if (movimento.categoriaMovimentoId == 303030) return;
+                      if (movimento.categoriaMovimentoId == 303040) return;
 
                       customShowModalBottomSheet(
                         context,

@@ -46,8 +46,8 @@ void main() async {
   group('Conta', () {
     test('Deve retornar o saldo de uma conta', () async {
       var newConta = _createConta();
-      var result = (await dbConta.saveConta(newConta)).getOrElse(() => false);
-      expect(result, true);
+      var result = (await dbConta.saveConta(newConta)).getOrElse(() => -1);
+      expect(result, isA<int>());
 
       await movimentoProvider.saveMovimento(Movimento.make(
         id: 1,
@@ -68,11 +68,11 @@ void main() async {
     });
     test('deve retornar a lista de contas', () async {
       var newConta = _createConta();
-      var result0 = (await dbConta.saveConta(newConta)).getOrElse(() => false);
-      expect(result0, true);
+      var result0 = (await dbConta.saveConta(newConta)).getOrElse(() => -1);
+      expect(result0, isA<int>());
 
       var result = await dbConta.listContas();
-      
+
       expect(result, isA<Right>());
       expect(result.getOrElse(() => []), isA<List<Conta>>());
       expect(result.getOrElse(() => []).length, 1);
@@ -196,7 +196,7 @@ Conta _createConta([int id = 1]) {
     totalReceitas: 0,
     descricao: 'Conta fake',
     tipoConta: TipoConta.tipoContas.first,
-    banco:  Banco.fake(),
+    banco: Banco.fake(),
     color: Colors.blue,
     iconAsset: null,
     showInSoma: null,

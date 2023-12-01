@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
@@ -18,8 +20,12 @@ part 'create_conta_state.dart';
 
 class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
   late final IContaService contaService;
+  late final IMovimentoService _movimentoService;
+
   CreateContaBloc() : super(CreateContaInitial()) {
     contaService = locator();
+    _movimentoService = locator();
+
     on<GravarContaEvent>(_onGravarContaEvent);
   }
 
@@ -57,16 +63,28 @@ class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
 
       var result = await contaService.saveConta(conta);
 
-      if (result is Left) {
-        emit(
-          CreateContaError(
-            errorMessage: result.fold((l) => l.toString(), (r) => ''),
-          ),
+      if (result is Right) {
+        var movimentoReajuste = Movimento.make(
+          contaId: result.getOrElse(() => -1),
+          tipoMovimentoId: 1,
+          valor: saldo,
+          data: DateTime.now(),
+          confirmado: true,
+          descricao: 'Saldo inicial',
+          categoriaMovimentoId: 303040,
+          obsMovimento: '',
         );
-        return;
-      }
 
-      emit(CreateContaSuccess(conta));
+        var result0 = await _movimentoService.saveMovimento(movimentoReajuste);
+
+        if (result0 is Right) {
+          emit(CreateContaSuccess(conta));
+        } else {
+          emit(const CreateContaError(errorMessage: 'Erro criar o saldo inicial.'));
+        }
+      } else {
+        emit(const CreateContaError(errorMessage: 'Erro ao criar a conta.'));
+      }
     } catch (e) {
       emit(
         const CreateContaError(
