@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+import '../../conta/bloc/create_conta_bloc.dart';
+import '../../conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import '../../conta/cubit/reajustar_saldo_cubit.dart';
 
 class CarteiraCardSection extends StatefulWidget {
@@ -37,12 +39,31 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
   Widget build(BuildContext context) {
     context.read<ContasCubit>().getContas();
 
-    return BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
-      listener: (context, state) {
-        if (state is ReajustarSaldoSuccess) {
-          context.read<ContasCubit>().getContas();
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ContaMostrarNaTelaInicialCubit,
+            ContaMostrarNaTelaInicialState>(
+          listener: (context, state) {
+            if (state is ContaMostrarNaTelaChanged) {
+              context.read<ContasCubit>().getContas();
+            }
+          },
+        ),
+        BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
+          listener: (context, state) {
+            if (state is ReajustarSaldoSuccess) {
+              context.read<ContasCubit>().getContas();
+            }
+          },
+        ),
+        BlocListener<CreateContaBloc, CreateContaState>(
+          listener: (context, state) {
+            if (state is CreateContaSuccess) {
+              context.read<ContasCubit>().getContas();
+            }
+          },
+        ),
+      ],
       child: GetBuilder(
         init: carteiraController,
         id: 'geral',
@@ -61,7 +82,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
                 }
 
                 if (state is ContasListarContasError) {
-                  return Text('${state.errorMessage}');
+                  return Text('//${state.errorMessage}');
                 }
 
                 if (state is ContasListarContasEmpty) {
