@@ -11,6 +11,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'category_list_item_component.dart';
+import '../../carteira/components/conta_listitem_component.dart';
 import 'register_despesa_header.dart';
 
 class Body extends StatelessWidget {
@@ -118,36 +119,9 @@ class Body extends StatelessWidget {
                       const GutterSmall(),
                       const MyDivider(),
                       const GutterTiny(),
-                      WithIcon(
+                      const WithIcon(
                         icon: Icons.wallet_outlined,
-                        child: GetBuilder(
-                          id: 'conta',
-                          init: controller,
-                          builder: (context) {
-                            return DropdownButton<int>(
-                              value: controller.cartaoId,
-                              isExpanded: true,
-                              onChanged: (int? value) {
-                                if (value == null) {
-                                  return;
-                                }
-                                controller.cartaoId = value;
-                                controller.update(['conta']);
-                              },
-                              borderRadius: BorderRadius.circular(8),
-                              padding:
-                                  const EdgeInsets.all(kDefaultPadding / 4),
-                              hint: const Text('Conta'),
-                              items: controller
-                                  .getCards()
-                                  .map((c) => DropdownMenuItem(
-                                        value: c.id,
-                                        child: Text(c.nome),
-                                      ))
-                                  .toList(),
-                            );
-                          },
-                        ),
+                        child: ContaListItemComponent(),
                       ),
                       const GutterTiny(),
                       const MyDivider(),
