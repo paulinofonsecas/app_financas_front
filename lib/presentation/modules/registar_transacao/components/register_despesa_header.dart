@@ -12,22 +12,25 @@ class RegisterHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     var controller = Get.find<RegistarTransacaoController>();
 
     var size = MediaQuery.of(context).size;
     return GetBuilder(
         init: controller,
         id: 'geral',
-        builder: (context) {
+        builder: (c) {
           return Container(
             padding: const EdgeInsets.all(kDefaultPadding),
             constraints: BoxConstraints(
               minHeight: size.height * .17,
             ),
             decoration: BoxDecoration(
-              color: isReceita(controller.movimentoType)
-                  ? kVerdeColor
-                  : kVermelhaColor,
+              color: isDark
+                  ? Theme.of(context).colorScheme.shadow
+                  : isReceita(controller.movimentoType)
+                      ? kVerdeColor
+                      : kVermelhaColor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,10 +113,11 @@ class SwitchTransactionButton extends StatelessWidget {
         onTap: () {
           controller.switchTransactionType();
         },
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 400),
           padding: const EdgeInsets.symmetric(
-            vertical: kDefaultPadding / 2,
-            horizontal: kDefaultPadding * 1.5,
+            vertical: kDefaultPadding / 3,
+            horizontal: kDefaultPadding,
           ),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(90)),
@@ -132,7 +136,7 @@ class SwitchTransactionButton extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Gutter(),
+              const GutterSmall(),
               const Icon(
                 Icons.sync,
                 color: Colors.white,

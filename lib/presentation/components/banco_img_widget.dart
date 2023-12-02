@@ -15,6 +15,7 @@ class BancoImgCircularWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(30),
       child: Image.asset(
         conta.banco.imgAsset!,
+        fit: BoxFit.cover,
         height: 20,
         width: 20,
       ),

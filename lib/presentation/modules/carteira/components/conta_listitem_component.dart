@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
+import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
+import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,14 +16,47 @@ class ContaListItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SelectContaCubit(),
+      child: const ContaListItemView(),
+    );
+  }
+}
+
+class ContaListItemView extends StatelessWidget {
+  const ContaListItemView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BottomSheetContasWidget.openModalBottomSheet(context);
+        BottomSheetContasWidget.openModalBottomSheet(
+          context,
+          context.read<BottomSheetContaCubit>(),
+          context.read<SelectContaCubit>(),
+        );
       },
       child: Row(
         children: [
-          _ShowContaWidget(
-            conta: Conta.fake(),
+          BlocBuilder<SelectContaCubit, SelectContaState>(
+            bloc: context.read<SelectContaCubit>()..selectDefaultConta(),
+            builder: (context, state) {
+              if (state is SelectContaLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (state is SelectContaError) {
+                return Text('//${state.errorMessage}');
+              }
+
+              if (state is SelectContaSuccess) {
+                return _ShowContaWidget(conta: state.conta);
+              }
+
+              return const SizedBox();
+            },
           ),
           const Spacer(),
           const Icon(Icons.chevron_right),
@@ -42,8 +78,8 @@ class _ShowContaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-        vertical: kDefaultPadding / 2.3,
+        horizontal: kDefaultPadding / 2,
+        vertical: kDefaultPadding / 3,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(90),
