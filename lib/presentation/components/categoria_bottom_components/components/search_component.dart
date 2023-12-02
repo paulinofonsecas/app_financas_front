@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import 'bottom_category_comp_controller.dart';
 
 class SearchComponent extends StatelessWidget {
   const SearchComponent({
     super.key,
+    required this.textController,
+    this.onClearTap,
   });
+
+  final TextEditingController textController;
+  final Function()? onClearTap;
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<BottomCategoryCompController>();
-
     return TextField(
-      controller: controller.searchTextController,
+      controller: textController,
       decoration: InputDecoration(
         hintText: 'Pesquisar',
         prefixIcon: const Icon(Icons.search),
         suffixIcon: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () {
-            controller.searchTextController.clear();
-          },
+          onPressed: onClearTap,
         ),
         hintStyle: const TextStyle(
           color: Colors.grey,

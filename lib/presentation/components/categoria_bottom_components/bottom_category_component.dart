@@ -74,7 +74,12 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
         children: [
           Padding(
             padding: EdgeInsets.all(kDefaultPadding),
-            child: SearchComponent(),
+            child: SearchComponent(
+              textController: controller.searchTextController,
+              onClearTap: () {
+                controller.searchTextController.clear();
+              },
+            ),
           ),
           Gutter(),
           Expanded(
