@@ -1,7 +1,9 @@
+import 'package:app_financas/core/data/provider/db/db_banco_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/http/http_setup_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
@@ -29,9 +31,15 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    
+    // Categoria
+    Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
+    Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
+        fenix: true);
+
     // Movimentos
     Get.lazyPut<IMovimentoProvider>(
-      () => DbMovimentoProvider(),
+      () => DbMovimentoProvider(Get.find()),
       fenix: true,
     );
     Get.lazyPut<IMovimentoService>(
@@ -39,11 +47,17 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    Get.lazyPut<IBancoProvider>(() => DbBancoProvider(), fenix: true);
+
+    // Conta
+    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find(), Get.find()), fenix: true);
+    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
+
+    // Setup
     Get.lazyPut<SetupConfiguration>(
       () => SetupConfiguration.local(),
     );
 
-    // Setup
     Get.lazyPut<ISetupProvider>(
       () => HttpSetupProvider(Get.find()),
       fenix: true,
@@ -53,18 +67,11 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
+    // Saldos
     Get.put<ISaldosService>(
       SaldosService(Get.find()),
       permanent: true,
     );
 
-    // Categoria
-    Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
-    Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
-        fenix: true);
-
-    // Conta
-    Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
-    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
   }
 }

@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/erros/failure.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../interfaces/i_categoria_provider.dart';
@@ -54,23 +55,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, List<Categoria>>> listCategoriasEntradas() async {
-    await initCategoriaEntradasDb();
-    var result = _categoriasEntradaBox.toMap();
-
-    if (result.isEmpty) {
-      var categoriasPadrao = [
-        'Salário',
-        'Horas Extras',
-        'Rendimento',
-        'Devolução',
-        'Outro',
-      ];
-
-      for (var cat in categoriasPadrao) {
-        await saveEntradaCategoria(Categoria(id: -1, name: cat));
-      }
-      return listCategoriasEntradas();
-    }
+    var result = await _getRawCategoriaEntrada();
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
@@ -82,24 +67,87 @@ class DbCategoriaProvider implements ICategoriaProvider {
     return Right(finalResult);
   }
 
-  @override
-  Future<Either<Failure, List<Categoria>>> listCategoriasSaidas() async {
+  Future<Map<dynamic, Map<dynamic, dynamic>>> _getRawCategoriaSaida() async {
     await initCategoriaSaidasDb();
     var result = _categoriasSaidaBox.toMap();
 
     if (result.isEmpty) {
       var categoriasPadrao = [
-        'Pagamento',
-        'Emprestimo',
-        'Outro',
+        Categoria(
+          id: 1,
+          name: 'Casa',
+          icon: Icons.attach_money,
+          color: Colors.green,
+        ),
+        Categoria(
+          id: 2,
+          name: 'Educação',
+          icon: Icons.book,
+          color: Colors.orange,
+        ),
+        Categoria(
+          id: 3,
+          name: 'Lazer',
+          icon: Icons.beach_access,
+          color: Colors.cyan,
+        ),
+        Categoria(
+          id: 4,
+          name: 'Outros',
+          icon: Icons.more_horiz,
+          color: Colors.cyan,
+        ),
       ];
 
       for (var cat in categoriasPadrao) {
-        await saveSaidaCategoria(Categoria(id: -1, name: cat));
+        await saveSaidaCategoria(cat);
       }
 
-      return listCategoriasSaidas();
+      return _getRawCategoriaSaida();
     }
+
+    return result;
+  }
+
+  Future<Map<dynamic, Map<dynamic, dynamic>>> _getRawCategoriaEntrada() async {
+    await initCategoriaEntradasDb();
+    var result = _categoriasEntradaBox.toMap();
+
+    if (result.isEmpty) {
+      var categoriasPadrao = [
+        Categoria(
+          id: 1,
+          name: 'Salário',
+          icon: Icons.attach_money,
+          color: Colors.green,
+        ),
+        Categoria(
+          id: 2,
+          name: 'Rendimento',
+          icon: Icons.construction_sharp,
+          color: Colors.orange,
+        ),
+        Categoria(
+          id: 3,
+          name: 'Outra',
+          icon: Icons.construction_sharp,
+          color: Colors.cyan,
+        ),
+      ];
+
+      for (var categoria in categoriasPadrao) {
+        await saveEntradaCategoria(categoria);
+      }
+
+      return _getRawCategoriaEntrada();
+    }
+
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, List<Categoria>>> listCategoriasSaidas() async {
+    var result = await _getRawCategoriaSaida();
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
@@ -294,24 +342,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
   @override
   Future<Either<Failure, List<Categoria>>>
       listArchivedCategoriasEntradas() async {
-    await initCategoriaEntradasDb();
-    var result = _categoriasEntradaBox.toMap();
-
-    if (result.isEmpty) {
-      var categoriasPadrao = [
-        'Salário',
-        'Horas Extras',
-        'Rendimento',
-        'Devolução',
-        'Outro',
-      ];
-
-      for (var cat in categoriasPadrao) {
-        await saveEntradaCategoria(Categoria(id: -1, name: cat));
-      }
-      return listCategoriasEntradas();
-    }
-
+    var result = await _getRawCategoriaEntrada();
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
         .where((element) => element.isArchived)
@@ -326,26 +357,13 @@ class DbCategoriaProvider implements ICategoriaProvider {
   @override
   Future<Either<Failure, List<Categoria>>>
       listArchivedCategoriasSaidas() async {
-    await initCategoriaSaidasDb();
-    var result = _categoriasSaidaBox.toMap();
-
-    if (result.isEmpty) {
-      var categoriasPadrao = [
-        'Pagamento',
-        'Emprestimo',
-        'Outro',
-      ];
-
-      for (var cat in categoriasPadrao) {
-        await saveSaidaCategoria(Categoria(id: -1, name: cat));
-      }
-      return listCategoriasSaidas();
-    }
+    var result = await _getRawCategoriaSaida();
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
         .where((element) => element.isArchived)
         .toList();
+
     finalResult.sort(
       (a, b) => a.name.compareTo(b.name),
     );
@@ -355,23 +373,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, List<Categoria>>> listValidCategoriasEntradas() async {
-    await initCategoriaEntradasDb();
-    var result = _categoriasEntradaBox.toMap();
-
-    if (result.isEmpty) {
-      var categoriasPadrao = [
-        'Salário',
-        'Horas Extras',
-        'Rendimento',
-        'Devolução',
-        'Outro',
-      ];
-
-      for (var cat in categoriasPadrao) {
-        await saveEntradaCategoria(Categoria(id: -1, name: cat));
-      }
-      return listCategoriasEntradas();
-    }
+    var result = await _getRawCategoriaEntrada();
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))
@@ -386,21 +388,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
 
   @override
   Future<Either<Failure, List<Categoria>>> listValidCategoriasSaidas() async {
-    await initCategoriaSaidasDb();
-    var result = _categoriasSaidaBox.toMap();
-
-    if (result.isEmpty) {
-      var categoriasPadrao = [
-        'Pagamento',
-        'Emprestimo',
-        'Outro',
-      ];
-
-      for (var cat in categoriasPadrao) {
-        await saveSaidaCategoria(Categoria(id: -1, name: cat));
-      }
-      return listCategoriasSaidas();
-    }
+    var result = await _getRawCategoriaSaida();
 
     var finalResult = result.values
         .map((e) => Categoria.fromMap(e.cast<String, dynamic>()))

@@ -1,8 +1,9 @@
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
-import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
+
+import 'presentation/modules/conta/bloc/conta_bloc.dart';
+import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
+import 'presentation/modules/registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +42,18 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => locator<ContaBloc>(),
+        ),
+        BlocProvider(
+          create: (c) => locator<ReajustarSaldoCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => CreateContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ContaMostrarNaTelaInicialCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BottomSheetContaCubit(),
         ),
       ],
       child: DevicePreview(
@@ -80,13 +97,6 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      // builder: (context, widget) {
-      //   return MediaQuery(
-      //     data: MediaQuery.of(context)
-      //         .copyWith(textScaler: const TextScaler.linear(1.0)),
-      //     child: widget!,
-      //   );
-      // },
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),

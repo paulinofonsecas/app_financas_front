@@ -1,9 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/bloc/conta/conta_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'contas_state.dart';
@@ -14,20 +13,20 @@ class ContasCubit extends Cubit<ContasState> {
   ContasCubit() : super(ContasInitial()) {
     _contaBloc = locator();
 
-    _contaBloc.stream.listen((event) {
-      if (event is ListarContasLoading) {
+    _contaBloc.stream.listen((state) {
+      if (state is ListarContasLoading) {
         emit(ContasListarContasLoading());
       }
 
-      if (event is ListarContasSuccess) {
-        emit(ContasListarContasSuccess(event.contas));
+      if (state is ListarContasSuccess) {
+        emit(ContasListarContasSuccess(state.contas));
       }
 
-      if (event is ListarContasError) {
-        emit(ContasListarContasError(errorMessage: event.errorMessage));
+      if (state is ListarContasError) {
+        emit(ContasListarContasError(errorMessage: state.errorMessage));
       }
 
-      if (event is ListarContasEmpty) {
+      if (state is ListarContasEmpty) {
         emit(ContasListarContasEmpty());
       }
     });

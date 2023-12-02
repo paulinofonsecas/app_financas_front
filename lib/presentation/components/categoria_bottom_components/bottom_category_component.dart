@@ -9,7 +9,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 import 'components/categoria_list_component.dart';
-import 'components/search_component.dart';
+import '../search_component.dart';
 import 'components/bottom_category_comp_controller.dart';
 
 class BottomCategoryComponent extends StatefulWidget {
@@ -74,7 +74,12 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
         children: [
           Padding(
             padding: EdgeInsets.all(kDefaultPadding),
-            child: SearchComponent(),
+            child: SearchComponent(
+              textController: controller.searchTextController,
+              onClearTap: () {
+                controller.searchTextController.clear();
+              },
+            ),
           ),
           Gutter(),
           Expanded(

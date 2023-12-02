@@ -11,6 +11,7 @@ import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cu
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:app_financas/presentation/components/escolher_tipo_movimento.dart';
@@ -166,21 +167,21 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.wallet,
+            FontAwesomeIcons.creditCard,
           ),
-          label: 'Carteira',
+          label: 'Contas',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.timeline,
+            FontAwesomeIcons.chartColumn,
           ),
           label: 'Estatisticas',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            CupertinoIcons.settings,
+            FontAwesomeIcons.ellipsis,
           ),
-          label: 'Settings',
+          label: 'Mais',
         ),
       ],
     );

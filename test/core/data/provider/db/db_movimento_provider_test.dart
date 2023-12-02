@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +15,8 @@ void main() async {
 
   setUp(() {
     Hive.init('$path/test/hive_testing_path');
-    dbMovimentosProvider = DbMovimentoProvider();
+    dbMovimentosProvider =
+        DbMovimentoProvider(CategoriaService(DbCategoriaProvider()));
   });
 
   tearDown(() {
@@ -44,7 +47,7 @@ void main() async {
       valor: 15000,
       data: DateTime.now(),
       descricao: 'Compra de auriculares',
-      cartaoId: 1,
+      contaId: 1,
       tipoMovimentoId: 2,
       categoriaMovimentoId: 1,
       obsMovimento: 'Silva porto',
@@ -103,6 +106,33 @@ void main() async {
     expect(result2.descricao, 'Compra de computador');
     expect(result2.tipoMovimentoId, 1);
   });
+
+  group('Quatidade de transacoes', () {
+    test('Deve retornar a zero quantidade de despesas e receitas por conta', () async {
+    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => []), isA<List<int>>());
+    expect(result.getOrElse(() => []).length, 2);
+    expect(result.getOrElse(() => []).first, 0);
+    expect(result.getOrElse(() => []).last, 0);
+  });
+
+  test('Deve retornar a quantidade de despesas e receitas por conta', () async {
+    var movimento = _makeFakeMovimento();
+
+    await dbMovimentosProvider.saveMovimento(movimento);
+    await dbMovimentosProvider.saveMovimento(movimento);
+
+    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => []), isA<List<int>>());
+    expect(result.getOrElse(() => []).length, 2);
+    expect(result.getOrElse(() => []).first, 2);
+    expect(result.getOrElse(() => []).last, 0);
+  });
+  });
 }
 
 Movimento _makeFakeMovimento() {
@@ -111,7 +141,7 @@ Movimento _makeFakeMovimento() {
     valor: 15000,
     data: DateTime.now(),
     descricao: 'Compra de auriculares',
-    cartaoId: 1,
+    contaId: 1,
     tipoMovimentoId: 2,
     categoriaMovimentoId: 1,
     obsMovimento: 'Silva porto',
