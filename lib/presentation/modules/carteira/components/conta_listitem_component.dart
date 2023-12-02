@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
+import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
+import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -8,9 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/banco_img_widget.dart';
-
-import '../../registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
-import '../../registar_transacao/cubit/select_conta_cubit.dart';
 
 class ContaListItemComponent extends StatelessWidget {
   const ContaListItemComponent({super.key});

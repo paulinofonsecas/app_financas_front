@@ -1,11 +1,11 @@
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_conta_cubit.dart';
+import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
+import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'banco_img_widget.dart';
