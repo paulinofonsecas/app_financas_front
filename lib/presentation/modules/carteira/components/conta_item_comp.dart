@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/presentation/components/banco_img_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
@@ -31,7 +33,7 @@ class ContaItem extends StatelessWidget {
             vertical: isActive ? 10 : kDefaultPadding * 1.5,
           ),
           decoration: BoxDecoration(
-            color: isActive
+            color: !isActive
                 ? Theme.of(context).colorScheme.background
                 : Theme.of(context).colorScheme.secondaryContainer,
             boxShadow: isActive
@@ -64,15 +66,30 @@ class ContaItem extends StatelessWidget {
   }
 
   Widget bottomSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           numberFormat.format(conta.saldo),
           style: GoogleFonts.inter(
-            fontSize: 26,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        Row(
+          children: [
+            if (conta.banco.imgAsset != null)
+              BancoImgCircularWidget(conta: conta),
+            const GutterTiny(),
+            Text(
+              conta.banco.acronimo ?? '',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -92,7 +109,7 @@ class ContaItem extends StatelessWidget {
               ),
             ),
             Text(
-              'Hoje, 08 Sept 2023',
+              conta.banco.nome,
               style: GoogleFonts.inter(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
@@ -104,3 +121,4 @@ class ContaItem extends StatelessWidget {
     );
   }
 }
+

@@ -1,25 +1,31 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../interfaces/i_contas_provider.dart';
 
 class DbContaProvider implements IContaProvider {
   final IMovimentoProvider movimentoProvider;
+  final IBancoProvider _bancoProvider;
   late Box<Map<dynamic, dynamic>> _contas;
 
-  DbContaProvider(this.movimentoProvider);
+  DbContaProvider(this.movimentoProvider, this._bancoProvider);
 
   Future<void> initDb() async {
     _contas = await Hive.openBox(kContasBox);
   }
 
   @override
-  Future<Either<Failure, bool>> saveConta(
+  Future<Either<Failure, int>> saveConta(
     Conta conta,
   ) async {
     try {
@@ -29,30 +35,20 @@ class DbContaProvider implements IContaProvider {
       conta = conta.copyWith(id: lastId);
       var map = conta.toMap();
       await _contas.put(lastId, map);
-      return const Right(true);
+      return Right(lastId);
     } catch (e) {
-      return const Right(false);
+      return const Right(-1);
     }
   }
 
   @override
-  Future<Either<Failure, List<Conta>>> listContas() async {
+  Future<Either<Failure, List<Conta>>> listContas([int? mes]) async {
     await initDb();
     var result = _contas.toMap();
 
     if (result.isEmpty) {
-      var contasPadrao = [
-        'Familiar',
-        'Empresa',
-        'Gastos gerais',
-        'Poupanças',
-        'Outro',
-      ];
+      await _generateDefaultAccounts();
 
-      for (var cont in contasPadrao) {
-        await saveConta(Conta(nome: cont, saldo: 0.0, id: -1));
-      }
-      
       return listContas();
     }
 
@@ -62,17 +58,69 @@ class DbContaProvider implements IContaProvider {
         .toList();
 
     for (var conta in contas) {
-      var saldoResult = await _getSaldo(conta.id);
+      var saldoResult = await _getSaldo(conta.id, mes);
+      List<int> totalMovimentos = await _getTotalMovimentos(conta.id);
+      var banco = await _getBanco(conta.banco.id);
 
       if (saldoResult.isLeft()) {
         return Left(Failure('Erro ao processar o saldo da conta'));
       } else {
-        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+        conta = conta.copyWith(
+          saldo: saldoResult.getOrElse(() => 0.0),
+          totalDespesas: totalMovimentos.first,
+          totalReceitas: totalMovimentos.last,
+          banco: banco,
+        );
         saida.add(conta);
       }
     }
 
     return Right(saida);
+  }
+
+  Future<void> _generateDefaultAccounts() async {
+    var contasPadrao = [
+      Conta(
+        id: 1,
+        nome: 'Carteira',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.orangeAccent,
+      ),
+      Conta(
+        id: 2,
+        nome: 'Salário',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta salarial',
+        color: Colors.brown,
+      ),
+      Conta(
+        id: 3,
+        nome: 'Pupança',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de pupança à curto prazo',
+        color: Colors.blueAccent,
+      ),
+    ];
+
+    for (var conta in contasPadrao) {
+      await saveConta(conta);
+    }
   }
 
   @override
@@ -86,20 +134,35 @@ class DbContaProvider implements IContaProvider {
     } else {
       var conta = Conta.fromMap(data.cast<String, dynamic>());
       var saldoResult = await _getSaldo(id);
+      var banco = await _getBanco(conta.banco.id);
 
       if (saldoResult.isLeft()) {
         return Left(Failure('Saldo inválido'));
       } else {
-        conta = conta.copyWith(saldo: saldoResult.getOrElse(() => 0.0));
+        conta = conta.copyWith(
+          saldo: saldoResult.getOrElse(() => 0.0),
+          banco: banco,
+        );
       }
       return Right(conta);
     }
   }
 
-  Future<Either<Failure, double>> _getSaldo(int contaId) async {
-    var result = await movimentoProvider.getSaldo(contaId);
+  Future<Banco> _getBanco(int id) async {
+    await _bancoProvider.listBancos();
+    var result = await _bancoProvider.getBanco(id);
+    return result.getOrElse(() => Banco.fake());
+  }
+
+  Future<Either<Failure, double>> _getSaldo(int contaId, [int? mes]) async {
+    var result = await movimentoProvider.getSaldo(contaId, mes);
 
     return result;
+  }
+
+  Future<List<int>> _getTotalMovimentos(int contaId) async {
+    var result = await movimentoProvider.getTotalMovimentos(contaId);
+    return result.getOrElse(() => [0, 0]);
   }
 
   @override
@@ -113,6 +176,55 @@ class DbContaProvider implements IContaProvider {
       return const Right(true);
     } catch (e) {
       return Left(DbException('Erro ao atualizar conta'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BalancoMensal>> calcularBalancoMensal(
+      int mesIndex) async {
+    if (mesIndex < 1 || mesIndex > 12) {
+      return Left(Failure('Mês inválido'));
+    } else {
+      var result = await movimentoProvider.listMovimentos();
+
+      if (result.isLeft()) {
+        return Left(Failure('Erro ao processar o balanço mensal'));
+      }
+
+      var movimentos = result.getOrElse(() => []);
+
+      var saldoReal = movimentos
+          .where(
+              (element) => element.data.month == mesIndex && element.confirmado)
+          .fold(
+        0.0,
+        (previousValue, element) {
+          if (element.tipoMovimentoId == 1) {
+            return previousValue + element.valor;
+          } else {
+            return previousValue - element.valor;
+          }
+        },
+      );
+
+      var saldoContabilistico =
+          movimentos.where((element) => element.data.month == mesIndex).fold(
+        0.0,
+        (previousValue, element) {
+          if (element.tipoMovimentoId == 1) {
+            return previousValue + element.valor;
+          } else {
+            return previousValue - element.valor;
+          }
+        },
+      );
+
+      return Right(
+        BalancoMensal(
+          saldoReal,
+          saldoContabilistico,
+        ),
+      );
     }
   }
 }

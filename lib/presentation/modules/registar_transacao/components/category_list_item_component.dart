@@ -22,8 +22,8 @@ class CategoryListItemComponent extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding,
-              vertical: kDefaultPadding / 2.3,
+              horizontal: kDefaultPadding / 2,
+              vertical: kDefaultPadding / 3,
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(90),

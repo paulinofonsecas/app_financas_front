@@ -1,10 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
-
+import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
@@ -12,8 +9,27 @@ import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/registar_transacao_controller.dart';
 
-class RegistarTransacao extends StatelessWidget {
-  const RegistarTransacao({
+class RegistarTransacaoPage extends StatelessWidget {
+  const RegistarTransacaoPage({
+    super.key,
+    required this.movimentoType,
+    this.contaId,
+  });
+
+  final int movimentoType;
+  final int? contaId;
+
+  @override
+  Widget build(BuildContext context) {
+    return RegistarTransacaoView(
+      movimentoType: movimentoType,
+      contaId: contaId,
+    );
+  }
+}
+
+class RegistarTransacaoView extends StatelessWidget {
+  const RegistarTransacaoView({
     Key? key,
     required this.movimentoType,
     this.contaId,
@@ -31,70 +47,75 @@ class RegistarTransacao extends StatelessWidget {
     return GetBuilder(
       init: controller,
       id: 'geral',
-      builder: (context) {
-        return Scaffold(
-          backgroundColor: isReceita(controller.movimentoType)
-              ? kVerdeColor
-              : kVermelhaColor,
-          body: SafeArea(
-            bottom: false,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Body(contaId: contaId),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SuspendedButton(),
-                ),
-              ],
+      builder: (c) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor:
+                  controller.movimentoType == 1 ? kVerdeColor : kVermelhaColor,
+              brightness: Theme.of(context).brightness,
             ),
           ),
+          child: Builder(builder: (context) {
+            var isDarkMode = Theme.of(context).brightness == Brightness.dark;
+            return Scaffold(
+              backgroundColor: isDarkMode
+                  ? Theme.of(context).colorScheme.shadow
+                  : isReceita(controller.movimentoType)
+                      ? kVerdeColor
+                      : kVermelhaColor,
+              body: SafeArea(
+                bottom: false,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Body(contaId: contaId),
+                    _BuildActionButton(
+                      movimentoType: controller.movimentoType,
+                      controller: controller,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
         );
       },
     );
   }
 }
 
-class SuspendedButton extends StatelessWidget {
-  const SuspendedButton({super.key});
+class _BuildActionButton extends StatelessWidget {
+  const _BuildActionButton({
+    required this.movimentoType,
+    required this.controller,
+  });
+
+  final int movimentoType;
+  final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<RegistarTransacaoController>();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        OutlinedButton(
-          onPressed: () async {
-            await controller.finalizarMovimento();
-            if (controller.salvo) {
-              Get.back(closeOverlays: true);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: Get.size.width / 6,
-              vertical: 20,
-            ),
-            backgroundColor: isReceita(controller.movimentoType)
-                ? kVerdeForteColor
-                : kVermelhaForteColor,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DefaultActionButton(
+            text: 'Salvar',
+            backgroundColor:
+                movimentoType == 1 ? kVerdeForteColor : kVermelhaForteColor,
             foregroundColor: Colors.white,
-            side: BorderSide(
-              color: isReceita(controller.movimentoType)
-                  ? kVerdeForteColor
-                  : kVermelhaForteColor,
-            ),
+            onPressed: () async {
+              await controller.finalizarMovimento();
+              if (controller.salvo) {
+                Get.back(closeOverlays: true);
+              }
+            },
           ),
-          child: Text(
-            'Salvar',
-            style: GoogleFonts.inter().copyWith(
-              fontSize: 16,
-            ),
-          ),
-        ),
-        GutterLarge(),
-      ],
+          const GutterLarge(),
+        ],
+      ),
     );
   }
 }

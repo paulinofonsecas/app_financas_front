@@ -40,7 +40,6 @@ class EditTransactionPage extends StatelessWidget {
               ? kVerdeColor
               : kVermelhaColor,
           body: SafeArea(
-            bottom: false,
             child: Stack(
               fit: StackFit.expand,
               children: [

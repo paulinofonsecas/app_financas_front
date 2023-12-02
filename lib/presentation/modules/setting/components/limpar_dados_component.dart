@@ -15,12 +15,13 @@ class LimparDadosWidget extends StatelessWidget {
     await Hive.deleteBoxFromDisk(kContasBox);
     await Hive.deleteBoxFromDisk(kCategoriasEntradaBox);
     await Hive.deleteBoxFromDisk(kCategoriasSaidaBox);
+    await Hive.deleteBoxFromDisk(kBancoBox);
   }
 
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      icon: Icon(Icons.warning),
+      icon: const Icon(Icons.warning),
       onPressed: () {
         showDialog(
           context: context,
