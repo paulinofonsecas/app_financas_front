@@ -44,7 +44,7 @@ Future<void> main() async {
           create: (context) => locator<ContaBloc>(),
         ),
         BlocProvider(
-          create: (c) => locator<ReajustarSaldoCubit>(),
+          create: (c)       => locator<ReajustarSaldoCubit>(),
         ),
         BlocProvider(
           create: (context) => CreateContaBloc(),
