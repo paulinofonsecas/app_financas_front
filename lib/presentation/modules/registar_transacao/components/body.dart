@@ -118,12 +118,12 @@ class Body extends StatelessWidget {
                       ),
                       const GutterSmall(),
                       const MyDivider(),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const WithIcon(
                         icon: Icons.wallet_outlined,
                         child: ContaListItemComponent(),
                       ),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const MyDivider(),
                       const GutterTiny(),
                       WithIcon(

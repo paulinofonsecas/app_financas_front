@@ -5,28 +5,33 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'bottom_sheet_conta_state.dart';
+part 'select_conta_state.dart';
 
-class BottomSheetContaCubit extends Cubit<BottomSheetContaState> {
-  late final IContaService _contaService;
-
-  BottomSheetContaCubit() : super(BottomSheetContaInitial()) {
+class SelectContaCubit extends Cubit<SelectContaState> {
+  SelectContaCubit() : super(SelectContaInitial()) {
     _contaService = locator();
   }
 
-  void listContas() async {
-    emit(ListarContasLoading());
+  late final IContaService _contaService;
+
+  void selectDefaultConta() async {
+    emit(SelectContaLoading());
 
     var result = await _contaService.listContas();
 
     if (result is Right) {
-      emit(ListarContasSuccess(result.getOrElse(() => [])));
+      emit(SelectContaSuccess(result.getOrElse(() => []).first));
     } else {
       emit(
-        const ListarContasError(
-          errorMessage: 'Ocorreu um erro ao carregar as contas',
+        const SelectContaError(
+          errorMessage: 'Ocorreu um erro a carregar a conta',
         ),
       );
     }
   }
+
+  void selectConta(Conta conta) {
+    emit(SelectContaSuccess(conta));
+  }
+
 }

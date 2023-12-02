@@ -10,9 +10,22 @@ import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/banco_img_widget.dart';
 
 import '../../registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
+import '../../registar_transacao/cubit/select_conta_cubit.dart';
 
 class ContaListItemComponent extends StatelessWidget {
   const ContaListItemComponent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SelectContaCubit(),
+      child: const ContaListItemView(),
+    );
+  }
+}
+
+class ContaListItemView extends StatelessWidget {
+  const ContaListItemView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +34,31 @@ class ContaListItemComponent extends StatelessWidget {
         BottomSheetContasWidget.openModalBottomSheet(
           context,
           context.read<BottomSheetContaCubit>(),
+          context.read<SelectContaCubit>(),
         );
       },
       child: Row(
         children: [
-          _ShowContaWidget(conta: Conta.fake()),
+          BlocBuilder<SelectContaCubit, SelectContaState>(
+            bloc: context.read<SelectContaCubit>()..selectDefaultConta(),
+            builder: (context, state) {
+              if (state is SelectContaLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (state is SelectContaError) {
+                return Text('//${state.errorMessage}');
+              }
+
+              if (state is SelectContaSuccess) {
+                return _ShowContaWidget(conta: state.conta);
+              }
+
+              return const SizedBox();
+            },
+          ),
           const Spacer(),
           const Icon(Icons.chevron_right),
         ],

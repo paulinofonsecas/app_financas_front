@@ -8,3 +8,23 @@ sealed class BottomSheetContaState extends Equatable {
 }
 
 final class BottomSheetContaInitial extends BottomSheetContaState {}
+
+final class ListarContasLoading extends BottomSheetContaState {}
+
+final class ListarContasError extends BottomSheetContaState {
+  final String? errorMessage;
+
+  const ListarContasError({this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage ?? ''];
+}
+
+final class ListarContasSuccess extends BottomSheetContaState {
+  final List<Conta> contas;
+
+  const ListarContasSuccess(this.contas);
+
+  @override
+  List<Object> get props => [contas];
+}
