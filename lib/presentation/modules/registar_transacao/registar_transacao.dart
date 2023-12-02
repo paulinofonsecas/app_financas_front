@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/registar_transacao_controller.dart';
+import 'cubit/confirmar_transacao_cubit.dart';
 
 class RegistarTransacaoPage extends StatelessWidget {
   const RegistarTransacaoPage({
@@ -66,21 +68,42 @@ class RegistarTransacaoView extends StatelessWidget {
                       : kVermelhaColor,
               body: SafeArea(
                 bottom: false,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Body(contaId: contaId),
-                    _BuildActionButton(
-                      movimentoType: controller.movimentoType,
-                      controller: controller,
-                    ),
-                  ],
+                child: _RegistarTransacaoBody(
+                  contaId: contaId,
+                  controller: controller,
                 ),
               ),
             );
           }),
         );
       },
+    );
+  }
+}
+
+class _RegistarTransacaoBody extends StatelessWidget {
+  const _RegistarTransacaoBody({
+    required this.contaId,
+    required this.controller,
+  });
+
+  final int? contaId;
+  final RegistarTransacaoController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ConfirmarTransacaoCubit(),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Body(contaId: contaId),
+          _BuildActionButton(
+            movimentoType: controller.movimentoType,
+            controller: controller,
+          ),
+        ],
+      ),
     );
   }
 }

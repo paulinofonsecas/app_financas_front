@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
@@ -7,9 +8,9 @@ import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
-import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
+import '../cubit/confirmar_transacao_cubit.dart';
 import 'category_list_item_component.dart';
 import '../../carteira/components/conta_listitem_component.dart';
 import 'register_despesa_header.dart';
@@ -53,41 +54,7 @@ class Body extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.check_circle_outlined),
-                          const Gutter(),
-                          Text(isReceita(controller.movimentoType)
-                              ? 'Recebido'
-                              : 'Pago'),
-                          const Spacer(),
-                          Obx(
-                            () => Switch(
-                              value: controller.confirmado.value,
-                              onChanged: (c) {
-                                if (controller.date.isAfter(DateTime.now())) {
-                                  controller.confirmado.value = false;
-                                  showErrorMessage(
-                                    'Impossível confirmar',
-                                    'Aguarde até a data selecionada para confirmar '
-                                        'a ${isReceita(controller.movimentoType) ? 'receita' : 'despesa'} '
-                                        'ou selecione uma data igual ou inferior a de hoje.',
-                                    duration: const Duration(seconds: 7),
-                                    backgroundColor: Colors.orange[700],
-                                  );
-                                } else {
-                                  controller.confirmado.value = c;
-                                }
-                              },
-                              activeColor: Colors.white,
-                              activeTrackColor:
-                                  isReceita(controller.movimentoType)
-                                      ? kVerdeForteColor
-                                      : kVermelhaForteColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                      _ConfirmarTransacaoWidget(controller: controller),
                       const GutterSmall(),
                       const MyDivider(),
                       const GutterSmall(),
@@ -148,6 +115,52 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ConfirmarTransacaoWidget extends StatelessWidget {
+  const _ConfirmarTransacaoWidget({
+    required this.controller,
+  });
+
+  final RegistarTransacaoController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    var confirmarTransCubit = context.read<ConfirmarTransacaoCubit>();
+
+    return Row(
+      children: [
+        const Icon(Icons.check_circle_outlined),
+        const Gutter(),
+        Text(
+          isReceita(controller.movimentoType) ? 'Recebido' : 'Pago',
+        ),
+        const Spacer(),
+        BlocBuilder<ConfirmarTransacaoCubit, ConfirmarTransacaoState>(
+          builder: (context, state) {
+            return Switch(
+              value: state.isTransacaoConfirmad,
+              onChanged: (c) {
+                if (controller.date.isAfter(DateTime.now())) {
+                  controller.confirmado.value = false;
+                  showErrorMessage(
+                    'Impossível confirmar',
+                    'Aguarde até a data selecionada para confirmar '
+                        'a ${isReceita(controller.movimentoType) ? 'receita' : 'despesa'} '
+                        'ou selecione uma data igual ou inferior a de hoje.',
+                    duration: const Duration(seconds: 7),
+                    backgroundColor: Colors.orange[700],
+                  );
+                } else {
+                  confirmarTransCubit.changeConfirmarTransacao();
+                }
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
