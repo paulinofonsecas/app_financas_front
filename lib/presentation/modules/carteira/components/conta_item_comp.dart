@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/presentation/components/banco_img_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,7 +80,7 @@ class ContaItem extends StatelessWidget {
         Row(
           children: [
             if (conta.banco.imgAsset != null)
-              _BancoImgCircularWidget(conta: conta),
+              BancoImgCircularWidget(conta: conta),
             const GutterTiny(),
             Text(
               conta.banco.acronimo ?? '',
@@ -121,23 +122,3 @@ class ContaItem extends StatelessWidget {
   }
 }
 
-class _BancoImgCircularWidget extends StatelessWidget {
-  const _BancoImgCircularWidget({
-    super.key,
-    required this.conta,
-  });
-
-  final Conta conta;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
-      child: Image.asset(
-        conta.banco.imgAsset!,
-        height: 20,
-        width: 20,
-      ),
-    );
-  }
-}

@@ -3,8 +3,8 @@
 
 import 'package:flutter/material.dart';
 
-class BottomSheetContaWidget extends StatefulWidget {
-  const BottomSheetContaWidget({
+class BottomSheetContasWidget extends StatefulWidget {
+  const BottomSheetContasWidget({
     Key? key,
   }) : super(key: key);
 
@@ -24,16 +24,16 @@ class BottomSheetContaWidget extends StatefulWidget {
         height: size.height * 0.8,
       ),
       builder: (BuildContext context) {
-        return BottomSheetContaWidget();
+        return BottomSheetContasWidget();
       },
     );
   }
 
   @override
-  State<BottomSheetContaWidget> createState() => _BottomSheetContaWidget();
+  State<BottomSheetContasWidget> createState() => _BottomSheetContaWidget();
 }
 
-class _BottomSheetContaWidget extends State<BottomSheetContaWidget> {
+class _BottomSheetContaWidget extends State<BottomSheetContasWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
