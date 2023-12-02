@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +14,27 @@ import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/registar_transacao_controller.dart';
 
-class RegistarTransacao extends StatelessWidget {
-  const RegistarTransacao({
+class RegistarTransacaoPage extends StatelessWidget {
+  const RegistarTransacaoPage({
+    super.key,
+    required this.movimentoType,
+    this.contaId,
+  });
+
+  final int movimentoType;
+  final int? contaId;
+
+  @override
+  Widget build(BuildContext context) {
+    return RegistarTransacaoView(
+      movimentoType: movimentoType,
+      contaId: contaId,
+    );
+  }
+}
+
+class RegistarTransacaoView extends StatelessWidget {
+  const RegistarTransacaoView({
     Key? key,
     required this.movimentoType,
     this.contaId,
@@ -43,7 +64,7 @@ class RegistarTransacao extends StatelessWidget {
                 Body(contaId: contaId),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: SuspendedButton(),
+                  child: _SuspendedButton(),
                 ),
               ],
             ),
@@ -54,8 +75,8 @@ class RegistarTransacao extends StatelessWidget {
   }
 }
 
-class SuspendedButton extends StatelessWidget {
-  const SuspendedButton({super.key});
+class _SuspendedButton extends StatelessWidget {
+  const _SuspendedButton({super.key});
 
   @override
   Widget build(BuildContext context) {

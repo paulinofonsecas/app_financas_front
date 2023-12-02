@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/banco_img_widget.dart';
+
+import '../../registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 
 class ContaListItemComponent extends StatelessWidget {
   const ContaListItemComponent({super.key});
@@ -15,13 +18,14 @@ class ContaListItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BottomSheetContasWidget.openModalBottomSheet(context);
+        BottomSheetContasWidget.openModalBottomSheet(
+          context,
+          context.read<BottomSheetContaCubit>(),
+        );
       },
       child: Row(
         children: [
-          _ShowContaWidget(
-            conta: Conta.fake(),
-          ),
+          _ShowContaWidget(conta: Conta.fake()),
           const Spacer(),
           const Icon(Icons.chevron_right),
         ],

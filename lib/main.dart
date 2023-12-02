@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
 import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
+import 'presentation/modules/registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,9 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => ContaMostrarNaTelaInicialCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BottomSheetContaCubit(),
         ),
       ],
       child: DevicePreview(
