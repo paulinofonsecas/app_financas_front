@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/constants.dart';
@@ -10,11 +9,13 @@ class DefaultActionButton extends StatelessWidget {
     required this.text,
     this.onPressed,
     this.backgroundColor,
+    this.foregroundColor,
   }) : super(key: key);
 
   final String text;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
+  final Color? foregroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,15 @@ class DefaultActionButton extends StatelessWidget {
           horizontal: kDefaultPadding * 2.8,
           vertical: kDefaultPadding / 1.5,
         ),
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
       ),
       onPressed: onPressed,
       child: Text(
         text,
         style: GoogleFonts.inter(
           fontSize: 16,
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );

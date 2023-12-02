@@ -37,7 +37,7 @@ class Body extends StatelessWidget {
               minHeight: size.height * .9,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: Theme.of(context).colorScheme.background,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(30),
               ),
@@ -88,16 +88,16 @@ class Body extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const MyDivider(),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const WithIcon(
                         icon: Icons.calendar_today_outlined,
                         child: SelectDateComponent(),
                       ),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const MyDivider(),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       WithIcon(
                         icon: Icons.create_rounded,
                         child: TextField(
@@ -109,23 +109,23 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const GutterTiny(),
-                      const MyDivider(),
                       const GutterSmall(),
+                      const MyDivider(),
+                      const Gutter(),
                       const WithIcon(
                         icon: Icons.label_outline,
                         child: CategoryListItemComponent(),
                       ),
-                      const GutterSmall(),
+                      const Gutter(),
                       const MyDivider(),
-                      const GutterSmall(),
+                      const Gutter(),
                       const WithIcon(
                         icon: Icons.wallet_outlined,
                         child: ContaListItemComponent(),
                       ),
-                      const GutterSmall(),
+                      const Gutter(),
                       const MyDivider(),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       WithIcon(
                         icon: Icons.create_outlined,
                         child: TextField(
@@ -137,7 +137,7 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const GutterTiny(),
+                      const GutterSmall(),
                       const MyDivider(),
                       const GutterLarge(),
                     ],
