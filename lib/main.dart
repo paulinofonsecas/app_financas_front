@@ -16,9 +16,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
 
+import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
 import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
-import 'presentation/modules/registar_transacao/cubit/bottom_sheet_conta_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
