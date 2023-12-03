@@ -127,7 +127,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
       return true;
     }
 
-    IContaProvider contaService = locator();
+    IContaProvider contaService = getIt();
     var result = await contaService.getConta(movimento.cartaoId);
 
     if (result is Right) {

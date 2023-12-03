@@ -12,7 +12,7 @@ class ContaMostrarNaTelaInicialCubit
 
   ContaMostrarNaTelaInicialCubit()
       : super(const ContaMostrarNaTelaInitial(false)) {
-    _contaService = locator();
+    _contaService = getIt();
   }
 
   void revelState(Conta conta) {

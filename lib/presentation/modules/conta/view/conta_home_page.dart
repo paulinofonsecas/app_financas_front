@@ -32,7 +32,7 @@ class _ContaPageState extends State<ContaPage> {
   @override
   void initState() {
     super.initState();
-    headerCubit = ContaListHeaderCubit(locator());
+    headerCubit = ContaListHeaderCubit(getIt());
   }
 
   @override

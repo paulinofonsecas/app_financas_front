@@ -34,7 +34,7 @@ class _MovimentosListSectionState extends State<MovimentosListSection> {
 
   @override
   void initState() {
-    movimentosCubit = locator();
+    movimentosCubit = getIt();
     pagingController = PagingController(firstPageKey: 1);
 
     pagingController.addPageRequestListener((pageKey) {

@@ -35,11 +35,11 @@ void main() async {
     movimentoProvider = DbMovimentoProvider(categoriaService);
     dbConta = DbContaProvider(movimentoProvider, dbProvider);
 
-    locator.registerSingleton(dbConta);
+    getIt.registerSingleton(dbConta);
   });
 
   tearDown(() async {
-    await locator.reset(dispose: true);
+    await getIt.reset(dispose: true);
     await Hive.deleteFromDisk();
     await Hive.close();
   });

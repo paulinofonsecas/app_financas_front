@@ -3,6 +3,7 @@ import 'package:app_financas/presentation/modules/registar_transacao/cubit/switc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:app_financas/presentation/components/my_divider.dart';
@@ -13,6 +14,7 @@ import 'package:app_financas/presentation/helders/helpers.dart';
 
 import '../cubit/confirmar_transacao_cubit.dart';
 import '../cubit/descricao_text_cubit.dart';
+import '../cubit/obs_text_cubit.dart';
 import '../cubit/select_data_cubit.dart';
 import 'category_list_item_component.dart';
 import '../../carteira/components/conta_listitem_component.dart';
@@ -90,30 +92,20 @@ class _MainContentWidget extends StatelessWidget {
                 const MyDivider(),
                 const Gutter(),
                 const WithIcon(
-                  icon: Icons.label_outline,
+                  icon: FontAwesomeIcons.layerGroup,
                   child: CategoryListItemComponent(),
                 ),
                 const Gutter(),
                 const MyDivider(),
                 const Gutter(),
                 const WithIcon(
-                  icon: Icons.wallet_outlined,
+                  icon: FontAwesomeIcons.creditCard,
                   child: ContaListItemComponent(),
                 ),
                 const Gutter(),
                 const MyDivider(),
                 const GutterSmall(),
-                WithIcon(
-                  icon: Icons.create_outlined,
-                  child: TextField(
-                    controller: controller.obsTextController,
-                    maxLines: 1,
-                    decoration: const InputDecoration(
-                      hintText: 'Observações',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
+                const _ObsWidget(), // Observações
                 const GutterSmall(),
                 const MyDivider(),
                 const GutterLarge(),
@@ -121,6 +113,27 @@ class _MainContentWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ObsWidget extends StatelessWidget {
+  const _ObsWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    var obsTextCubit = context.read<ObsTextCubit>();
+
+    return WithIcon(
+      icon: FontAwesomeIcons.clipboard,
+      child: TextField(
+        onChanged: (v) => obsTextCubit.changeText(v),
+        maxLines: 1,
+        decoration: const InputDecoration(
+          hintText: 'Observações',
+          border: InputBorder.none,
+        ),
       ),
     );
   }

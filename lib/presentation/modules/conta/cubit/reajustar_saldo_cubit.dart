@@ -11,7 +11,7 @@ part 'reajustar_saldo_state.dart';
 class ReajustarSaldoCubit extends Cubit<ReajustarSaldoState> {
   late final IMovimentoService _movimentoService;
   ReajustarSaldoCubit() : super(const ReajustarSaldoInitial()) {
-    _movimentoService = locator();
+    _movimentoService = getIt();
   }
 
   Future<void> reajustarSaldo(Conta conta) async {
