@@ -10,6 +10,7 @@ import 'package:app_financas/constants.dart';
 
 import 'controllers/registar_transacao_controller.dart';
 import 'cubit/confirmar_transacao_cubit.dart';
+import 'cubit/select_data_cubit.dart';
 import 'cubit/switch_transacao_cubit.dart';
 import 'cubit/valor_transacao_cubit.dart';
 
@@ -35,6 +36,9 @@ class RegistarTransacaoPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ValorTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SelectDataCubit(),
         ),
       ],
       child: _RegistarTransacaoView(
