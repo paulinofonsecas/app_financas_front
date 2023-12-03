@@ -41,7 +41,7 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Entrada',
                     color: kVerdeAccentColor,
                     onTap: () {
-                      Get.to(RegistarTransacaoView(
+                      Get.to(RegistarTransacaoPage(
                         movimentoType: 1,
                         contaId: contaId,
                       ))?.then(
@@ -58,7 +58,7 @@ class BottomEscolherTipoMovimento extends StatelessWidget {
                     label: 'Saida',
                     color: kVermelhaColor,
                     onTap: () {
-                      Get.to(RegistarTransacaoView(
+                      Get.to(RegistarTransacaoPage(
                         movimentoType: 2,
                         contaId: contaId,
                       ))?.then((value) {

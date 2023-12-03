@@ -23,15 +23,25 @@ class RegistarTransacaoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RegistarTransacaoView(
-      movimentoType: movimentoType,
-      contaId: contaId,
+    return MultiBlocProvider(
+       providers: [
+        BlocProvider(
+          create: (context) => ConfirmarTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SwitchTransacaoCubit(),
+        ),
+      ],
+      child: _RegistarTransacaoView(
+        movimentoType: movimentoType,
+        contaId: contaId,
+      ),
     );
   }
 }
 
-class RegistarTransacaoView extends StatelessWidget {
-  const RegistarTransacaoView({
+class _RegistarTransacaoView extends StatelessWidget {
+  const _RegistarTransacaoView({
     Key? key,
     required this.movimentoType,
     this.contaId,
@@ -46,33 +56,23 @@ class RegistarTransacaoView extends StatelessWidget {
       movimentoType: movimentoType,
     ));
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ConfirmarTransacaoCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SwitchTransacaoCubit(),
-        ),
-      ],
-      child: Builder(builder: (context) {
-        var switchCubit = context.watch<SwitchTransacaoCubit>();
-        var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
-
-        return Theme(
-          data: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: isEntrada ? kVerdeColor : kVermelhaColor,
-              brightness: Theme.of(context).brightness,
-            ),
+    return Builder(builder: (context) {
+      var switchCubit = context.watch<SwitchTransacaoCubit>();
+      var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+    
+      return Theme(
+        data: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: isEntrada ? kVerdeColor : kVermelhaColor,
+            brightness: Theme.of(context).brightness,
           ),
-          child: _BodySection(
-            controller: controller,
-            contaId: contaId,
-          ),
-        );
-      }),
-    );
+        ),
+        child: _BodySection(
+          controller: controller,
+          contaId: contaId,
+        ),
+      );
+    });
   }
 }
 
