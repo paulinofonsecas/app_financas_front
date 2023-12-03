@@ -12,6 +12,7 @@ import 'package:app_financas/presentation/modules/registar_transacao/controllers
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 import '../cubit/confirmar_transacao_cubit.dart';
+import '../cubit/select_data_cubit.dart';
 import 'category_list_item_component.dart';
 import '../../carteira/components/conta_listitem_component.dart';
 import 'register_despesa_header.dart';
@@ -142,6 +143,25 @@ class _ConfirmarTransacaoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var confirmarTransCubit = context.read<ConfirmarTransacaoCubit>();
 
+    void onPressed() {
+      var selectDataCubit = context.read<SelectDataCubit>();
+      var switchTransCubit = context.read<SwitchTransacaoCubit>();
+      var isEntrada = switchTransCubit.state is SwitchTransacaoEntrada;
+
+      if (selectDataCubit.state.date.isAfter(DateTime.now())) {
+        showErrorMessage(
+          'Impossível confirmar',
+          'Aguarde até a data selecionada para confirmar '
+              'a ${isEntrada ? 'receita' : 'despesa'} '
+              'ou selecione uma data igual ou inferior a de hoje.',
+          duration: const Duration(seconds: 7),
+          backgroundColor: Colors.orange[700],
+        );
+      } else {
+        confirmarTransCubit.changeConfirmarTransacao();
+      }
+    }
+
     return Row(
       children: [
         const Icon(Icons.check_circle_outlined),
@@ -160,21 +180,7 @@ class _ConfirmarTransacaoWidget extends StatelessWidget {
           builder: (context, state) {
             return Switch(
               value: state.isTransacaoConfirmad,
-              onChanged: (c) {
-                if (controller.date.isAfter(DateTime.now())) {
-                  controller.confirmado.value = false;
-                  showErrorMessage(
-                    'Impossível confirmar',
-                    'Aguarde até a data selecionada para confirmar '
-                        'a ${isReceita(controller.movimentoType) ? 'receita' : 'despesa'} '
-                        'ou selecione uma data igual ou inferior a de hoje.',
-                    duration: const Duration(seconds: 7),
-                    backgroundColor: Colors.orange[700],
-                  );
-                } else {
-                  confirmarTransCubit.changeConfirmarTransacao();
-                }
-              },
+              onChanged: (c) => onPressed(),
             );
           },
         ),
