@@ -7,6 +7,9 @@ class ValorTransacaoCubit extends Cubit<ValorTransacaoState> {
   ValorTransacaoCubit() : super(const ValorTransacaoInicial(''));
 
   void changeValorTransacao(String valor) {
+    if (valor.isEmpty) {
+      return;
+    }
     emit(ValorTransacaoChanged(valor));
   }
 }

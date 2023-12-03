@@ -12,6 +12,7 @@ import 'package:app_financas/presentation/modules/registar_transacao/controllers
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 import '../cubit/confirmar_transacao_cubit.dart';
+import '../cubit/descricao_text_cubit.dart';
 import '../cubit/select_data_cubit.dart';
 import 'category_list_item_component.dart';
 import '../../carteira/components/conta_listitem_component.dart';
@@ -81,16 +82,9 @@ class _MainContentWidget extends StatelessWidget {
                 const GutterSmall(),
                 const MyDivider(),
                 const GutterSmall(),
-                WithIcon(
+                const WithIcon(
                   icon: Icons.create_rounded,
-                  child: TextField(
-                    controller: controller.descricaoTextController,
-                    decoration: const InputDecoration(
-                      hintText: 'Descrição',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                  ),
+                  child: _DecricaoTestWidget(),
                 ),
                 const GutterSmall(),
                 const MyDivider(),
@@ -127,6 +121,24 @@ class _MainContentWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _DecricaoTestWidget extends StatelessWidget {
+  const _DecricaoTestWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    var descricaoTextCubit = context.read<DescricaoTextCubit>();
+
+    return TextField(
+      onChanged: (valor) => descricaoTextCubit.changeText(valor),
+      decoration: const InputDecoration(
+        hintText: 'Descrição',
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero,
       ),
     );
   }

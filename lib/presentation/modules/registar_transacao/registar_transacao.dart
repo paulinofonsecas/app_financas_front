@@ -10,6 +10,7 @@ import 'package:app_financas/constants.dart';
 
 import 'controllers/registar_transacao_controller.dart';
 import 'cubit/confirmar_transacao_cubit.dart';
+import 'cubit/descricao_text_cubit.dart';
 import 'cubit/select_data_cubit.dart';
 import 'cubit/switch_transacao_cubit.dart';
 import 'cubit/valor_transacao_cubit.dart';
@@ -39,6 +40,9 @@ class RegistarTransacaoPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SelectDataCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DescricaoTextCubit(),
         ),
       ],
       child: _RegistarTransacaoView(
@@ -132,14 +136,14 @@ class _RegistarTransacaoBody extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Body(contaId: contaId),
-        const _BuildActionButton(),
+        const _SalvarActionButton(),
       ],
     );
   }
 }
 
-class _BuildActionButton extends StatelessWidget {
-  const _BuildActionButton();
+class _SalvarActionButton extends StatelessWidget {
+  const _SalvarActionButton();
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +160,7 @@ class _BuildActionButton extends StatelessWidget {
             backgroundColor: isEntrada ? kVerdeForteColor : kVermelhaForteColor,
             foregroundColor: Colors.white,
             onPressed: () {
-              context.read<RegistarTransacaoBloc>().add(SaveTransacaoEvent());
+              // context.read<RegistarTransacaoBloc>().add(SaveTransacaoEvent());
             },
           ),
           const GutterLarge(),
