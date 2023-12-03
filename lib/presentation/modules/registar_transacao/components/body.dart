@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -33,83 +34,101 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           const RegisterHeader(),
-          Container(
-            constraints: BoxConstraints(
-              minHeight: size.height * .9,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(30),
-              ),
-            ),
+          _MainContentWidget(
+            size: size,
+            controller: controller,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MainContentWidget extends StatelessWidget {
+  const _MainContentWidget({
+    required this.size,
+    required this.controller,
+  });
+
+  final Size size;
+  final RegistarTransacaoController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: size.height * .9,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const GutterLarge(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
               children: [
-                const GutterLarge(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _ConfirmarTransacaoWidget(controller: controller),
-                      const GutterSmall(),
-                      const MyDivider(),
-                      const GutterSmall(),
-                      const WithIcon(
-                        icon: Icons.calendar_today_outlined,
-                        child: SelectDateComponent(),
-                      ),
-                      const GutterSmall(),
-                      const MyDivider(),
-                      const GutterSmall(),
-                      WithIcon(
-                        icon: Icons.create_rounded,
-                        child: TextField(
-                          controller: controller.descricaoTextController,
-                          decoration: const InputDecoration(
-                            hintText: 'Descrição',
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                        ),
-                      ),
-                      const GutterSmall(),
-                      const MyDivider(),
-                      const Gutter(),
-                      const WithIcon(
-                        icon: Icons.label_outline,
-                        child: CategoryListItemComponent(),
-                      ),
-                      const Gutter(),
-                      const MyDivider(),
-                      const Gutter(),
-                      const WithIcon(
-                        icon: Icons.wallet_outlined,
-                        child: ContaListItemComponent(),
-                      ),
-                      const Gutter(),
-                      const MyDivider(),
-                      const GutterSmall(),
-                      WithIcon(
-                        icon: Icons.create_outlined,
-                        child: TextField(
-                          controller: controller.obsTextController,
-                          maxLines: 1,
-                          decoration: const InputDecoration(
-                            hintText: 'Observações',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      const GutterSmall(),
-                      const MyDivider(),
-                      const GutterLarge(),
-                    ],
+                _ConfirmarTransacaoWidget(controller: controller),
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterSmall(),
+                const WithIcon(
+                  icon: Icons.calendar_today_outlined,
+                  child: SelectDateComponent(),
+                ),
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterSmall(),
+                WithIcon(
+                  icon: Icons.create_rounded,
+                  child: TextField(
+                    controller: controller.descricaoTextController,
+                    decoration: const InputDecoration(
+                      hintText: 'Descrição',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ),
                   ),
                 ),
+                const GutterSmall(),
+                const MyDivider(),
+                const Gutter(),
+                const WithIcon(
+                  icon: Icons.label_outline,
+                  child: CategoryListItemComponent(),
+                ),
+                const Gutter(),
+                const MyDivider(),
+                const Gutter(),
+                const WithIcon(
+                  icon: Icons.wallet_outlined,
+                  child: ContaListItemComponent(),
+                ),
+                const Gutter(),
+                const MyDivider(),
+                const GutterSmall(),
+                WithIcon(
+                  icon: Icons.create_outlined,
+                  child: TextField(
+                    controller: controller.obsTextController,
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                      hintText: 'Observações',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterLarge(),
               ],
             ),
           ),
@@ -134,8 +153,14 @@ class _ConfirmarTransacaoWidget extends StatelessWidget {
       children: [
         const Icon(Icons.check_circle_outlined),
         const Gutter(),
-        Text(
-          isReceita(controller.movimentoType) ? 'Recebido' : 'Pago',
+        BlocBuilder<SwitchTransacaoCubit, SwitchTransacaoState>(
+          builder: (context, state) {
+            var isEntrada = state is SwitchTransacaoEntrada;
+
+            return Text(
+              isEntrada ? 'Recebido' : 'Pago',
+            );
+          },
         ),
         const Spacer(),
         BlocBuilder<ConfirmarTransacaoCubit, ConfirmarTransacaoState>(

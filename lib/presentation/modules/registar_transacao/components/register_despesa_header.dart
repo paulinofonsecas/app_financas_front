@@ -1,8 +1,9 @@
 import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +13,9 @@ class RegisterHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var switchCubit = context.watch<SwitchTransacaoCubit>();
+    var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+
     var isDark = Theme.of(context).brightness == Brightness.dark;
     var controller = Get.find<RegistarTransacaoController>();
 
@@ -28,67 +32,21 @@ class RegisterHeader extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark
                   ? Theme.of(context).colorScheme.shadow
-                  : isReceita(controller.movimentoType)
+                  : isEntrada
                       ? kVerdeColor
                       : kVermelhaColor,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
+                const Stack(
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Text(
-                        'Cancelar',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    SwitchTransactionButton(controller: controller),
+                    _CancelarButton(),
+                    _SwitchTransactionButton(),
                   ],
                 ),
                 const GutterLarge(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Valor da ${controller.movimentoType == 1 ? 'receita' : 'despesa'}',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextFormField(
-                      controller: controller.valorTextController,
-                      onChanged: controller.onValorChange,
-                      focusNode: FocusNode(canRequestFocus: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      keyboardType: TextInputType.number,
-                      style: GoogleFonts.inter(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: '0,00',
-                        hintStyle: GoogleFonts.inter(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                        prefixText: 'Kz ',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ],
-                ),
+                _ValorTextWidget(controller: controller),
                 const Gutter(),
               ],
             ),
@@ -97,9 +55,28 @@ class RegisterHeader extends StatelessWidget {
   }
 }
 
-class SwitchTransactionButton extends StatelessWidget {
-  const SwitchTransactionButton({
-    super.key,
+class _CancelarButton extends StatelessWidget {
+  const _CancelarButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text(
+        'Cancelar',
+        style: GoogleFonts.inter(
+          fontSize: 16,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class _ValorTextWidget extends StatelessWidget {
+  const _ValorTextWidget({
     required this.controller,
   });
 
@@ -107,43 +84,97 @@ class SwitchTransactionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BlocBuilder<SwitchTransacaoCubit, SwitchTransacaoState>(
+          builder: (context, state) {
+            var isEntrada = state is SwitchTransacaoEntrada;
+            return Text(
+              'Valor da ${isEntrada ? 'receita' : 'despesa'}',
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            );
+          },
+        ),
+        TextFormField(
+          controller: controller.valorTextController,
+          onChanged: controller.onValorChange,
+          focusNode: FocusNode(canRequestFocus: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          keyboardType: TextInputType.number,
+          style: GoogleFonts.inter(
+            fontSize: 32,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+          decoration: InputDecoration(
+            hintText: '0,00',
+            hintStyle: GoogleFonts.inter(
+              fontSize: 32,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+            prefixText: 'Kz ',
+            border: InputBorder.none,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SwitchTransactionButton extends StatelessWidget {
+  const _SwitchTransactionButton();
+
+  @override
+  Widget build(BuildContext context) {
+    var bloc = context.read<SwitchTransacaoCubit>();
+
     return Align(
       alignment: Alignment.center,
       child: GestureDetector(
         onTap: () {
-          controller.switchTransactionType();
+          bloc.switchTransationType();
         },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
-          padding: const EdgeInsets.symmetric(
-            vertical: kDefaultPadding / 3,
-            horizontal: kDefaultPadding,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(90)),
-            color: isReceita(controller.movimentoType)
-                ? kVerdeForteColor
-                : kVermelhaForteColor,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                controller.movimentoType == 1 ? 'Receita' : 'Despesa',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+        child: BlocBuilder<SwitchTransacaoCubit, SwitchTransacaoState>(
+          builder: (context, state) {
+            var isEntrada = state is SwitchTransacaoEntrada;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(
+                vertical: kDefaultPadding / 3,
+                horizontal: kDefaultPadding,
               ),
-              const GutterSmall(),
-              const Icon(
-                Icons.sync,
-                color: Colors.white,
-                weight: 1,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(90)),
+                color: isEntrada ? kVerdeForteColor : kVermelhaForteColor,
               ),
-            ],
-          ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isEntrada ? 'Receita' : 'Despesa',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const GutterSmall(),
+                  const Icon(
+                    Icons.sync,
+                    color: Colors.white,
+                    weight: 1,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
