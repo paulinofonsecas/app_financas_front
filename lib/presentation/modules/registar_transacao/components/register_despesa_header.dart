@@ -8,6 +8,8 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../cubit/valor_transacao_cubit.dart';
+
 class RegisterHeader extends StatelessWidget {
   const RegisterHeader({super.key});
 
@@ -84,6 +86,7 @@ class _ValorTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var valorTransacaoCubit = context.read<ValorTransacaoCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,8 +103,7 @@ class _ValorTextWidget extends StatelessWidget {
           },
         ),
         TextFormField(
-          controller: controller.valorTextController,
-          onChanged: controller.onValorChange,
+          onChanged: valorTransacaoCubit.changeValorTransacao,
           focusNode: FocusNode(canRequestFocus: true),
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,

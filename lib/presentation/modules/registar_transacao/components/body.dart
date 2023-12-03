@@ -26,18 +26,14 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     var controller = Get.find<RegistarTransacaoController>();
     if (contaId != null) controller.cartaoId = contaId!;
 
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         children: [
-          const RegisterHeader(),
-          _MainContentWidget(
-            size: size,
-            controller: controller,
-          ),
+          RegisterHeader(),
+          _MainContentWidget(),
         ],
       ),
     );
@@ -45,16 +41,13 @@ class Body extends StatelessWidget {
 }
 
 class _MainContentWidget extends StatelessWidget {
-  const _MainContentWidget({
-    required this.size,
-    required this.controller,
-  });
-
-  final Size size;
-  final RegistarTransacaoController controller;
+  const _MainContentWidget();
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var controller = Get.find<RegistarTransacaoController>();
+
     return Container(
       constraints: BoxConstraints(
         minHeight: size.height * .9,

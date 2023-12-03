@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/components/default_action_button.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -10,6 +11,7 @@ import 'package:app_financas/constants.dart';
 import 'controllers/registar_transacao_controller.dart';
 import 'cubit/confirmar_transacao_cubit.dart';
 import 'cubit/switch_transacao_cubit.dart';
+import 'cubit/valor_transacao_cubit.dart';
 
 class RegistarTransacaoPage extends StatelessWidget {
   const RegistarTransacaoPage({
@@ -24,12 +26,15 @@ class RegistarTransacaoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-       providers: [
+      providers: [
         BlocProvider(
           create: (context) => ConfirmarTransacaoCubit(),
         ),
         BlocProvider(
           create: (context) => SwitchTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ValorTransacaoCubit(),
         ),
       ],
       child: _RegistarTransacaoView(
@@ -59,7 +64,7 @@ class _RegistarTransacaoView extends StatelessWidget {
     return Builder(builder: (context) {
       var switchCubit = context.watch<SwitchTransacaoCubit>();
       var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
-    
+
       return Theme(
         data: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -123,23 +128,14 @@ class _RegistarTransacaoBody extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Body(contaId: contaId),
-        _BuildActionButton(
-          movimentoType: controller.movimentoType,
-          controller: controller,
-        ),
+        const _BuildActionButton(),
       ],
     );
   }
 }
 
 class _BuildActionButton extends StatelessWidget {
-  const _BuildActionButton({
-    required this.movimentoType,
-    required this.controller,
-  });
-
-  final int movimentoType;
-  final RegistarTransacaoController controller;
+  const _BuildActionButton();
 
   @override
   Widget build(BuildContext context) {
@@ -155,11 +151,8 @@ class _BuildActionButton extends StatelessWidget {
             text: 'Salvar',
             backgroundColor: isEntrada ? kVerdeForteColor : kVermelhaForteColor,
             foregroundColor: Colors.white,
-            onPressed: () async {
-              await controller.finalizarMovimento();
-              if (controller.salvo) {
-                Get.back(closeOverlays: true);
-              }
+            onPressed: () {
+              context.read<RegistarTransacaoBloc>().add(SaveTransacaoEvent());
             },
           ),
           const GutterLarge(),
