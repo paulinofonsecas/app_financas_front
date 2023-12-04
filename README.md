@@ -77,59 +77,59 @@ The main features of the application are:
 
 ### 1 - Tela principal.
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png =365x728)
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png =365x728)
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png =365x728)
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png =365x728)
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png =365x728)
 
 
 ### 2 - Gestão de contas.
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png =365x728)
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png =365x728)
 
 ### 3 - Estatisticas.
 
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png)
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png =365x728)
 
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png)
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png =365x728)
 
 ### 4 - Registar transação
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png =365x728)
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png =365x728)
 
 ### 5 - Editar transação.
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png)
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png =365x728)
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png)
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png =365x728)
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png)
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png =365x728)
