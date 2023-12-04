@@ -1,5 +1,5 @@
 
-![Logo of the project](https://github.com/paulinofonsecas/app_financas_front/raw/main/readme/imgs/logo.jpg){:height="64px" width="64px"} 
+<img src="https://github.com/paulinofonsecas/app_financas_front/raw/main/readme/imgs/logo.jpg" alt="Logo of the project" width="64" height="64">
 
 
 ## KzGest
