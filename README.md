@@ -48,48 +48,6 @@ Here are the technologies used in this project.
   ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
 
 
-## How to use
-
-### 1 - Tela principal.
-
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png)
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png)
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png)
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png)
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png)
-
-
-### 2 - Gestão de contas.
-
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png)
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png)
-
-### 3 - Estatisticas.
-
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png)
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png)
-
-### 4 - Registar transação
-
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png)
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png)
-
-### 5 - Editar transação.
-
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png)
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png)
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png)
-
 ## Features
 
 The main features of the application are:
@@ -113,3 +71,65 @@ The main features of the application are:
   ## Authors
 
   * **Paulino Fonseca** 
+
+
+## How to use
+
+### 1 - Tela principal.
+
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png)
+
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png)
+
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png)
+
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png)
+
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png)
+
+
+### 2 - Gestão de contas.
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png)
+
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png)
+
+### 3 - Estatisticas.
+
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png)
+
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png)
+
+### 4 - Registar transação
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png)
+
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png)
+
+### 5 - Editar transação.
+
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png)
+
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png)
+
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png)
