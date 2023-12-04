@@ -9,7 +9,7 @@ part 'select_conta_state.dart';
 
 class SelectContaCubit extends Cubit<SelectContaState> {
   SelectContaCubit() : super(SelectContaInitial()) {
-    _contaService = locator();
+    _contaService = getIt();
   }
 
   late final IContaService _contaService;
@@ -33,5 +33,4 @@ class SelectContaCubit extends Cubit<SelectContaState> {
   void selectConta(Conta conta) {
     emit(SelectContaSuccess(conta));
   }
-
 }

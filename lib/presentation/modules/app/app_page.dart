@@ -63,13 +63,13 @@ class _AppPageState extends State<AppPage> {
             create: (c) => ContasCubit(),
           ),
           BlocProvider(
-            create: (context) => locator<MovimentosByContaCubit>(),
+            create: (context) => getIt<MovimentosByContaCubit>(),
           ),
           BlocProvider(
-            create: (context) => locator<ChangeContaCubit>(),
+            create: (context) => getIt<ChangeContaCubit>(),
           ),
           BlocProvider(
-            create: (context) => locator<ChangeTipoMovimentoCubit>(),
+            create: (context) => getIt<ChangeTipoMovimentoCubit>(),
           ),
         ],
         child: const CarteiraPage(),

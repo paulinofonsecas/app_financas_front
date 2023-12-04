@@ -20,7 +20,7 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
 
   @override
   void initState() {
-    homePageCubit = locator();
+    homePageCubit = getIt();
 
     super.initState();
   }

@@ -11,7 +11,7 @@ class BottomSheetContaCubit extends Cubit<BottomSheetContaState> {
   late final IContaService _contaService;
 
   BottomSheetContaCubit() : super(BottomSheetContaInitial()) {
-    _contaService = locator();
+    _contaService = getIt();
   }
 
   void listContas() async {

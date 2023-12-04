@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
@@ -20,12 +23,12 @@ class BottomCategoryComponent extends StatefulWidget {
   }) : super(key: key);
 
   final TipoCategoria tipoCategoria;
-  final int selectedCategoriaId;
+  final int? selectedCategoriaId;
 
   static Future<dynamic> openModalBottomSheet(
     BuildContext context,
     TipoCategoria tipoCategoria,
-    int selectedCategoriaId,
+    int? selectedCategoriaId,
   ) async {
     var size = MediaQuery.of(context).size;
 
@@ -83,34 +86,30 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
           ),
           Gutter(),
           Expanded(
-            child: GetBuilder(
-              init: controller,
-              id: 'categoriaList',
-              builder: (context) {
-                return FutureBuilder<List<Categoria>>(
-                  future: controller.getCategorias(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Ocorreu um erro ao buscar as categorias'),
-                      );
-                    }
+            child: BlocBuilder<ListarCategoriaCubit, ListarCategoriaState>(
+              bloc: context.read<ListarCategoriaCubit>()..listarCategorias(widget.tipoCategoria),
+              builder: (context, state) {
+                if (state is ListarCategoriasError) {
+                  return Center(
+                    child: Text('Ocorreu um erro ao buscar as categorias'),
+                  );
+                }
 
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+                if (state is ListarCategoriasLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-                    var categorias = snapshot.data ?? [];
+                if (state is ListarCategoriasSuccess) {
+                  return CategoriaListComponent(
+                    categorias: state.categorias,
+                    selectedCategoriaId: widget.selectedCategoriaId,
+                    tipoCategoria: widget.tipoCategoria,
+                  );
+                }
 
-                    return CategoriaListComponent(
-                      categorias: categorias,
-                      selectedCategoriaId: widget.selectedCategoriaId,
-                      tipoCategoria: widget.tipoCategoria,
-                    );
-                  },
-                );
+                return Container();
               },
             ),
           ),

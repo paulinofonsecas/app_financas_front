@@ -12,7 +12,7 @@ class SaldosService implements ISaldosService {
   late final IContaService contaService;
 
   SaldosService(this.movimentoService) {
-    contaService = locator();
+    contaService = getIt();
   }
 
   @override

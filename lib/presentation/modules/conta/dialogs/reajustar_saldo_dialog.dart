@@ -44,7 +44,7 @@ class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: locator<ReajustarSaldoCubit>(),
+      value: getIt<ReajustarSaldoCubit>(),
       child: BlocConsumer<ReajustarSaldoCubit, ReajustarSaldoState>(
         listenWhen: (old, state) =>
             old != state && state is ReajustarSaldoSuccess,

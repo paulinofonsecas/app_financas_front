@@ -15,7 +15,7 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
   late final IContaService contaService;
 
   ContaBloc() : super(ContaInitial()) {
-    contaService = locator();
+    contaService = getIt();
 
     on<ListarContasEvent>(_onListarContas);
     on<ListarContasAtEvent>(_onListarContasAt);

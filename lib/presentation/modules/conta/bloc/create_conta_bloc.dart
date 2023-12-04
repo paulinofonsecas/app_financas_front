@@ -23,8 +23,8 @@ class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
   late final IMovimentoService _movimentoService;
 
   CreateContaBloc() : super(CreateContaInitial()) {
-    contaService = locator();
-    _movimentoService = locator();
+    contaService = getIt();
+    _movimentoService = getIt();
 
     on<GravarContaEvent>(_onGravarContaEvent);
   }
@@ -80,7 +80,8 @@ class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
         if (result0 is Right) {
           emit(CreateContaSuccess(conta));
         } else {
-          emit(const CreateContaError(errorMessage: 'Erro criar o saldo inicial.'));
+          emit(const CreateContaError(
+              errorMessage: 'Erro criar o saldo inicial.'));
         }
       } else {
         emit(const CreateContaError(errorMessage: 'Erro ao criar a conta.'));

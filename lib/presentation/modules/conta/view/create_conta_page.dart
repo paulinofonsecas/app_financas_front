@@ -29,7 +29,7 @@ class _CreateContaPageState extends State<CreateContaPage> {
           create: (context) => CreateContaThemeCubit(),
         ),
         BlocProvider(
-          create: (context) => InstituicaoFinanceiraCubit(locator()),
+          create: (context) => InstituicaoFinanceiraCubit(getIt()),
         ),
         BlocProvider(
           create: (context) => TipoContaCubit(),
