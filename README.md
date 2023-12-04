@@ -42,10 +42,10 @@ Here are the technologies used in this project.
 
 ### Extrutura do projeto
   #### Arquitetura de dados
-  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png" height="300em" />
+  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png" height="600em" />
   
   #### Extrutura de pastas
-  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png" height="300em" />
+  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png" height="600em" />
 
 
 ## Features
