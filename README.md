@@ -26,13 +26,6 @@ Here are the technologies used in this project.
 
 ## Getting started
 
-### Extrutura do projeto
-  #### Arquitetura de dados
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
-  
-  #### Extrutura de pastas
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
-
 ### Como executar este projeto
 * Instale o git na tua maquina seguindo este artigo [Como instalar e configurar o Git no windows](https://dev.to/womakerscode/tutorial-instalando-configurando-e-inicializando-o-git-no-windows-57cj)
 * Instale o flutter seguindo este artigo da documentação oficial [Como instalar e configurar o flutter](https://docs.flutter.dev/get-started/install)
@@ -47,91 +40,76 @@ Here are the technologies used in this project.
   flutter run -d chrome
   ```
 
+### Extrutura do projeto
+  #### Arquitetura de dados
+  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
+  
+  #### Extrutura de pastas
+  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
+
+
 ## How to use
 
-### 1 - When you access the project, you will see this Home page.
+### 1 - Tela principal.
 
-![Homepage image]()
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png)
+![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png)
 
-### 2 - You can Login in the system if you have an account registered.
 
-![Login](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/16.png)
+### 2 - Gestão de contas.
 
-### 3 - Or simply create your account.
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png)
+![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png)
 
-![Sign up](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/15.png)
+### 3 - Estatisticas.
 
-### 4 - This is the Dashboard!
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png)
+![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png)
 
-![Dashboard](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/14.png)
-![Dashboard](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/13.png)
+### 4 - Registar transação
 
-### 5 - You can see more of an album clicking above it.
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png)
+![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png)
 
-![Dashboard](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/12.png)
-![Dashboard](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/11.png)
+### 5 - Editar transação.
 
-### 6 - You can also search a music, artist or an album accord of it's category!!
-
-![Search tab](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/10.png)
-
-### 7 - Clicking on the category, will return:
-
-  #### 7.1 - It's albums registered.
-
-![Search Albums tab](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/9.png)
-
-  #### 7.2 - It's artists.
-
-![Search Artists tab](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/8.png)
-
-  #### 7.3 - It's musics.
-
-![Search Musics tab](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/7.png)
-
-### 8 - Clicking on the artist, you can see it's perfil like the image above.
-
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/6.png)
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/5.png)
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/4.png)
-
-### 9 - You can access the favorite's tab too like:
-  #### 9.1 - Favorite Albums.
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/3.png)
-
-  #### 9.2 - Favorite Artists.
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/2.png)
-
-  #### 9.3 - Favorite Musics.
-![Artist show](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/1.png)
-
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png)
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png)
+![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png)
 
 ## Features
 
 The main features of the application are:
- - Listen Songs.
- - Favorite Albums.
- - Favorite Artists.
- - Favorite Musics.
- - See Album's perfil.
- - See Artist's perfil.
- - Search albums, musics and artists.
-
+ - Registar entradas e saidas.
+ - Visualizar transação.
+ - Editar transação.
+ - Adicionar e gerenciar categorias.
+ - Adicionar e gerenciar contas.
+ - Reajustar fundo de conta.
+ - Visualizar historico de transações e graficos.
 
 ## Links
-  - Repository: https://github.com/Lucasdfg07/Spotify_clone
-    - In case of sensitive bugs like security vulnerabilities, please contact
-      Lucassiqueiraferandes07@gmail.com directly instead of using issue tracker. We value your effort
-      to improve the security and privacy of this project!
+  - Mobills App de finanças: [Site oficial da Mobills](https://www.mobills.com.br/)
+    - Foi usado o App do IOS para inspiração de desigin e funcionalidades!
 
   ## Versioning
 
-  1.0.0.0
+  1.0.1+2
 
 
   ## Authors
 
-  * **Lucas Siqueira Fernandes** 
-
-  Please follow github and join us!
-  Thanks to visiting me and good coding!
+  * **Paulino Fonseca** 
