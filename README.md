@@ -1,5 +1,5 @@
 
-![Logo of the project](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/logo.jpg)
+![Logo of the project](https://github.com/paulinofonsecas/app_financas_front/raw/main/readme/imgs/logo.jpg){:height="64px" width="64px"} 
 
 
 ## KzGest
@@ -28,7 +28,9 @@ Here are the technologies used in this project.
 
 ### Extrutura do projeto
   #### Arquitetura de dados
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)|#### Extrutura de pastas
+  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
+  
+  #### Extrutura de pastas
   ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
 
 ### Como executar este projeto
