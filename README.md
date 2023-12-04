@@ -38,6 +38,8 @@ Aqui estão as tecnologias utilizadas neste projeto.
   ```shell
   flutter run -d chrome
   ```
+### Rode a versão hopedada na web
+[KzGest](https://kzgest.web.app/)
 
 ### Estrutura do Projeto
   #### Arquitetura de Dados
