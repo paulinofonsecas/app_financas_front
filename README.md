@@ -28,28 +28,29 @@ Here are the technologies used in this project.
 
 ### Extrutura do projeto
   #### Arquitetura de dados
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
-
+  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)|
   #### Extrutura de pastas
   ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
 
 ### Como executar este projeto
 * Instale o git na tua maquina seguindo este artigo [Como instalar e configurar o Git no windows](https://dev.to/womakerscode/tutorial-instalando-configurando-e-inicializando-o-git-no-windows-57cj)
 * Instale o flutter seguindo este artigo da documentação oficial [Como instalar e configurar o flutter](https://docs.flutter.dev/get-started/install)
-- Baixe as dependencias do projeto
+* Baixe as dependencias do projeto
+  
   ```shell
   flutter pub get
   ```
 * Execute o projeto no navegador
+
   ```shell
   flutter run -d chrome
   ```
 
 ## How to use
 
-### 1 - When you access the project, you will see this initial page.
+### 1 - When you access the project, you will see this Home page.
 
-![Homepage image](https://github.com/Lucasdfg07/Spotify_clone/blob/master/public/readme_photos/17.png)
+![Homepage image]()
 
 ### 2 - You can Login in the system if you have an account registered.
 
