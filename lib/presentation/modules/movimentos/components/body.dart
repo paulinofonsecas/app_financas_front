@@ -31,7 +31,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    homePageCubit = locator();
+    homePageCubit = getIt();
     pagingController = PagingController(firstPageKey: 1);
 
     pagingController.addPageRequestListener((pageKey) {

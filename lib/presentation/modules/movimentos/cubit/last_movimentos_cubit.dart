@@ -12,7 +12,7 @@ class ListMovimentosCubit extends Cubit<LastMovimentosState> {
   late final MovimentoBloc _movimentoBloc;
 
   ListMovimentosCubit() : super(LastMovimentosInitialState()) {
-    _movimentoBloc = locator();
+    _movimentoBloc = getIt();
 
     _movimentoBloc.stream.listen((event) {
       if (event is MovimentoGetMovimentosListOfDaySucess) {

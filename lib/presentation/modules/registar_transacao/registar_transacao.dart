@@ -1,13 +1,19 @@
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/presentation/helders/helpers.dart';
 
 import 'controllers/registar_transacao_controller.dart';
+import 'cubit/confirmar_transacao_cubit.dart';
+import 'cubit/descricao_text_cubit.dart';
+import 'cubit/obs_text_cubit.dart';
+import 'cubit/select_data_cubit.dart';
+import 'cubit/switch_transacao_cubit.dart';
+import 'cubit/valor_transacao_cubit.dart';
 
 class RegistarTransacaoPage extends StatelessWidget {
   const RegistarTransacaoPage({
@@ -21,15 +27,37 @@ class RegistarTransacaoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RegistarTransacaoView(
-      movimentoType: movimentoType,
-      contaId: contaId,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ConfirmarTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SwitchTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ValorTransacaoCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SelectDataCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DescricaoTextCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ObsTextCubit(),
+        ),
+      ],
+      child: _RegistarTransacaoView(
+        movimentoType: movimentoType,
+        contaId: contaId,
+      ),
     );
   }
 }
 
-class RegistarTransacaoView extends StatelessWidget {
-  const RegistarTransacaoView({
+class _RegistarTransacaoView extends StatelessWidget {
+  const _RegistarTransacaoView({
     Key? key,
     required this.movimentoType,
     this.contaId,
@@ -44,58 +72,87 @@ class RegistarTransacaoView extends StatelessWidget {
       movimentoType: movimentoType,
     ));
 
-    return GetBuilder(
-      init: controller,
-      id: 'geral',
-      builder: (c) {
-        return Theme(
-          data: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor:
-                  controller.movimentoType == 1 ? kVerdeColor : kVermelhaColor,
-              brightness: Theme.of(context).brightness,
-            ),
+    return Builder(builder: (context) {
+      var switchCubit = context.watch<SwitchTransacaoCubit>();
+      var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+
+      return Theme(
+        data: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: isEntrada ? kVerdeColor : kVermelhaColor,
+            brightness: Theme.of(context).brightness,
           ),
-          child: Builder(builder: (context) {
-            var isDarkMode = Theme.of(context).brightness == Brightness.dark;
-            return Scaffold(
-              backgroundColor: isDarkMode
-                  ? Theme.of(context).colorScheme.shadow
-                  : isReceita(controller.movimentoType)
-                      ? kVerdeColor
-                      : kVermelhaColor,
-              body: SafeArea(
-                bottom: false,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Body(contaId: contaId),
-                    _BuildActionButton(
-                      movimentoType: controller.movimentoType,
-                      controller: controller,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-        );
-      },
+        ),
+        child: _BodySection(
+          controller: controller,
+          contaId: contaId,
+        ),
+      );
+    });
+  }
+}
+
+class _BodySection extends StatelessWidget {
+  const _BodySection({
+    required this.controller,
+    required this.contaId,
+  });
+
+  final RegistarTransacaoController controller;
+  final int? contaId;
+
+  @override
+  Widget build(BuildContext context) {
+    var switchCubit = context.watch<SwitchTransacaoCubit>();
+    var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+    var isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: isDarkMode
+          ? Theme.of(context).colorScheme.shadow
+          : isEntrada
+              ? kVerdeColor
+              : kVermelhaColor,
+      body: SafeArea(
+        bottom: false,
+        child: _RegistarTransacaoBody(
+          contaId: contaId,
+          controller: controller,
+        ),
+      ),
     );
   }
 }
 
-class _BuildActionButton extends StatelessWidget {
-  const _BuildActionButton({
-    required this.movimentoType,
+class _RegistarTransacaoBody extends StatelessWidget {
+  const _RegistarTransacaoBody({
+    required this.contaId,
     required this.controller,
   });
 
-  final int movimentoType;
+  final int? contaId;
   final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Body(contaId: contaId),
+        const _SalvarActionButton(),
+      ],
+    );
+  }
+}
+
+class _SalvarActionButton extends StatelessWidget {
+  const _SalvarActionButton();
+
+  @override
+  Widget build(BuildContext context) {
+    var switchCubit = context.watch<SwitchTransacaoCubit>();
+    var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Column(
@@ -103,14 +160,10 @@ class _BuildActionButton extends StatelessWidget {
         children: [
           DefaultActionButton(
             text: 'Salvar',
-            backgroundColor:
-                movimentoType == 1 ? kVerdeForteColor : kVermelhaForteColor,
+            backgroundColor: isEntrada ? kVerdeForteColor : kVermelhaForteColor,
             foregroundColor: Colors.white,
-            onPressed: () async {
-              await controller.finalizarMovimento();
-              if (controller.salvo) {
-                Get.back(closeOverlays: true);
-              }
+            onPressed: () {
+              // context.read<RegistarTransacaoBloc>().add(SaveTransacaoEvent());
             },
           ),
           const GutterLarge(),

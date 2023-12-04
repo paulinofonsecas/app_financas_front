@@ -17,8 +17,8 @@ class HomePageCubit extends Cubit<HomePageState> {
   final int pageSize = 10;
 
   HomePageCubit() : super(HomePageInitialState()) {
-    _movimentoBloc = locator();
-    _saldosService = locator();
+    _movimentoBloc = getIt();
+    _saldosService = getIt();
 
     _movimentoBloc.stream.listen(onMovimento);
   }

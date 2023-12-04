@@ -2,6 +2,7 @@
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/gerir_categorias_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
+import '../../../modules/registar_transacao/cubit/select_categoria_cubit.dart';
 import 'bottom_category_comp_controller.dart';
 import '../../criar_categoria/criar_categoria_component.dart';
 import 'categoria_item_component.dart';
@@ -22,7 +24,7 @@ class CategoriaListComponent extends StatelessWidget {
   }) : super(key: key);
 
   final List<Categoria> categorias;
-  final int selectedCategoriaId;
+  final int? selectedCategoriaId;
   final TipoCategoria tipoCategoria;
 
   @override
@@ -41,6 +43,9 @@ class CategoriaListComponent extends StatelessWidget {
                 return CategoriaItem(
                   onTap: () {
                     controller.searchTextController.clear();
+                    context
+                        .read<SelectCategoriaCubit>()
+                        .selectedCategoria(categoria);
                     Navigator.of(context).pop(categoria);
                   },
                   categoria: categoria,

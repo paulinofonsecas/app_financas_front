@@ -1,9 +1,11 @@
+import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/registar_transacao_controller.dart';
+import '../cubit/confirmar_transacao_cubit.dart';
 
 class SelectDateComponent extends StatelessWidget {
   const SelectDateComponent({
@@ -12,26 +14,33 @@ class SelectDateComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<RegistarTransacaoController>();
+    var selectDataCubit = context.watch<SelectDataCubit>();
+
     return Row(
       children: [
-        GetBuilder(
-          init: controller,
-          builder: (context) {
-            return Expanded(
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  hintText: controller.getSelectedDate(),
-                  hintStyle: GoogleFonts.inter().copyWith(
+        Expanded(
+          child: BlocBuilder<SelectDataCubit, SelectDataState>(
+            bloc: selectDataCubit,
+            builder: (context, state) {
+              if (state is SelectDataSuccess || state is SelectDataInitial) {
+                return Text(
+                  verboseDateFormat.format(state.date),
+                  style: GoogleFonts.inter().copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
-                  border: InputBorder.none,
+                );
+              }
+
+              return Text(
+                'Ocorreu um erro',
+                style: GoogleFonts.inter().copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         const Gutter(),
         TextButton(
@@ -40,7 +49,13 @@ class SelectDateComponent extends StatelessWidget {
                 Theme.of(context).colorScheme.surfaceTint.withOpacity(.1),
           ),
           onPressed: () {
-            controller.selecionarDateTime(context);
+            var confirmarTransacaoCubit =
+                context.read<ConfirmarTransacaoCubit>();
+
+            selectDataCubit.selecionarDateTime(
+              context,
+              confirmarTransacaoCubit,
+            );
           },
           child: const Text('Selecionar data'),
         ),

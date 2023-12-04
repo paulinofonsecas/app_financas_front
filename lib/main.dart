@@ -19,6 +19,8 @@ import 'package:intl/intl.dart';
 import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
 import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
+import 'presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
+import 'presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,19 +34,19 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => locator<AppBloc>(),
+          create: (_) => getIt<AppBloc>(),
         ),
         BlocProvider(
-          create: (context) => locator<MovimentoBloc>(),
+          create: (context) => getIt<MovimentoBloc>(),
         ),
         BlocProvider(
-          create: (context) => locator<AppThemeCubit>(),
+          create: (context) => getIt<AppThemeCubit>(),
         ),
         BlocProvider(
-          create: (context) => locator<ContaBloc>(),
+          create: (context) => getIt<ContaBloc>(),
         ),
         BlocProvider(
-          create: (c)       => locator<ReajustarSaldoCubit>(),
+          create: (c) => getIt<ReajustarSaldoCubit>(),
         ),
         BlocProvider(
           create: (context) => CreateContaBloc(),
@@ -54,6 +56,12 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => BottomSheetContaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ListarCategoriaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SelectCategoriaCubit(),
         ),
       ],
       child: DevicePreview(

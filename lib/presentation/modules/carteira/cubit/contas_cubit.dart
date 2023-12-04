@@ -11,7 +11,7 @@ class ContasCubit extends Cubit<ContasState> {
   late final ContaBloc _contaBloc;
 
   ContasCubit() : super(ContasInitial()) {
-    _contaBloc = locator();
+    _contaBloc = getIt();
 
     _contaBloc.stream.listen((state) {
       if (state is ListarContasLoading) {

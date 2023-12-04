@@ -1,21 +1,87 @@
-import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 
-class CategoryListItemComponent extends StatelessWidget {
+import '../cubit/select_categoria_cubit.dart';
+
+class CategoryListItemComponent extends StatefulWidget {
   const CategoryListItemComponent({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var controller = Get.find<RegistarTransacaoController>();
+  State<CategoryListItemComponent> createState() =>
+      _CategoryListItemComponentState();
+}
 
+class _CategoryListItemComponentState extends State<CategoryListItemComponent> {
+  @override
+  void initState() {
+    var isEntrada =
+        context.read<SwitchTransacaoCubit>().state is SwitchTransacaoEntrada;
+    context.read<SelectCategoriaCubit>().selectDefaultCategoria(isEntrada);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SwitchTransacaoCubit, SwitchTransacaoState>(
+      listener: (context, state) {
+        var isEntrada = state is SwitchTransacaoEntrada;
+        context.read<SelectCategoriaCubit>().selectDefaultCategoria(isEntrada);
+      },
+      builder: (_, switchState) {
+        return BlocBuilder<SelectCategoriaCubit, SelectCategoriaState>(
+          buildWhen: (previous, current) => previous != current,
+          builder: (context, state) {
+            var isEntrada = switchState is SwitchTransacaoEntrada;
+
+            if (state is SelectCategoriaLoading) {
+              return const Center(
+                child: SizedBox.square(
+                  dimension: 25,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            if (state is SelectCategoriaError) {
+              return const Text('Ocorreu um erro');
+            }
+
+            if (state is SelectCategoriaChanged) {
+              return _CategoriaItemWidget(
+                isEntrada: isEntrada,
+                categoria: state.categoria,
+              );
+            }
+            return const SizedBox();
+          },
+        );
+      },
+    );
+  }
+}
+
+class _CategoriaItemWidget extends StatelessWidget {
+  const _CategoriaItemWidget({
+    required this.categoria,
+    required this.isEntrada,
+  });
+
+  final bool isEntrada;
+  final Categoria categoria;
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        controller.selectCategory(
+        BottomCategoryComponent.openModalBottomSheet(
           context,
+          isEntrada ? TipoCategoria.entrada : TipoCategoria.saida,
+          categoria.id,
         );
       },
       child: Row(
@@ -32,63 +98,17 @@ class CategoryListItemComponent extends StatelessWidget {
                 width: 1,
               ),
             ),
-            child: GetBuilder(
-                init: controller,
-                id: 'category',
-                builder: (context) {
-                  return FutureBuilder<Categoria?>(
-                    future: controller.getCategoriaSelecionada(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text(
-                            'Error',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        );
-                      }
-
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      if (snapshot.hasData && snapshot.data == null) {
-                        return const Center(
-                          child: Text(
-                            'Categoria invalida',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        );
-                      }
-
-                      if (snapshot.hasData &&
-                          snapshot.data == Categoria.fake()) {
-                        return const Center(
-                          child: Text(
-                            'Categoria invalida',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        );
-                      }
-
-                      var category = snapshot.data!;
-
-                      return Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            category.icon ?? Icons.category_outlined,
-                            size: 18,
-                          ),
-                          const GutterSmall(),
-                          Text(category.name),
-                        ],
-                      );
-                    },
-                  );
-                }),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  categoria.icon ?? Icons.category_outlined,
+                  size: 18,
+                ),
+                const GutterSmall(),
+                Text(categoria.name),
+              ],
+            ),
           ),
           const Spacer(),
           const Icon(Icons.chevron_right),
