@@ -7,4 +7,11 @@ sealed class RegistarTransacaoEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SaveTransacaoEvent extends RegistarTransacaoEvent {}
+class SalvarTransacaoEvent extends RegistarTransacaoEvent {
+  const SalvarTransacaoEvent(this.context);
+
+  final BuildContext context;
+
+  @override
+  List<Object> get props => [context];
+}
