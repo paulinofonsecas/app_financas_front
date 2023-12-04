@@ -30,17 +30,20 @@ Here are the technologies used in this project.
   #### Arquitetura de dados
   ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
 
-* To create and build your database accord of the project.
-  - rake db:create db:migrate
-  
-* To create the previous files to use on the project, on the database.
-  - rake db:seed
-  
-* To install the gems.
-  - bundle install
-  
-* To run the project.
-  - rails s
+  #### Extrutura de pastas
+  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
+
+### Como executar este projeto
+* Instale o git na tua maquina seguindo este artigo [Como instalar e configurar o Git no windows](https://dev.to/womakerscode/tutorial-instalando-configurando-e-inicializando-o-git-no-windows-57cj)
+* Instale o flutter seguindo este artigo da documentação oficial [Como instalar e configurar o flutter](https://docs.flutter.dev/get-started/install)
+- Baixe as dependencias do projeto
+  ```shell
+  flutter pub get
+  ```
+* Execute o projeto no navegador
+  ```shell
+  flutter run -d chrome
+  ```
 
 ## How to use
 
