@@ -42,10 +42,10 @@ Here are the technologies used in this project.
 
 ### Extrutura do projeto
   #### Arquitetura de dados
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png)
+  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png" height="300em" />
   
   #### Extrutura de pastas
-  ![Arquitetura do projeto](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png)
+  <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png" height="300em" />
 
 
 ## Features
@@ -75,61 +75,63 @@ The main features of the application are:
 
 ## How to use
 
+
+
 ### 1 - Tela principal.
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_1.png" height="300em" />
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_2.png" height="300em" />
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_3.png" height="300em" />
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_4.png" height="300em" />
 
-![Homepage](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/home/home_5.png" height="300em" />
 
 
 ### 2 - Gestão de contas.
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_1.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_2.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_3.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_4.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_5.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_6.png" height="300em" />
 
-![Contas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/contas/contas_7.png" height="300em" />
 
 ### 3 - Estatisticas.
 
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_1.png" height="300em" />
 
-![Estatisticas](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/estatisticas/estatistica_2.png" height="300em" />
 
 ### 4 - Registar transação
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_1.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_2.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_3.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_4.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_5.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/reg_trans_6.png" height="300em" />
 
-![Registar transacao](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/registar_transacao/7.png" height="300em" />
 
 ### 5 - Editar transação.
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_1.png" height="300em" />
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_2.png" height="300em" />
 
-![Editar transação](https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png =365x728)
+<img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/editar_transacao/edit_trans_3.png" height="300em" />
