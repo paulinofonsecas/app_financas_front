@@ -3,33 +3,32 @@
 
 
 ## KzGest
-KzGest é um aplicativo de gestão financeira pessoal. O app permite o registo das entradas e sadas com o objetivos de rastrear o modo que usas o teu dinheiro
+KzGest é um aplicativo de gestão financeira pessoal. O app permite o registro das entradas e saídas com o objetivo de rastrear o modo como você utiliza o seu dinheiro.
 
+## Tecnologia 
 
-## Technology 
-
-Here are the technologies used in this project.
+Aqui estão as tecnologias utilizadas neste projeto.
 
 * flutter 3.16.0
 * flutter_bloc 8.1.3
 * hive 2.2.3
 
-## Services Used
+## Serviços Utilizados
 
 * Firebase serve
 
-## Gestão de estado
+## Gestão de Estado
 
 * GetX (migrando para flutter_bloc)
 * flutter_bloc
 
 
-## Getting started
+## Iniciando
 
 ### Como executar este projeto
-* Instale o git na tua maquina seguindo este artigo [Como instalar e configurar o Git no windows](https://dev.to/womakerscode/tutorial-instalando-configurando-e-inicializando-o-git-no-windows-57cj)
+* Instale o git na sua máquina seguindo este artigo [Como instalar e configurar o Git no Windows](https://dev.to/womakerscode/tutorial-instalando-configurando-e-inicializando-o-git-no-windows-57cj)
 * Instale o flutter seguindo este artigo da documentação oficial [Como instalar e configurar o flutter](https://docs.flutter.dev/get-started/install)
-* Baixe as dependencias do projeto
+* Baixe as dependências do projeto
   
   ```shell
   flutter pub get
@@ -40,39 +39,37 @@ Here are the technologies used in this project.
   flutter run -d chrome
   ```
 
-### Extrutura do projeto
-  #### Arquitetura de dados
+### Estrutura do Projeto
+  #### Arquitetura de Dados
   <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/arquitetura_do_projeto.png" height="600em" />
   
-  #### Extrutura de pastas
+  #### Estrutura de Pastas
   <img src="https://github.com/paulinofonsecas/app_financas_front/blob/main/readme/imgs/extrutura_de_pasta.png" height="600em" />
 
 
-## Features
+## Funcionalidades
 
-The main features of the application are:
- - Registar entradas e saidas.
- - Visualizar transação.
- - Editar transação.
+As principais funcionalidades do aplicativo são:
+ - Registrar entradas e saídas.
+ - Visualizar transações.
+ - Editar transações.
  - Adicionar e gerenciar categorias.
  - Adicionar e gerenciar contas.
  - Reajustar fundo de conta.
- - Visualizar historico de transações e graficos.
+ - Visualizar histórico de transações e gráficos.
 
 ## Links
   - Mobills App de finanças: [Site oficial da Mobills](https://www.mobills.com.br/)
-    - Foi usado o App do IOS para inspiração de desigin e funcionalidades!
+    - Foi usado o App do iOS como inspiração de design e funcionalidades!
 
-  ## Versioning
+  ## Versionamento
 
   1.0.1+2
 
 
-  ## Authors
+  ## Autores
 
   * **Paulino Fonseca** 
-
-
 
 ## How to use
 
