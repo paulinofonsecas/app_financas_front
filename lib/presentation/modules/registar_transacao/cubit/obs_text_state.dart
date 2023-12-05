@@ -6,7 +6,7 @@ sealed class ObsTextState extends Equatable {
   final String obs;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [obs];
 }
 
 final class ObsTextInitial extends ObsTextState {

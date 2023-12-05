@@ -1,11 +1,9 @@
-import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../cubit/valor_transacao_cubit.dart';
@@ -19,41 +17,35 @@ class RegisterHeader extends StatelessWidget {
     var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
 
     var isDark = Theme.of(context).brightness == Brightness.dark;
-    var controller = Get.find<RegistarTransacaoController>();
 
     var size = MediaQuery.of(context).size;
-    return GetBuilder(
-        init: controller,
-        id: 'geral',
-        builder: (c) {
-          return Container(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            constraints: BoxConstraints(
-              minHeight: size.height * .17,
-            ),
-            decoration: BoxDecoration(
-              color: isDark
-                  ? Theme.of(context).colorScheme.shadow
-                  : isEntrada
-                      ? kVerdeColor
-                      : kVermelhaColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Stack(
-                  children: [
-                    _CancelarButton(),
-                    _SwitchTransactionButton(),
-                  ],
-                ),
-                const GutterLarge(),
-                _ValorTextWidget(controller: controller),
-                const Gutter(),
-              ],
-            ),
-          );
-        });
+    return Container(
+      padding: const EdgeInsets.all(kDefaultPadding),
+      constraints: BoxConstraints(
+        minHeight: size.height * .17,
+      ),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Theme.of(context).colorScheme.shadow
+            : isEntrada
+                ? kVerdeColor
+                : kVermelhaColor,
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              _CancelarButton(),
+              _SwitchTransactionButton(),
+            ],
+          ),
+          GutterLarge(),
+          _ValorTextWidget(),
+          Gutter(),
+        ],
+      ),
+    );
   }
 }
 
@@ -78,11 +70,7 @@ class _CancelarButton extends StatelessWidget {
 }
 
 class _ValorTextWidget extends StatelessWidget {
-  const _ValorTextWidget({
-    required this.controller,
-  });
-
-  final RegistarTransacaoController controller;
+  const _ValorTextWidget();
 
   @override
   Widget build(BuildContext context) {

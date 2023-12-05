@@ -8,11 +8,13 @@ class DefaultActionButton extends StatelessWidget {
     Key? key,
     required this.text,
     this.onPressed,
+    this.style,
     this.backgroundColor,
     this.foregroundColor,
   }) : super(key: key);
 
   final String text;
+  final ButtonStyle? style;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -20,7 +22,7 @@ class DefaultActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      style: FilledButton.styleFrom(
+      style: style ?? FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding * 2.8,
           vertical: kDefaultPadding / 1.5,

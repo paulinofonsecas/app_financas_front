@@ -70,11 +70,8 @@ class CategoriaListComponent extends StatelessWidget {
                   });
                 },
               ),
-              // CustomListTileAction(
-              //   title: 'Criar subcategoria',
-              //   icon: Icons.add,
-              //   onTap: () {},
-              // ),
+
+              // listItem gerenciar categorias
               CustomListTileAction(
                 title: 'Gerenciar categorias',
                 icon: Icons.settings,

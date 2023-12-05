@@ -1,7 +1,6 @@
-import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/criar_categoria_controller.dart';
 
@@ -13,50 +12,36 @@ class FooterSectionComponent extends StatelessWidget {
     var controller = Get.find<CriarCategoriaController>();
     return Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        OutlinedButton(
+        DefaultActionButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           style: OutlinedButton.styleFrom(
-            minimumSize: Size(Get.size.width / 2.5, 50),
-            padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding * 3,
-              vertical: kDefaultPadding,
-            ),
             side: const BorderSide(
               color: Colors.purple,
               width: 2,
             ),
-            foregroundColor: Colors.purple,
+            backgroundColor: Colors.transparent,
           ),
-          child: Text(
-            'Cancelar',
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          foregroundColor: Colors.purple,
+          text: 'Cancelar',
         ),
-        ElevatedButton(
+        DefaultActionButton(
           onPressed: () {
             controller.cadastrarCategoria().then((value) {
               Navigator.of(context).pop();
             });
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.purple,
-            foregroundColor: Colors.white,
-            minimumSize: Size(Get.size.width / 2.5, 50),
-          ),
-          child: Text(
-            'salvar',
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(
+              color: Colors.purple,
+              width: 2,
             ),
+            backgroundColor: Colors.purple,
           ),
+          text: 'Salvar',
         ),
       ],
     );
