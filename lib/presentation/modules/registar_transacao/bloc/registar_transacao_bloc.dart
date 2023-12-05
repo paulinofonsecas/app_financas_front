@@ -45,7 +45,7 @@ class RegistarTransacaoBloc
     }
 
     var valorTransacao = getValorTransacao(context, emit);
-    if (valorTransacao == null || valorTransacao <= 0) {
+    if (valorTransacao == null) {
       showErrorMessage('Valor', 'Coloque um valor correto para o movimento');
       return;
     }
@@ -60,7 +60,7 @@ class RegistarTransacaoBloc
     }
 
     var obs = getObsTransacao(context, emit);
-    if (obs == null || obs.isEmpty) {
+    if (obs == null) {
       showErrorMessage('Obs invalida',
           'Ocorreu um erro ao validar a observação. Tente novamente');
       return;

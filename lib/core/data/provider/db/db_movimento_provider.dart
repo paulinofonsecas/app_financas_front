@@ -33,9 +33,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
         return Left(ValorInvalido('Saldo invalido ${movimento.valor}'));
       }
 
-      if (!(await saldoIsSuficiente(movimento))) {
-        return Left(SaldoInsuficiente('Saldo insuficiente'));
-      }
+      // if (!(await saldoIsSuficiente(movimento))) {
+      //   return Left(SaldoInsuficiente('Saldo insuficiente'));
+      // }
 
       movimento = movimento.copyWith(
         valor: movimento.valor,
@@ -149,9 +149,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
         lastId = _movimentosBox.keys.last + 1;
       }
 
-      if (!(await saldoIsSuficiente(movimento))) {
-        return Left(SaldoInsuficiente('Saldo insuficiente'));
-      }
+      // if (!(await saldoIsSuficiente(movimento))) {
+      //   return Left(SaldoInsuficiente('Saldo insuficiente'));
+      // }
 
       movimento = movimento.copyWith(id: lastId);
       var map = movimento.toMap();
