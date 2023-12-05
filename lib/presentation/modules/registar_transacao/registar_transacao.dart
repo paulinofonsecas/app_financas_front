@@ -30,7 +30,7 @@ class RegistarTransacaoPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SwitchTransacaoCubit(),
+          create: (context) => SwitchTransacaoCubit(movimentoType),
         ),
         BlocProvider(
           create: (context) => ValorTransacaoCubit(),
