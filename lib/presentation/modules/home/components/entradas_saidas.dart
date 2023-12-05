@@ -6,6 +6,7 @@ import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.d
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -47,6 +48,14 @@ class _EntradasESaidasState extends State<EntradasESaidas> {
         BlocListener<CreateContaBloc, CreateContaState>(
           listener: (context, state) {
             if (state is CreateContaSuccess) {
+              context.read<HomePageCubit>().getSaldoTotalEntradas();
+              context.read<HomePageCubit>().getSaldoTotalSaidas();
+            }
+          },
+        ),
+        BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
+          listener: (context, state) {
+            if (state is RegistarTransacaoSuccess) {
               context.read<HomePageCubit>().getSaldoTotalEntradas();
               context.read<HomePageCubit>().getSaldoTotalSaidas();
             }

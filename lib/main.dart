@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
 import 'presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
+import 'presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 
@@ -35,6 +36,9 @@ Future<void> main() async {
       providers: [
         BlocProvider(
           create: (_) => getIt<AppBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => RegistarTransacaoBloc(),
         ),
         BlocProvider(
           create: (context) => getIt<MovimentoBloc>(),

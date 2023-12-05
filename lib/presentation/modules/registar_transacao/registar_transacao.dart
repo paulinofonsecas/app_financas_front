@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/components/default_action_button.dart';
+import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
 
+import 'bloc/registar_transacao_bloc.dart';
 import 'controllers/registar_transacao_controller.dart';
 import 'cubit/confirmar_transacao_cubit.dart';
 import 'cubit/descricao_text_cubit.dart';
@@ -30,19 +32,22 @@ class RegistarTransacaoPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ConfirmarTransacaoCubit(),
-        ),
-        BlocProvider(
           create: (context) => SwitchTransacaoCubit(),
         ),
         BlocProvider(
           create: (context) => ValorTransacaoCubit(),
         ),
         BlocProvider(
+          create: (context) => ConfirmarTransacaoCubit(),
+        ),
+        BlocProvider(
           create: (context) => SelectDataCubit(),
         ),
         BlocProvider(
           create: (context) => DescricaoTextCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SelectContaCubit(),
         ),
         BlocProvider(
           create: (context) => ObsTextCubit(),
@@ -68,27 +73,32 @@ class _RegistarTransacaoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(RegistarTransacaoController(
-      movimentoType: movimentoType,
-    ));
+    var switchCubit = context.watch<SwitchTransacaoCubit>();
+    var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
+    var controller =
+        Get.put(RegistarTransacaoController(movimentoType: movimentoType));
 
-    return Builder(builder: (context) {
-      var switchCubit = context.watch<SwitchTransacaoCubit>();
-      var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
-
-      return Theme(
-        data: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: isEntrada ? kVerdeColor : kVermelhaColor,
-            brightness: Theme.of(context).brightness,
+    return BlocConsumer<RegistarTransacaoBloc, RegistarTransacaoState>(
+      listener: (context, state) {
+        if (state is RegistarTransacaoSuccess) {
+          Navigator.pop(context);
+        }
+      },
+      builder: (context, state) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: isEntrada ? kVerdeColor : kVermelhaColor,
+              brightness: Theme.of(context).brightness,
+            ),
           ),
-        ),
-        child: _BodySection(
-          controller: controller,
-          contaId: contaId,
-        ),
-      );
-    });
+          child: _BodySection(
+            controller: controller,
+            contaId: contaId,
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -163,7 +173,9 @@ class _SalvarActionButton extends StatelessWidget {
             backgroundColor: isEntrada ? kVerdeForteColor : kVermelhaForteColor,
             foregroundColor: Colors.white,
             onPressed: () {
-              // context.read<RegistarTransacaoBloc>().add(SaveTransacaoEvent());
+              context
+                  .read<RegistarTransacaoBloc>()
+                  .add(SalvarTransacaoEvent(context));
             },
           ),
           const GutterLarge(),

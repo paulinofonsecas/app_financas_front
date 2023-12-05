@@ -4,6 +4,7 @@ import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_t
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/home/components/card_widget.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,6 +52,13 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
           BlocListener<CreateContaBloc, CreateContaState>(
             listener: (context, state) {
               if (state is CreateContaSuccess) {
+                homePageCubit.getSaldoTotal();
+              }
+            },
+          ),
+          BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
+            listener: (context, state) {
+              if (state is RegistarTransacaoSuccess) {
                 homePageCubit.getSaldoTotal();
               }
             },

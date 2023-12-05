@@ -1,19 +1,13 @@
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
+import 'package:app_financas/core/domain/services/i_movimento_service.dart';
+import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/campos_mixin.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/confirmar_transacao_cubit.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/descricao_text_cubit.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/obs_text_cubit.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_data_cubit.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../cubit/valor_transacao_cubit.dart';
 
 part 'registar_transacao_event.dart';
 part 'registar_transacao_state.dart';
@@ -32,8 +26,11 @@ class RegistarTransacaoBloc
     extends Bloc<RegistarTransacaoEvent, RegistarTransacaoState>
     with CamposMixin {
   RegistarTransacaoBloc() : super(RegistarTransacaoInitial()) {
+    _movimentoService = getIt();
     on<SalvarTransacaoEvent>(onRegistarTransacao);
   }
+
+  late final IMovimentoService _movimentoService;
 
   void onRegistarTransacao(
     SalvarTransacaoEvent event,
@@ -50,17 +47,22 @@ class RegistarTransacaoBloc
     var valorTransacao = getValorTransacao(context, emit);
     if (valorTransacao == null || valorTransacao <= 0) {
       showErrorMessage('Valor', 'Coloque um valor correto para o movimento');
+      return;
     }
 
     var confimarTransacao = getConfirmatedTransacao(context, emit);
 
     var descricao = getDescricaoTransacao(context, emit);
     if (descricao == null || descricao.isEmpty) {
-      showErrorMessage('Descrição vazia', 'Preencha a descrição do movimento');
+      showErrorMessage(
+          'Descrição vazia', 'Preencha a descrição do movimento');
+      return;
     }
 
     var obs = getObsTransacao(context, emit);
     if (obs == null || obs.isEmpty) {
+      showErrorMessage('Obs invalida',
+          'Ocorreu um erro ao validar a observação. Tente novamente');
       return;
     }
 
@@ -68,33 +70,41 @@ class RegistarTransacaoBloc
 
     var categoria = getCategoriaTransacao(context, emit);
     if (categoria == null) {
+      showErrorMessage(
+        'Descricao invalida',
+        'Ocorreu um erro ao validar a descricao. Tente novamente',
+      );
       return;
     }
 
     var conta = getContaTransacao(context, emit);
     if (conta == null) {
+      showErrorMessage(
+        'Conta invalida',
+        'Ocorreu um erro ao validar a conta. Tente novamente',
+      );
       return;
     }
 
-
     var movimento = Movimento.make(
-      valor: valorTransacao!,
+      valor: valorTransacao,
       data: data!,
-      descricao: descricao!,
-      contaId: conta!.id,
-      tipoMovimentoId: ,
-      categoriaMovimentoId: categoriaSelectedId,
-      obsMovimento: obsMovimento,
-      confirmado: confirmado.value,
+      descricao: descricao,
+      contaId: conta.id,
+      tipoMovimentoId: tipoMovimento == true ? 1 : 2,
+      categoriaMovimentoId: categoria.id,
+      obsMovimento: obs,
+      confirmado: confimarTransacao,
     );
 
-    var result = await movimentoService.saveMovimento(movimento);
+    var result = await _movimentoService.saveMovimento(movimento);
 
     if (result is Right) {
-      showSucessMessage('Sucesso', 'Movimento registrado com sucesso');
-      salvo = true;
+      emit(RegistarTransacaoSuccess());
     } else {
-      var error = result.swap().getOrElse(() => HttpException('message'));
+      var error = result
+          .swap()
+          .getOrElse(() => Failure('Erro desconhecido ao salvar a transacao'));
 
       if (result is Left && error is SaldoInsuficiente) {
         showErrorMessage(
@@ -107,7 +117,6 @@ class RegistarTransacaoBloc
           'Erro ao registrar movimento',
         );
       }
-      salvandoMovimento.value = false;
     }
   }
 }
