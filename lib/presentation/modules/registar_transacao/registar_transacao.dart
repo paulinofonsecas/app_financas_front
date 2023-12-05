@@ -3,13 +3,11 @@ import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/constants.dart';
 
 import 'bloc/registar_transacao_bloc.dart';
-import 'controllers/registar_transacao_controller.dart';
 import 'cubit/confirmar_transacao_cubit.dart';
 import 'cubit/descricao_text_cubit.dart';
 import 'cubit/obs_text_cubit.dart';
@@ -75,8 +73,6 @@ class _RegistarTransacaoView extends StatelessWidget {
   Widget build(BuildContext context) {
     var switchCubit = context.watch<SwitchTransacaoCubit>();
     var isEntrada = switchCubit.state is SwitchTransacaoEntrada;
-    var controller =
-        Get.put(RegistarTransacaoController(movimentoType: movimentoType));
 
     return BlocConsumer<RegistarTransacaoBloc, RegistarTransacaoState>(
       listener: (context, state) {
@@ -93,7 +89,6 @@ class _RegistarTransacaoView extends StatelessWidget {
             ),
           ),
           child: _BodySection(
-            controller: controller,
             contaId: contaId,
           ),
         );
@@ -104,11 +99,9 @@ class _RegistarTransacaoView extends StatelessWidget {
 
 class _BodySection extends StatelessWidget {
   const _BodySection({
-    required this.controller,
     required this.contaId,
   });
 
-  final RegistarTransacaoController controller;
   final int? contaId;
 
   @override
@@ -127,7 +120,6 @@ class _BodySection extends StatelessWidget {
         bottom: false,
         child: _RegistarTransacaoBody(
           contaId: contaId,
-          controller: controller,
         ),
       ),
     );
@@ -137,11 +129,9 @@ class _BodySection extends StatelessWidget {
 class _RegistarTransacaoBody extends StatelessWidget {
   const _RegistarTransacaoBody({
     required this.contaId,
-    required this.controller,
   });
 
   final int? contaId;
-  final RegistarTransacaoController controller;
 
   @override
   Widget build(BuildContext context) {
