@@ -3,6 +3,7 @@ import 'package:app_financas/presentation/modules/carteira/controllers/carteira_
 import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta_details/conta_details_page.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -59,6 +60,13 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
         BlocListener<CreateContaBloc, CreateContaState>(
           listener: (context, state) {
             if (state is CreateContaSuccess) {
+              context.read<ContasCubit>().getContas();
+            }
+          },
+        ),
+        BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
+          listener: (context, state) {
+            if (state is RegistarTransacaoSuccess) {
               context.read<ContasCubit>().getContas();
             }
           },

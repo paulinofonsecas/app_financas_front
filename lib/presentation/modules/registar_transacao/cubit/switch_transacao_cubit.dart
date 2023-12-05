@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'switch_transacao_state.dart';
 
 class SwitchTransacaoCubit extends Cubit<SwitchTransacaoState> {
-  SwitchTransacaoCubit() : super(SwitchTransacaoEntrada());
+  SwitchTransacaoCubit(int movimentoType)
+      : super(movimentoType == 1
+            ? SwitchTransacaoEntrada()
+            : SwitchTransacaoSaida());
 
   void defineTransationType(int movimentoType) {
     if (movimentoType == 1) {

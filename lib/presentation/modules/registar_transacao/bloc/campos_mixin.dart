@@ -20,7 +20,8 @@ mixin CamposMixin {
     Emitter<RegistarTransacaoState> emit,
   ) {
     try {
-      return (context.read<SwitchTransacaoCubit>() is SwitchTransacaoEntrada);
+      return (context.read<SwitchTransacaoCubit>().state
+          is SwitchTransacaoEntrada);
     } catch (e) {
       return null;
     }
@@ -116,8 +117,9 @@ mixin CamposMixin {
     Emitter<RegistarTransacaoState> emit,
   ) {
     try {
-      return (context.read<SelectContaCubit>().state as SelectContaSuccess)
-          .conta;
+      var cubit =
+          (context.read<SelectContaCubit>().state as SelectContaSuccess);
+      return cubit.conta;
     } catch (e) {
       return null;
     }

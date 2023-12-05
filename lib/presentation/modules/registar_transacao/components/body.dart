@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/controllers/registar_transacao_controller.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 import '../cubit/confirmar_transacao_cubit.dart';
@@ -30,9 +28,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<RegistarTransacaoController>();
-    if (contaId != null) controller.cartaoId = contaId!;
-
     return const SingleChildScrollView(
       child: Column(
         children: [
@@ -50,7 +45,6 @@ class _MainContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var controller = Get.find<RegistarTransacaoController>();
 
     return Container(
       constraints: BoxConstraints(
@@ -62,53 +56,53 @@ class _MainContentWidget extends StatelessWidget {
           top: Radius.circular(30),
         ),
       ),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const GutterLarge(),
+          GutterLarge(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ConfirmarTransacaoWidget(controller: controller),
-                const GutterSmall(),
-                const MyDivider(),
-                const GutterSmall(),
-                const WithIcon(
+                _ConfirmarTransacaoWidget(),
+                GutterSmall(),
+                MyDivider(),
+                GutterSmall(),
+                WithIcon(
                   icon: Icons.calendar_today_outlined,
                   child: SelectDateComponent(),
                 ),
-                const GutterSmall(),
-                const MyDivider(),
-                const GutterSmall(),
-                const WithIcon(
+                GutterSmall(),
+                MyDivider(),
+                GutterSmall(),
+                WithIcon(
                   icon: Icons.create_rounded,
                   child: _DecricaoTestWidget(),
                 ),
-                const GutterSmall(),
-                const MyDivider(),
-                const Gutter(),
-                const WithIcon(
+                GutterSmall(),
+                MyDivider(),
+                Gutter(),
+                WithIcon(
                   icon: FontAwesomeIcons.layerGroup,
                   child: CategoryListItemComponent(),
                 ),
-                const Gutter(),
-                const MyDivider(),
-                const Gutter(),
-                const WithIcon(
+                Gutter(),
+                MyDivider(),
+                Gutter(),
+                WithIcon(
                   icon: FontAwesomeIcons.creditCard,
                   child: ContaListItemComponent(),
                 ),
-                const Gutter(),
-                const MyDivider(),
-                const GutterSmall(),
-                const _ObsWidget(), // Observações
-                const GutterSmall(),
-                const MyDivider(),
-                const GutterLarge(),
+                Gutter(),
+                MyDivider(),
+                GutterSmall(),
+                _ObsWidget(), // Observações
+                GutterSmall(),
+                MyDivider(),
+                GutterLarge(),
               ],
             ),
           ),
@@ -158,11 +152,7 @@ class _DecricaoTestWidget extends StatelessWidget {
 }
 
 class _ConfirmarTransacaoWidget extends StatelessWidget {
-  const _ConfirmarTransacaoWidget({
-    required this.controller,
-  });
-
-  final RegistarTransacaoController controller;
+  const _ConfirmarTransacaoWidget();
 
   @override
   Widget build(BuildContext context) {

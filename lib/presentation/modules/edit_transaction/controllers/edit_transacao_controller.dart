@@ -80,16 +80,6 @@ class EditTransacaoController extends GetxController {
       is24HourMode: true,
       initialDate: date,
       isForce2Digits: true,
-      separator: Padding(
-        padding: const EdgeInsets.all(kDefaultPadding),
-        child: FilledButton.icon(
-          onPressed: () {
-            Navigator.pop(context, DateTime.now());
-          },
-          icon: const Icon(Icons.today),
-          label: const Text('Agora'),
-        ),
-      ),
     );
 
     if (dateTime != null) {

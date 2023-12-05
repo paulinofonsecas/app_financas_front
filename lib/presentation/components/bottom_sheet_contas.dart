@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -139,10 +140,10 @@ class _ContaListItem extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       title: Text(
-        conta.nome,
+        '${conta.nome} - ${conta.banco.acronimo ?? ''}',
         style: Theme.of(context).textTheme.titleMedium,
       ),
-      subtitle: Text(conta.banco.acronimo ?? conta.banco.nome),
+      subtitle: Text(numberFormat.format(conta.saldo)),
       trailing: Icon(
         isSelectedIndex
             ? FontAwesomeIcons.circleCheck

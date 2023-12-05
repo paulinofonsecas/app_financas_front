@@ -16,10 +16,7 @@ class ContaListItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SelectContaCubit(),
-      child: const ContaListItemView(),
-    );
+    return const ContaListItemView();
   }
 }
 
