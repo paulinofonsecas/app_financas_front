@@ -1,11 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_financas/presentation/components/my_divider.dart';
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/helders/format_helpers.dart';
-import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
-import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -13,6 +9,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/components/my_divider.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 
 class ReajustarSaldoDialog extends StatefulWidget {
   const ReajustarSaldoDialog({
@@ -28,6 +29,9 @@ class ReajustarSaldoDialog extends StatefulWidget {
 
 class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
   late final TextEditingController _newSaldoController;
+  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+    symbol: 'Kz',
+  );
 
   @override
   void initState() {
@@ -37,7 +41,7 @@ class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
     _newSaldoController.addListener(() {
       context
           .read<ReajustarSaldoCubit>()
-          .updateNewSaldo(_newSaldoController.text);
+          .updateNewSaldo(_formatter.getUnformattedValue().toString());
     });
   }
 
@@ -99,20 +103,9 @@ class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Expanded(
-                          child: TextField(
-                            controller: _newSaldoController,
-                            style: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.zero,
-                              hintText: '0,00',
-                            ),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
+                          child: _MoneyTextField(
+                            newSaldoController: _newSaldoController,
+                            formatter: _formatter,
                           ),
                         ),
                         IconButton(
@@ -158,6 +151,33 @@ class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
     var estado = (state.saldo - widget.conta.saldo) > 0;
     return 'Para ajustar o seu saldo, será criada'
         ' uma ${estado ? 'receita' : 'despesa'} de ajuste.';
+  }
+}
+
+class _MoneyTextField extends StatelessWidget {
+  const _MoneyTextField({
+    required this.newSaldoController,
+    required this.formatter,
+  });
+
+  final TextEditingController newSaldoController;
+  final CurrencyTextInputFormatter formatter;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: newSaldoController,
+      style: GoogleFonts.inter(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero,
+        hintText: '0,00',
+      ),
+      inputFormatters: [formatter],
+    );
   }
 }
 
