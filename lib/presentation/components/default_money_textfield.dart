@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,10 +8,12 @@ class DefaultMoneyTextField extends StatelessWidget {
     super.key,
     this.onChanged,
     this.controller,
+    this.textInputFormatter,
   });
 
   final Function(String)? onChanged;
   final TextEditingController? controller;
+  final TextInputFormatter? textInputFormatter;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +21,7 @@ class DefaultMoneyTextField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       focusNode: FocusNode(canRequestFocus: true),
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
+      inputFormatters: [textInputFormatter ?? CurrencyTextInputFormatter()],
       keyboardType: TextInputType.number,
       style: GoogleFonts.inter(
         fontSize: 26,
@@ -34,7 +35,6 @@ class DefaultMoneyTextField extends StatelessWidget {
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
-        prefixText: 'Kz ',
         contentPadding: EdgeInsets.zero,
         border: InputBorder.none,
       ),
