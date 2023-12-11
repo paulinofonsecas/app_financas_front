@@ -37,6 +37,7 @@ dependencies:
   flutter_launcher_icons: "^0.13.1"
   device_preview: ^1.1.0
   font_awesome_flutter: ^10.6.0
+  currency_text_input_formatter: ^2.1.11
 
 flutter_launcher_icons:
   android: "launcher_icon"

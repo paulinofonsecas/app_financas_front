@@ -1,5 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class RegisterHeader extends StatelessWidget {
             ],
           ),
           GutterLarge(),
-          _ValorTextWidget(),
+          ValorTextWidget(),
           Gutter(),
         ],
       ),
@@ -69,12 +70,11 @@ class _CancelarButton extends StatelessWidget {
   }
 }
 
-class _ValorTextWidget extends StatelessWidget {
-  const _ValorTextWidget();
+class ValorTextWidget extends StatelessWidget {
+  const ValorTextWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var valorTransacaoCubit = context.read<ValorTransacaoCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,29 +90,7 @@ class _ValorTextWidget extends StatelessWidget {
             );
           },
         ),
-        TextFormField(
-          onChanged: valorTransacaoCubit.changeValorTransacao,
-          focusNode: FocusNode(canRequestFocus: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-          ],
-          keyboardType: TextInputType.number,
-          style: GoogleFonts.inter(
-            fontSize: 32,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-          decoration: InputDecoration(
-            hintText: '0,00',
-            hintStyle: GoogleFonts.inter(
-              fontSize: 32,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-            prefixText: 'Kz ',
-            border: InputBorder.none,
-          ),
-        ),
+        const MoneyTextFormField(),
       ],
     );
   }
@@ -166,6 +144,50 @@ class _SwitchTransactionButton extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class MoneyTextFormField extends StatefulWidget {
+  const MoneyTextFormField({Key? key}) : super(key: key);
+
+  @override
+  State<MoneyTextFormField> createState() => _MoneyTextFormFieldState();
+}
+
+class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
+  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+    symbol: 'Kz',
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    var valorTransacao = context.read<ValorTransacaoCubit>();
+
+    return TextFormField(
+      initialValue: _formatter.format('0'),
+      onChanged: (v) {
+        valorTransacao.changeValorTransacao(
+          _formatter.getUnformattedValue().toString(),
+        );
+      },
+      inputFormatters: <TextInputFormatter>[_formatter],
+      focusNode: FocusNode(canRequestFocus: true),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      style: GoogleFonts.inter(
+        fontSize: 32,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
+      ),
+      decoration: InputDecoration(
+        hintText: '0',
+        hintStyle: GoogleFonts.inter(
+          fontSize: 32,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        border: InputBorder.none,
       ),
     );
   }
