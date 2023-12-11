@@ -4,6 +4,7 @@ import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme
 import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -133,15 +134,27 @@ class _HeaderWidget extends StatelessWidget {
   }
 }
 
-class _SaldoWidget extends StatelessWidget {
+class _SaldoWidget extends StatefulWidget {
   const _SaldoWidget();
+
+  @override
+  State<_SaldoWidget> createState() => _SaldoWidgetState();
+}
+
+class _SaldoWidgetState extends State<_SaldoWidget> {
+  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+    symbol: 'Kz',
+  );
 
   @override
   Widget build(BuildContext context) {
     return DefaultMoneyTextField(
       onChanged: (value) {
-        context.read<SaldoInicialTextCubit>().onTextChange(value);
+        context
+            .read<SaldoInicialTextCubit>()
+            .onTextChange(_formatter.getUnformattedValue().toString());
       },
+      textInputFormatter: _formatter,
     );
   }
 }
