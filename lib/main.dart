@@ -69,7 +69,7 @@ Future<void> main() async {
         ),
       ],
       child: DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: true,
         builder: (c) => const MyApp(),
       ),
     ),
