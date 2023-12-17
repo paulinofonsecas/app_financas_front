@@ -1,6 +1,5 @@
 import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/presentation/modules/app/app_page.dart';
-import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';

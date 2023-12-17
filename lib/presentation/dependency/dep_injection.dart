@@ -34,9 +34,10 @@ import 'package:dio/dio.dart';
 
 import '../modules/conta/bloc/bloc.dart';
 
-var getIt = GetIt.instance;
+late GetIt getIt;
 
-Future<void> dependencyInitialize() async {
+void dependencyInitialize() {
+  getIt = GetIt.instance;
   getIt.registerLazySingleton<Dio>(() => makeDefaultDio());
 
   // Banco

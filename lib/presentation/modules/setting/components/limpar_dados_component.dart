@@ -1,7 +1,7 @@
-import 'package:app_financas/presentation/bindings/init_bindings.dart';
-import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -13,9 +13,10 @@ class LimparDadosWidget extends StatelessWidget {
   Future<void> _deleteAllData() async {
     await Hive.deleteBoxFromDisk(kMovimentosBox);
     await Hive.deleteBoxFromDisk(kContasBox);
+    await Hive.deleteBoxFromDisk(kBancoBox);
+    await Hive.deleteBoxFromDisk(kSetupBox);
     await Hive.deleteBoxFromDisk(kCategoriasEntradaBox);
     await Hive.deleteBoxFromDisk(kCategoriasSaidaBox);
-    await Hive.deleteBoxFromDisk(kBancoBox);
   }
 
   @override
@@ -25,7 +26,7 @@ class LimparDadosWidget extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (myContext) => AlertDialog(
             title: const Text('Limpar dados'),
             content: const Text(
               'Deseja realmente redefinir toda a base de dados?',
@@ -36,7 +37,7 @@ class LimparDadosWidget extends StatelessWidget {
                   foregroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(myContext).pop();
                 },
                 child: const Text('Cancelar'),
               ),
@@ -44,11 +45,15 @@ class LimparDadosWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.red,
                 ),
-                onPressed: () async {
-                  await _deleteAllData();
-                  Get.offAll(
-                    () => const SplashScreen(),
-                    binding: InitBingings(),
+                onPressed: () {
+                  _deleteAllData().then(
+                    (value) async {
+                      await getIt.reset();
+                      Get.deleteAll();
+                      Get.reset();
+                      // ignore: use_build_context_synchronously
+                      Phoenix.rebirth(context);
+                    },
                   );
                 },
                 child: const Text('Limpar'),
