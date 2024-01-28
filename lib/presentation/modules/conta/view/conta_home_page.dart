@@ -81,7 +81,9 @@ class ContaView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ContaHeader(),
+        const ContaHeader(
+          title: 'Contas',
+        ),
         const Gutter(),
         BlocBuilder<ContaPeriodoPickerCubit, ContaPeriodoPickerState>(
           builder: (context, state) {

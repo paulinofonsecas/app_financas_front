@@ -30,55 +30,51 @@ Future<void> main() async {
   Intl.defaultLocale = 'pt_BR';
   await Hive.initFlutter('./app_financas_db');
 
+  dependencyInitialize();
+
   runApp(
-    Phoenix(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<AppBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => RegistarTransacaoBloc(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<MovimentoBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<AppThemeCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ContaBloc>(),
+        ),
+        BlocProvider(
+          create: (c) => getIt<ReajustarSaldoCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => CreateContaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ContaMostrarNaTelaInicialCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BottomSheetContaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ListarCategoriaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SelectCategoriaCubit(),
+        ),
+      ],
       child: Builder(builder: (context) {
-        dependencyInitialize();
-
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) => getIt<AppBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => RegistarTransacaoBloc(),
-            ),
-            BlocProvider(
-              create: (context) => getIt<MovimentoBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => getIt<AppThemeCubit>(),
-            ),
-            BlocProvider(
-              create: (context) => getIt<ContaBloc>(),
-            ),
-            BlocProvider(
-              create: (c) => getIt<ReajustarSaldoCubit>(),
-            ),
-            BlocProvider(
-              create: (context) => CreateContaBloc(),
-            ),
-            BlocProvider(
-              create: (context) => ContaMostrarNaTelaInicialCubit(),
-            ),
-            BlocProvider(
-              create: (context) => BottomSheetContaCubit(),
-            ),
-            BlocProvider(
-              create: (context) => ListarCategoriaCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SelectCategoriaCubit(),
-            ),
-          ],
-          child: Builder(builder: (context) {
-            var width = context.width;
-
-            return DevicePreview(
-              // enabled: width > 600,
-              builder: (c) => const MyApp(),
-            );
-          }),
+        // var width = context.width;
+    
+        return DevicePreview(
+          // enabled: width > 600,
+          builder: (c) => const MyApp(),
         );
       }),
     ),
