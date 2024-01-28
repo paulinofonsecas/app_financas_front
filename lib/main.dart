@@ -75,7 +75,7 @@ Future<void> main() async {
             var width = context.width;
 
             return DevicePreview(
-              enabled: width > 600,
+              // enabled: width > 600,
               builder: (c) => const MyApp(),
             );
           }),
