@@ -9,6 +9,8 @@ sealed class GContaState extends Equatable {
 
 final class ContaInitial extends GContaState {}
 
+final class ArquivarContaSuccess extends GContaState {}
+
 // contas
 
 final class ListarContasLoading extends GContaState {}
