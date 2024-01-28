@@ -227,4 +227,16 @@ class DbContaProvider implements IContaProvider {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, void>> removeConta(int id) async {
+    await initDb();
+
+    try {
+      await _contas.delete(id);
+      return const Right(null);
+    } catch (e) {
+      return Left(DbException('Erro ao remover conta'));
+    }
+  }
 }
