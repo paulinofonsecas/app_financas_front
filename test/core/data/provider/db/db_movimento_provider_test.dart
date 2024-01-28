@@ -75,6 +75,39 @@ void main() async {
     expect(result.getOrElse(() => []).first.id, 1);
   });
 
+  test('Deve transferir movimentos entre contas', () async {
+    var movimento1 = _makeFakeMovimento();
+    var movimento2 = _makeFakeMovimento();
+    var movimento3 = _makeFakeMovimento();
+
+    await dbMovimentosProvider.saveMovimento(movimento1);
+    await dbMovimentosProvider.saveMovimento(movimento2);
+    await dbMovimentosProvider.saveMovimento(movimento3);
+
+    final result = await dbMovimentosProvider.listMovimentos();
+    final movimentosSalvos = result.getOrElse(() => []);
+
+    expect(result, isA<Right>());
+    expect(result.getOrElse(() => []), isA<List<Movimento>>());
+    expect(result.getOrElse(() => []).length, 3);
+    expect(result.getOrElse(() => []).first.id, 1);
+    expect(result.getOrElse(() => []).first.cartaoId, 1);
+
+    await dbMovimentosProvider.transferirMovimentos(movimentosSalvos, 2);
+
+    final result2 = await dbMovimentosProvider.listMovimentos();
+    final movimentosTranferidos = result2.getOrElse(() => []);
+
+    expect(result2, isA<Right>());
+    expect(result2.getOrElse(() => []), isA<List<Movimento>>());
+    expect(result2.getOrElse(() => []).length, 3);
+    expect(result2.getOrElse(() => []).first.id, 1);
+    expect(movimentosTranferidos.length, 3);
+    expect(movimentosTranferidos[0].cartaoId, 2);
+    expect(movimentosTranferidos[1].cartaoId, 2);
+    expect(movimentosTranferidos[2].cartaoId, 2);
+  });
+
   test('Deve editar um movimento', () async {
     var movimento = _makeFakeMovimento();
     movimento = movimento.copyWith(id: 2);
@@ -108,30 +141,32 @@ void main() async {
   });
 
   group('Quatidade de transacoes', () {
-    test('Deve retornar a zero quantidade de despesas e receitas por conta', () async {
-    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+    test('Deve retornar a zero quantidade de despesas e receitas por conta',
+        () async {
+      var result = await dbMovimentosProvider.getTotalMovimentos(1);
 
-    expect(result, isA<Right>());
-    expect(result.getOrElse(() => []), isA<List<int>>());
-    expect(result.getOrElse(() => []).length, 2);
-    expect(result.getOrElse(() => []).first, 0);
-    expect(result.getOrElse(() => []).last, 0);
-  });
+      expect(result, isA<Right>());
+      expect(result.getOrElse(() => []), isA<List<int>>());
+      expect(result.getOrElse(() => []).length, 2);
+      expect(result.getOrElse(() => []).first, 0);
+      expect(result.getOrElse(() => []).last, 0);
+    });
 
-  test('Deve retornar a quantidade de despesas e receitas por conta', () async {
-    var movimento = _makeFakeMovimento();
+    test('Deve retornar a quantidade de despesas e receitas por conta',
+        () async {
+      var movimento = _makeFakeMovimento();
 
-    await dbMovimentosProvider.saveMovimento(movimento);
-    await dbMovimentosProvider.saveMovimento(movimento);
+      await dbMovimentosProvider.saveMovimento(movimento);
+      await dbMovimentosProvider.saveMovimento(movimento);
 
-    var result = await dbMovimentosProvider.getTotalMovimentos(1);
+      var result = await dbMovimentosProvider.getTotalMovimentos(1);
 
-    expect(result, isA<Right>());
-    expect(result.getOrElse(() => []), isA<List<int>>());
-    expect(result.getOrElse(() => []).length, 2);
-    expect(result.getOrElse(() => []).first, 2);
-    expect(result.getOrElse(() => []).last, 0);
-  });
+      expect(result, isA<Right>());
+      expect(result.getOrElse(() => []), isA<List<int>>());
+      expect(result.getOrElse(() => []).length, 2);
+      expect(result.getOrElse(() => []).first, 2);
+      expect(result.getOrElse(() => []).last, 0);
+    });
   });
 }
 

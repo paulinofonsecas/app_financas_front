@@ -184,20 +184,29 @@ class HttpMovimentoProvider implements IMovimentoProvider {
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada({DateTime? date}) {
+  Future<Either<Failure, List<Movimento>>> listMovimentosEntrada(
+      {DateTime? date}) {
     // TODO: implement listMovimentosEntrada
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<Movimento>>> listMovimentosSaida({DateTime? date}) {
+  Future<Either<Failure, List<Movimento>>> listMovimentosSaida(
+      {DateTime? date}) {
     // TODO: implement listMovimentosSaida
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, List<int>>> getTotalMovimentos(int contaId) {
     // TODO: implement getTotalMovimentos
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> transferirMovimentos(
+      List<Movimento> movimentos, int destinoId) {
+    // TODO: implement transferirMovimentos
     throw UnimplementedError();
   }
 }

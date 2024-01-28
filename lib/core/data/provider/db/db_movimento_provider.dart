@@ -295,4 +295,29 @@ class DbMovimentoProvider implements IMovimentoProvider {
       return Left(Failure('Erro ao processar o total de movimentos'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> transferirMovimentos(
+    List<Movimento> movimentos,
+    int destinoId,
+  ) async {
+    try {
+      await initDb();
+      final saida = <Movimento>[];
+
+      for (var movimento in movimentos) {
+        final data = movimento.copyWith(cartaoId: destinoId);
+
+        saida.add(data);
+        await _movimentosBox.put(
+          movimento.id,
+          data.toMap(),
+        );
+      }
+
+      return const Right([]);
+    } catch (e) {
+      return Left(HttpException('Erro ao transferir movimentos'));
+    }
+  }
 }
