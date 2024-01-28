@@ -22,4 +22,8 @@ abstract class IMovimentoService {
     int page,
     int pageSize,
   );
+  Future<Either<Failure, List<Movimento>>> transferirMovimentos(
+    List<Movimento> movimentos,
+    int destinoId,
+  );
 }

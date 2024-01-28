@@ -110,4 +110,10 @@ class MovimentoService implements IMovimentoService {
       {DateTime? date}) {
     return provider.listMovimentosSaida(date: date);
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> transferirMovimentos(
+      List<Movimento> movimentos, int destinoId) {
+    return provider.transferirMovimentos(movimentos, destinoId);
+  }
 }
