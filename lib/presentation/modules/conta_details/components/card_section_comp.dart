@@ -1,5 +1,7 @@
 import 'package:app_financas/presentation/components/escolher_tipo_movimento.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta_details/controllers/conta_details_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
@@ -93,7 +95,7 @@ class CardSection extends StatelessWidget {
             children: [
               ListTile(
                 onTap: () {
-                  
+                  getIt<ContaBloc>().add(ArquivarContaEvent(conta: conta));
                   Navigator.of(context).pop();
                 },
                 title: Text(

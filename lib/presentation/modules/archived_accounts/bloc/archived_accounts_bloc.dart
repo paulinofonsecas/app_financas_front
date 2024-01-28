@@ -22,12 +22,11 @@ class ArchivedAccountsBloc
     Emitter<ArchivedAccountsState> emit,
   ) async {
     emit(const ArchivedAccountsLoading());
-    final result = await _contaService.listContas();
+    final result = await _contaService.listArchivedContas();
 
     result.fold(
       (l) => emit(const ArchivedAccountsError()),
-      (r) => emit(ArchivedAccountsLoaded(
-          r.where((element) => element.isArchived == true).toList())),
+      (r) => emit(ArchivedAccountsLoaded(r)),
     );
   }
 }

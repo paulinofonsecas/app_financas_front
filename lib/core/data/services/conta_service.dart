@@ -11,8 +11,12 @@ class ContaService implements IContaService {
   ContaService(this.provider);
 
   @override
-  Future<Either<Failure, List<Conta>>> listContas([int? mes]) {
-    return provider.listContas(mes);
+  Future<Either<Failure, List<Conta>>> listContas([int? mes]) async {
+    final result = await provider.listContas(mes);
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r.where((conta) => conta.isArchived == false).toList()),
+    );
   }
 
   @override
@@ -38,5 +42,14 @@ class ContaService implements IContaService {
   @override
   Future<Either<Failure, void>> deleteConta(int id) {
     return provider.removeConta(id);
+  }
+
+  @override
+  Future<Either<Failure, List<Conta>>> listArchivedContas() async {
+    final result = await provider.listContas();
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r.where((conta) => conta.isArchived == true).toList()),
+    );
   }
 }
