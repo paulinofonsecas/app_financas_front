@@ -46,7 +46,7 @@ class _AppPageState extends State<AppPage> {
       MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => HomePageCubit(),
+            create: (context) => getIt<HomePageCubit>(),
           ),
           BlocProvider(
             create: (context) => ListMovimentosCubit(),

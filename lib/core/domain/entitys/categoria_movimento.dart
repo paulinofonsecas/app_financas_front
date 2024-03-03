@@ -101,7 +101,10 @@ class Categoria {
       color: map['color'] != null ? Color(map['color'] as int) : null,
       isArchived: map['isArchived'] as bool? ?? false,
       icon: map['icon'] != null
-          ? deserializeIcon(map['icon'].cast<String, dynamic>())
+          ? deserializeIcon(
+              map['icon'].cast<String, dynamic>(),
+              iconPack: IconPack.material,
+            )
           : null,
     );
   }
