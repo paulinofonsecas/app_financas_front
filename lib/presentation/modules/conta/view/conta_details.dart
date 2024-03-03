@@ -219,7 +219,6 @@ class _SecondRow extends StatelessWidget {
 
 class _FirstRowWidget extends StatelessWidget {
   const _FirstRowWidget({
-    super.key,
     required this.conta,
   });
 

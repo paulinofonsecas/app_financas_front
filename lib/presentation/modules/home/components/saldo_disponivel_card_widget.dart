@@ -6,7 +6,6 @@ import 'package:app_financas/presentation/modules/home/components/card_widget.da
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SaldoDisponivelCardWidget extends StatefulWidget {
   const SaldoDisponivelCardWidget({super.key});
