@@ -34,17 +34,24 @@ class MovimentosPendentesBloc
         final entradasPendentes = pendentes[TipoMovimento.ENTRADA] ?? [];
         final saidasPendentes = pendentes[TipoMovimento.SAIDA] ?? [];
 
+        if (entradasPendentes.isEmpty && saidasPendentes.isEmpty) {
+          emit(const MovimentosPendentesEmpty());
+          return;
+        }
+
         emit(
           MovimentosPendentesSuccess(
             [
-              if (entradasPendentes.isNotEmpty) MovimentosPendentes(
-                tipoMovimentoId: TipoMovimento.ENTRADA,
-                movimentos: entradasPendentes,
-              ),
-              if (saidasPendentes.isNotEmpty) MovimentosPendentes(
-                tipoMovimentoId: TipoMovimento.SAIDA,
-                movimentos: saidasPendentes,
-              ),
+              if (entradasPendentes.isNotEmpty)
+                MovimentosPendentes(
+                  tipoMovimentoId: TipoMovimento.ENTRADA,
+                  movimentos: entradasPendentes,
+                ),
+              if (saidasPendentes.isNotEmpty)
+                MovimentosPendentes(
+                  tipoMovimentoId: TipoMovimento.SAIDA,
+                  movimentos: saidasPendentes,
+                ),
             ],
           ),
         );

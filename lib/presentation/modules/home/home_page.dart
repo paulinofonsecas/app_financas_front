@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
-import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/view/movimentos_pendentes_abba.dart';
+import 'package:app_financas/presentation/modules/home/movimentos_pendentes/view/movimentos_pendentes_abba.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';

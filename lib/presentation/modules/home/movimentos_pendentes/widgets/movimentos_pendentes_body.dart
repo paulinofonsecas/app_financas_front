@@ -10,43 +10,42 @@ class MovimentosPendentesBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: AbbaHeader(
-            title: 'Movimentos pendentes',
-            verMaisAction: () {},
-          ),
-        ),
-        const SizedBox(height: kDefaultPadding / 2),
-        BlocBuilder<MovimentosPendentesBloc, MovimentosPendentesState>(
-          bloc: context.read<MovimentosPendentesBloc>()
-            ..add(const LoadMovimentosPendentesEvent()),
-          builder: (context, state) {
-            if (state is MovimentosPendentesLoading) {
-              return const CircularProgressIndicator();
-            }
+    return BlocBuilder<MovimentosPendentesBloc, MovimentosPendentesState>(
+      bloc: context.read<MovimentosPendentesBloc>()
+        ..add(const LoadMovimentosPendentesEvent()),
+      builder: (context, state) {
+        if (state is MovimentosPendentesLoading) {
+          return const CircularProgressIndicator();
+        }
 
-            if (state is MovimentosPendentesError) {
-              return Center(
-                child: Text(state.message),
-              );
-            }
+        if (state is MovimentosPendentesError) {
+          return Center(
+            child: Text(state.message),
+          );
+        }
 
-            if (state is MovimentosPendentesSuccess) {
-              return SizedBox(
-                height: 120,
+        if (state is MovimentosPendentesSuccess) {
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: AbbaHeader(
+                  title: 'Movimentos pendentes',
+                ),
+              ),
+              const SizedBox(height: kDefaultPadding / 2),
+              SizedBox(
+                height: 135,
                 child: ListMovimentosPendentes(
                   movimentosPendentes: state.movimentosPendentes,
                 ),
-              );
-            }
+              ),
+            ],
+          );
+        }
 
-            return const SizedBox.shrink();
-          },
-        ),
-      ],
+        return const SizedBox.shrink();
+      },
     );
   }
 }

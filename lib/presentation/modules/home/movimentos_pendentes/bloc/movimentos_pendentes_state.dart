@@ -44,3 +44,7 @@ class MovimentosPendentesSuccess extends MovimentosPendentesState {
   @override
   List<Object> get props => [movimentosPendentes];
 }
+
+class MovimentosPendentesEmpty extends MovimentosPendentesState {
+  const MovimentosPendentesEmpty() : super();
+}

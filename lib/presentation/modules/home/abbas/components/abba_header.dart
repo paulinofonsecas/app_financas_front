@@ -26,16 +26,17 @@ class AbbaHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        GestureDetector(
-          onTap: verMaisAction,
-          child: Text(
-            'Ver mais',
-            style: GoogleFonts.inter(
-              fontSize: theme.titleMedium!.fontSize,
-              color: Theme.of(context).colorScheme.onBackground,
+        if (verMaisAction != null)
+          GestureDetector(
+            onTap: verMaisAction,
+            child: Text(
+              'Ver mais',
+              style: GoogleFonts.inter(
+                fontSize: theme.titleMedium!.fontSize,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
             ),
           ),
-        ),
       ],
     );
   }

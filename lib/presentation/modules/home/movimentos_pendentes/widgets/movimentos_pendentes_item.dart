@@ -16,13 +16,25 @@ class FontReceitaListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 175,
-      height: 120,
+      width: 165,
+      height: 130,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiaryContainer,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withOpacity(
+                  Theme.of(context).brightness == Brightness.dark ? .5 : .2,
+                ),
+            blurRadius: 4,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
-      margin: const EdgeInsets.only(right: kDefaultPadding),
+      margin: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding,
+        vertical: kDefaultPadding / 4,
+      ),
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
