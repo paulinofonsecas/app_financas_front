@@ -15,7 +15,7 @@ class SelectOutrosIconsComponent extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
-        IconData? icon = await FlutterIconPicker.showIconPicker(
+        IconData? icon = await showIconPicker(
           context,
           iconPackModes: [IconPack.fontAwesomeIcons],
           iconSize: 32,

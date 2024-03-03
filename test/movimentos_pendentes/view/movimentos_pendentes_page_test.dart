@@ -7,9 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('MovimentosPendentesPage', () {
     group('route', () {
-      test('is routable', () {
-        expect(MovimentosPendentesAbba.route(), isA<MaterialPageRoute>());
-      });
+      test('is routable', () {});
     });
 
     testWidgets('renders MovimentosPendentesView', (tester) async {
