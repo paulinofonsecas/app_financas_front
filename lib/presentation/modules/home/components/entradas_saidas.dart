@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
@@ -32,32 +33,32 @@ class _EntradasESaidasState extends State<EntradasESaidas> {
             ContaMostrarNaTelaInicialState>(
           listener: (context, state) {
             if (state is ContaMostrarNaTelaChanged) {
-              context.read<HomePageCubit>().getSaldoTotalEntradas();
-              context.read<HomePageCubit>().getSaldoTotalSaidas();
+              getIt<HomePageCubit>().getSaldoTotalEntradas();
+              getIt<HomePageCubit>().getSaldoTotalSaidas();
             }
           },
         ),
         BlocListener<ReajustarSaldoCubit, ReajustarSaldoState>(
           listener: (context, state) {
             if (state is ReajustarSaldoSuccess) {
-              context.read<HomePageCubit>().getSaldoTotalEntradas();
-              context.read<HomePageCubit>().getSaldoTotalSaidas();
+              getIt<HomePageCubit>().getSaldoTotalEntradas();
+              getIt<HomePageCubit>().getSaldoTotalSaidas();
             }
           },
         ),
         BlocListener<CreateContaBloc, CreateContaState>(
           listener: (context, state) {
             if (state is CreateContaSuccess) {
-              context.read<HomePageCubit>().getSaldoTotalEntradas();
-              context.read<HomePageCubit>().getSaldoTotalSaidas();
+              getIt<HomePageCubit>().getSaldoTotalEntradas();
+              getIt<HomePageCubit>().getSaldoTotalSaidas();
             }
           },
         ),
         BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
           listener: (context, state) {
             if (state is RegistarTransacaoSuccess) {
-              context.read<HomePageCubit>().getSaldoTotalEntradas();
-              context.read<HomePageCubit>().getSaldoTotalSaidas();
+              getIt<HomePageCubit>().getSaldoTotalEntradas();
+              getIt<HomePageCubit>().getSaldoTotalSaidas();
             }
           },
         ),
@@ -78,7 +79,7 @@ class _EntradasESaidasState extends State<EntradasESaidas> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               BlocBuilder<HomePageCubit, HomePageState>(
-                bloc: context.read<HomePageCubit>()..getSaldoTotalEntradas(),
+                bloc: getIt<HomePageCubit>()..getSaldoTotalEntradas(),
                 buildWhen: (previous, current) {
                   return previous != current &&
                       current is HomePageGetEntradasSuccess;
@@ -110,7 +111,7 @@ class _EntradasESaidasState extends State<EntradasESaidas> {
                 },
               ),
               BlocBuilder<HomePageCubit, HomePageState>(
-                bloc: context.read<HomePageCubit>()..getSaldoTotalSaidas(),
+                bloc: getIt<HomePageCubit>()..getSaldoTotalSaidas(),
                 buildWhen: (previous, current) {
                   return previous != current &&
                       current is HomePageGetSaidasSuccess;
