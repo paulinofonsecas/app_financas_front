@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ContaHeader extends StatelessWidget {
-  const ContaHeader({super.key});
+  const ContaHeader({
+    super.key,
+    this.defaultColor = Colors.white,
+    required this.title,
+    this.trailing,
+  });
+
+  final Color defaultColor;
+  final String title;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
-    var defaultColor = Colors.white;
-
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding / 2),
       child: Row(
@@ -25,7 +32,7 @@ class ContaHeader extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            'Contas',
+            title,
             style: GoogleFonts.inter(
               fontSize: 18,
               color: defaultColor,
@@ -33,13 +40,14 @@ class ContaHeader extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          IconButton(
-            style: IconButton.styleFrom(
-              foregroundColor: defaultColor,
-            ),
-            onPressed: () {},
-            icon: const Icon(Icons.more_horiz),
-          )
+          if (trailing != null)
+            IconButton(
+              style: IconButton.styleFrom(
+                foregroundColor: defaultColor,
+              ),
+              onPressed: () {},
+              icon: const Icon(Icons.more_horiz),
+            )
         ],
       ),
     );

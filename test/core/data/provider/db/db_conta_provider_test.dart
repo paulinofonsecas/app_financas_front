@@ -4,6 +4,7 @@ import 'package:app_financas/core/data/provider/db/db_banco_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_movimento_provider.dart';
+import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
@@ -41,8 +42,10 @@ void main() async {
   tearDown(() async {
     await getIt.reset(dispose: true);
     await Hive.deleteFromDisk();
+    await Hive.deleteBoxFromDisk(kContasBox);
     await Hive.close();
   });
+
   group('Conta', () {
     test('Deve retornar o saldo de uma conta', () async {
       var newConta = _createConta();
@@ -77,6 +80,25 @@ void main() async {
       expect(result.getOrElse(() => []), isA<List<Conta>>());
       expect(result.getOrElse(() => []).length, 1);
       expect(result.getOrElse(() => []).first.banco.nome, isNot('Conta fake'));
+    });
+
+    test('deve remover uma conta do banco', () async {
+      var newConta = _createConta();
+      var result0 = (await dbConta.saveConta(newConta)).getOrElse(() => -1);
+      expect(result0, isA<int>());
+
+      var result = await dbConta.listContas();
+
+      expect(result, isA<Right>());
+      expect(result.getOrElse(() => []), isA<List<Conta>>());
+      expect(result.getOrElse(() => []).length, 1);
+      expect(result.getOrElse(() => []).first.banco.nome, isNot('Conta fake'));
+
+      await dbConta.removeConta(result.getOrElse(() => []).first.id);
+
+      var result2 = await dbConta.listContas();
+      expect(result2, isA<Right>());
+      expect(result2.getOrElse(() => []).length, 3);
     });
 
     group('Balanco mensal', () {

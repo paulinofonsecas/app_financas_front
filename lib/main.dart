@@ -24,11 +24,12 @@ import 'presentation/modules/registar_transacao/cubit/select_categoria_cubit.dar
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dependencyInitialize();
 
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
   await Hive.initFlutter('./app_financas_db');
+
+  dependencyInitialize();
 
   runApp(
     MultiBlocProvider(
@@ -67,10 +68,14 @@ Future<void> main() async {
           create: (context) => SelectCategoriaCubit(),
         ),
       ],
-      child: DevicePreview(
-        enabled: true,
-        builder: (c) => const MyApp(),
-      ),
+      child: Builder(builder: (context) {
+        // var width = context.width;
+
+        return DevicePreview(
+          // enabled: width > 600,
+          builder: (c) => const MyApp(),
+        );
+      }),
     ),
   );
 }
@@ -89,7 +94,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ).copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
+          seedColor: Colors.green,
           brightness: Brightness.dark,
         ),
         brightness: Brightness.dark,
@@ -97,7 +102,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
+          seedColor: Colors.green,
         ),
       ),
       scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {

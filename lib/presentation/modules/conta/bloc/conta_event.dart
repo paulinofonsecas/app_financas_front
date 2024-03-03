@@ -9,6 +9,15 @@ sealed class ContaEvent extends Equatable {
 
 class ListarContasEvent extends ContaEvent {}
 
+class ArquivarContaEvent extends ContaEvent {
+  const ArquivarContaEvent({required this.conta});
+
+  final Conta conta;
+
+  @override
+  List<Object> get props => [conta];
+}
+
 class ListarContasAtEvent extends ContaEvent {
   final int mes;
 

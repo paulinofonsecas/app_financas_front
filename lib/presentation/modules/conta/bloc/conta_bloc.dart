@@ -17,10 +17,19 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
   ContaBloc() : super(ContaInitial()) {
     contaService = getIt();
 
+    on<ArquivarContaEvent>(_onArquivarConta);
     on<ListarContasEvent>(_onListarContas);
     on<ListarContasAtEvent>(_onListarContasAt);
     on<CalcularSaldoMensalEvent>(_onCalcularSaldoMensal);
     on<ChangeViewSaldoInHomePage>(_onChangeViewSaldoInHomePage);
+  }
+
+  _onArquivarConta(ArquivarContaEvent event, emit) async {
+    var conta = event.conta;
+
+    await contaService.updateConta(conta.copyWith(isArchived: true));
+
+    emit(ArquivarContaSuccess());
   }
 
   _onListarContas(event, emit) async {
