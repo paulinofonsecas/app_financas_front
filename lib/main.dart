@@ -70,7 +70,7 @@ Future<void> main() async {
       ],
       child: Builder(builder: (context) {
         // var width = context.width;
-    
+
         return DevicePreview(
           // enabled: width > 600,
           builder: (c) => const MyApp(),
@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ).copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
+          seedColor: Colors.green,
           brightness: Brightness.dark,
         ),
         brightness: Brightness.dark,
@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
+          seedColor: Colors.green,
         ),
       ),
       scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {

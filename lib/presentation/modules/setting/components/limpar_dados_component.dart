@@ -1,7 +1,6 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -52,7 +51,6 @@ class LimparDadosWidget extends StatelessWidget {
                       Get.deleteAll();
                       Get.reset();
                       // ignore: use_build_context_synchronously
-                      Phoenix.rebirth(context);
                     },
                   );
                 },

@@ -7,6 +7,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/movimentos_pendentes_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
@@ -49,6 +50,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       var map = movimento.toMap();
       await _movimentosBox.put(movimento.id, map);
+
+      getIt<MovimentosPendentesBloc>()
+          .add(const LoadMovimentosPendentesEvent());
 
       return const Right(true);
     } catch (e) {
@@ -156,6 +160,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
       movimento = movimento.copyWith(id: lastId);
       var map = movimento.toMap();
       await _movimentosBox.put(lastId, map);
+
+      getIt<MovimentosPendentesBloc>()
+          .add(const LoadMovimentosPendentesEvent());
 
       return const Right(true);
     } catch (e) {

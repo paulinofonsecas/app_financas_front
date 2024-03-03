@@ -116,4 +116,18 @@ class MovimentoService implements IMovimentoService {
       List<Movimento> movimentos, int destinoId) {
     return provider.transferirMovimentos(movimentos, destinoId);
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosPendentes() async {
+    final result = await provider.listMovimentos();
+
+    if (result.isRight()) {
+      final listMovimentos = result.getOrElse(() => []);
+      return Right(
+        listMovimentos.where((element) => !element.confirmado).toList(),
+      );
+    } else {
+      return result;
+    }
+  }
 }
