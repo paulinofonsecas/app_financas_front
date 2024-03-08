@@ -2,6 +2,7 @@
 
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
@@ -19,8 +20,16 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(HomePageInitialState()) {
     _movimentoBloc = getIt();
     _saldosService = getIt();
-
+    _startListeningMovimentoUpdates();
     _movimentoBloc.stream.listen(onMovimento);
+  }
+
+  void _startListeningMovimentoUpdates() {
+    final movimentoProvider = getIt<IMovimentoService>();
+    movimentoProvider.addListener(() {
+      getSaldoTotalEntradas();
+      getSaldoTotalSaidas();
+    });
   }
 
   void onConta(event) {

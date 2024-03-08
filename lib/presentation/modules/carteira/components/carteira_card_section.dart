@@ -36,6 +36,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
     super.initState();
   }
 
+  // TODO Melhorar a implementa;\cao deste widget
   @override
   Widget build(BuildContext context) {
     context.read<ContasCubit>().getContas();
@@ -100,6 +101,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
                 if (state is ContasListarContasSuccess) {
                   var contas = state.contas;
                   var changeContas = context.read<ChangeContaCubit>();
+
                   if (changeContas.state is ChageContaInitial) {
                     changeContas.updateContaIndex(contas.first.id);
                   }

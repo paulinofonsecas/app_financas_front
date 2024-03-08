@@ -209,4 +209,14 @@ class HttpMovimentoProvider implements IMovimentoProvider {
     // TODO: implement transferirMovimentos
     throw UnimplementedError();
   }
+  
+  @override
+  void addListener(Function fn) {
+    // TODO: implement addListener
+  }
+  
+  @override
+  void removeListener(Function fn) {
+    // TODO: implement removeListener
+  }
 }

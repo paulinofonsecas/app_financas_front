@@ -7,14 +7,13 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/movimentos_pendentes_bloc.dart';
-import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
 class DbMovimentoProvider implements IMovimentoProvider {
   late Box<Map<dynamic, dynamic>> _movimentosBox;
   late final ICategoriaService categoriaService;
+  final List<Function> _listeners = [];
 
   DbMovimentoProvider(this.categoriaService);
 
@@ -24,6 +23,16 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
   Future<void> dispose() {
     return _movimentosBox.close();
+  }
+
+  @override
+  void addListener(Function fn) {
+    _listeners.add(fn);
+  }
+
+  @override
+  void removeListener(Function fn) {
+    _listeners.remove(fn);
   }
 
   @override
@@ -61,9 +70,9 @@ class DbMovimentoProvider implements IMovimentoProvider {
   }
 
   void _globalUpdate() {
-    getIt<MovimentosPendentesBloc>().add(const LoadMovimentosPendentesEvent());
-    getIt<HomePageCubit>().getSaldoTotalEntradas();
-    getIt<HomePageCubit>().getSaldoTotalSaidas();
+    for (var element in _listeners) {
+      element();
+    }
   }
 
   @override

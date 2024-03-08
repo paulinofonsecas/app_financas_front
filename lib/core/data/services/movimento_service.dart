@@ -8,37 +8,38 @@ import '../../domain/entitys/movimento.dart';
 import '../provider/interfaces/i_movimento_provider.dart';
 
 class MovimentoService implements IMovimentoService {
-  final IMovimentoProvider provider;
+  final IMovimentoProvider _provider;
   bool isLocal = false;
 
-  MovimentoService({required this.provider}) {
+  MovimentoService({required IMovimentoProvider provider})
+      : _provider = provider {
     var sc = Get.find<SetupConfiguration>();
     isLocal = sc.isLocal;
   }
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentos() {
-    return provider.listMovimentos();
+    return _provider.listMovimentos();
   }
 
   @override
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento) {
-    return provider.saveMovimento(movimento);
+    return _provider.saveMovimento(movimento);
   }
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentosAt(DateTime date) {
-    return provider.listMovimentosAt(date);
+    return _provider.listMovimentosAt(date);
   }
 
   @override
   Future<Either<Failure, bool>> editMovimento(Movimento movimento) {
-    return provider.editMovimento(movimento);
+    return _provider.editMovimento(movimento);
   }
 
   @override
   Future<Either<Failure, Movimento>> getMovimento(int id) {
-    return provider.getMovimento(id);
+    return _provider.getMovimento(id);
   }
 
   @override
@@ -49,7 +50,7 @@ class MovimentoService implements IMovimentoService {
     if (isLocal) {
       return _getLocalPaginatedMovimentos(page, pageSize);
     } else {
-      return provider.listPaginatedMovimentos(page, pageSize);
+      return _provider.listPaginatedMovimentos(page, pageSize);
     }
   }
 
@@ -57,7 +58,7 @@ class MovimentoService implements IMovimentoService {
     int page,
     int pageSize,
   ) {
-    return provider.listMovimentos().then((value) {
+    return _provider.listMovimentos().then((value) {
       if (value.isLeft()) {
         return const Right([]);
       } else {
@@ -82,7 +83,7 @@ class MovimentoService implements IMovimentoService {
 
   @override
   Future<Either<Failure, bool>> deleteMovimento(int id) {
-    return provider.deleteMovimento(id);
+    return _provider.deleteMovimento(id);
   }
 
   @override
@@ -102,24 +103,24 @@ class MovimentoService implements IMovimentoService {
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentosEntrada(
       {DateTime? date}) {
-    return provider.listMovimentosEntrada(date: date);
+    return _provider.listMovimentosEntrada(date: date);
   }
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentosSaida(
       {DateTime? date}) {
-    return provider.listMovimentosSaida(date: date);
+    return _provider.listMovimentosSaida(date: date);
   }
 
   @override
   Future<Either<Failure, List<Movimento>>> transferirMovimentos(
       List<Movimento> movimentos, int destinoId) {
-    return provider.transferirMovimentos(movimentos, destinoId);
+    return _provider.transferirMovimentos(movimentos, destinoId);
   }
 
   @override
   Future<Either<Failure, List<Movimento>>> listMovimentosPendentes() async {
-    final result = await provider.listMovimentos();
+    final result = await _provider.listMovimentos();
 
     if (result.isRight()) {
       final listMovimentos = result.getOrElse(() => []);
@@ -129,5 +130,15 @@ class MovimentoService implements IMovimentoService {
     } else {
       return result;
     }
+  }
+
+  @override
+  void addListener(Function fn) {
+    _provider.addListener(fn);
+  }
+
+  @override
+  void removeListener(Function fn) {
+    _provider.removeListener(fn);
   }
 }

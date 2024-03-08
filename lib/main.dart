@@ -14,6 +14,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
@@ -22,8 +23,23 @@ import 'presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dar
 import 'presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 
+class BlocObserverWithLogger extends BlocObserver {
+  final Logger logger;
+
+  BlocObserverWithLogger({required this.logger});
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    logger.d('${bloc.runtimeType} $change');
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  var logger = Logger();
+  Bloc.observer = BlocObserverWithLogger(logger: logger);
 
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';

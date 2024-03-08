@@ -25,4 +25,6 @@ abstract class IMovimentoProvider {
     List<Movimento> movimentos,
     int destinoId,
   );
+  void addListener(Function fn);
+  void removeListener(Function fn);
 }
