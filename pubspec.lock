@@ -342,14 +342,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.1.4"
-  flutter_bloc_hooks:
-    dependency: "direct main"
-    description:
-      name: flutter_bloc_hooks
-      sha256: b4781fd01f06b51cdf8af275c98cb6be2b6bab51f7c0cbc6b4970d1f48d69d4f
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.2+1"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -366,14 +358,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
-  flutter_hooks:
-    dependency: transitive
-    description:
-      name: flutter_hooks
-      sha256: "6a126f703b89499818d73305e4ce1e3de33b4ae1c5512e3b8eab4b986f46774c"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.18.6"
   flutter_iconpicker:
     dependency: "direct main"
     description:
