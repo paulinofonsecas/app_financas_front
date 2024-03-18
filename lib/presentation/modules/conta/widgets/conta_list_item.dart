@@ -117,7 +117,7 @@ class _ContaItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Saldo',
+                      conta.banco.acronimo ?? conta.banco.nome,
                       style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
