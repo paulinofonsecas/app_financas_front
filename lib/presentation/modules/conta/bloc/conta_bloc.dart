@@ -18,6 +18,7 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
     contaService = getIt();
 
     on<ArquivarContaEvent>(_onArquivarConta);
+    on<DesarquivarContaEvent>(_onDesarquivarContaEvent);
     on<ListarContasEvent>(_onListarContas);
     on<ListarContasAtEvent>(_onListarContasAt);
     on<CalcularSaldoMensalEvent>(_onCalcularSaldoMensal);
@@ -30,6 +31,14 @@ class ContaBloc extends Bloc<ContaEvent, GContaState> {
     await contaService.updateConta(conta.copyWith(isArchived: true));
 
     emit(ArquivarContaSuccess());
+  }
+
+  _onDesarquivarContaEvent(DesarquivarContaEvent event, emit) async {
+    var conta = event.conta;
+
+    await contaService.updateConta(conta.copyWith(isArchived: false));
+
+    emit(DesarquivarContaSucess());
   }
 
   _onListarContas(event, emit) async {

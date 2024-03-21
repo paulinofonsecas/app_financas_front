@@ -109,6 +109,7 @@ class CustomListTileAction extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: kDefaultPadding / 2),
       child: ListTile(
         onTap: onTap,
+        contentPadding: const EdgeInsets.only(bottom: kDefaultPadding / 2),
         title: Text(
           title,
           style: GoogleFonts.inter(fontWeight: FontWeight.w400),

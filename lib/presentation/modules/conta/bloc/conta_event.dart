@@ -18,6 +18,15 @@ class ArquivarContaEvent extends ContaEvent {
   List<Object> get props => [conta];
 }
 
+class DesarquivarContaEvent extends ContaEvent {
+  const DesarquivarContaEvent({required this.conta});
+
+  final Conta conta;
+
+  @override
+  List<Object> get props => [conta];
+}
+
 class ListarContasAtEvent extends ContaEvent {
   final int mes;
 

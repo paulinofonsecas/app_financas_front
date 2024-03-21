@@ -1,3 +1,4 @@
+import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
@@ -48,7 +49,17 @@ class ContaListSection extends StatelessWidget {
             }
           },
         ),
-        BlocListener<ContaMostrarNaTelaInicialCubit, ContaMostrarNaTelaInicialState>(
+        BlocListener<ContaBloc, GContaState>(
+          listener: (context, state) {
+            if (state is DesarquivarContaSucess) {
+              context
+                  .read<ContaBloc>()
+                  .add(ListarContasAtEvent(DateTime.now().month));
+            }
+          },
+        ),
+        BlocListener<ContaMostrarNaTelaInicialCubit,
+            ContaMostrarNaTelaInicialState>(
           listener: (context, state) {
             if (state is ContaMostrarNaTelaChanged) {
               context

@@ -39,6 +39,11 @@ class DbBancoProvider implements IBancoProvider {
     // Bancos angolanos
     var bancos = [
       Banco(
+        id: 10000,
+        nome: 'Nenhum',
+        acronimo: 'Nenhum',
+      ),
+      Banco(
         id: 1,
         nome: 'Banco Angolano de Investimos',
         acronimo: 'BAI',

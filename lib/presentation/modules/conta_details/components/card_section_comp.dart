@@ -15,9 +15,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CardSection extends StatelessWidget {
   const CardSection({
-    Key? key,
+    super.key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 

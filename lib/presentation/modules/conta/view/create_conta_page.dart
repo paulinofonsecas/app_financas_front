@@ -5,6 +5,7 @@ import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_in
 import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/create_conta_body.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../cubit/create_conta_theme_cubit.dart';
@@ -13,7 +14,7 @@ class CreateContaPage extends StatefulWidget {
   const CreateContaPage({super.key});
 
   static Route<dynamic> route() {
-    return MaterialPageRoute<dynamic>(builder: (_) => const CreateContaPage());
+    return CupertinoPageRoute<dynamic>(builder: (_) => const CreateContaPage());
   }
 
   @override
