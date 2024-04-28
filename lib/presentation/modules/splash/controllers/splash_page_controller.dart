@@ -62,7 +62,7 @@ class SplashPageController extends GetxController {
         isDismissible: true,
         mainButton: TextButton(
           style: TextButton.styleFrom(
-            primary: Colors.white,
+            foregroundColor: Colors.white,
           ),
           onPressed: () {
             Get.back();
