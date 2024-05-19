@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../cubit/valor_transacao_cubit.dart';
 
@@ -158,7 +159,7 @@ class MoneyTextFormField extends StatefulWidget {
 
 class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
   final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    symbol: 'Kz',
+    NumberFormat.compactCurrency(symbol: 'Kz', decimalDigits: 2),
   );
 
   @override
@@ -166,7 +167,7 @@ class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
     var valorTransacao = context.read<ValorTransacaoCubit>();
 
     return TextFormField(
-      initialValue: _formatter.format('0'),
+      initialValue: _formatter.format.format('0'),
       onChanged: (v) {
         valorTransacao.changeValorTransacao(
           _formatter.getUnformattedValue().toString(),

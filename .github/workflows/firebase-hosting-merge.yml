@@ -18,7 +18,7 @@ jobs:
       - name: 'Run flutter pub get'
         run: flutter pub get
       - name: 'Build Web App'
-        run: flutter build web --no-tree-shake-icons
+        run: flutter build web --wasm --no-tree-shake-icons
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0.7.1
         with:

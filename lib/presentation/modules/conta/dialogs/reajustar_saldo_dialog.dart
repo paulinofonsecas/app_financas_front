@@ -14,6 +14,7 @@ import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:intl/intl.dart';
 
 class ReajustarSaldoDialog extends StatefulWidget {
   const ReajustarSaldoDialog({
@@ -30,7 +31,7 @@ class ReajustarSaldoDialog extends StatefulWidget {
 class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
   late final TextEditingController _newSaldoController;
   final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    symbol: 'Kz',
+    NumberFormat.compactCurrency(symbol: 'Kz', decimalDigits: 2),
   );
 
   @override
