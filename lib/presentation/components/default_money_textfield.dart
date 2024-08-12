@@ -2,6 +2,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class DefaultMoneyTextField extends StatelessWidget {
   const DefaultMoneyTextField({
@@ -21,7 +22,9 @@ class DefaultMoneyTextField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       focusNode: FocusNode(canRequestFocus: true),
-      inputFormatters: [textInputFormatter ?? CurrencyTextInputFormatter()],
+      inputFormatters: [textInputFormatter ?? CurrencyTextInputFormatter(
+        NumberFormat.currency(symbol: 'Kz'),
+      )],
       keyboardType: TextInputType.number,
       style: GoogleFonts.inter(
         fontSize: 26,

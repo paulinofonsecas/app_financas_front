@@ -17,6 +17,7 @@ import 'package:app_financas/presentation/components/default_action_button.dart'
 import 'package:app_financas/presentation/components/default_money_textfield.dart';
 import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
+import 'package:intl/intl.dart';
 
 import '../bottom_sheets/tipo_conta_bottom_sheet.dart';
 import 'color_picker_widget.dart';
@@ -143,7 +144,7 @@ class _SaldoWidget extends StatefulWidget {
 
 class _SaldoWidgetState extends State<_SaldoWidget> {
   final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    symbol: 'Kz',
+    NumberFormat.currency(symbol: 'Kz'),
   );
 
   @override

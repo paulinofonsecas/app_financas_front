@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   : c.loadingError.value
                       ? TextButton.icon(
                           style: TextButton.styleFrom(
-                            primary: Colors.green,
+                            foregroundColor: Colors.green,
                           ),
                           onPressed: () {
                             Get.back();

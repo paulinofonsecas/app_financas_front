@@ -103,7 +103,7 @@ class Categoria {
       icon: map['icon'] != null
           ? deserializeIcon(
               map['icon'].cast<String, dynamic>(),
-              // iconPack: IconPack.material,
+              iconPack: IconPack.material,
             )
           : null,
     );

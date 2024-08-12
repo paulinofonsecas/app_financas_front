@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +24,6 @@ class SplashPageController extends GetxController {
   }
 
   Future<void> init() async {
-    
-    
     isLoading.value = true;
     var categoriaEntradasResult =
         await categoriaService.listValidCategoriasEntradas();
@@ -62,7 +60,7 @@ class SplashPageController extends GetxController {
         isDismissible: true,
         mainButton: TextButton(
           style: TextButton.styleFrom(
-            primary: Colors.white,
+            foregroundColor: Colors.white,
           ),
           onPressed: () {
             Get.back();
