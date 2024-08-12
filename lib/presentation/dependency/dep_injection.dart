@@ -58,8 +58,8 @@ void dependencyInitialize() {
 
   // Conta
   getIt.registerLazySingleton<IContaProvider>(
-      () => DbContaProvider(getIt(), getIt()));
-  getIt.registerLazySingleton<IContaService>(() => ContaService(getIt(), getIt()));
+      () => DbContaProvider(getIt()));
+  getIt.registerLazySingleton<IContaService>(() => ContaService(getIt(), getIt(), getIt()));
 
   // saldos
   getIt.registerLazySingleton<ISaldosService>(() => SaldosService(getIt()));

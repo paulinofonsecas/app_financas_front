@@ -8,12 +8,10 @@ abstract class IMovimentoProvider {
     int page,
     int pageSize,
   );
-  Future<Either<Failure, List<int>>> getTotalMovimentos(int contaId);
   Future<Either<Failure, List<Movimento>>> listMovimentosAt(DateTime date);
   Future<Either<Failure, Movimento>> getMovimento(int id);
   Future<Either<Failure, bool>> saveMovimento(Movimento movimento);
   Future<Either<Failure, bool>> editMovimento(Movimento movimento);
-  Future<Either<Failure, double>> getSaldo(int id, [int? mes]);
   Future<Either<Failure, bool>> deleteMovimento(int id);
   Future<Either<Failure, List<Movimento>>> listPaginatedContaMovimentos(
       int currentIndex, int page, int pageSize);

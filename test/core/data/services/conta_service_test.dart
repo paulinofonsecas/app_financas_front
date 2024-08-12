@@ -1,8 +1,10 @@
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/services/conta_service.dart';
 import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
+import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/core/domain/services/i_banco_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -11,16 +13,118 @@ import 'package:mocktail/mocktail.dart';
 
 class MockMovimentoService extends Mock implements IMovimentoService {}
 
+class MockBancoService extends Mock implements IBancoService {}
+
 class MockContaProvider extends Mock implements IContaProvider {}
 
 void main() {
-  group('calcularBalancoMensal', () {
-    test('invalid month index returns Failure', () async {
-      final service = ContaService(
-        MockContaProvider(),
-        MockMovimentoService(),
+  late ContaService service;
+  late MockContaProvider provider;
+  late MockBancoService bancoService;
+  late MockMovimentoService movimentosService;
+
+  setUp(() {
+    provider = MockContaProvider();
+    movimentosService = MockMovimentoService();
+    bancoService = MockBancoService();
+
+    registerFallbackValue(Conta.fake());
+    service = ContaService(
+      provider,
+      movimentosService,
+      bancoService,
+    );
+  });
+
+  // group listar contas e movimentos
+
+  group('listContas', () {
+    test('error when listing contas returns Failure', () async {
+      when(() => provider.listContas())
+          .thenAnswer((_) async => Left(Failure('')));
+
+      final result = await service.listContas();
+
+      expect(result.isLeft(), true);
+      expect(result.swap().getOrElse(() => Failure('')).message,
+          'Erro ao listar as contas');
+    });
+
+    test('successful listing of accounts', () async {
+      when(() => movimentosService.getTotalMovimentos(any())).thenAnswer(
+        (_) async => const Right([0, 0]),
       );
 
+      when(() => movimentosService.getSaldo(any())).thenAnswer(
+        (_) async => const Right(0),
+      );
+
+      when(() => bancoService.getBanco(any())).thenAnswer(
+        (_) async => Right(Banco.fake()),
+      );
+
+      when(() => provider.listContas()).thenAnswer(
+        (_) async => Right(
+          [
+            Conta.fake(id: 1, saldoicial: 100.0),
+            Conta.fake(id: 2),
+          ],
+        ),
+      );
+
+      final result = await service.listContas();
+
+      expect(result.isRight(), true);
+      expect(result.getOrElse(() => []).length, 2);
+      expect(result.getOrElse(() => []).first.saldoInicial, 100.0);
+    });
+
+    // erro ao listar conta quando não tem banco
+    test('error when listing account without bank returns Failure', () async {
+      when(() => movimentosService.getTotalMovimentos(any())).thenAnswer(
+        (_) async => const Right([0, 0]),
+      );
+
+      when(() => movimentosService.getSaldo(any())).thenAnswer(
+        (_) async => const Right(0),
+      );
+
+      when(() => bancoService.getBanco(any())).thenAnswer(
+        (_) async => Left(Failure('')),
+      );
+
+      when(() => provider.listContas()).thenAnswer(
+        (_) async => Right(
+          [
+            Conta.fake(id: 1, saldoicial: 100.0),
+            Conta.fake(id: 2),
+          ],
+        ),
+      );
+
+      final result = await service.listContas();
+
+      expect(result.isLeft(), true);
+      expect(result.swap().getOrElse(() => Failure('')).message,
+          'Erro ao buscar o banco');
+    });
+
+    // erro ao contar contas
+    test('error when counting accounts returns Failure', () async {
+      const errorMessage = 'Ocorreu um erro ao contar as contas.';
+
+      when(() => provider.listContas())
+          .thenAnswer((_) async => Left(Failure(errorMessage)));
+
+      final result = await service.listContas();
+
+      expect(result.isLeft(), true);
+      expect(result.swap().getOrElse(() => Failure('')).message, errorMessage);
+    });
+  });
+
+  group('calcularBalancoMensal', () {
+    test('invalid month index returns Failure', () async {
       final result = await service.calcularBalancoMensal(0);
 
       expect(result.isLeft(), true);
@@ -29,13 +133,6 @@ void main() {
     });
 
     test('error when listing movimentos returns Failure', () async {
-      final movimentosService = MockMovimentoService();
-
-      final service = ContaService(
-        MockContaProvider(),
-        movimentosService,
-      );
-
       when(() => movimentosService.listMovimentos())
           .thenAnswer((_) async => Left(Failure('')));
 
@@ -47,13 +144,6 @@ void main() {
     });
 
     test('successful calculation of monthly balance', () async {
-      final movimentosService = MockMovimentoService();
-
-      final service = ContaService(
-        MockContaProvider(),
-        movimentosService,
-      );
-
       when(() => movimentosService.listMovimentos()).thenAnswer(
         (_) async => Right(
           [
@@ -78,13 +168,6 @@ void main() {
     });
 
     test('calculation of monthly balance with no movimentos', () async {
-      final movimentosService = MockMovimentoService();
-
-      final service = ContaService(
-        MockContaProvider(),
-        movimentosService,
-      );
-
       when(() => movimentosService.listMovimentos()).thenAnswer(
         (_) async => const Right([]),
       );
@@ -97,13 +180,6 @@ void main() {
 
     test('calculation of monthly balance with movimentos in different months',
         () async {
-      final movimentosService = MockMovimentoService();
-
-      final service = ContaService(
-        MockContaProvider(),
-        movimentosService,
-      );
-
       when(() => movimentosService.listMovimentos()).thenAnswer(
         (_) async => Right(
           [
@@ -130,21 +206,6 @@ void main() {
   });
 
   group('saveConta', () {
-    late ContaService service;
-    late MockContaProvider provider;
-    late MockMovimentoService movimentoService;
-
-    setUp(() {
-      provider = MockContaProvider();
-      movimentoService = MockMovimentoService();
-
-      registerFallbackValue(Conta.fake());
-      service = ContaService(
-        provider,
-        movimentoService,
-      );
-    });
-
     test('successful save operation', () async {
       when(() => provider.saveConta(any()))
           .thenAnswer((_) async => const Right(1));

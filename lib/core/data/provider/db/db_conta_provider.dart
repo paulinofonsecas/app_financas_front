@@ -14,10 +14,9 @@ import '../interfaces/i_contas_provider.dart';
 
 class DbContaProvider implements IContaProvider {
   final IMovimentoProvider movimentoProvider;
-  final IBancoProvider _bancoProvider;
   late Box<Map<dynamic, dynamic>> _contas;
 
-  DbContaProvider(this.movimentoProvider, this._bancoProvider);
+  DbContaProvider(this.movimentoProvider);
 
   Future<void> initDb() async {
     _contas = await Hive.openBox(kContasBox);
@@ -45,36 +44,11 @@ class DbContaProvider implements IContaProvider {
     await initDb();
     var result = _contas.toMap();
 
-    if (result.isEmpty) {
-      await _generateDefaultAccounts();
-
-      return listContas();
-    }
-
-    var saida = <Conta>[];
     var contas = result.values
         .map((e) => Conta.fromMap(e.cast<String, dynamic>()))
         .toList();
 
-    for (var conta in contas) {
-      var saldoResult = await _getSaldo(conta.id, mes);
-      List<int> totalMovimentos = await _getTotalMovimentos(conta.id);
-      var banco = await _getBanco(conta.banco.id);
-
-      if (saldoResult.isLeft()) {
-        return Left(Failure('Erro ao processar o saldo da conta'));
-      } else {
-        conta = conta.copyWith(
-          saldo: saldoResult.getOrElse(() => 0.0),
-          totalDespesas: totalMovimentos.first,
-          totalReceitas: totalMovimentos.last,
-          banco: banco,
-        );
-        saida.add(conta);
-      }
-    }
-
-    return Right(saida);
+    return Right(contas);
   }
 
   Future<void> _generateDefaultAccounts() async {
@@ -132,36 +106,8 @@ class DbContaProvider implements IContaProvider {
       return Left(NotFoundError('Conta não encontrada'));
     } else {
       var conta = Conta.fromMap(data.cast<String, dynamic>());
-      var saldoResult = await _getSaldo(id);
-      var banco = await _getBanco(conta.banco.id);
-
-      if (saldoResult.isLeft()) {
-        return Left(Failure('Saldo inválido'));
-      } else {
-        conta = conta.copyWith(
-          saldo: saldoResult.getOrElse(() => 0.0),
-          banco: banco,
-        );
-      }
       return Right(conta);
     }
-  }
-
-  Future<Banco> _getBanco(int id) async {
-    await _bancoProvider.listBancos();
-    var result = await _bancoProvider.getBanco(id);
-    return result.getOrElse(() => Banco.fake());
-  }
-
-  Future<Either<Failure, double>> _getSaldo(int contaId, [int? mes]) async {
-    var result = await movimentoProvider.getSaldo(contaId, mes);
-
-    return result;
-  }
-
-  Future<List<int>> _getTotalMovimentos(int contaId) async {
-    var result = await movimentoProvider.getTotalMovimentos(contaId);
-    return result.getOrElse(() => [0, 0]);
   }
 
   @override

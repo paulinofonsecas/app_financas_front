@@ -37,21 +37,32 @@ class Conta {
     this.isArchived = false,
   });
 
-  factory Conta.fake() {
+  factory Conta.fake({
+    int id = 0,
+    String nome = 'Conta fake',
+    double saldo = 0.0,
+    double saldoicial = 0.0,
+    String descricao = 'Conta fake',
+    int totalDespesas = 0,
+    int totalReceitas = 0,
+    Color color = Colors.blue,
+    String? iconAsset,
+    bool? showInSoma,
+    bool? isArchived,
+  }) {
     return Conta(
-      id: 0,
-      nome: 'Conta fake',
-      saldo: 0.0,
-      saldoInicial: 0.0,
-      totalDespesas: 0,
-      totalReceitas: 0,
-      descricao: 'Conta fake',
+      id: id,
+      nome: nome,
+      saldo: saldo,
+      saldoInicial: saldoicial,
+      descricao: descricao,
       tipoConta: TipoConta.tipoContas.first,
       banco: Banco.fake(),
-      color: Colors.blue,
-      iconAsset: null,
-      showInSoma: null,
-      isArchived: null,
+      totalDespesas: totalDespesas,
+      totalReceitas: totalReceitas,
+      color: color,
+      iconAsset: iconAsset,
+      showInSoma: showInSoma,
     );
   }
 
