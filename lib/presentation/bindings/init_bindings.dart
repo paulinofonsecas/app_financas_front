@@ -8,12 +8,14 @@ import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.
 import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_setup_provider.dart';
+import 'package:app_financas/core/data/services/banco_service.dart';
 import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/data/services/conta_service.dart';
 import 'package:app_financas/core/data/services/movimento_service.dart';
 import 'package:app_financas/core/data/services/saldos_service.dart';
 import 'package:app_financas/core/data/services/setup_service.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
+import 'package:app_financas/core/domain/services/i_banco_service.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
@@ -31,17 +33,22 @@ class InitBingings extends Bindings {
       fenix: true,
     );
 
-    
     // Categoria
     Get.lazyPut<ICategoriaProvider>(() => DbCategoriaProvider(), fenix: true);
     Get.lazyPut<ICategoriaService>(() => CategoriaService(Get.find()),
         fenix: true);
 
     // Movimentos
+    Get.lazyPut<IBancoService>(
+      () => BancoService(Get.find()),
+      fenix: true,
+    );
+
     Get.lazyPut<IMovimentoProvider>(
       () => DbMovimentoProvider(Get.find()),
       fenix: true,
     );
+
     Get.lazyPut<IMovimentoService>(
       () => MovimentoService(provider: Get.find()),
       fenix: true,
@@ -51,7 +58,13 @@ class InitBingings extends Bindings {
 
     // Conta
     Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find()), fenix: true);
-    // Get.lazyPut<IContaService>(() => ContaService(Get.find(), getIt()), fenix: true);
+    Get.lazyPut<IContaService>(
+        () => ContaService(
+              Get.find(),
+              Get.find(),
+              Get.find(),
+            ),
+        fenix: true);
 
     // Setup
     Get.lazyPut<SetupConfiguration>(
@@ -72,6 +85,5 @@ class InitBingings extends Bindings {
       SaldosService(Get.find()),
       permanent: true,
     );
-
   }
 }
