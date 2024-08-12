@@ -63,18 +63,23 @@ class Movimento {
     );
   }
 
-  factory Movimento.fake() {
+  factory Movimento.fake({
+    double valor = 0,
+    bool confirmado = false,
+    int tipoMovimentoId = -1,
+    DateTime? data,
+  }) {
     return Movimento(
       id: -1,
-      valor: 0,
-      data: DateTime.now(),
+      valor: valor,
+      data: data ?? DateTime.now(),
       descricao: '',
       userId: -1,
       cartaoId: -1,
-      tipoMovimentoId: -1,
+      tipoMovimentoId: tipoMovimentoId,
       categoriaMovimentoId: -1,
       obsMovimento: '',
-      confirmado: false,
+      confirmado: confirmado,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );

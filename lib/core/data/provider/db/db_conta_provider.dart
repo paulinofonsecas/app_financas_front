@@ -1,7 +1,6 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
 import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
@@ -176,55 +175,6 @@ class DbContaProvider implements IContaProvider {
       return const Right(true);
     } catch (e) {
       return Left(DbException('Erro ao atualizar conta'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, BalancoMensal>> calcularBalancoMensal(
-      int mesIndex) async {
-    if (mesIndex < 1 || mesIndex > 12) {
-      return Left(Failure('Mês inválido'));
-    } else {
-      var result = await movimentoProvider.listMovimentos();
-
-      if (result.isLeft()) {
-        return Left(Failure('Erro ao processar o balanço mensal'));
-      }
-
-      var movimentos = result.getOrElse(() => []);
-
-      var saldoReal = movimentos
-          .where(
-              (element) => element.data.month == mesIndex && element.confirmado)
-          .fold(
-        0.0,
-        (previousValue, element) {
-          if (element.tipoMovimentoId == 1) {
-            return previousValue + element.valor;
-          } else {
-            return previousValue - element.valor;
-          }
-        },
-      );
-
-      var saldoContabilistico =
-          movimentos.where((element) => element.data.month == mesIndex).fold(
-        0.0,
-        (previousValue, element) {
-          if (element.tipoMovimentoId == 1) {
-            return previousValue + element.valor;
-          } else {
-            return previousValue - element.valor;
-          }
-        },
-      );
-
-      return Right(
-        BalancoMensal(
-          saldoReal,
-          saldoContabilistico,
-        ),
-      );
     }
   }
 

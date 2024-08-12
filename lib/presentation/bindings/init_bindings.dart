@@ -51,7 +51,7 @@ class InitBingings extends Bindings {
 
     // Conta
     Get.lazyPut<IContaProvider>(() => DbContaProvider(Get.find(), Get.find()), fenix: true);
-    Get.lazyPut<IContaService>(() => ContaService(Get.find()), fenix: true);
+    // Get.lazyPut<IContaService>(() => ContaService(Get.find(), getIt()), fenix: true);
 
     // Setup
     Get.lazyPut<SetupConfiguration>(
