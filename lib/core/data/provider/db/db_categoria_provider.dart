@@ -26,7 +26,7 @@ class DbCategoriaProvider implements ICategoriaProvider {
     Categoria categoria,
   ) async {
     try {
-      await initCategoriaEntradasDb();
+      // await initCategoriaEntradasDb();
 
       var lastId = _categoriasEntradaBox.values.length + 1;
       categoria = categoria.copyWith(id: lastId);

@@ -1,13 +1,8 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/erros/failure.dart';
-
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../interfaces/i_contas_provider.dart';
@@ -20,6 +15,10 @@ class DbContaProvider implements IContaProvider {
 
   Future<void> initDb() async {
     _contas = await Hive.openBox(kContasBox);
+  }
+
+  Future<void> closeDb() async {
+    await _contas.close();
   }
 
   @override
@@ -49,51 +48,6 @@ class DbContaProvider implements IContaProvider {
         .toList();
 
     return Right(contas);
-  }
-
-  Future<void> _generateDefaultAccounts() async {
-    var contasPadrao = [
-      Conta(
-        id: 1,
-        nome: 'Carteira',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de gastos diversos',
-        color: Colors.orangeAccent,
-      ),
-      Conta(
-        id: 2,
-        nome: 'Salário',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta salarial',
-        color: Colors.brown,
-      ),
-      Conta(
-        id: 3,
-        nome: 'Pupança',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de pupança à curto prazo',
-        color: Colors.blueAccent,
-      ),
-    ];
-
-    for (var conta in contasPadrao) {
-      await saveConta(conta);
-    }
   }
 
   @override

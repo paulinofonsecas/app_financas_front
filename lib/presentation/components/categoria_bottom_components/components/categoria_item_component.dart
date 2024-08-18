@@ -1,18 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-
 class CategoriaItem extends StatelessWidget {
   const CategoriaItem({
-    Key? key,
+    super.key,
     required this.categoria,
     this.onTap,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   final Categoria categoria;
   final GestureTapCallback? onTap;

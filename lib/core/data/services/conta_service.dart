@@ -2,30 +2,32 @@ import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dar
 import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
 import 'package:app_financas/core/domain/entitys/banco.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
 import 'package:app_financas/core/domain/services/i_banco_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 
 class ContaService implements IContaService {
-  final IContaProvider provider;
+  final IContaProvider _provider;
   final IBancoService _bancoService;
   final IMovimentoService _movimentoService;
 
-  ContaService(this.provider, this._movimentoService, this._bancoService);
+  ContaService(this._provider, this._movimentoService, this._bancoService);
 
   @override
   Future<Either<Failure, List<Conta>>> listContas([int? mes]) async {
-    final result = await provider.listContas(mes);
+    final result = await _provider.listContas(mes);
 
     return result.fold(
       (l) => Left(Failure(l.message)),
       (contas) async {
         if (contas.isEmpty) {
-          return const Right([]);
-          // await _generateDefaultAccounts();
-          // return listContas();
+          // return const Right([]);
+          await _generateDefaultAccounts();
+          return listContas(mes);
         }
 
         var saida = <Conta>[];
@@ -53,9 +55,60 @@ class ContaService implements IContaService {
         }
 
         return Right(
-            contas.where((conta) => conta.isArchived == false).toList());
+            saida.where((conta) => conta.isArchived == false).toList());
       },
     );
+  }
+
+  Future<void> _generateDefaultAccounts() async {
+    final bancos = await _bancoService.listBancos();
+
+    if (bancos.isLeft()) {
+      throw Exception('Não foi possível buscar os bancos');
+    }
+
+    var contasPadrao = [
+      Conta(
+        id: 1,
+        nome: 'Carteira',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de gastos diversos',
+        color: Colors.orangeAccent,
+      ),
+      Conta(
+        id: 2,
+        nome: 'Salário',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta salarial',
+        color: Colors.brown,
+      ),
+      Conta(
+        id: 3,
+        nome: 'Pupança',
+        saldo: 0.0,
+        saldoInicial: 0.0,
+        totalDespesas: 0,
+        totalReceitas: 0,
+        banco: Banco.fake(),
+        tipoConta: TipoConta.tipoContas.first,
+        descricao: 'Conta de pupança à curto prazo',
+        color: Colors.blueAccent,
+      ),
+    ];
+
+    for (var conta in contasPadrao) {
+      await _provider.saveConta(conta);
+    }
   }
 
   Future<List<int>> _getTotalMovimentos(int contaId) async {
@@ -65,14 +118,14 @@ class ContaService implements IContaService {
 
   @override
   Future<Either<Failure, int>> saveConta(Conta categoria) {
-    return provider.saveConta(categoria);
+    return _provider.saveConta(categoria);
   }
 
   @override
   Future<Either<Failure, Conta>> getConta(int id) async {
     late Conta conta;
 
-    final result = await provider.getConta(id);
+    final result = await _provider.getConta(id);
     if (result.isLeft()) {
       return Left(
           result.swap().getOrElse(() => Failure('Erro ao obter conta')));
@@ -161,17 +214,17 @@ class ContaService implements IContaService {
 
   @override
   Future<Either<Failure, bool>> updateConta(Conta conta) {
-    return provider.updateConta(conta);
+    return _provider.updateConta(conta);
   }
 
   @override
   Future<Either<Failure, void>> deleteConta(int id) {
-    return provider.removeConta(id);
+    return _provider.removeConta(id);
   }
 
   @override
   Future<Either<Failure, List<Conta>>> listArchivedContas() async {
-    final result = await provider.listContas();
+    final result = await _provider.listContas();
     return result.fold(
       (l) => Left(l),
       (r) => Right(r.where((conta) => conta.isArchived == true).toList()),
@@ -179,6 +232,8 @@ class ContaService implements IContaService {
   }
 
   Future<Either<Failure, Banco>> _getBanco(int id) async {
+    //! fix-me: isso pode ser melhorado
+    await _bancoService.listBancos();
     var result = await _bancoService.getBanco(id);
 
     if (result.isLeft()) {

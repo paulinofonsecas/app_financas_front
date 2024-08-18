@@ -15,6 +15,10 @@ class DbBancoProvider implements IBancoProvider {
     _bancoBox = await Hive.openBox(kBancoBox);
   }
 
+  Future<void> closeDb() async {
+    await _bancoBox.close();
+  }
+
   @override
   Future<Either<Failure, List<Banco>>> listBancos() async {
     try {
@@ -86,8 +90,10 @@ class DbBancoProvider implements IBancoProvider {
     ];
 
     for (var banco in bancos) {
-      _bancoBox.put(banco.id, banco.toMap());
+      await _bancoBox.put(banco.id, banco.toMap());
     }
+
+    await closeDb();
   }
 
   @override

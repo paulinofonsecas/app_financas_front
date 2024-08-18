@@ -41,7 +41,7 @@ void main() {
   group('listContas', () {
     test('error when listing contas returns Failure', () async {
       when(() => provider.listContas())
-          .thenAnswer((_) async => Left(Failure('')));
+          .thenAnswer((_) async => Left(Failure('Erro ao listar as contas')));
 
       final result = await service.listContas();
 

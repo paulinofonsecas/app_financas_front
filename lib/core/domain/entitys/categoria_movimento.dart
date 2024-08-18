@@ -89,7 +89,7 @@ class Categoria {
       'id': id,
       'name': name,
       'color': color?.value,
-      'icon': icon != null ? serializeIcon(icon!) : null,
+      'icon': icon != null ? serializeIcon(icon!, iconPack: IconPack.material) : null,
       'isArchived': isArchived
     };
   }
