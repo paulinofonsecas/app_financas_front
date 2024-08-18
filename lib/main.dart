@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
@@ -84,16 +86,22 @@ Future<void> main() async {
           create: (context) => SelectCategoriaCubit(),
         ),
       ],
-      child: Builder(builder: (context) {
-        // var width = context.width;
-
-        return DevicePreview(
-          // enabled: width > 600,
-          builder: (c) => const MyApp(),
-        );
-      }),
+      child: _buildApp(),
     ),
   );
+}
+
+Builder _buildApp() {
+  return Builder(builder: (context) {
+    var showDevicePreview = Platform.isAndroid ||
+        Platform.isIOS ||
+        MediaQuery.sizeOf(context).width < 600;
+
+    return DevicePreview(
+      enabled: !showDevicePreview,
+      builder: (c) => const MyApp(),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
