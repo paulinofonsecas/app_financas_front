@@ -21,9 +21,9 @@ class BottomCategoryCompController extends GetxController {
     service = Get.find();
     searchTextController = TextEditingController();
 
-    searchTextController.addListener(() {
-      update(['categoriaList']);
-    });
+    // searchTextController.addListener(() {
+    //   update(['categoriaList']);
+    // });
 
     super.onInit();
   }

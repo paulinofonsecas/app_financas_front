@@ -57,13 +57,29 @@ class BottomCategoryComponent extends StatefulWidget {
 
 class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
   late final BottomCategoryCompController controller;
+  var _searchedValue = '';
 
   @override
   void initState() {
     controller = Get.put(
       BottomCategoryCompController(tipoCategoria: widget.tipoCategoria),
     );
+
+    controller.searchTextController.addListener(() {
+      setState(() {
+        _searchedValue = controller.searchTextController.text;
+      });
+    });
+
     super.initState();
+  }
+
+  List<Categoria> _getCategorias(
+    List<Categoria> categorias,
+  ) {
+    return categorias
+        .where((cat) => cat.name.contains(_searchedValue))
+        .toList();
   }
 
   @override
@@ -103,7 +119,7 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
 
                 if (state is ListarCategoriasSuccess) {
                   return CategoriaListComponent(
-                    categorias: state.categorias,
+                    categorias: _getCategorias(state.categorias),
                     selectedCategoriaId: widget.selectedCategoriaId,
                     tipoCategoria: widget.tipoCategoria,
                   );
