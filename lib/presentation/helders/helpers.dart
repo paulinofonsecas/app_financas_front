@@ -15,6 +15,7 @@ void showErrorMessage(String title, String message,
       duration: duration ?? const Duration(seconds: 4),
       backgroundColor: backgroundColor ?? Colors.red,
       isDismissible: true,
+      borderRadius: 10,
     ),
   );
 }
@@ -27,6 +28,7 @@ void showSucessMessage(String title, String message) {
       duration: const Duration(seconds: 2),
       backgroundColor: Colors.green,
       isDismissible: true,
+      borderRadius: 10,
     ),
   );
 }
