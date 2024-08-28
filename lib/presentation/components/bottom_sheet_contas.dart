@@ -1,3 +1,5 @@
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/create_account_widget.dart';
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
@@ -6,18 +8,14 @@ import 'package:app_financas/presentation/modules/conta/view/create_conta_page.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'banco_img_widget.dart';
-import 'search_component.dart';
 
 class BottomSheetContasWidget extends StatefulWidget {
   const BottomSheetContasWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static Future<dynamic> openModalBottomSheet(
     BuildContext context,
@@ -65,10 +63,11 @@ class _BottomSheetContaWidget extends State<BottomSheetContasWidget> {
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
           children: [
-            SearchComponent(
-              textController: TextEditingController(),
-              onClearTap: () {},
-            ),
+            // !fix-me
+            // SearchComponent(
+            //   textController: TextEditingController(),
+            //   onClearTap: () {},
+            // ),
             const Gutter(),
             Expanded(
               child: BlocBuilder<BottomSheetContaCubit, BottomSheetContaState>(
