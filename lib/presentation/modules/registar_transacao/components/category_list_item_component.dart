@@ -94,7 +94,7 @@ class _CategoriaItemWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(90),
               border: Border.all(
-                color: Colors.orangeAccent,
+                color: categoria.color ?? Colors.white,
                 width: 1,
               ),
             ),
@@ -104,6 +104,7 @@ class _CategoriaItemWidget extends StatelessWidget {
                 Icon(
                   categoria.icon ?? Icons.category_outlined,
                   size: 18,
+                  color: categoria.color,
                 ),
                 const GutterSmall(),
                 Text(categoria.name),

@@ -65,9 +65,8 @@ class ContaListItemView extends StatelessWidget {
 
 class _ShowContaWidget extends StatelessWidget {
   const _ShowContaWidget({
-    Key? key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 
