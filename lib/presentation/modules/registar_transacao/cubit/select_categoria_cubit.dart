@@ -21,8 +21,8 @@ class SelectCategoriaCubit extends Cubit<SelectCategoriaState> {
     emit(SelectCategoriaLoading());
 
     var result = await (isEntrada
-        ? _categoriaService.listCategoriasEntradas()
-        : _categoriaService.listCategoriasSaidas());
+        ? _categoriaService.listValidCategoriasEntradas()
+        : _categoriaService.listValidCategoriasSaidas());
 
     if (result is Right) {
       emit(SelectCategoriaChanged(result.getOrElse(() => []).first));

@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +10,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-
-import 'components/categoria_list_component.dart';
 import '../search_component.dart';
 import 'components/bottom_category_comp_controller.dart';
+import 'components/categoria_list_component.dart';
 
 class BottomCategoryComponent extends StatefulWidget {
   const BottomCategoryComponent({
-    Key? key,
+    super.key,
     required this.tipoCategoria,
     required this.selectedCategoriaId,
-  }) : super(key: key);
+  });
 
   final TipoCategoria tipoCategoria;
   final int? selectedCategoriaId;
@@ -87,7 +86,8 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
           Gutter(),
           Expanded(
             child: BlocBuilder<ListarCategoriaCubit, ListarCategoriaState>(
-              bloc: context.read<ListarCategoriaCubit>()..listarCategorias(widget.tipoCategoria),
+              bloc: context.read<ListarCategoriaCubit>()
+                ..listarCategorias(widget.tipoCategoria),
               builder: (context, state) {
                 if (state is ListarCategoriasError) {
                   return Center(

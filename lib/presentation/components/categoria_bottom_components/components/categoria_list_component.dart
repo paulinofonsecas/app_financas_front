@@ -3,6 +3,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/gerir_categorias_page.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -67,6 +68,11 @@ class CategoriaListComponent extends StatelessWidget {
                       context: context,
                       tipoCategoria: tipoCategoria,
                     ).then((value) {
+                      //! fix-me
+                      // ignore: use_build_context_synchronously
+                      context
+                          .read<ListarCategoriaCubit>()
+                          .listarCategorias(tipoCategoria);
                       controller.update(['categoriaList']);
                     });
                   },

@@ -23,9 +23,9 @@ class ListarCategoriaCubit extends Cubit<ListarCategoriaState> {
     late Either<Failure, List<Categoria>> result;
 
     if (tipo == TipoCategoria.entrada) {
-      result = await _iCategoriaService.listCategoriasEntradas();
+      result = await _iCategoriaService.listValidCategoriasEntradas();
     } else {
-      result = await _iCategoriaService.listCategoriasSaidas();
+      result = await _iCategoriaService.listValidCategoriasSaidas();
     }
 
     if (result is Right) {
