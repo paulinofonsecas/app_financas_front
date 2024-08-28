@@ -9,6 +9,7 @@ import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.d
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,8 +94,7 @@ Future<void> main() async {
 
 Builder _buildApp() {
   return Builder(builder: (context) {
-    var showDevicePreview = Platform.isAndroid ||
-        Platform.isIOS ||
+    var showDevicePreview = (Platform.isAndroid || Platform.isIOS || kIsWeb) &&
         MediaQuery.sizeOf(context).width < 600;
 
     return DevicePreview(
