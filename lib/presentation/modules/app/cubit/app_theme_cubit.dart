@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 part 'app_theme_state.dart';
 
 class AppThemeCubit extends Cubit<AppThemeState> {
-  AppThemeCubit() : super(const AppThemeChanged(ThemeMode.dark));
+  AppThemeCubit() : super(const AppThemeChanged(ThemeMode.system));
 
   void changeThemeMode(ThemeMode themeMode) {
     emit(AppThemeChanged(themeMode));

@@ -2,7 +2,6 @@
 
 import 'package:app_financas/presentation/modules/splash/controllers/splash_page_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,40 +28,29 @@ class _SplashScreenState extends State<SplashScreen> {
         bottom: false,
         child: Column(
           mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
-            Align(
-              alignment: Alignment.center,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40),
-                child: Image.asset(
-                  'assets/imgs/logo.jpg',
-                  width: 200,
-                  height: 200,
-                ),
+            Center(
+              child: Obx(
+                () => c.isLoading.value
+                    ? const CircularProgressIndicator()
+                    : c.loadingError.value
+                        ? TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.green,
+                            ),
+                            onPressed: () {
+                              // Get.back();
+                              c.init();
+                            },
+                            icon: Icon(Icons.refresh, color: Colors.green[700]),
+                            label: const Text('Tentar novamente'),
+                          )
+                        : const Text(''),
               ),
             ),
             const Spacer(),
-            Obx(
-              () => c.isLoading.value
-                  ? const CircularProgressIndicator()
-                  : c.loadingError.value
-                      ? TextButton.icon(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.green,
-                          ),
-                          onPressed: () {
-                            Get.back();
-                            c.init();
-                          },
-                          icon: Icon(Icons.refresh, color: Colors.green[700]),
-                          label: const Text('Tentar novamente'),
-                        )
-                      : const Text(''),
-            ),
-            GutterLarge(),
-            GutterLarge(),
-            GutterLarge(),
           ],
         ),
       ),

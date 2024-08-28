@@ -2,6 +2,7 @@
 
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class MovimentoItem extends StatelessWidget {
   const MovimentoItem({
-    Key? key,
+    super.key,
     required this.movimento,
     required this.asset,
     required this.title,
@@ -19,7 +20,7 @@ class MovimentoItem extends StatelessWidget {
     required this.avatarBgColor,
     required this.tipoMovimentoId,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Movimento movimento;
   final int tipoMovimentoId;
@@ -55,9 +56,10 @@ class MovimentoItem extends StatelessWidget {
           fit: StackFit.loose,
           children: [
             Container(
+              height: 64,
               padding: EdgeInsets.symmetric(
                 horizontal: kDefaultPadding / 2,
-                vertical: kDefaultPadding,
+                // vertical: kDefaultPadding,
               ),
               decoration: BoxDecoration(
                 color: Theme.of(context)
@@ -140,27 +142,6 @@ class MovimentoItem extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class NotConfirmWidgetIndicator extends StatelessWidget {
-  const NotConfirmWidgetIndicator({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Container(
-        width: 15,
-        height: 15,
-        decoration: BoxDecoration(
-          color: Colors.redAccent,
-          shape: BoxShape.circle,
-        ),
-      ),
     );
   }
 }

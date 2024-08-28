@@ -1,28 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/components/my_divider.dart';
+import 'package:app_financas/presentation/components/with_icon.dart';
+import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app_financas/presentation/components/my_divider.dart';
-import 'package:app_financas/presentation/components/with_icon.dart';
-import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
-import 'package:app_financas/presentation/helders/helpers.dart';
-
+import '../../carteira/components/conta_listitem_component.dart';
 import '../cubit/confirmar_transacao_cubit.dart';
 import '../cubit/descricao_text_cubit.dart';
 import '../cubit/obs_text_cubit.dart';
 import '../cubit/select_data_cubit.dart';
 import 'category_list_item_component.dart';
-import '../../carteira/components/conta_listitem_component.dart';
 import 'register_despesa_header.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key? key,
+    super.key,
     this.contaId,
-  }) : super(key: key);
+  });
 
   final int? contaId;
 
@@ -51,7 +50,7 @@ class _MainContentWidget extends StatelessWidget {
         minHeight: size.height * .9,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(30),
         ),
@@ -142,6 +141,7 @@ class _DecricaoTestWidget extends StatelessWidget {
 
     return TextField(
       onChanged: (valor) => descricaoTextCubit.changeText(valor),
+      textCapitalization: TextCapitalization.sentences,
       decoration: const InputDecoration(
         hintText: 'Descrição',
         border: InputBorder.none,
