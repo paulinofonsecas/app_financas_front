@@ -2,6 +2,7 @@
 
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/view/movimentos_pendentes_abba.dart';
+import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/funcionalidades_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
@@ -43,6 +44,8 @@ class _HomePageState extends State<HomePage> {
                 ActionBar(),
                 Gutter(),
                 SaldoDisponivelCardWidget(),
+                Gutter(),
+                FuncionalidadesWidget(),
                 Gutter(),
                 MovimentosPendentesAbba(),
                 Gutter(),

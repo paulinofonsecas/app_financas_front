@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app_financas/presentation/components/movimento_item.dart';
-import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
+import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-
-import 'package:app_financas/constants.dart';
 import 'package:get/get.dart';
 
 import '../../show_transaction/show_transaction_page.dart';
@@ -32,7 +31,7 @@ class MovimentosAtHomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AbbaHeader(
-          title: 'Ultimos mov...',
+          title: 'Recentes',
           verMaisAction: verMaisAction,
         ),
         Gutter(),

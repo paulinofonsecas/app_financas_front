@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AbbaHeader extends StatelessWidget {
   const AbbaHeader({
-    Key? key,
+    super.key,
     required this.title,
     this.verMaisAction,
-  }) : super(key: key);
+  });
 
   final String title;
   final GestureTapCallback? verMaisAction;
@@ -21,7 +21,7 @@ class AbbaHeader extends StatelessWidget {
         Text(
           title,
           style: GoogleFonts.inter(
-            fontSize: theme.titleLarge!.fontSize,
+            fontSize: theme.titleMedium!.fontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -33,7 +33,7 @@ class AbbaHeader extends StatelessWidget {
               'Ver mais',
               style: GoogleFonts.inter(
                 fontSize: theme.titleMedium!.fontSize,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),
