@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/funcionalidade_item.dart';
+import 'package:app_financas/presentation/modules/planejamento/view/planejamento_page.dart';
 import 'package:flutter/material.dart';
 
 class FuncionalidadesWidget extends StatelessWidget {
@@ -28,7 +29,9 @@ class FuncionalidadesWidget extends StatelessWidget {
           CustomContainerButton(
             icon: Icons.monetization_on_outlined,
             label: 'Planejamento',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(PlanejamentoPage.route());
+            },
           ),
         ],
       ),

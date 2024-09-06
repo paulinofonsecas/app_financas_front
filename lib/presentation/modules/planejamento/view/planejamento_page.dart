@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/planejamento/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/planejamento_body.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
 /// {@template planejamento_page}
 /// A description for PlanejamentoPage
@@ -16,13 +19,35 @@ class PlanejamentoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PlanejamentoBloc(),
-      child: const Scaffold(
-        body: PlanejamentoView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PlanejamentoBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PlanejamentoAtualCubit(getIt()),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Planejamento'),
+          centerTitle: true,
+          elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_horiz),
+            ),
+            const Gutter(),
+          ],
+        ),
+        body: const SafeArea(
+          bottom: false,
+          child: PlanejamentoView(),
+        ),
       ),
     );
-  }    
+  }
 }
 
 /// {@template planejamento_view}
