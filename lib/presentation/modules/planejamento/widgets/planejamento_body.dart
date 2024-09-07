@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/view/create_planejamento_page.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/categorias_planejamento_section.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/header_planejamento_section.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/info_planejamento_section.dart';
@@ -57,7 +58,9 @@ class PlanejamentoBody extends StatelessWidget {
                       const Gutter(),
                       TextButton(
                         onPressed: () {
-                          
+                          Navigator.of(context).push(
+                            CreatePlanejamentoPage.route(),
+                          );
                         },
                         child: const Text('Criar planejamento'),
                       )

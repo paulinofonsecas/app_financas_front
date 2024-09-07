@@ -1,5 +1,3 @@
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/entitys/item_planejamento.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
 import 'package:app_financas/core/domain/services/i_planejamento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
@@ -17,20 +15,20 @@ class PlanejamentoAtualCubit extends Cubit<PlanejamentoAtualState> {
     emit(PlanejamentoAtualLoading());
 
     await _service.deletePlanejamento('00000000-0000');
-    await _service.createPlanejamento(Planejamento.fake(
-      itens: [
-        ItemPlanejamento(
-          id: 1,
-          categoria: Categoria.fake(),
-          plafound: 100000,
-        ),
-        ItemPlanejamento(
-          id: 2,
-          categoria: Categoria.fake(),
-          plafound: 100000,
-        ),
-      ],
-    ));
+    // await _service.createPlanejamento(Planejamento.fake(
+    //   itens: [
+    //     ItemPlanejamento(
+    //       id: 1,
+    //       categoria: Categoria.fake(),
+    //       plafound: 100000,
+    //     ),
+    //     ItemPlanejamento(
+    //       id: 2,
+    //       categoria: Categoria.fake(),
+    //       plafound: 100000,
+    //     ),
+    //   ],
+    // ));
 
     _service.getPlanejamentoAtual().then((value) {
       value.fold(
