@@ -1,6 +1,9 @@
 import 'package:intl/intl.dart';
 
-NumberFormat get numberFormat => NumberFormat.currency(symbol: 'Kz');
+NumberFormat get numberFormat => NumberFormat.currency(
+      symbol: 'Kz',
+      customPattern: '#,##0.00 Kz',
+    );
 
 DateFormat get dateFormat => DateFormat('dd MMM y')..add_Hm();
 

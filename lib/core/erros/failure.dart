@@ -3,10 +3,14 @@ class Failure implements Exception {
   Failure(this.message);
 }
 
+final class NaoExistePlanejamentoAtual extends Failure {
+  NaoExistePlanejamentoAtual(super.message);
+}
+
 class ValorInvalido implements Failure {
   @override
   final String message;
-  
+
   ValorInvalido(this.message);
 }
 

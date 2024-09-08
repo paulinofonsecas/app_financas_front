@@ -214,6 +214,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  currency_textfield:
+    dependency: "direct main"
+    description:
+      name: currency_textfield
+      sha256: "694689db25e4ac147a6e0c8b0674c2c1f5ae35300f3469b9077fefa2f8ae9069"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.12.0"
   dart_console:
     dependency: transitive
     description:
@@ -310,6 +318,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  easy_stepper:
+    dependency: "direct main"
+    description:
+      name: easy_stepper
+      sha256: "63f66314a509ec690c8152a41288961fd96ba9e92ef184299f068a5e78bd16ad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5+1"
   equatable:
     dependency: "direct main"
     description:
@@ -387,6 +403,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  flutter_hooks:
+    dependency: "direct main"
+    description:
+      name: flutter_hooks
+      sha256: cde36b12f7188c85286fba9b38cc5a902e7279f36dd676967106c041dc9dde70
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.5"
   flutter_iconpicker:
     dependency: "direct main"
     description:
@@ -690,6 +714,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      sha256: "6a24ade5d3d918c306bb1c21a6b9a04aab0489d51a2582522eea820b4093b62b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   macros:
     dependency: transitive
     description:
@@ -947,6 +979,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.1"
+  searchable_listview:
+    dependency: "direct main"
+    description:
+      name: searchable_listview
+      sha256: aed3d927d383d090a3484403ac0f323895e8e7de31c8642d72e36a1942c44a9f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.15.2"
   settings_yaml:
     dependency: transitive
     description:
@@ -1201,13 +1241,13 @@ packages:
     source: hosted
     version: "0.3.1"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
-      sha256: "83d37c7ad7aaf9aa8e275490669535c8080377cfa7a7004c24dfac53afffaa90"
+      sha256: f33d6bb662f0e4f79dcd7ada2e6170f3b3a2530c28fc41f49a411ddedd576a77
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.2"
+    version: "4.5.0"
   validators2:
     dependency: transitive
     description:

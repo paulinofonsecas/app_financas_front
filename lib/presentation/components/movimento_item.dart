@@ -3,6 +3,7 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
+import 'package:app_financas/presentation/global/categorie_avatar.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
@@ -72,17 +73,8 @@ class MovimentoItem extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: movimento.categoria?.color ??
-                            kBlackColor.withOpacity(.5),
-                        radius: 15,
-                        child: Center(
-                          child: Icon(
-                            movimento.categoria?.icon ?? Icons.more_horiz,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ),
+                      CategorieAvatar(
+                        categoria: movimento.categoria!,
                       ),
                       SizedBox(width: kDefaultPadding),
                       Column(

@@ -1,8 +1,12 @@
 import 'package:app_financas/core/data/provider/db/db_banco_provider.dart';
+import 'package:app_financas/core/data/provider/db/db_planejamento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_banco_provider.dart';
+import 'package:app_financas/core/data/provider/interfaces/i_planejamento_provider.dart';
 import 'package:app_financas/core/data/services/banco_service.dart';
+import 'package:app_financas/core/data/services/planejamento_service.dart';
 import 'package:app_financas/core/data/services/saldos_service.dart';
 import 'package:app_financas/core/domain/services/i_banco_service.dart';
+import 'package:app_financas/core/domain/services/i_planejamento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -41,6 +45,15 @@ void dependencyInitialize() {
   getIt = GetIt.instance;
   getIt.registerLazySingleton<Dio>(() => makeDefaultDio());
 
+  // Planejamento
+  getIt.registerLazySingleton<IPlanejamentoProvider>(
+      () => DBPlanejamentoProvider(
+            movimentoProvider: getIt(),
+            categoriaService: getIt(),
+          ));
+  getIt.registerLazySingleton<IPlanejamentoService>(
+      () => PlanejamentoService(provider: getIt()));
+
   // Banco
   getIt.registerLazySingleton<IBancoProvider>(() => DbBancoProvider());
   getIt.registerLazySingleton<IBancoService>(() => BancoService(getIt()));
@@ -57,9 +70,9 @@ void dependencyInitialize() {
       () => MovimentoService(provider: getIt()));
 
   // Conta
-  getIt.registerLazySingleton<IContaProvider>(
-      () => DbContaProvider(getIt()));
-  getIt.registerLazySingleton<IContaService>(() => ContaService(getIt(), getIt(), getIt()));
+  getIt.registerLazySingleton<IContaProvider>(() => DbContaProvider(getIt()));
+  getIt.registerLazySingleton<IContaService>(
+      () => ContaService(getIt(), getIt(), getIt()));
 
   // saldos
   getIt.registerLazySingleton<ISaldosService>(() => SaldosService(getIt()));

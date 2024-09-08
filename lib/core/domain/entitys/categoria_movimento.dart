@@ -41,12 +41,12 @@ class Categoria {
     );
   }
 
-  factory Categoria.fake() {
+  factory Categoria.fake([Color? color]) {
     return Categoria(
-      id: -1,
-      name: '',
-      color: null,
-      icon: null,
+      id: 3,
+      name: 'Teste',
+      color: color ?? Colors.blue,
+      icon: Icons.book,
     );
   }
 
@@ -89,7 +89,9 @@ class Categoria {
       'id': id,
       'name': name,
       'color': color?.value,
-      'icon': icon != null ? serializeIcon(icon!, iconPack: IconPack.material) : null,
+      'icon': icon != null
+          ? serializeIcon(icon!, iconPack: IconPack.material)
+          : null,
       'isArchived': isArchived
     };
   }
