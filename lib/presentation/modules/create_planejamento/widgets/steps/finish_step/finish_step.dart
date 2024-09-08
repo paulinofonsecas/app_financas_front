@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/item_planejamento.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
 import 'package:app_financas/presentation/global/duet_info.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/bloc/create_planejamento_bloc.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step/item_planejado_pie_chart.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step/success_create_planejamento.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -24,16 +25,7 @@ class FinishStep extends StatelessWidget {
         .map((e) => e.plafound)
         .fold(0.0, (previousValue, element) => previousValue + element);
 
-    return BlocConsumer<CreatePlanejamentoBloc, CreateNewPlanejamentoState>(
-      listener: (context, state) {
-        if (state is CreateNewPlanejamentoError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Ocorreu um erro ao tentar criar o planejamento'),
-            ),
-          );
-        }
-      },
+    return BlocBuilder<CreatePlanejamentoBloc, CreateNewPlanejamentoState>(
       builder: (context, state) {
         if (state is CreateNewPlanejamentoLoading) {
           return const Center(
@@ -111,49 +103,18 @@ class _ResumoPlanejamento extends StatelessWidget {
           ),
           SizedBox.square(
             dimension: context.width,
-            child: PieChartSample(
-              itemPlanejamentos: planejamento.itens,
+            child: ItemPlanejamentoPieChart(
+              itemPlanejamentos: [
+                ...planejamento.itens,
+                ItemPlanejamento(
+                  id: 80808080,
+                  categoria: Categoria(id: 80808080, name: 'Não plan.'),
+                  plafound: planejamento.plafound - somaDistribuicao,
+                ),
+              ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PieChartSample extends StatelessWidget {
-  const PieChartSample({
-    super.key,
-    required this.itemPlanejamentos,
-  });
-
-  final List<ItemPlanejamento> itemPlanejamentos;
-
-  List<Color> generateUnrepeatedColors() {
-    return [...Colors.primaries]..take(itemPlanejamentos.length);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = generateUnrepeatedColors();
-
-    return PieChart(
-      PieChartData(
-        sections: itemPlanejamentos
-            .map((e) => PieChartSectionData(
-                  color: colors[itemPlanejamentos.indexOf(e)],
-                  value: e.plafound,
-                  title: e.categoria.name,
-                  radius: 70,
-                  titleStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ))
-            .toList(),
-        centerSpaceRadius: 60,
-        sectionsSpace: 2,
       ),
     );
   }

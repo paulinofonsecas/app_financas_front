@@ -18,10 +18,12 @@ class Planejamento {
     this.itens = const [],
   });
 
-  factory Planejamento.make() {
+  factory Planejamento.make({
+    DateTime? dataReferencia,
+  }) {
     return Planejamento(
       id: const Uuid().v4(),
-      dataReferencia: DateTime.now(),
+      dataReferencia: dataReferencia ?? DateTime.now(),
       plafound: 0,
       itens: [],
     );

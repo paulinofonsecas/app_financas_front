@@ -41,6 +41,7 @@ class CreatePlanejamentoPage extends StatelessWidget {
           title: const Text('Novo planejamento'),
           centerTitle: true,
           elevation: 0,
+          leading: const SizedBox(width: kToolbarHeight),
         ),
         body: const CreatePlanejamentoView(),
       ),

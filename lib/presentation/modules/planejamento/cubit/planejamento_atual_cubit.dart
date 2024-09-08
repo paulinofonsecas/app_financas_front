@@ -11,9 +11,9 @@ class PlanejamentoAtualCubit extends Cubit<PlanejamentoAtualState> {
 
   final IPlanejamentoService _service;
 
-  void deletePlanejamentoAtual() async {
+  Future<void> deletePlanejamento(String id) async {
     emit(PlanejamentoAtualLoading());
-    _service.deletePlanejamentoAtual().then((value) {
+    _service.deletePlanejamento(id).then((value) {
       value.fold(
         (l) {
           emit(PlanejamentoAtualFailled(
@@ -46,7 +46,33 @@ class PlanejamentoAtualCubit extends Cubit<PlanejamentoAtualState> {
         },
         (r) {
           emit(
-            PlanejamentoAtualSucess(planejamento: r),
+            PlanejamentoAtualSuccess(planejamento: r),
+          );
+        },
+      );
+    });
+  }
+
+  void getPlanejamento(DateTime periodoState) async {
+    emit(PlanejamentoAtualLoading());
+
+    _service.getPlanejamentoOn(periodoState).then((value) {
+      value.fold(
+        (l) {
+          if (l is NaoExistePlanejamentoAtual) {
+            emit(PlanejamentoAtualEmpty());
+            return;
+          }
+
+          emit(
+            PlanejamentoAtualFailled(
+              message: 'Erro ao carregar o planejamento\n ${l.message}',
+            ),
+          );
+        },
+        (r) {
+          emit(
+            PlanejamentoAtualSuccess(planejamento: r),
           );
         },
       );

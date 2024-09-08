@@ -1,5 +1,6 @@
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/planejamento/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/planejamento/cubit/periodo_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/planejamento_body.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/planejamento_bottomsheet.dart';
@@ -26,31 +27,40 @@ class PlanejamentoPage extends StatelessWidget {
           create: (context) => PlanejamentoBloc(),
         ),
         BlocProvider(
-          create: (context) => PlanejamentoAtualCubit(getIt()),
+          create: (context) => PeriodoPlanejamentoCubit(),
         ),
       ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Planejamento'),
-          centerTitle: true,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () {
-                showBottomSheet(
-                  context: context,
-                  builder: (context) => const PlanejamentoBottomsheet(),
-                );
-              },
-              icon: const Icon(Icons.more_horiz),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Planejamento'),
+              centerTitle: true,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) => BlocProvider.value(
+                        value: getIt<PlanejamentoAtualCubit>(),
+                        child: Builder(builder: (context) {
+                          return const PlanejamentoBottomsheet();
+                        }),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.more_horiz),
+                ),
+                const Gutter(),
+              ],
             ),
-            const Gutter(),
-          ],
-        ),
-        body: const SafeArea(
-          bottom: false,
-          child: PlanejamentoView(),
-        ),
+            body: const SafeArea(
+              bottom: false,
+              child: PlanejamentoView(),
+            ),
+          );
+        },
       ),
     );
   }

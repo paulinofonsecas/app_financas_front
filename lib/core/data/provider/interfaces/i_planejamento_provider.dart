@@ -10,5 +10,5 @@ abstract class IPlanejamentoProvider {
   Future<Either<Failure, void>> deletePlanejamento(
       String planejamentoId);
   Future<Either<Failure, Planejamento>> getPlanejamento(String planejamentoId);
-  Future<Either<Failure, List<Planejamento>>> getAllPlanejamentos();
+  Future<Either<Failure, List<Planejamento>>> getAllPlanejamentos({DateTime? dataReferencia});
 }

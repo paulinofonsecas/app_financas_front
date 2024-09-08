@@ -9,6 +9,7 @@ import 'package:app_financas/presentation/modules/home/controllers/home_page_con
 import 'package:app_financas/presentation/modules/home/cubit/show_planejamento_in_home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/view/movimentos_pendentes_abba.dart';
 import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/funcionalidades_widget.dart';
+import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/view/planejamento_page.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/info_planejamento_section.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,6 @@ class _HomePageState extends State<HomePage> {
                     FuncionalidadesWidget(),
                     Gutter(),
                     _PlanejamentoWidget(),
-                    Gutter(),
                     MovimentosPendentesAbba(),
                     Gutter(),
                     HomeScreenMovimentosWidget(),
@@ -82,48 +82,58 @@ class _PlanejamentoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: BlocBuilder<ShowPlanejamentoInHomePageCubit,
-          ShowPlanejamentoInHomePageState>(
-        bloc: context.read<ShowPlanejamentoInHomePageCubit>()
-          ..getPlanejamento(),
-        builder: (context, state) {
-          if (state is ShowPlanejamentoInHomePageLoading) {
-            return Center(child: const CircularProgressIndicator());
+      child: BlocListener<PlanejamentoAtualCubit, PlanejamentoAtualState>(
+        bloc: getIt<PlanejamentoAtualCubit>(),
+        listener: (context, state) {
+          if (state is PlanejamentoAtualSuccess ||
+              state is PlanejamentoAtualEmpty) {
+            context.read<ShowPlanejamentoInHomePageCubit>().getPlanejamento();
           }
-
-          if (state is ShowPlanejamentoInHomePageEmpty) {
-            return SizedBox();
-          }
-
-          if (state is ShowPlanejamentoInHomePageError) {
-            log(state.message);
-            return SizedBox();
-          }
-
-          if (state is ShowPlanejamentoInHomePageSuccess) {
-            return Column(
-              children: [
-                Gutter(),
-                AbbaHeader(
-                  title: 'Planejamento',
-                  verMaisAction: () {
-                    Navigator.of(context).push(PlanejamentoPage.route());
-                  },
-                ),
-                Gutter(),
-                InkWell(
-                  onTap: () =>
-                      Navigator.of(context).push(PlanejamentoPage.route()),
-                  child: InfoPlanejamentoSection(
-                    planejamento: state.planejamento,
-                  ),
-                ),
-              ],
-            );
-          }
-
-          return const SizedBox();
         },
+        child: BlocBuilder<ShowPlanejamentoInHomePageCubit,
+            ShowPlanejamentoInHomePageState>(
+          bloc: context.read<ShowPlanejamentoInHomePageCubit>()
+            ..getPlanejamento(),
+          builder: (context, state) {
+            if (state is ShowPlanejamentoInHomePageLoading) {
+              return Center(child: const CircularProgressIndicator());
+            }
+
+            if (state is ShowPlanejamentoInHomePageEmpty) {
+              return SizedBox();
+            }
+
+            if (state is ShowPlanejamentoInHomePageError) {
+              log(state.message);
+              return SizedBox();
+            }
+
+            if (state is ShowPlanejamentoInHomePageSuccess) {
+              return Column(
+                children: [
+                  Gutter(),
+                  AbbaHeader(
+                    title: 'Planejamento',
+                    verMaisAction: () {
+                      Navigator.of(context).push(PlanejamentoPage.route());
+                    },
+                  ),
+                  Gutter(),
+                  InkWell(
+                    onTap: () =>
+                        Navigator.of(context).push(PlanejamentoPage.route()),
+                    child: InfoPlanejamentoSection(
+                      planejamento: state.planejamento,
+                    ),
+                  ),
+                  Gutter(),
+                ],
+              );
+            }
+
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }

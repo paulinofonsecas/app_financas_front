@@ -42,6 +42,7 @@ class _AtribuirPlafoundDialogState extends State<AtribuirPlafoundDialog> {
           const Text('Quanto deseja atribuir a essa categoria?'),
           const Gutter(),
           TextField(
+            autofocus: true,
             controller: controller,
             textAlign: TextAlign.center,
             inputFormatters: const [],

@@ -5,7 +5,7 @@ import 'package:app_financas/presentation/modules/create_planejamento/cubit/crea
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/create_planejamento_stepper.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/categorias_step.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/discribuicao_step/distribuicao_step.dart';
-import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step/finish_step.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/plafound_step.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
 import 'package:flutter/material.dart';
@@ -34,23 +34,38 @@ class _CreatePlanejamentoBodyState extends State<CreatePlanejamentoBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CreatePlanejamentoStepperControllCubit,
-        CreatePlanejamentoStepperControllState>(
-      listener: (context, state) {
-        if (state is CreatePlanejamentoStepperControllNext) {
-          if (activeStep < 4) {
-            setState(() {
-              activeStep++;
-            });
-          }
-        } else if (state is CreatePlanejamentoStepperControllBack) {
-          if (activeStep > 0) {
-            setState(() {
-              activeStep--;
-            });
-          }
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CreatePlanejamentoBloc, CreateNewPlanejamentoState>(
+          listener: (context, state) {
+            if (state is CreateNewPlanejamentoError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                ),
+              );
+            }
+          },
+        ),
+        BlocListener<CreatePlanejamentoStepperControllCubit,
+            CreatePlanejamentoStepperControllState>(
+          listener: (context, state) {
+            if (state is CreatePlanejamentoStepperControllNext) {
+              if (activeStep < 4) {
+                setState(() {
+                  activeStep++;
+                });
+              }
+            } else if (state is CreatePlanejamentoStepperControllBack) {
+              if (activeStep > 0) {
+                setState(() {
+                  activeStep--;
+                });
+              }
+            }
+          },
+        ),
+      ],
       child: Column(
         children: [
           CreatePlanejamentoStepper(activeStep2: activeStep),
@@ -64,9 +79,9 @@ class _CreatePlanejamentoBodyState extends State<CreatePlanejamentoBody> {
               ),
             ),
           ),
-          if (context.read<CreatePlanejamentoBloc>().state
+          if (context.watch<CreatePlanejamentoBloc>().state
                   is CreateNewPlanejamentoInitial ||
-              context.read<CreatePlanejamentoBloc>().state
+              context.watch<CreatePlanejamentoBloc>().state
                   is CreateNewPlanejamentoError)
             _ControlButtons(activeStep: activeStep),
         ],
