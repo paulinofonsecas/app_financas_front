@@ -35,8 +35,8 @@ class BlocObserverWithLogger extends BlocObserver {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var logger = Logger();
-  Bloc.observer = BlocObserverWithLogger(logger: logger);
+  // var logger = Logger();
+  // Bloc.observer = BlocObserverWithLogger(logger: logger);
 
   initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';

@@ -34,7 +34,7 @@ void main() async {
 
     dbProvider = DbBancoProvider();
     movimentoProvider = DbMovimentoProvider(categoriaService);
-    dbConta = DbContaProvider(movimentoProvider, dbProvider);
+    dbConta = DbContaProvider(movimentoProvider, dbProvider, );
 
     getIt.registerSingleton(dbConta);
   });
