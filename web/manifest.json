@@ -1,11 +1,11 @@
 {
-    "name": "app_financas",
-    "short_name": "app_financas",
+    "name": "KzGest",
+    "short_name": "KzGest",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#01C24B",
+    "theme_color": "#01C24B",
+    "description": "Gestão Financeira",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
