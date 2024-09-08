@@ -21,7 +21,7 @@ jobs:
       - name: "Build Web App"
         run: flutter build web --no-tree-shake-icons
       - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0.7.1
+        uses: FirebaseExtended/action-hosting-deploy@v0.9.0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KZGEST }}"

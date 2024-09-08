@@ -35,10 +35,7 @@ class BlocObserverWithLogger extends BlocObserver {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // var logger = Logger();
-  // Bloc.observer = BlocObserverWithLogger(logger: logger);
-
-  initializeDateFormatting('pt_BR', null);
+  await  initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
   await Hive.initFlutter('./app_financas_db');
 
