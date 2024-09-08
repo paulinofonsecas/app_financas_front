@@ -1,9 +1,11 @@
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_movimento_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_planejamento_provider.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/item_planejamento.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
+import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,10 +13,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 class DBPlanejamentoProvider implements IPlanejamentoProvider {
   late Box<Map<dynamic, dynamic>> _planejamentoBox;
   late IMovimentoProvider _movimentoProvider;
+  late ICategoriaService _categoriaService;
 
-  DBPlanejamentoProvider({required IMovimentoProvider movimentoProvider})
+  DBPlanejamentoProvider(
+      {required IMovimentoProvider movimentoProvider,
+      required ICategoriaService categoriaService})
       : super() {
     _movimentoProvider = movimentoProvider;
+    _categoriaService = categoriaService;
   }
 
   Future<void> initDb() async {
@@ -26,8 +32,16 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
   }
 
   Future<Either<Failure, List<Movimento>>> _alimentarMovimentos() async {
-    final result = await _movimentoProvider.listMovimentos();
+    // periodo: do inicial ao final do mes atual
+    final result = await _movimentoProvider.listMovimentosSaida(
+      date: DateTime.now(),
+    );
 
+    return result;
+  }
+
+  Future<Either<Failure, List<Categoria>>> _getCategorias() async {
+    final result = await _categoriaService.listCategoriasSaidas();
     return result;
   }
 
@@ -93,27 +107,40 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
         return Left(movimentosResult.swap().getOrElse(() => Failure('')));
       }
 
+      // pega todas as categorias
+      final categoriasResult = await _getCategorias();
+      if (categoriasResult.isLeft()) {
+        return Left(categoriasResult
+            .swap()
+            .getOrElse(() => Failure('Erro ao recuperar categorias')));
+      }
+      final categorias = categoriasResult.getOrElse(() => []);
+
       final saida = <Planejamento>[];
       for (var planejamentoData in planejamentoDataRaw) {
         // alimenta a lista de ItemPlanejamento com os movimentos
-        final itemPlanejamentoList =
-            (planejamentoData['itens'] as List).map((e) {
-          final movimentosDoIten = movimentos
-              .where((mov) => mov.categoria!.id == e['categoria'])
-              .toList();
+        final itemPlanejamentoList = (planejamentoData['itens'] as List).map(
+          (e) {
+            final movimentosDoIten = movimentos
+                .where((mov) => mov.categoria!.id == e['categoria'])
+                .toList();
+            final categoria =
+                categorias.where((c) => c.id == e['categoria']).first;
 
-          return ItemPlanejamento.fromMap(e)
-            ..copyWith(
+            var item = ItemPlanejamento.fromMap(e);
+            item = item.copyWith(
               movimentos: movimentosDoIten,
-              categoria: movimentosDoIten.first.categoria!,
+              categoria: categoria,
             );
-        }).toList();
+
+            return item;
+          },
+        ).toList();
 
         // alimenta o planejamento com os itens
-        saida.add(Planejamento.fromMap(planejamentoData as Map<String, dynamic>)
-          ..copyWith(
-            itens: itemPlanejamentoList,
-          ));
+        saida.add(Planejamento.fromMap(planejamentoData).copyWith(
+          itens: itemPlanejamentoList,
+        ));
       }
 
       return Right(saida);
@@ -127,52 +154,23 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
   Future<Either<Failure, Planejamento>> getPlanejamento(
       String planejamentoId) async {
     try {
-      await initDb();
+      final result = await getAllPlanejamentos();
 
-      if (!_planejamentoBox.keys.contains(planejamentoId)) {
-        return Left(Failure('Planejamento nao encontrado'));
-      }
+      if (result.isRight()) {
+        final planejamentoList = result.getOrElse(() => []);
 
-      // recupera o planejamento na box
-      final planejamentoDataRaw = _planejamentoBox.get(planejamentoId);
-      if (planejamentoDataRaw == null) {
-        return Left(Failure('Planejamento null'));
-      }
+        if (planejamentoList.isEmpty) {
+          return Left(Failure('Planejamento nao encontrado'));
+        }
 
-      // recupera todos os movimentos para alimentar a lista de
-      // ItemPlanejamento
-      final movimentosResult = await _alimentarMovimentos();
-      final movimentos = <Movimento>[];
-      if (movimentosResult.isRight()) {
-        movimentos.addAll(movimentosResult.getOrElse(() => []));
+        return Right(planejamentoList
+            .firstWhere((planejamento) => planejamento.id == planejamentoId));
       } else {
-        return Left(movimentosResult.swap().getOrElse(() => Failure('')));
+        return Left(result
+            .swap()
+            .getOrElse(() => Failure('Erro ao buscar planejamento.')));
       }
-
-      // alimenta a lista de ItemPlanejamento com os movimentos
-      final itemPlanejamentoList =
-          (planejamentoDataRaw['itens'] as List).map((e) {
-        final movimentosDoIten = movimentos
-            .where((mov) => mov.categoria!.id == e['categoria'])
-            .toList();
-
-        return ItemPlanejamento.fromMap(e as Map<String, dynamic>)
-          ..copyWith(
-            movimentos: movimentosDoIten,
-            categoria: movimentosDoIten.first.categoria!,
-          );
-      }).toList();
-
-      // alimenta o planejamento com os itens
-      final planejamento =
-          Planejamento.fromMap(planejamentoDataRaw as Map<String, dynamic>)
-            ..copyWith(
-              itens: itemPlanejamentoList,
-            );
-
-      return Right(planejamento);
     } catch (e) {
-      await closeDb();
       return Left(Failure(e.toString()));
     }
   }

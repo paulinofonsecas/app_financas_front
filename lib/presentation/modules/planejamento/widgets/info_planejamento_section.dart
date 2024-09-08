@@ -1,6 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
-import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/global/duet_info.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/usage_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -37,36 +37,6 @@ class InfoPlanejamentoSection extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DuetInfo extends StatelessWidget {
-  const DuetInfo({super.key, required this.title, required this.valor});
-
-  final String title;
-  final double valor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            // color: Colors.black,
-          ),
-        ),
-        const GutterTiny(),
-        Text(
-          numberFormat.format(valor),
-          style: const TextStyle(
-            fontSize: 16,
-          ),
-        )
-      ],
     );
   }
 }

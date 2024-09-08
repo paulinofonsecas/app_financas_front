@@ -1,8 +1,10 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/categoria_bottom_components/components/categoria_item_component.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/create_planejamento.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/search_list_categorias_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 class CategoriasStep extends StatelessWidget {
@@ -24,7 +26,6 @@ class GlobalSearchCategoriaBody extends StatefulWidget {
 
 class _GlobalSearchCategoriaBodyState extends State<GlobalSearchCategoriaBody> {
   final controller = TextEditingController();
-  final selectedCategorias = <int>[];
 
   @override
   void initState() {
@@ -32,59 +33,82 @@ class _GlobalSearchCategoriaBodyState extends State<GlobalSearchCategoriaBody> {
     super.initState();
   }
 
+  void _onItemTap(Categoria categoria) {
+    context.read<CreatePlanejamentoCubit>().addOrRemoveCategorias(categoria);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchListCategoriasCubit, SearchListCategoriasState>(
-      bloc: context.read<SearchListCategoriasCubit>(),
-      builder: (context, state) {
-        if (state is SearchListCategoriasLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+    final selectedCategorias = context
+        .watch<CreatePlanejamentoCubit>()
+        .state
+        .planejamento
+        .itens
+        .map((e) => e.categoria)
+        .toList();
 
-        if (state is SearchListCategoriasError) {
-          return const Center(
-            child: Text('Ups, algo deu errado'),
-          );
-        }
+    return Column(
+      children: [
+        const Text(
+          'Selecione as categorias que deseja incluir no planejamento.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const Gutter(),
+        Expanded(
+          child:
+              BlocBuilder<SearchListCategoriasCubit, SearchListCategoriasState>(
+            bloc: context.read<SearchListCategoriasCubit>(),
+            builder: (context, state) {
+              if (state is SearchListCategoriasLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-        if (state is SearchListCategoriasLoaded) {
-          return SearchableList<Categoria>(
-            searchTextController: controller,
-            initialList: state.categorias,
-            itemBuilder: (Categoria categoria) => CategoriaItem(
-              onTap: () {
-                controller.clear();
-                setState(() {
-                  if (selectedCategorias.contains(categoria.id)) {
-                    selectedCategorias.remove(categoria.id);
-                  } else {
-                    selectedCategorias.add(categoria.id);
-                  }
-                });
-              },
-              categoria: categoria,
-              isSelected: selectedCategorias.contains(categoria.id),
-            ),
-            filter: (String value) => state.categorias
-                .where(
-                  (element) =>
-                      element.name.toLowerCase().contains(value.toLowerCase()),
-                )
-                .toList(),
-            emptyWidget: const Center(
-              child: Text('Nenhuma categoria encontrada'),
-            ),
-            inputDecoration: const InputDecoration(
-              hintText: 'Pesquisar categorias',
-              fillColor: Colors.white,
-            ),
-          );
-        }
+              if (state is SearchListCategoriasError) {
+                return const Center(
+                  child: Text('Ups, algo deu errado'),
+                );
+              }
 
-        return const Placeholder();
-      },
+              if (state is SearchListCategoriasLoaded) {
+                return SearchableList<Categoria>(
+                  searchTextController: controller,
+                  initialList: state.categorias,
+                  itemBuilder: (Categoria categoria) => CategoriaItem(
+                    onTap: () {
+                      controller.clear();
+                      _onItemTap(categoria);
+                    },
+                    categoria: categoria,
+                    isSelected: selectedCategorias.contains(categoria),
+                  ),
+                  filter: (String value) => state.categorias
+                      .where(
+                        (element) => element.name
+                            .toLowerCase()
+                            .contains(value.toLowerCase()),
+                      )
+                      .toList(),
+                  emptyWidget: const Center(
+                    child: Text('Nenhuma categoria encontrada'),
+                  ),
+                  inputDecoration: const InputDecoration(
+                    hintText: 'Pesquisar categorias',
+                    fillColor: Colors.white,
+                  ),
+                );
+              }
+
+              return const Placeholder();
+            },
+          ),
+        ),
+      ],
     );
   }
 }

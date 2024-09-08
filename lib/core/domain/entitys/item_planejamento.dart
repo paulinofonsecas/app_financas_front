@@ -20,6 +20,15 @@ class ItemPlanejamento {
     this.movimentos = const [],
   });
 
+  factory ItemPlanejamento.make(Categoria categoria) {
+    return ItemPlanejamento(
+      id: Random.secure().nextInt(100000),
+      categoria: categoria,
+      plafound: 0,
+      movimentos: [],
+    );
+  }
+
   // fake constructor
   factory ItemPlanejamento.fake() => ItemPlanejamento(
         id: 0,

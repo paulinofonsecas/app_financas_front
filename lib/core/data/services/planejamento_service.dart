@@ -64,7 +64,8 @@ class PlanejamentoService implements IPlanejamentoService {
         final planejamentoList = planejamento.getOrElse(() => []);
 
         if (planejamentoList.isEmpty) {
-          return Left(NaoExistePlanejamentoAtual('Nenhum planejamento encontrado.'));
+          return Left(
+              NaoExistePlanejamentoAtual('Nenhum planejamento encontrado.'));
         }
 
         // retorna um planejamento com base o mes e ano informado
@@ -110,5 +111,14 @@ class PlanejamentoService implements IPlanejamentoService {
     } catch (e) {
       return Left(Failure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> deletePlanejamentoAtual() async {
+    final planejamento = await getPlanejamentoAtual();
+    return planejamento.fold(
+      (l) => Future.value(Left(l)),
+      (r) => deletePlanejamento(r.id),
+    );
   }
 }

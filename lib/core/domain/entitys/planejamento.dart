@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:app_financas/core/domain/entitys/item_planejamento.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 class Planejamento {
   final String id;
@@ -16,6 +17,15 @@ class Planejamento {
     required this.plafound,
     this.itens = const [],
   });
+
+  factory Planejamento.make() {
+    return Planejamento(
+      id: const Uuid().v4(),
+      dataReferencia: DateTime.now(),
+      plafound: 0,
+      itens: [],
+    );
+  }
 
   // fake construtor
   Planejamento.fake({
@@ -56,14 +66,14 @@ class Planejamento {
     };
   }
 
-  factory Planejamento.fromMap(Map<String, dynamic> map) {
+  factory Planejamento.fromMap(dynamic map) {
     return Planejamento(
       id: map['id'] as String,
       dataReferencia:
           DateTime.fromMillisecondsSinceEpoch(map['dataReferencia'] as int),
       plafound: map['plafound'] as double,
       itens: List<ItemPlanejamento>.from(
-        (map['itens'] as List<Map<String, dynamic>>).map<ItemPlanejamento>(
+        (map['itens'] as List<dynamic>).map<ItemPlanejamento>(
           (x) => ItemPlanejamento.fromMap(x),
         ),
       ),

@@ -17,14 +17,15 @@ void main() {
 
     test('initial state has default value for customProperty', () {
       final createPlanejamentoBloc = CreatePlanejamentoBloc();
-      expect(createPlanejamentoBloc.state.customProperty, equals('Default Value'));
+      expect(
+          createPlanejamentoBloc.state.customProperty, equals('Default Value'));
     });
 
-    blocTest<CreatePlanejamentoBloc, CreatePlanejamentoState>(
+    blocTest<CreatePlanejamentoBloc, CreateNewPlanejamentoState>(
       'CustomCreatePlanejamentoEvent emits nothing',
       build: CreatePlanejamentoBloc.new,
       act: (bloc) => bloc.add(const CustomCreatePlanejamentoEvent()),
-      expect: () => <CreatePlanejamentoState>[],
+      expect: () => <CreateNewPlanejamentoState>[],
     );
   });
 }

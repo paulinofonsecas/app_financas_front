@@ -3,9 +3,9 @@ part of 'create_planejamento_bloc.dart';
 /// {@template create_planejamento_state}
 /// CreatePlanejamentoState description
 /// {@endtemplate}
-class CreatePlanejamentoState extends Equatable {
+class CreateNewPlanejamentoState extends Equatable {
   /// {@macro create_planejamento_state}
-  const CreatePlanejamentoState({
+  const CreateNewPlanejamentoState({
     this.customProperty = 'Default Value',
   });
 
@@ -16,10 +16,10 @@ class CreatePlanejamentoState extends Equatable {
   List<Object> get props => [customProperty];
 
   /// Creates a copy of the current CreatePlanejamentoState with property changes
-  CreatePlanejamentoState copyWith({
+  CreateNewPlanejamentoState copyWith({
     String? customProperty,
   }) {
-    return CreatePlanejamentoState(
+    return CreateNewPlanejamentoState(
       customProperty: customProperty ?? this.customProperty,
     );
   }
@@ -28,7 +28,23 @@ class CreatePlanejamentoState extends Equatable {
 /// {@template create_planejamento_initial}
 /// The initial state of CreatePlanejamentoState
 /// {@endtemplate}
-class CreatePlanejamentoInitial extends CreatePlanejamentoState {
-  /// {@macro create_planejamento_initial}
-  const CreatePlanejamentoInitial() : super();
+class CreateNewPlanejamentoInitial extends CreateNewPlanejamentoState {
+  const CreateNewPlanejamentoInitial() : super();
+}
+
+class CreateNewPlanejamentoLoading extends CreateNewPlanejamentoState {
+  const CreateNewPlanejamentoLoading() : super();
+}
+
+class CreateNewPlanejamentoSuccess extends CreateNewPlanejamentoState {
+  const CreateNewPlanejamentoSuccess(this.planejamento) : super();
+
+  final Planejamento planejamento;
+
+  @override
+  List<Object> get props => [planejamento];
+}
+
+class CreateNewPlanejamentoError extends CreateNewPlanejamentoState {
+  const CreateNewPlanejamentoError() : super();
 }

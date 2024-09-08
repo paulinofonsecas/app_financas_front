@@ -1,6 +1,8 @@
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:currency_textfield/currency_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 class PlafoundStep extends StatefulWidget {
@@ -17,6 +19,16 @@ class _PlafoundStepState extends State<PlafoundStep> {
     thousandSymbol: ".",
     currencyOnLeft: false,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      context
+          .read<CreatePlanejamentoCubit>()
+          .updatePlafound(controller.doubleValue);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

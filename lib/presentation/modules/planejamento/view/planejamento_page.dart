@@ -2,6 +2,7 @@ import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/planejamento/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/planejamento_body.dart';
+import 'package:app_financas/presentation/modules/planejamento/widgets/planejamento_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
@@ -35,7 +36,12 @@ class PlanejamentoPage extends StatelessWidget {
           elevation: 0,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showBottomSheet(
+                  context: context,
+                  builder: (context) => const PlanejamentoBottomsheet(),
+                );
+              },
               icon: const Icon(Icons.more_horiz),
             ),
             const Gutter(),

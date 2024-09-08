@@ -7,9 +7,9 @@ void main() {
   group('CreatePlanejamentoState', () {
     test('supports value equality', () {
       expect(
-        CreatePlanejamentoState(),
+        CreateNewPlanejamentoState(),
         equals(
-          const CreatePlanejamentoState(),
+          const CreateNewPlanejamentoState(),
         ),
       );
     });
@@ -17,7 +17,7 @@ void main() {
     group('constructor', () {
       test('can be instantiated', () {
         expect(
-          const CreatePlanejamentoState(),
+          const CreateNewPlanejamentoState(),
           isNotNull,
         );
       });
@@ -28,7 +28,7 @@ void main() {
         'copies correctly '
         'when no argument specified',
         () {
-          const createPlanejamentoState = CreatePlanejamentoState(
+          const createPlanejamentoState = CreateNewPlanejamentoState(
             customProperty: 'My property',
           );
           expect(
@@ -42,13 +42,14 @@ void main() {
         'copies correctly '
         'when all arguments specified',
         () {
-          const createPlanejamentoState = CreatePlanejamentoState(
+          const createPlanejamentoState = CreateNewPlanejamentoState(
             customProperty: 'My property',
           );
-          final otherCreatePlanejamentoState = CreatePlanejamentoState(
+          final otherCreatePlanejamentoState = CreateNewPlanejamentoState(
             customProperty: 'My property 2',
           );
-          expect(createPlanejamentoState, isNot(equals(otherCreatePlanejamentoState)));
+          expect(createPlanejamentoState,
+              isNot(equals(otherCreatePlanejamentoState)));
 
           expect(
             createPlanejamentoState.copyWith(

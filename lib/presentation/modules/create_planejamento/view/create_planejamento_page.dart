@@ -1,4 +1,6 @@
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_stepper_controll_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/search_list_categorias_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/create_planejamento_body.dart';
@@ -22,13 +24,16 @@ class CreatePlanejamentoPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CreatePlanejamentoBloc(),
+          create: (context) => CreatePlanejamentoBloc(getIt()),
         ),
         BlocProvider(
           create: (context) => CreatePlanejamentoStepperControllCubit(),
         ),
         BlocProvider(
           create: (context) => SearchListCategoriasCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CreatePlanejamentoCubit(),
         ),
       ],
       child: Scaffold(

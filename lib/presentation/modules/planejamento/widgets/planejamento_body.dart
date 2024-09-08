@@ -21,16 +21,6 @@ class PlanejamentoBody extends StatelessWidget {
   /// {@macro planejamento_body}
   const PlanejamentoBody({super.key});
 
-  // get planejamento => Planejamento(
-  //       id: '0',
-  //       dataReferencia: DateTime.now(),
-  //       plafound: 4000000,
-  //       itens: List.generate(
-  //         8,
-  //         (index) => ItemPlanejamento.fake(),
-  //       ),
-  //     );
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -79,7 +69,8 @@ class PlanejamentoBody extends StatelessWidget {
 
                 if (state is PlanejamentoAtualSucess) {
                   return _PlanejamentoViewWidget(
-                      planejamento: state.planejamento);
+                    planejamento: state.planejamento,
+                  );
                 }
 
                 return const Placeholder();

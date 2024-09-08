@@ -1,7 +1,11 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/bloc/create_planejamento_bloc.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_stepper_controll_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/create_planejamento_stepper.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/categorias_step.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/discribuicao_step/distribuicao_step.dart';
+import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/plafound_step.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +28,8 @@ class _CreatePlanejamentoBodyState extends State<CreatePlanejamentoBody> {
   final _stepScreens = [
     const PlafoundStep(),
     const CategoriasStep(),
-    Container(color: Colors.green),
-    Container(color: Colors.blue),
+    const DistribuicaoStep(),
+    const FinishStep(),
   ];
 
   @override
@@ -60,7 +64,11 @@ class _CreatePlanejamentoBodyState extends State<CreatePlanejamentoBody> {
               ),
             ),
           ),
-          _ControlButtons(activeStep: activeStep),
+          if (context.read<CreatePlanejamentoBloc>().state
+                  is CreateNewPlanejamentoInitial ||
+              context.read<CreatePlanejamentoBloc>().state
+                  is CreateNewPlanejamentoError)
+            _ControlButtons(activeStep: activeStep),
         ],
       ),
     );
@@ -106,7 +114,14 @@ class _ControlButtons extends StatelessWidget {
               }
 
               if (activeStep == 3) {
-                Navigator.of(context).pop();
+                context
+                    .read<CreatePlanejamentoBloc>()
+                    .add(FinishCreatePlanejamentoEvent(
+                      context
+                          .read<CreatePlanejamentoCubit>()
+                          .state
+                          .planejamento,
+                    ));
               }
             },
           ),

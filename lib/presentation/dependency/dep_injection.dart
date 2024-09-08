@@ -47,7 +47,10 @@ void dependencyInitialize() {
 
   // Planejamento
   getIt.registerLazySingleton<IPlanejamentoProvider>(
-      () => DBPlanejamentoProvider(movimentoProvider: getIt()));
+      () => DBPlanejamentoProvider(
+            movimentoProvider: getIt(),
+            categoriaService: getIt(),
+          ));
   getIt.registerLazySingleton<IPlanejamentoService>(
       () => PlanejamentoService(provider: getIt()));
 
