@@ -29,13 +29,21 @@ class BlocObserverWithLogger extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     logger.d('${bloc.runtimeType} $change');
+    print('${bloc.runtimeType} $change');
   }
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await  initializeDateFormatting('pt_BR', null);
+  var logger = Logger();
+  Bloc.observer = BlocObserverWithLogger(logger: logger);
+
+  FlutterError.onError = (details) {
+    print(details.exceptionAsString());
+  };
+
+  await initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
   await Hive.initFlutter('./app_financas_db');
 
