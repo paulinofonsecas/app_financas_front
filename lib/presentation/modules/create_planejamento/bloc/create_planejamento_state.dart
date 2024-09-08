@@ -46,5 +46,10 @@ class CreateNewPlanejamentoSuccess extends CreateNewPlanejamentoState {
 }
 
 class CreateNewPlanejamentoError extends CreateNewPlanejamentoState {
-  const CreateNewPlanejamentoError() : super();
+  const CreateNewPlanejamentoError(this.message) : super();
+
+  final String message;
+
+  @override
+  List<Object> get props => [];
 }

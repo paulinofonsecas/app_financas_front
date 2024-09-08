@@ -33,21 +33,32 @@ class PlanejamentoService implements IPlanejamentoService {
   @override
   Future<Either<Failure, Planejamento>> getPlanejamentoOn(DateTime date) async {
     try {
-      final planejamento = await _provider.getAllPlanejamentos();
+      final planejamento =
+          await _provider.getAllPlanejamentos(dataReferencia: date);
 
       if (planejamento.isRight()) {
         final planejamentoList = planejamento.getOrElse(() => []);
 
-        // retorna um planejamento com base o mes e ano informado
-        return Right(planejamentoList.firstWhere(
-          (planejamento) {
+        try {
+          final p = planejamentoList.firstWhere((planejamento) {
             return planejamento.dataReferencia.month == date.month &&
                 planejamento.dataReferencia.year == date.year;
-          },
-        ));
+          });
+          return Right(p);
+        } catch (e) {
+          return Left(
+            planejamento.swap().getOrElse(
+                  () => NaoExistePlanejamentoAtual(
+                    'Planejamento inexistente.',
+                  ),
+                ),
+          );
+        }
       } else {
-        return Left(planejamento.swap().getOrElse(
-            () => Failure('Ocorreu um erro ao buscar o planejamento.')));
+        return Left(
+          planejamento.swap().getOrElse(
+              () => Failure('Ocorreu um erro ao buscar o planejamento.')),
+        );
       }
     } catch (e) {
       return Left(Failure(e.toString()));

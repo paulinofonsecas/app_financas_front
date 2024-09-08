@@ -23,13 +23,13 @@ void main() {
         result
             .getOrElse(
               () => Planejamento.fake(
-                DateTime(1999, 1, 1),
+                dataReferencia: DateTime(1999, 1, 1),
               ),
             )
             .dataReferencia
             .month,
         Planejamento.fake(
-          DateTime.now(),
+          dataReferencia: DateTime.now(),
         ).dataReferencia.month,
       );
     });
@@ -46,7 +46,8 @@ void main() {
 
     test('Deve retornar o planejamento da data informada', () async {
       when(() => planejamentoProvider.getAllPlanejamentos()).thenAnswer(
-        (_) async => Right([Planejamento.fake(DateTime(2022, 1, 1))]),
+        (_) async =>
+            Right([Planejamento.fake(dataReferencia: DateTime(2022, 1, 1))]),
       );
 
       final result = await planejamentoService.getPlanejamentoOn(
@@ -68,8 +69,8 @@ void main() {
     test('Obter a lista de planejamentos', () async {
       when(() => planejamentoProvider.getAllPlanejamentos()).thenAnswer(
         (_) async => Right([
-          Planejamento.fake(DateTime(2022, 1, 1)),
-          Planejamento.fake(DateTime(2022, 2, 1)),
+          Planejamento.fake(dataReferencia: DateTime(2022, 1, 1)),
+          Planejamento.fake(dataReferencia: DateTime(2022, 2, 1)),
         ]),
       );
 

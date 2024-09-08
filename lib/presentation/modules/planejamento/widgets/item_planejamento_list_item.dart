@@ -66,10 +66,15 @@ class _HeaderWidget extends StatelessWidget {
               ),
             ),
             Text(
-              'Restam ${numberFormat.format(restante)}',
-              style: const TextStyle(
+              restante < 0
+                  ? 'Excedeu ${numberFormat.format(itemPlanejamento.consumido.abs())}'
+                  : 'Restam ${numberFormat.format(restante)}',
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
+                color: restante < 0
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ],

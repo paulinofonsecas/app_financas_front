@@ -87,7 +87,8 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
   }
 
   @override
-  Future<Either<Failure, List<Planejamento>>> getAllPlanejamentos() async {
+  Future<Either<Failure, List<Planejamento>>> getAllPlanejamentos(
+      {DateTime? dataReferencia}) async {
     try {
       await initDb();
 
@@ -100,12 +101,18 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
       // recupera todos os movimentos para alimentar a lista de
       // ItemPlanejamento
       final movimentosResult = await _alimentarMovimentos();
-      final movimentos = <Movimento>[];
+      var movimentos = <Movimento>[];
       if (movimentosResult.isRight()) {
         movimentos.addAll(movimentosResult.getOrElse(() => []));
       } else {
         return Left(movimentosResult.swap().getOrElse(() => Failure('')));
       }
+      final date = dataReferencia ?? DateTime.now();
+      movimentos = movimentos
+          .where(
+            (mov) => mov.data.year == date.year && mov.data.month == date.month,
+          )
+          .toList();
 
       // pega todas as categorias
       final categoriasResult = await _getCategorias();

@@ -22,10 +22,10 @@ final class PlanejamentoAtualFailled extends PlanejamentoAtualState {
   List<Object> get props => [message];
 }
 
-final class PlanejamentoAtualSucess extends PlanejamentoAtualState {
+final class PlanejamentoAtualSuccess extends PlanejamentoAtualState {
   final Planejamento planejamento;
 
-  const PlanejamentoAtualSucess({required this.planejamento});
+  const PlanejamentoAtualSuccess({required this.planejamento});
 
   @override
   List<Object> get props => [planejamento];

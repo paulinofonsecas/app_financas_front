@@ -37,7 +37,9 @@ class UsageProgress extends StatelessWidget {
                 borderRadius: BorderRadius.circular(90),
                 child: LinearProgressIndicator(
                   value: actualValue / finalValue,
-                  color: color ?? Theme.of(context).colorScheme.surfaceTint,
+                  color: _percent > 100
+                      ? Theme.of(context).colorScheme.errorContainer
+                      : color ?? Theme.of(context).colorScheme.surfaceTint,
                   backgroundColor: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(90),
                 ),
@@ -51,7 +53,11 @@ class UsageProgress extends StatelessWidget {
                     '$_percent%',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: _percent >= 60
-                              ? Theme.of(context).colorScheme.surface
+                              ? _percent > 100
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onErrorContainer
+                                  : Colors.black
                               : Colors.black,
                         ),
                   ),
@@ -90,7 +96,9 @@ class UsageInfo extends StatelessWidget {
           height: 10,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(90),
-            color: Theme.of(context).colorScheme.surfaceTint,
+            color: percentage > 100
+                ? Theme.of(context).colorScheme.errorContainer
+                : Theme.of(context).colorScheme.surfaceTint,
           ),
         ),
         const Gutter(),

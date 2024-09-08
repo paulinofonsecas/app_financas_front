@@ -44,6 +44,7 @@ class _PlafoundStepState extends State<PlafoundStep> {
         ),
         const Gutter(),
         TextField(
+          autofocus: true,
           controller: controller,
           textAlign: TextAlign.center,
           inputFormatters: const [],

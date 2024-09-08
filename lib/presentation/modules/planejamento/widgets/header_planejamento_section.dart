@@ -21,7 +21,7 @@ class HeaderPlanejamentoSection extends StatelessWidget {
           children: [
             MyInfoField(
               icon: FontAwesomeIcons.coins,
-              title: 'Restante',
+              title: planejamento.restante < 0 ? 'Excedido: ' : 'Restante: ',
               valor: numberFormat.format(planejamento.restante),
             ),
             Container(

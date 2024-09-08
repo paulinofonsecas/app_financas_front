@@ -21,6 +21,7 @@ import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/movimentos_pendentes_bloc.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
+import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app_financas/core/data/provider/db/db_categoria_provider.dart';
 import 'package:app_financas/core/data/provider/db/db_conta_provider.dart';
@@ -39,10 +40,9 @@ import 'package:dio/dio.dart';
 
 import '../modules/conta/bloc/bloc.dart';
 
-late GetIt getIt;
+final getIt = GetIt.instance;
 
 void dependencyInitialize() {
-  getIt = GetIt.instance;
   getIt.registerLazySingleton<Dio>(() => makeDefaultDio());
 
   // Planejamento
@@ -53,6 +53,8 @@ void dependencyInitialize() {
           ));
   getIt.registerLazySingleton<IPlanejamentoService>(
       () => PlanejamentoService(provider: getIt()));
+
+  getIt.registerLazySingleton(() => PlanejamentoAtualCubit(getIt()));
 
   // Banco
   getIt.registerLazySingleton<IBancoProvider>(() => DbBancoProvider());

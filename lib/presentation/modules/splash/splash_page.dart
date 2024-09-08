@@ -29,28 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Center(
-              child: Obx(
-                () => c.isLoading.value
-                    ? const Text('Carregando')
-                    : c.loadingError.value
-                        ? TextButton.icon(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.green,
-                            ),
-                            onPressed: () {
-                              // Get.back();
-                              c.init();
-                            },
-                            icon: Icon(Icons.refresh, color: Colors.green[700]),
-                            label: const Text('Tentar novamente'),
-                          )
-                        : const Text(''),
-              ),
-            ),
-            const Spacer(),
+          children: const [
+            Spacer(),
+            Center(child: CircularProgressIndicator()),
+            Spacer(),
           ],
         ),
       ),

@@ -24,7 +24,7 @@ class InfoPlanejamentoSection extends StatelessWidget {
               valor: planejamento.plafound,
             ),
             DuetInfo(
-              title: 'Resta: ',
+              title: planejamento.restante < 0 ? 'Excedido: ' : 'Resta: ',
               valor: planejamento.restante,
             ),
             const Gutter(),

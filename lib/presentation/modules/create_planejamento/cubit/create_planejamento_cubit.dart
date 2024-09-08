@@ -8,7 +8,9 @@ part 'create_planejamento_state.dart';
 
 class CreatePlanejamentoCubit extends Cubit<CreatePlanejamentoState> {
   CreatePlanejamentoCubit()
-      : super(CreatePlanejamentoInitial(Planejamento.make()));
+      : super(
+          CreatePlanejamentoInitial(Planejamento.make()),
+        );
 
   void updatePlafound(double doubleValue) {
     final planejamentoModel =

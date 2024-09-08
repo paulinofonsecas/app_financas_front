@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/view/create_planejamento_page.dart';
+import 'package:app_financas/presentation/modules/planejamento/cubit/periodo_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/categorias_planejamento_section.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/header_planejamento_section.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/info_planejamento_section.dart';
@@ -23,62 +25,79 @@ class PlanejamentoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding,
-        ),
-        child: Column(
-          children: [
-            const PeriodoPlanejamento(),
-            BlocBuilder<PlanejamentoAtualCubit, PlanejamentoAtualState>(
-              bloc: context.read<PlanejamentoAtualCubit>()
-                ..getPlanejamentoAtual(),
-              builder: (context, state) {
-                if (state is PlanejamentoAtualLoading) {
-                  return const CircularProgressIndicator();
-                }
-
-                if (state is PlanejamentoAtualEmpty) {
-                  return Column(
-                    children: [
-                      const GutterLarge(),
-                      const GutterLarge(),
-                      const Text('Não existe planejamento ativo'),
-                      const Gutter(),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            CreatePlanejamentoPage.route(),
-                          );
-                        },
-                        child: const Text('Criar planejamento'),
-                      )
-                    ],
-                  );
-                }
-
-                if (state is PlanejamentoAtualFailled) {
-                  log(state.message);
-                  return const Column(
-                    children: [
-                      Text('Falha ao carregar planejamento'),
-                    ],
-                  );
-                }
-
-                if (state is PlanejamentoAtualSucess) {
-                  return _PlanejamentoViewWidget(
-                    planejamento: state.planejamento,
-                  );
-                }
-
-                return const Placeholder();
-              },
+    return BlocBuilder<PeriodoPlanejamentoCubit, PeriodoPlanejamentoState>(
+      builder: (context, periodoState) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding,
             ),
-          ],
-        ),
-      ),
+            child: Column(
+              children: [
+                const PeriodoPlanejamento(),
+                BlocBuilder<PlanejamentoAtualCubit, PlanejamentoAtualState>(
+                  bloc: getIt<PlanejamentoAtualCubit>()
+                    ..getPlanejamento(periodoState.periodo),
+                  builder: (context, state) {
+                    if (state is PlanejamentoAtualLoading) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    if (state is PlanejamentoAtualEmpty) {
+                      return Column(
+                        children: [
+                          const GutterLarge(),
+                          const GutterLarge(),
+                          const Text('Não existe planejamento neste mes'),
+                          const Gutter(),
+                          if (periodoState.periodo.month ==
+                              DateTime.now().month)
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .push(CreatePlanejamentoPage.route())
+                                    .then((value) {
+                                  // ignore: use_build_context_synchronously
+                                  getIt<PlanejamentoAtualCubit>()
+                                      .getPlanejamento(DateTime.now());
+                                });
+                              },
+                              child: const Text('Criar planejamento'),
+                            )
+                          else
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<PeriodoPlanejamentoCubit>()
+                                    .setPeriodo(DateTime.now());
+                              },
+                              child: const Text('Voltar ao mes atual'),
+                            )
+                        ],
+                      );
+                    }
+
+                    if (state is PlanejamentoAtualFailled) {
+                      log(state.message);
+                      return const Center(
+                        child: Text('Falha ao carregar planejamento'),
+                      );
+                    }
+
+                    if (state is PlanejamentoAtualSuccess) {
+                      return _PlanejamentoViewWidget(
+                        planejamento: state.planejamento,
+                      );
+                    }
+
+                    return const Placeholder();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
