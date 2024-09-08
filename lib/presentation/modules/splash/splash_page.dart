@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Center(
               child: Obx(
                 () => c.isLoading.value
-                    ? const CircularProgressIndicator()
+                    ? const Text('Carregando')
                     : c.loadingError.value
                         ? TextButton.icon(
                             style: TextButton.styleFrom(
