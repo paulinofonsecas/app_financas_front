@@ -1,4 +1,6 @@
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
+import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/gestures.dart';
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var themeModeState = context.watch<AppThemeCubit>().state;
+    var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
       title: 'KzGest',
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      themeMode: ThemeMode.dark,
+      themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),
       home: const SplashScreen(),
     );
