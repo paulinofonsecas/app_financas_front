@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/home/fpaulino/sdks/flutter/flutter"
+export "FLUTTER_ROOT=/home/fpaulino/.shorebird/bin/cache/flutter/9239d8659dedccd1dbe8527d1cf5b002720141bc"
 export "FLUTTER_APPLICATION_PATH=/home/fpaulino/devin/flutter/app_financas_front"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"

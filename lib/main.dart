@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_financas/app.dart';
 import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -94,7 +96,7 @@ Future<void> main() async {
 Builder _buildApp() {
   return Builder(builder: (context) {
     return DevicePreview(
-      enabled: true,
+      enabled: !Platform.isAndroid,
       builder: (c) => const MyApp(),
     );
   });
