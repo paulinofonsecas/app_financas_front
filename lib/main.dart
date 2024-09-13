@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 
 import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
@@ -22,28 +21,8 @@ import 'presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dar
 import 'presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
 import 'presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 
-class BlocObserverWithLogger extends BlocObserver {
-  final Logger logger;
-
-  BlocObserverWithLogger({required this.logger});
-
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    super.onChange(bloc, change);
-    logger.d('${bloc.runtimeType} $change');
-    print('${bloc.runtimeType} $change');
-  }
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  var logger = Logger();
-  Bloc.observer = BlocObserverWithLogger(logger: logger);
-
-  FlutterError.onError = (details) {
-    print(details.exceptionAsString());
-  };
 
   await initializeDateFormatting('pt_BR', null);
   Intl.defaultLocale = 'pt_BR';
@@ -51,53 +30,57 @@ Future<void> main() async {
 
   dependencyInitialize();
 
+  final setupBlocs = [
+    BlocProvider(
+      create: (_) => getIt<AppBloc>(),
+    ),
+    BlocProvider(
+      create: (context) => RegistarTransacaoBloc(),
+    ),
+    BlocProvider(
+      create: (context) => getIt<MovimentoBloc>(),
+    ),
+    BlocProvider(
+      create: (context) => getIt<AppThemeCubit>(),
+    ),
+    BlocProvider(
+      create: (context) => getIt<ContaBloc>(),
+    ),
+    BlocProvider(
+      create: (c) => getIt<ReajustarSaldoCubit>(),
+    ),
+    BlocProvider(
+      create: (context) => CreateContaBloc(),
+    ),
+    BlocProvider(
+      create: (context) => ContaMostrarNaTelaInicialCubit(),
+    ),
+    BlocProvider(
+      create: (context) => BottomSheetContaCubit(),
+    ),
+    BlocProvider(
+      create: (context) => ListarCategoriaCubit(),
+    ),
+    BlocProvider(
+      create: (context) => SelectCategoriaCubit(),
+    ),
+  ];
+
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => getIt<AppBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => RegistarTransacaoBloc(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<MovimentoBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<AppThemeCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<ContaBloc>(),
-        ),
-        BlocProvider(
-          create: (c) => getIt<ReajustarSaldoCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => CreateContaBloc(),
-        ),
-        BlocProvider(
-          create: (context) => ContaMostrarNaTelaInicialCubit(),
-        ),
-        BlocProvider(
-          create: (context) => BottomSheetContaCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ListarCategoriaCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SelectCategoriaCubit(),
-        ),
-      ],
+      providers: setupBlocs,
       child: _buildApp(),
     ),
   );
 }
 
 Builder _buildApp() {
-  return Builder(builder: (context) {
-    return DevicePreview(
-      enabled: !Platform.isAndroid,
-      builder: (c) => const MyApp(),
-    );
-  });
+  return Builder(
+    builder: (context) {
+      return DevicePreview(
+        enabled: !Platform.isAndroid,
+        builder: (c) => const MyApp(),
+      );
+    },
+  );
 }
