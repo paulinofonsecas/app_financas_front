@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_financas/app/app.dart';
 import 'package:app_financas/app/bloc/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -76,7 +79,7 @@ Builder _buildApp() {
   return Builder(
     builder: (context) {
       return DevicePreview(
-        enabled: true,
+        enabled: !kReleaseMode && !Platform.isAndroid,
         builder: (c) => const MyApp(),
       );
     },
