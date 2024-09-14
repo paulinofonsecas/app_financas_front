@@ -62,60 +62,57 @@ class _ResumoPlanejamento extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          FittedBox(
-            child: Text(
-              'Resumo do planejamento',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
+    return Column(
+      children: [
+        FittedBox(
+          child: Text(
+            'Resumo do planejamento',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
-          const Gutter(),
-          const Divider(),
-          const Gutter(),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: kDefaultPadding * 2),
-            child: Column(
-              children: [
-                DuetInfo(
-                  title: 'Receita total',
-                  valor: valorTotal,
-                  extended: true,
-                ),
-                const GutterSmall(),
-                DuetInfo(
-                  title: 'Categorias inclusas',
-                  valor: planejamento.itens.length.toDouble(),
-                  extended: true,
-                  isMoney: false,
-                ),
-                const GutterSmall(),
-                DuetInfo(
-                  title: 'Não planejado',
-                  valor: planejamento.plafound - somaDistribuicao,
-                  extended: true,
-                ),
-              ],
-            ),
+        ),
+        const Gutter(),
+        const Divider(),
+        const Gutter(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding * 2),
+          child: Column(
+            children: [
+              DuetInfo(
+                title: 'Receita total',
+                valor: valorTotal,
+                extended: true,
+              ),
+              const GutterSmall(),
+              DuetInfo(
+                title: 'Categorias inclusas',
+                valor: planejamento.itens.length.toDouble(),
+                extended: true,
+                isMoney: false,
+              ),
+              const GutterSmall(),
+              DuetInfo(
+                title: 'Não planejado',
+                valor: planejamento.plafound - somaDistribuicao,
+                extended: true,
+              ),
+            ],
           ),
-          SizedBox.square(
-            dimension: context.width,
-            child: ItemPlanejamentoPieChart(
-              itemPlanejamentos: [
-                ...planejamento.itens,
-                ItemPlanejamento(
-                  id: 80808080,
-                  categoria: Categoria(id: 80808080, name: 'Não plan.'),
-                  plafound: planejamento.plafound - somaDistribuicao,
-                ),
-              ],
-            ),
+        ),
+        SizedBox.square(
+          dimension: context.width,
+          child: ItemPlanejamentoPieChart(
+            itemPlanejamentos: [
+              ...planejamento.itens,
+              ItemPlanejamento(
+                id: 80808080,
+                categoria: Categoria(id: 80808080, name: 'Não plan.'),
+                plafound: planejamento.plafound - somaDistribuicao,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

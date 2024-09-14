@@ -76,7 +76,7 @@ Builder _buildApp() {
   return Builder(
     builder: (context) {
       return DevicePreview(
-        enabled: false,
+        enabled: true,
         builder: (c) => const MyApp(),
       );
     },
