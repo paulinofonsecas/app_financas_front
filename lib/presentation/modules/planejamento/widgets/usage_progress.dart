@@ -1,3 +1,4 @@
+import 'package:app_financas/presentation/components/usage_info.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -15,7 +16,26 @@ class UsageProgress extends StatelessWidget {
   final Color? color;
 
   double get _percent => (actualValue / finalValue * 100).roundToDouble();
-  // double get _difference => (finalValue - actualValue).roundToDouble();
+
+  Color _getTextColor(BuildContext context) {
+    final textColor = Theme.of(context).brightness != Brightness.dark
+        ? Colors.white
+        : Colors.black;
+
+    if (_percent > 100) {
+      return Theme.of(context).colorScheme.onErrorContainer;
+    }
+
+    if (_percent < 60) {
+      return textColor;
+    }
+
+    if (_percent >= 60 && _percent < 100) {
+      return textColor;
+    }
+
+    return Colors.white;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +72,8 @@ class UsageProgress extends StatelessWidget {
                   child: Text(
                     '$_percent%',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: _percent >= 60
-                              ? _percent > 100
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .onErrorContainer
-                                  : Colors.black
-                              : Colors.black,
+                          color: _getTextColor(context),
+                          fontWeight: FontWeight.w500,
                         ),
                   ),
                 ),
@@ -77,32 +92,6 @@ class UsageProgress extends StatelessWidget {
         UsageInfo(
           percentage: _percent,
         ),
-      ],
-    );
-  }
-}
-
-class UsageInfo extends StatelessWidget {
-  const UsageInfo({super.key, required this.percentage});
-
-  final double percentage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(90),
-            color: percentage > 100
-                ? Theme.of(context).colorScheme.errorContainer
-                : Theme.of(context).colorScheme.surfaceTint,
-          ),
-        ),
-        const Gutter(),
-        Text('$percentage% Despesas pagas'),
       ],
     );
   }

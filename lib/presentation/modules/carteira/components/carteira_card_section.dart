@@ -39,6 +39,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
   // TODO Melhorar a implementa;\cao deste widget
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     context.read<ContasCubit>().getContas();
 
     return MultiBlocListener(
@@ -78,7 +79,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
         id: 'geral',
         builder: (c) {
           return SizedBox(
-            height: 190,
+            height: size.height * .25,
             child: BlocBuilder<ContasCubit, ContasState>(
               bloc: context.read<ContasCubit>()..getContas(),
               buildWhen: (previous, current) =>

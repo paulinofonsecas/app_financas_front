@@ -87,14 +87,7 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
             }
 
             if (state is HomePageSaldoDisponivelSuccess) {
-              return LayoutBuilder(
-                builder: (c, constraines) {
-                  return SaldoDisponivelCard(
-                    height: 176,
-                    saldo: state.saldo,
-                  );
-                },
-              );
+              return SaldoCardWidget(saldo: state.saldo);
             }
 
             return Container();

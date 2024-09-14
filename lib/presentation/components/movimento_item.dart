@@ -3,7 +3,7 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
-import 'package:app_financas/presentation/global/categorie_avatar.dart';
+import 'package:app_financas/presentation/components/categorie_avatar.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/string_helpers.dart';
 import 'package:flutter/material.dart';

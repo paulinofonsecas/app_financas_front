@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
     var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
-      title: 'KzGest',
+      title: 'Kz Gest',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(
         useMaterial3: true,
       ).copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: Colors.green,
           brightness: Brightness.dark,
         ),
         brightness: Brightness.dark,
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: Colors.green,
         ),
       ),
       scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {

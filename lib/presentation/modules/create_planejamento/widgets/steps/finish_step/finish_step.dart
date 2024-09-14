@@ -3,7 +3,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/item_planejamento.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
-import 'package:app_financas/presentation/global/duet_info.dart';
+import 'package:app_financas/presentation/components/duet_info.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/bloc/create_planejamento_bloc.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/finish_step/item_planejado_pie_chart.dart';

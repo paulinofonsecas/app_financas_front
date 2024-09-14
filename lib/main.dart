@@ -1,7 +1,5 @@
-import 'dart:io';
-
-import 'package:app_financas/app.dart';
-import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
+import 'package:app_financas/app/app.dart';
+import 'package:app_financas/app/bloc/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
@@ -78,7 +76,7 @@ Builder _buildApp() {
   return Builder(
     builder: (context) {
       return DevicePreview(
-        enabled: !Platform.isAndroid,
+        enabled: false,
         builder: (c) => const MyApp(),
       );
     },

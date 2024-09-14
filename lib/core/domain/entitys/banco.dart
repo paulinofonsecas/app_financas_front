@@ -21,7 +21,12 @@ class Banco {
   }
 
   factory Banco.fake([int id = 1]) {
-    return Banco(id: id, nome: '', acronimo: '', imgAsset: '');
+    return Banco(
+      id: id,
+      nome: 'Banco Angolano de Investimentos',
+      acronimo: 'BAI',
+      imgAsset: 'assets/imgs/bancos/BAI.png',
+    );
   }
 
   factory Banco.fromMap(Map<dynamic, dynamic> map) {
