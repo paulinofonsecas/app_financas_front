@@ -9,10 +9,7 @@ class MovimentosPendentesAbba extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<MovimentosPendentesBloc>(),
-      child: const MovimentosPendentesView(),
-    );
+    return const MovimentosPendentesView();
   }
 }
 

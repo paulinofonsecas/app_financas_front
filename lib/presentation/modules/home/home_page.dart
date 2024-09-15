@@ -61,28 +61,33 @@ class _HomePageState extends State<HomePage> {
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: context.theme.colorScheme.surface,
-          body: SafeArea(
-            bottom: false,
-            child: GetBuilder(
-              init: controller,
-              id: 'geral',
-              builder: (context) {
-                return ListView(
-                  children: [
-                    ActionBar(),
-                    SaldoDisponivelCardWidget(),
-                    Gutter(),
-                    CardListWidget(),
-                    Gutter(),
-                    FuncionalidadesWidget(),
-                    Gutter(),
-                    PlanejamentoWidget(),
-                    MovimentosPendentesAbba(),
-                    Gutter(),
-                    HomeScreenMovimentosWidget(),
-                  ],
-                );
-              },
+          body: RefreshIndicator(
+            onRefresh: () async {
+              setState(() {});
+            },
+            child: SafeArea(
+              bottom: false,
+              child: GetBuilder(
+                init: controller,
+                id: 'geral',
+                builder: (context) {
+                  return ListView(
+                    children: [
+                      ActionBar(),
+                      SaldoDisponivelCardWidget(),
+                      Gutter(),
+                      CardListWidget(),
+                      Gutter(),
+                      FuncionalidadesWidget(),
+                      Gutter(),
+                      PlanejamentoWidget(),
+                      MovimentosPendentesAbba(),
+                      Gutter(),
+                      HomeScreenMovimentosWidget(),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         );

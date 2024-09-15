@@ -9,7 +9,6 @@ import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cu
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SaldoCardWidget extends StatelessWidget {
@@ -28,11 +27,9 @@ class SaldoCardWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
             children: [
               _buildSaldoVisibility(context),
-              GutterSmall(),
               _buildSaldoWidget(),
             ],
           ),

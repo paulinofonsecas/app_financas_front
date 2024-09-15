@@ -1,4 +1,3 @@
-import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -6,6 +5,8 @@ import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -40,8 +41,8 @@ class RegistarTransacaoController extends GetxController {
   }
 
   void _init() {
-    movimentoService = Get.find();
-    categoriaService = Get.find();
+    movimentoService = getIt();
+    categoriaService = getIt();
     setupConfiguration = Get.find();
 
     descricaoTextController = TextEditingController();

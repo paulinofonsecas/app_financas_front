@@ -1,23 +1,22 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/components/criar_categoria/cubit/icon_field_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../controllers/criar_categoria_controller.dart';
 
 class SelectOutrosIconsComponent extends StatelessWidget {
   const SelectOutrosIconsComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<CriarCategoriaController>();
+    final cubit = context.read<IconFieldCubit>();
 
     return InkWell(
       onTap: () async {
         IconData? icon = await showIconPicker(
           context,
-          iconPackModes: [IconPack.fontAwesomeIcons],
+          iconPackModes: [IconPack.material],
           iconSize: 32,
           title: const Text('Selecione um Icone'),
           searchHintText: 'Pesquise um Icone (em inglês)',
@@ -26,18 +25,21 @@ class SelectOutrosIconsComponent extends StatelessWidget {
         );
 
         if (icon != null) {
-          controller.changeIconFromPicker(icon);
+          cubit.selectIcon(icon);
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 3.3),
+        padding: const EdgeInsets.symmetric(
+          vertical: kDefaultPadding / 3.3,
+          horizontal: kDefaultPadding,
+        ),
         decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.circular(90),
         ),
         child: Center(
           child: Text(
-            'Outros',
+            'Outros Icones',
             style: GoogleFonts.inter(
               fontSize: 14,
               color: Colors.white,

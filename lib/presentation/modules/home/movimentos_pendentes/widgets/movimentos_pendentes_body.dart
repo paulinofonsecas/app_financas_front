@@ -1,4 +1,5 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/home/abbas/components/abba_header.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/widgets/movimentos_pendentes.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class MovimentosPendentesBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovimentosPendentesBloc, MovimentosPendentesState>(
-      bloc: context.read<MovimentosPendentesBloc>()
+      bloc: getIt<MovimentosPendentesBloc>()
         ..add(const LoadMovimentosPendentesEvent()),
       builder: (context, state) {
         if (state is MovimentosPendentesLoading) {

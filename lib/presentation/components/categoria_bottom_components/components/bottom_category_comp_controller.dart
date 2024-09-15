@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class BottomCategoryCompController extends GetxController {
 
   @override
   void onInit() {
-    service = Get.find();
+    service = getIt();
     searchTextController = TextEditingController();
 
     // searchTextController.addListener(() {

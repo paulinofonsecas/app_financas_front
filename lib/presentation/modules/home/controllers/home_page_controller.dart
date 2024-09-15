@@ -4,6 +4,7 @@ import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,10 +21,10 @@ class HomePageController extends GetxController {
 
   @override
   void onInit() {
-    categoriaProvider = Get.find();
-    contaProvider = Get.find();
-    movimentoService = Get.find();
-    saldosService = Get.find();
+    categoriaProvider = getIt();
+    contaProvider = getIt();
+    movimentoService = getIt();
+    saldosService = getIt();
     super.onInit();
   }
 
@@ -76,7 +77,7 @@ class HomePageController extends GetxController {
   }
 
   Future<List<Conta>> getCartoes() async {
-    var contaService = Get.find<IContaProvider>();
+    var contaService = getIt<IContaProvider>();
     var result = await contaService.listContas();
 
     if (result is Right) {

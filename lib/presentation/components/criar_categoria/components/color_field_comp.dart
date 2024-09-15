@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app_financas/presentation/components/criar_categoria/cubit/color_field_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/criar_categoria_controller.dart';
 import 'color_picker_list.dart';
 
 class ColorFieldComp extends StatelessWidget {
@@ -14,7 +14,7 @@ class ColorFieldComp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<CriarCategoriaController>();
+    final colorFieldState = context.watch<ColorFieldCubit>().state;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +22,9 @@ class ColorFieldComp extends StatelessWidget {
       children: [
         Icon(
           Icons.color_lens,
-          color: Colors.grey,
+          color: colorFieldState is ColorFieldSelected
+              ? colorFieldState.color
+              : Colors.grey,
         ),
         Gutter(),
         Expanded(
@@ -37,13 +39,7 @@ class ColorFieldComp extends StatelessWidget {
                 ),
               ),
               Gutter(),
-              GetBuilder(
-                init: controller,
-                id: 'color',
-                builder: (context) {
-                  return ColorPickerList();
-                },
-              ),
+              ColorPickerList(),
             ],
           ),
         ),
