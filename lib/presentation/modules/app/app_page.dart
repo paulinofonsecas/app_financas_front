@@ -1,20 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/app/bloc/app_bloc.dart';
-import 'package:app_financas/presentation/components/escolher_tipo_movimento.dart';
 import 'package:app_financas/presentation/components/my_drawer.dart';
-import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/app/widgets/bottom_nav_widget.dart';
 import 'package:app_financas/presentation/modules/carteira/carteira_page.dart';
 import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/home_page.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/registar_transacao.dart';
 import 'package:app_financas/presentation/modules/setting/setting_page.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../estatisticas/estatisticas_page.dart';
-import '../home/controllers/home_page_controller.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
@@ -62,29 +61,31 @@ class _AppPageState extends State<AppPage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: canShowFAB(navBarState)
-              ? FloatingActionButton(
-                  onPressed: () {
-                    customShowModalBottomSheet(
-                      context,
-                      isScrollControlled: false,
-                      constraints: const BoxConstraints.tightFor(),
-                      child: BottomEscolherTipoMovimento(
-                        cloused: () {
-                          Get.find<HomePageController>().update(['geral']);
-                          Get.find<CarteiraPageController>().update(['geral']);
-                          Get.back(closeOverlays: true);
-                          setState(() {});
-                        },
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    CupertinoIcons.add,
-                    color: Theme.of(context)
-                        .floatingActionButtonTheme
-                        .foregroundColor,
-                  ),
-                )
+              ?
+              // ? FloatingActionButton(
+              //     onPressed: () {
+              //       customShowModalBottomSheet(
+              //         context,
+              //         isScrollControlled: false,
+              //         constraints: const BoxConstraints.tightFor(),
+              //         child: BottomEscolherTipoMovimento(
+              //           cloused: () {
+              //             Get.find<HomePageController>().update(['geral']);
+              //             Get.find<CarteiraPageController>().update(['geral']);
+              //             Get.back(closeOverlays: true);
+              //             setState(() {});
+              //           },
+              //         ),
+              //       );
+              //     },
+              //     child: Icon(
+              //       CupertinoIcons.add,
+              //       color: Theme.of(context)
+              //           .floatingActionButtonTheme
+              //           .foregroundColor,
+              //     ),
+              //   )
+              const _CustomFAB()
               : null,
           bottomNavigationBar: BottomNavBar(
             index: navBarState.bottomNavIndex,
@@ -99,5 +100,72 @@ class _AppPageState extends State<AppPage> {
 
   bool canShowFAB(AppState state) {
     return (state.bottomNavIndex == 0 || state.bottomNavIndex == 1);
+  }
+}
+
+class _CustomFAB extends StatelessWidget {
+  const _CustomFAB();
+
+  void cloused() {
+    Get.find<HomePageController>().update(['geral']);
+    Get.find<CarteiraPageController>().update(['geral']);
+    Get.back(closeOverlays: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FabCircularMenuPlus(
+      alignment: Alignment.bottomCenter,
+      fabOpenIcon: const Icon(Icons.add),
+      fabSize: 60,
+      fabCloseIcon: const Icon(Icons.close),
+      fabColor: Theme.of(context).colorScheme.primaryContainer,
+      ringDiameter: 500,
+      ringWidth: 150,
+      ringDiameterLimitFactor: 2.5,
+      ringColor: Theme.of(context).colorScheme.secondaryContainer,
+      animationDuration: const Duration(milliseconds: 300),
+      children: <Widget>[
+        TextButton.icon(
+          icon: const Icon(Icons.arrow_upward),
+          label: const Text('Entrada'),
+          onPressed: () {
+            Get.to(const RegistarTransacaoPage(
+              movimentoType: 1,
+            ))?.then(
+              (value) {
+                cloused();
+              },
+            );
+          },
+        ),
+        TextButton.icon(
+          style: TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.onSurface,
+          ),
+          icon: const Icon(Icons.swap_horiz_outlined),
+          label: const Text('Transferencia'),
+          onPressed: () {},
+        ),
+        TextButton.icon(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.red,
+          ),
+          icon: const Icon(Icons.arrow_downward),
+          label: const Text('Saidas'),
+          onPressed: () {
+            Get.to(
+              const RegistarTransacaoPage(
+                movimentoType: 2,
+              ),
+            )?.then(
+              (value) {
+                cloused();
+              },
+            );
+          },
+        ),
+      ],
+    );
   }
 }

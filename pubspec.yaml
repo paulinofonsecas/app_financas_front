@@ -17,6 +17,7 @@ dependencies:
   dio: ^5.3.3
   easy_stepper: ^0.8.5+1
   equatable: ^2.0.5
+  fab_circular_menu_plus: ^0.0.2
   fl_chart: ^0.68.0
   flutter:
     sdk: flutter
