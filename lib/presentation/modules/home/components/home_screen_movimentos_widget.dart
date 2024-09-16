@@ -6,6 +6,8 @@ import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cu
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class HomeScreenMovimentosWidget extends StatelessWidget {
@@ -32,7 +34,23 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
               }
 
               if (state is LastMovimentosEmpty) {
-                return const Text('Sem movimentos para apresentar');
+                return Column(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svgs/empty_state.svg',
+                      width: 200,
+                      height: 200,
+                    ),
+                    const GutterLarge(),
+                    Text(
+                      'Sem movimentos para apresentar',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    const GutterLarge(),
+                    const GutterLarge(),
+                  ],
+                );
               }
 
               if (state is LastMovimentosSuccess) {

@@ -60,33 +60,8 @@ class _AppPageState extends State<AppPage> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: canShowFAB(navBarState)
-              ?
-              // ? FloatingActionButton(
-              //     onPressed: () {
-              //       customShowModalBottomSheet(
-              //         context,
-              //         isScrollControlled: false,
-              //         constraints: const BoxConstraints.tightFor(),
-              //         child: BottomEscolherTipoMovimento(
-              //           cloused: () {
-              //             Get.find<HomePageController>().update(['geral']);
-              //             Get.find<CarteiraPageController>().update(['geral']);
-              //             Get.back(closeOverlays: true);
-              //             setState(() {});
-              //           },
-              //         ),
-              //       );
-              //     },
-              //     child: Icon(
-              //       CupertinoIcons.add,
-              //       color: Theme.of(context)
-              //           .floatingActionButtonTheme
-              //           .foregroundColor,
-              //     ),
-              //   )
-              const _CustomFAB()
-              : null,
+          floatingActionButton:
+              canShowFAB(navBarState) ? const _CustomFAB() : null,
           bottomNavigationBar: BottomNavBar(
             index: navBarState.bottomNavIndex,
             onTap: (index) {
@@ -145,7 +120,7 @@ class _CustomFAB extends StatelessWidget {
           ),
           icon: const Icon(Icons.swap_horiz_outlined),
           label: const Text('Transferencia'),
-          onPressed: () {},
+          onPressed: null,
         ),
         TextButton.icon(
           style: TextButton.styleFrom(

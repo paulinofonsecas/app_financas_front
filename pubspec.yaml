@@ -76,4 +76,5 @@ flutter:
     - assets/imgs/profiles/
     - assets/svgs/home_page/
     - assets/svgs/categories/
+    - assets/svgs/
     - shorebird.yaml
