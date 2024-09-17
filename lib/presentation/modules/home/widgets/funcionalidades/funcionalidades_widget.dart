@@ -6,6 +6,7 @@ import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/f
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
+import 'package:app_financas/presentation/modules/objectivos/view/objectivos_page.dart';
 import 'package:app_financas/presentation/modules/planejamento/view/planejamento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +59,9 @@ class FuncionalidadesWidget extends StatelessWidget {
           CustomContainerButton(
             icon: Icons.track_changes,
             label: 'Objectivos',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, ObjectivosPage.route());
+            },
           ),
           CustomContainerButton(
             icon: Icons.monetization_on_outlined,

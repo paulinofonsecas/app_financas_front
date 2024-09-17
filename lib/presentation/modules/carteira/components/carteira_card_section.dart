@@ -36,7 +36,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
     super.initState();
   }
 
-  // TODO Melhorar a implementa;\cao deste widget
+  // TODO Melhorar a implementacao deste widget
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
