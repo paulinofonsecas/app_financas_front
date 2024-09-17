@@ -2,32 +2,51 @@ import 'package:app_financas/presentation/components/criar_categoria/cubit/color
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'color_item_comp.dart';
 import 'select_outros_colors_comp.dart';
 
-class ColorPickerList extends HookWidget {
+class ColorPickerList extends StatefulWidget {
   const ColorPickerList({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  State<ColorPickerList> createState() => _ColorPickerListState();
+}
+
+class _ColorPickerListState extends State<ColorPickerList> {
+  var selectedColorIndex = 0;
+  late final List<Color> colors;
+
+  @override
+  void initState() {
     var cubit = context.read<ColorFieldCubit>();
-    final selectedColorIndex = useState(0);
-    final colorsState =
-        useState((List.from(Colors.primaries)..shuffle()).take(8).toList());
-    final colors = colorsState.value;
+    colors = (List<Color>.from(Colors.primaries)..shuffle()).take(8).toList();
+
     if (cubit.state is ColorFieldInitial) {
       cubit.setSelectedColor(colors[0]);
+    } else {
+      colors.removeAt(0);
+      colors.removeWhere((color) => color == cubit.state.color);
+      colors.insert(0, cubit.state.color);
+      cubit.setSelectedColor(cubit.state.color);
     }
+
+    setState(() {});
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var cubit = context.read<ColorFieldCubit>();
 
     return BlocListener<ColorFieldCubit, ColorFieldState>(
       listener: (context, state) {
         if (state is ColorFieldSelected) {
           cubit.setSelectedColor(state.color);
-          selectedColorIndex.value = colors.indexOf(state.color);
+          selectedColorIndex = colors.indexOf(state.color);
+          setState(() {});
         }
       },
       child: Wrap(
@@ -41,10 +60,11 @@ class ColorPickerList extends HookWidget {
               ...colors.map((color) {
                 return ColorItemComponent(
                   color: color,
-                  isSelected: selectedColorIndex.value == colors.indexOf(color),
+                  isSelected: selectedColorIndex == colors.indexOf(color),
                   onTap: () {
                     cubit.setSelectedColor(color);
-                    selectedColorIndex.value = colors.indexOf(color);
+                    selectedColorIndex = colors.indexOf(color);
+                    setState(() {});
                   },
                 );
               }),

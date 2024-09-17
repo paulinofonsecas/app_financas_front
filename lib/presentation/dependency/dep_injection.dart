@@ -15,12 +15,14 @@ import 'package:app_financas/core/data/services/banco_service.dart';
 import 'package:app_financas/core/data/services/categoria_service.dart';
 import 'package:app_financas/core/data/services/conta_service.dart';
 import 'package:app_financas/core/data/services/movimento_service.dart';
+import 'package:app_financas/core/data/services/objectivo_service.dart';
 import 'package:app_financas/core/data/services/planejamento_service.dart';
 import 'package:app_financas/core/data/services/saldos_service.dart';
 import 'package:app_financas/core/domain/services/i_banco_service.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
+import 'package:app_financas/core/domain/services/i_objetivo_service.dart';
 import 'package:app_financas/core/domain/services/i_planejamento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -50,6 +52,8 @@ void dependencyInitialize() {
 
   // Objectivos
   getIt.registerLazySingleton<IObjectivoProvider>(() => DBObjectivoProvider());
+  getIt.registerLazySingleton<IObjectivoService>(
+      () => ObjectivoService(getIt()));
 
   // Planejamento
   getIt.registerLazySingleton<IPlanejamentoProvider>(

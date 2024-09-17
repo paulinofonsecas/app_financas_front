@@ -7,6 +7,8 @@ NumberFormat get numberFormat => NumberFormat.currency(
 
 DateFormat get dateFormat => DateFormat('dd MMM y')..add_Hm();
 
+DateFormat dataFormatada = DateFormat("d 'de' MMMM 'de' y", "pt_BR");
+
 DateFormat get messageDateFormat => DateFormat('MMM', 'pt_BR');
 
 DateFormat get shortDateFormat => DateFormat('dd/MMM/yyyy');

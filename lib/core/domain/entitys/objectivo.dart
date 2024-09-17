@@ -30,7 +30,7 @@ class Objectivo {
     this.isPaused = false,
   });
 
-  double get percent => (currentValue / targetValue) * 100;
+  double get percent => ((currentValue + initialValue) / targetValue) * 100;
 
   Objectivo copyWith({
     String? id,
@@ -108,6 +108,21 @@ class Objectivo {
       currentValue: currentValue,
       targetValue: targetValue,
       finalDate: DateTime(2022, 12, 31),
+      isPaused: false,
+    );
+  }
+
+  factory Objectivo.empty() {
+    return Objectivo(
+      id: const Uuid().v4(),
+      name: '',
+      description: '',
+      color: Colors.transparent,
+      icon: Icons.home,
+      initialValue: 0,
+      currentValue: 0,
+      targetValue: 0,
+      finalDate: DateTime.now(),
       isPaused: false,
     );
   }

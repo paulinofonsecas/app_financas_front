@@ -1,4 +1,7 @@
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/create_objectivo/view/pre_create_objectivo.dart';
 import 'package:app_financas/presentation/modules/objectivos/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:app_financas/presentation/modules/objectivos/widgets/objectivos_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -22,25 +25,38 @@ class ObjectivosPage extends StatelessWidget {
         BlocProvider(
           create: (context) => ObjectivosBloc(),
         ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Objectivos'),
-          centerTitle: true,
-          actions: [
-            TextButton.icon(
-              onPressed: () {
-                // Navigator.push(context, CreateObjectivoPage.route());
-              },
-              icon: const Icon(Icons.add),
-              iconAlignment: IconAlignment.end,
-              label: const Text('Novo'),
-            ),
-            const GutterSmall(),
-          ],
+        BlocProvider(
+          create: (context) => ListarObjetivosCubit(getIt()),
         ),
-        body: const ObjectivosView(),
-      ),
+      ],
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Objectivos'),
+            centerTitle: true,
+            actions: [
+              TextButton.icon(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    showDragHandle: true,
+                    builder: (context) => const PreCreateObjectivo(),
+                  ).then((value) {
+                    // ignore: use_build_context_synchronously
+                    context.read<ListarObjetivosCubit>().loadData();
+                  });
+                },
+                icon: const Icon(Icons.add),
+                iconAlignment: IconAlignment.end,
+                label: const Text('Novo'),
+              ),
+              const GutterSmall(),
+            ],
+          ),
+          body: const ObjectivosView(),
+        );
+      }),
     );
   }
 }

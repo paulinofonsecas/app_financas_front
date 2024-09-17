@@ -46,7 +46,7 @@ class ListaObjectivoItem extends StatelessWidget {
               const Gutter(),
               UsageProgress(
                 finalValue: objectivo.targetValue,
-                actualValue: objectivo.currentValue,
+                actualValue: objectivo.currentValue + objectivo.initialValue,
                 color: objectivo.color,
                 footerDescription: 'Guardado',
                 showFooter: false,
