@@ -1,3 +1,4 @@
+import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/core/data/provider/db/helpers/hive_db_provider.dart';
 import 'package:app_financas/core/data/provider/interfaces/i_objectivo_provider.dart';
 import 'package:app_financas/core/domain/entitys/objectivo.dart';
@@ -5,9 +6,11 @@ import 'package:app_financas/core/erros/failure.dart';
 import 'package:dartz/dartz.dart';
 
 class DBObjectivoProvider implements IObjectivoProvider {
-  final HiveDBProvider _dbProvider;
+  late final HiveDBProvider _dbProvider;
 
-  DBObjectivoProvider(this._dbProvider);
+  DBObjectivoProvider(){
+    _dbProvider = HiveDBProvider(boxName: kObjectivoBox);
+  }
 
   @override
   Future<Either<Failure, Objectivo>> createObjectivo(

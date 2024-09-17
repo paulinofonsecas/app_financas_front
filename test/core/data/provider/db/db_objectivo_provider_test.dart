@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:app_financas/core/data/provider/db/db_objectivo_provider.dart';
 import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
-import 'package:app_financas/core/data/provider/db/helpers/hive_db_provider.dart';
 import 'package:app_financas/core/domain/entitys/objectivo.dart';
 import 'package:app_financas/core/erros/failure.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
@@ -26,9 +25,7 @@ void main() {
   });
 
   test('Save objectivo in database with success', () async {
-    final objectivoProvider = DBObjectivoProvider(
-      HiveDBProvider(boxName: kObjectivoBox),
-    );
+    final objectivoProvider = DBObjectivoProvider();
 
     final objectivo = Objectivo.fake();
 
@@ -43,9 +40,7 @@ void main() {
   });
 
   test('Update objectivo in database with success', () async {
-    final objectivoProvider = DBObjectivoProvider(
-      HiveDBProvider(boxName: kObjectivoBox),
-    );
+    final objectivoProvider = DBObjectivoProvider();
 
     final objectivo = Objectivo.fake();
 
@@ -64,9 +59,7 @@ void main() {
   });
 
   test('Delete objectivo in database with success', () async {
-    final objectivoProvider = DBObjectivoProvider(
-      HiveDBProvider(boxName: kObjectivoBox),
-    );
+    final objectivoProvider = DBObjectivoProvider();
 
     final objectivo = Objectivo.fake();
 
@@ -83,9 +76,7 @@ void main() {
   });
 
   test('List objectivo in database with success', () async {
-    final objectivoProvider = DBObjectivoProvider(
-      HiveDBProvider(boxName: kObjectivoBox),
-    );
+    final objectivoProvider = DBObjectivoProvider();
 
     final objectivo = Objectivo.fake();
 
