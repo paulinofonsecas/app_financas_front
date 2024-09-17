@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -28,6 +29,8 @@ class Objectivo {
     this.currentValue = 0,
     this.isPaused = false,
   });
+
+  double get percent => (currentValue / targetValue) * 100;
 
   Objectivo copyWith({
     String? id,
@@ -85,18 +88,29 @@ class Objectivo {
     );
   }
 
-  factory Objectivo.fake() => Objectivo(
-        id: '1',
-        name: 'Carro novo',
-        description: 'Novo carro',
-        color: Colors.blue,
-        icon: Icons.check,
-        initialValue: 0,
-        currentValue: 0,
-        targetValue: 100,
-        finalDate: DateTime(2022, 12, 31),
-        isPaused: false,
-      );
+  factory Objectivo.fake() {
+    final targetValue = Random.secure().nextDouble() * 1000000;
+    var currentValue = Random.secure().nextDouble() * 1000000;
+
+    if (currentValue > targetValue) {
+      currentValue = targetValue;
+    }
+
+    return Objectivo(
+      id: const Uuid().v4(),
+      name: 'Carro novo',
+      description: 'Novo carro',
+      color: Colors.primaries[Random.secure().nextInt(
+        Colors.primaries.length,
+      )],
+      icon: Icons.home,
+      initialValue: 0,
+      currentValue: currentValue,
+      targetValue: targetValue,
+      finalDate: DateTime(2022, 12, 31),
+      isPaused: false,
+    );
+  }
 
   factory Objectivo.make({
     required String name,

@@ -8,7 +8,7 @@ import 'package:dartz/dartz.dart';
 class DBObjectivoProvider implements IObjectivoProvider {
   late final HiveDBProvider _dbProvider;
 
-  DBObjectivoProvider(){
+  DBObjectivoProvider() {
     _dbProvider = HiveDBProvider(boxName: kObjectivoBox);
   }
 

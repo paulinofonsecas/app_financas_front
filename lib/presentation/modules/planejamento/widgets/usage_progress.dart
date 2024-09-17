@@ -9,11 +9,15 @@ class UsageProgress extends StatelessWidget {
     required this.finalValue,
     required this.actualValue,
     required this.color,
+    this.footerDescription,
+    this.showFooter = true,
   });
 
   final double finalValue;
   final double actualValue;
   final Color? color;
+  final String? footerDescription;
+  final bool showFooter;
 
   double get _percent => (actualValue / finalValue * 100).roundToDouble();
 
@@ -27,7 +31,7 @@ class UsageProgress extends StatelessWidget {
     }
 
     if (_percent < 60) {
-      return textColor;
+      return Colors.black;
     }
 
     if (_percent >= 60 && _percent < 100) {
@@ -88,10 +92,14 @@ class UsageProgress extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
         ),
-        const Gutter(),
-        UsageInfo(
-          percentage: _percent,
-        ),
+        if (showFooter) ...[
+          const Gutter(),
+          UsageInfo(
+            percentage: _percent,
+            footerDescription: footerDescription ?? 'Despesas pagas',
+            color: color ?? Theme.of(context).colorScheme.surfaceTint,
+          )
+        ]
       ],
     );
   }

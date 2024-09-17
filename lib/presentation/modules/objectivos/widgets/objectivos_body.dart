@@ -1,3 +1,4 @@
+import 'package:app_financas/presentation/modules/objectivos/widgets/lista_objectivos/lista_objectivo.dart';
 import 'package:flutter/material.dart';
 
 /// {@template objectivos_body}
@@ -11,8 +12,12 @@ class ObjectivosBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [],
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          ListaObjectivos(),
+        ],
+      ),
     );
   }
 }
