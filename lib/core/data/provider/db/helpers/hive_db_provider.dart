@@ -5,60 +5,68 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDBProvider implements DBProvider {
   final String boxName;
-  late Box<Map<dynamic, dynamic>> _planejamentoBox;
+  late Box<Map<dynamic, dynamic>> _objectivoBox;
 
   HiveDBProvider({required this.boxName});
 
   @override
   Future<void> initDb() async {
-    _planejamentoBox = await Hive.openBox(boxName);
-
+    _objectivoBox = await Hive.openBox(boxName);
     return;
   }
 
   @override
   Future<void> closeDb() {
-    return _planejamentoBox.close();
+    return _objectivoBox.close();
   }
 
   @override
-  Future<Either<Failure, void>> add(String id, Map<String, dynamic> data) async {
+  Future<Either<Failure, void>> add(
+      String id, Map<String, dynamic> data) async {
     try {
       await initDb();
-      _planejamentoBox.put(id, data);
-      return Future.value(const Right(null));
+      _objectivoBox.put(id, data);
+      return const Right(null);
     } catch (e) {
-      return Future.value(Left(Failure(e.toString())));
+      return Left(Failure(e.toString()));
     }
   }
 
   @override
   Future<Either<Failure, void>> delete(String id) async {
     try {
-      await _planejamentoBox.delete(id);
-      return Future.value(const Right(null));
+      await initDb();
+      await _objectivoBox.delete(id);
+      return const Right(null);
     } catch (e) {
-      return Future.value(Left(Failure(e.toString())));
+      await closeDb();
+      return Left(Failure(e.toString()));
     }
   }
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> get(String id) async {
     try {
-      return Future.value(
-          Right(_planejamentoBox.get(id)! as Map<String, dynamic>));
+      await initDb();
+      return Right(_objectivoBox.get(id)!.cast<String, dynamic>());
     } catch (e) {
-      return Future.value(Left(Failure(e.toString())));
+      await closeDb();
+      return Left(Failure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<Map<String, dynamic>>>> list() {
+  Future<Either<Failure, List<Map<String, dynamic>>>> list() async {
     try {
-      return Future.value(Right(
-          _planejamentoBox.values.toList().cast<Map<String, dynamic>>()));
+      await initDb();
+      final raw = _objectivoBox.values
+          .toList()
+          .map((e) => e.cast<String, dynamic>())
+          .toList();
+      return Right(raw);
     } catch (e) {
-      return Future.value(Left(Failure(e.toString())));
+      await closeDb();
+      return Left(Failure(e.toString()));
     }
   }
 }

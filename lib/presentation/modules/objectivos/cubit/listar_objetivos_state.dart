@@ -8,7 +8,11 @@ sealed class ListarObjetivosState extends Equatable {
 }
 
 final class ListarObjetivosInitial extends ListarObjetivosState {}
+
 final class ListarObjetivosLoading extends ListarObjetivosState {}
+
+final class ListarObjetivosEmpty extends ListarObjetivosState {}
+
 final class ListarObjetivosLoaded extends ListarObjetivosState {
   final List<Objectivo> objectivos;
 
@@ -17,6 +21,7 @@ final class ListarObjetivosLoaded extends ListarObjetivosState {
   @override
   List<Object> get props => [objectivos];
 }
+
 final class ListarObjetivosError extends ListarObjetivosState {
   final String message;
   const ListarObjetivosError(this.message);

@@ -10,8 +10,10 @@ class NomeObjectivoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<CreateObjectivoBloc>();
-
     final preObj = context.read<CreateObjectivoBloc>().preObj;
+    bloc.objectivoModel = bloc.objectivoModel.copyWith(
+      name: preObj?.title ?? '',
+    );
 
     return Row(
       children: [

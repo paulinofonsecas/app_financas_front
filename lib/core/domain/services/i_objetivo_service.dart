@@ -10,4 +10,6 @@ abstract class IObjectivoService {
   Future<Either<Failure, List<Objectivo>>> listObjectivos();
   Future<Either<Failure, List<Objectivo>>> listObjectivosPausados();
   Future<Either<Failure, List<Objectivo>>> listObjectivosFinalizados();
+  Future<Either<Failure, bool>> adicionarFundo(
+      Objectivo objectivo, double fundo);
 }

@@ -37,7 +37,7 @@ class ObjectivoService implements IObjectivoService {
       (failure) => left(failure),
       (objectivos) => right(objectivos
           .where((obj) =>
-              obj.currentValue == obj.targetValue &&
+              obj.currentValue >= obj.targetValue &&
               obj.currentValue != 0 &&
               !obj.isPaused)
           .toList()),
@@ -57,5 +57,21 @@ class ObjectivoService implements IObjectivoService {
   @override
   Future<Either<Failure, Objectivo>> updateObjectivo(Objectivo objectivo) {
     return _provider.updateObjectivo(objectivo);
+  }
+
+  @override
+  Future<Either<Failure, bool>> adicionarFundo(
+      Objectivo objectivo, double fundo) async {
+    if (fundo <= 0) {
+      return right(false);
+    }
+
+    final objectivoResult = await _provider
+        .updateObjectivo(objectivo.copyWith(currentValue: fundo));
+
+    return objectivoResult.fold(
+      (failure) => left(failure),
+      (objectivo) => right(true),
+    );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/objectivo.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/objectivos/bottom_sheets/adicionar_fundos_sheet.dart';
+import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/usage_progress.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 class ListaObjectivoItem extends StatelessWidget {
@@ -57,7 +60,15 @@ class ListaObjectivoItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      AdicionarFundosSheet.show(
+                        context,
+                        objectivo,
+                      ).then((value) {
+                        // ignore: use_build_context_synchronously
+                        context.read<ListarObjetivosCubit>().loadData();
+                      });
+                    },
                     icon: const Icon(Icons.add),
                     label: const Text(
                       'Adicionar fundos',

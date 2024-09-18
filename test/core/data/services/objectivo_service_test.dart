@@ -271,4 +271,28 @@ void main() {
       expect(erro.message, 'Objectivo nao encontrado');
     });
   });
+
+  group('Adicionar Fundos', () {
+    test('should add fundos to a Objectivo', () async {
+      final provider = ObjectivoProviderMock();
+      final objectivo = Objectivo.make(
+        name: 'test',
+        description: 'test',
+        targetValue: 0,
+        color: Colors.red,
+        finalDate: DateTime.now().add(const Duration(days: 10)),
+        icon: Icons.add,
+      );
+
+      when(() => provider.updateObjectivo(objectivo)).thenAnswer(
+          (_) async => Right(objectivo.copyWith(currentValue: 20000)));
+
+      final service = ObjectivoService(provider);
+
+      final result = await service.adicionarFundo(objectivo, 20000);
+
+      expect(result.isRight(), true);
+    });
+
+  });
 }

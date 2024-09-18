@@ -2,6 +2,7 @@ import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objeti
 import 'package:app_financas/presentation/modules/objectivos/widgets/lista_objectivos/lista_objectivo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 
 class ListaObjectivos extends StatelessWidget {
   const ListaObjectivos({super.key});
@@ -21,10 +22,16 @@ class ListaObjectivos extends StatelessWidget {
         }
 
         if (state is ListarObjetivosError) {
-          return SizedBox.square(
+          return Center(
+            child: Text('Ocorreu um erro inesperado: ${state.message}'),
+          );
+        }
+
+        if (state is ListarObjetivosEmpty) {
+          return const SizedBox.square(
             dimension: 50,
             child: Center(
-              child: Text(state.message),
+              child: Text('Os seus objetivos serão listados aqui'),
             ),
           );
         }
@@ -34,6 +41,7 @@ class ListaObjectivos extends StatelessWidget {
             children: [
               ...state.objectivos
                   .map((obj) => ListaObjectivoItem(objectivo: obj)),
+              const GutterLarge(),
             ],
           );
         }
