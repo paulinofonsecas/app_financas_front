@@ -20,7 +20,9 @@ class DataFinalField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<CreateObjectivoBloc>();
-    final dateState = useState(DateTime.now().add(const Duration(days: 30)));
+    final dateState = useState(!isToday(bloc.objectivoModel.finalDate)
+        ? bloc.objectivoModel.finalDate
+        : DateTime.now().add(const Duration(days: 30)));
 
     return InkWell(
       onTap: () async {

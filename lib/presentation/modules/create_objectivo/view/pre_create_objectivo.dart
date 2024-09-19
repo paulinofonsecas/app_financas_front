@@ -118,8 +118,9 @@ class PreCreateObjectivo extends StatelessWidget {
                   (index) => SampleNewCategoriaItem(
                     obj: preObj[index],
                     onTap: () {
+                      Navigator.pop(context);
                       Navigator.of(context).push(CreateObjectivoPage.route(
-                        index == 0 ? null : preObj[index],
+                        preObjectivo: index == 0 ? null : preObj[index],
                       ));
                     },
                   ),

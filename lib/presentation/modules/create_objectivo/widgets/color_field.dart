@@ -8,9 +8,8 @@ class ColorField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preObj = context.watch<CreateObjectivoBloc>().preObj;
-    context.read<ColorFieldCubit>().setSelectedColor(
-        preObj?.color ?? Theme.of(context).colorScheme.surfaceTint);
+    final objectivo = context.watch<CreateObjectivoBloc>().objectivoModel;
+    context.read<ColorFieldCubit>().setSelectedColor(objectivo.color);
 
     return const ColorFieldComp();
   }

@@ -20,12 +20,13 @@ class DescricaoField extends StatelessWidget {
         const GutterSmall(),
         Expanded(
           child: TextFormField(
+            initialValue: bloc.objectivoModel.description,
             onChanged: (v) {
               bloc.objectivoModel = bloc.objectivoModel.copyWith(
                 description: v,
               );
             },
-            maxLines: 5,
+            maxLines: 3,
             focusNode: FocusNode(canRequestFocus: true),
             style: GoogleFonts.inter(
               fontSize: 16,

@@ -9,8 +9,8 @@ class IconField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preObj = context.watch<CreateObjectivoBloc>().preObj;
-    context.read<IconFieldCubit>().setSelectedIcon(preObj?.icon ?? Icons.home);
+    final preObj = context.watch<CreateObjectivoBloc>().objectivoModel;
+    context.read<IconFieldCubit>().setSelectedIcon(preObj.icon);
 
     return const IconFieldComp();
   }

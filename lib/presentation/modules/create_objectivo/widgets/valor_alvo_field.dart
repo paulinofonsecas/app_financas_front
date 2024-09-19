@@ -23,7 +23,7 @@ class ValorAlvoField extends StatelessWidget {
           'Valor do objetivo',
         ),
         TextFormField(
-          initialValue: formatter.formatDouble(0),
+          initialValue: formatter.formatDouble(bloc.objectivoModel.targetValue),
           onChanged: (v) {
             if (v.isNotEmpty) {
               bloc.objectivoModel = bloc.objectivoModel.copyWith(

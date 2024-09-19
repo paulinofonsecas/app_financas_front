@@ -1,6 +1,7 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/objectivo.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/create_objectivo/view/create_objectivo_page.dart';
 import 'package:app_financas/presentation/modules/objectivos/bottom_sheets/adicionar_fundos_sheet.dart';
 import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/usage_progress.dart';
@@ -20,78 +21,101 @@ class ListaObjectivoItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         surfaceTintColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _HeaderWidget(objectivo: objectivo),
-              const Gutter(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Data final do objetivo',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    shortDateFormat.format(objectivo.finalDate),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context)
+                .push(
+              CreateObjectivoPage.route(
+                objectivo: objectivo,
               ),
-              const Gutter(),
-              UsageProgress(
-                finalValue: objectivo.targetValue,
-                actualValue: objectivo.currentValue + objectivo.initialValue,
-                color: objectivo.color,
-                footerDescription: 'Guardado',
-                showFooter: false,
-              ),
-              const GutterSmall(),
-              const Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      AdicionarFundosSheet.show(
-                        context,
-                        objectivo,
-                      ).then((value) {
-                        // ignore: use_build_context_synchronously
-                        context.read<ListarObjetivosCubit>().loadData();
-                      });
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text(
-                      'Adicionar fundos',
+            )
+                .then((value) {
+              // ignore: use_build_context_synchronously
+              context.read<ListarObjetivosCubit>().loadData();
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(kDefaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _HeaderWidget(objectivo: objectivo),
+                const Gutter(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Data final do objetivo',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.info_outline),
-                    label: const Text(
-                      'Detalhes',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                    Text(
+                      shortDateFormat.format(objectivo.finalDate),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                ),
+                const Gutter(),
+                UsageProgress(
+                  finalValue: objectivo.targetValue,
+                  actualValue: objectivo.currentValue + objectivo.initialValue,
+                  color: objectivo.color,
+                  footerDescription: 'Guardado',
+                  showFooter: false,
+                ),
+                const GutterSmall(),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {
+                        AdicionarFundosSheet.show(
+                          context,
+                          objectivo,
+                        ).then((value) {
+                          // ignore: use_build_context_synchronously
+                          context.read<ListarObjetivosCubit>().loadData();
+                        });
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text(
+                        'Adicionar fundos',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(CreateObjectivoPage.route(
+                          objectivo: objectivo,
+                        ))
+                            .then((value) {
+                          // ignore: use_build_context_synchronously
+                          context.read<ListarObjetivosCubit>().loadData();
+                        });
+                      },
+                      icon: const Icon(Icons.info_outline),
+                      label: const Text(
+                        'Detalhes',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -132,6 +156,7 @@ class _HeaderWidget extends StatelessWidget {
             ),
           ),
         ),
+        const Gutter(),
         Text(
           '${objectivo.percent.toStringAsFixed(2)}%',
           style: const TextStyle(

@@ -23,6 +23,8 @@ class ValorInicialField extends StatelessWidget {
         const GutterSmall(),
         Expanded(
           child: TextFormField(
+            initialValue:
+                formatter.formatDouble(bloc.objectivoModel.initialValue),
             onChanged: (v) {
               bloc.objectivoModel = bloc.objectivoModel.copyWith(
                 initialValue: formatter.getDouble(),
@@ -38,7 +40,7 @@ class ValorInicialField extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             decoration: InputDecoration(
-              hintText: 'Valor inicial',
+              label: const Text('Valor inicial'),
               hintStyle: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,

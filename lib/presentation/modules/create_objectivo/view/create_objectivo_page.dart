@@ -1,7 +1,9 @@
+import 'package:app_financas/core/domain/entitys/objectivo.dart';
 import 'package:app_financas/presentation/components/criar_categoria/cubit/color_field_cubit.dart';
 import 'package:app_financas/presentation/components/criar_categoria/cubit/icon_field_cubit.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/bloc/bloc.dart';
+import 'package:app_financas/presentation/modules/create_objectivo/cubit/delete_objectivo_cubit.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/view/pre_create_objectivo.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/widgets/create_objectivo_body.dart';
 import 'package:flutter/material.dart';
@@ -12,24 +14,42 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 /// {@endtemplate}
 class CreateObjectivoPage extends StatelessWidget {
   /// {@macro create_objectivo_page}
-  const CreateObjectivoPage({super.key, required this.preObj});
+  const CreateObjectivoPage({super.key, required this.preObj, this.objectivo});
 
   final PreCreateObjModel? preObj;
+  final Objectivo? objectivo;
 
   /// The static route for CreateObjectivoPage
-  static Route<dynamic> route(PreCreateObjModel? preObj) {
+  static Route<dynamic> route(
+      {PreCreateObjModel? preObjectivo, Objectivo? objectivo}) {
     return MaterialPageRoute<dynamic>(
-        builder: (_) => CreateObjectivoPage(
-              preObj: preObj,
-            ));
+      builder: (_) => CreateObjectivoPage(
+        preObj: preObjectivo,
+        objectivo: objectivo,
+      ),
+    );
   }
+
+  Objectivo get _getObjectivo =>
+      objectivo ??
+      Objectivo.empty().copyWith(
+        name: preObj?.title ?? '',
+        color: preObj?.color ?? Colors.transparent,
+        icon: preObj?.icon ?? Icons.home,
+      );
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CreateObjectivoBloc(preObj, getIt()),
+          create: (context) => CreateObjectivoBloc(
+            service: getIt(),
+            objectivo: _getObjectivo,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => DeleteObjectivoCubit(getIt()),
         ),
         BlocProvider(
           create: (context) => ColorFieldCubit(),
@@ -39,23 +59,32 @@ class CreateObjectivoPage extends StatelessWidget {
         ),
       ],
       child: Builder(builder: (context) {
+        final isSaving =
+            context.read<CreateObjectivoBloc>().state is CreateObjectivoLoading;
+        final isDeleting = context.read<DeleteObjectivoCubit>().state
+            is DeleteObjectivoLoading;
+
         return Scaffold(
           appBar: AppBar(
             actions: [
               TextButton.icon(
-                onPressed: () {
-                  final bloc = context.read<CreateObjectivoBloc>();
-                  if (bloc.formKey.currentState!.validate()) {
-                    bloc.add(SaveObjectivoEvent(bloc.objectivoModel));
-                  }
-                },
+                onPressed: isDeleting || isSaving
+                    ? null
+                    : () {
+                        final bloc = context.read<CreateObjectivoBloc>();
+                        if (bloc.formKey.currentState!.validate()) {
+                          bloc.add(SaveObjectivoEvent(bloc.objectivoModel));
+                        }
+                      },
                 icon: const Icon(Icons.done),
                 iconAlignment: IconAlignment.end,
                 label: const Text('Salvar'),
               ),
               const GutterSmall(),
             ],
-            title: const Text('Novo objectivo'),
+            title: Text(
+              objectivo != null ? 'Editar objectivo' : 'Novo objectivo',
+            ),
           ),
           body: const CreateObjectivoView(),
         );
@@ -78,7 +107,6 @@ class CreateObjectivoView extends StatelessWidget {
         BlocListener<CreateObjectivoBloc, CreateObjectivoState>(
           listener: (context, state) {
             if (state is CreateObjectivoSuccess) {
-              // context.read<ListarObjetivosCubit>().loadData();
               Navigator.pop(context);
             }
 
