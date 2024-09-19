@@ -1,4 +1,4 @@
-package com.example.app_financas_front
+package com.paulinodev.kwanzage
 
 import io.flutter.embedding.android.FlutterActivity
 
