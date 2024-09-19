@@ -17,6 +17,9 @@ dependencies:
   dio: ^5.3.3
   easy_stepper: ^0.8.5+1
   equatable: ^2.0.5
+  firebase_analytics: ^11.3.2
+  firebase_core: ^3.5.0
+  firebase_crashlytics: ^4.1.2
   fl_chart: ^0.68.0
   flutter:
     sdk: flutter

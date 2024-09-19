@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "307729695573",
+    "project_id": "kzgest",
+    "storage_bucket": "kzgest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307729695573:android:cb77c563d66fe87713a5dc",
+        "android_client_info": {
+          "package_name": "com.paulinodev.kwanzage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARi6D22lfjQEAkRNUOc9m7hk_J6L5PdpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
