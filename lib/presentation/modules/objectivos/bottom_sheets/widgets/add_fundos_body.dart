@@ -8,6 +8,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 
 class AddFundosBody extends StatelessWidget {
   const AddFundosBody({
+    super.key,
     required this.formatterState,
     required this.formKey,
     required this.objectivo,
@@ -23,11 +24,6 @@ class AddFundosBody extends StatelessWidget {
       children: [
         FundoField(formatter: formatterState.value),
         const Gutter(),
-        //! fix me
-        // const Text('Conta de origem: ', style: TextStyle(fontSize: 16)),
-        // const GutterTiny(),
-        // const ContaListItemComponent(),
-        const GutterLarge(),
         const GutterLarge(),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,

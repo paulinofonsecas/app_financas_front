@@ -1,3 +1,4 @@
+import 'package:app_financas/presentation/components/empty_widget.dart';
 import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:app_financas/presentation/modules/objectivos/widgets/lista_objectivos/lista_objectivo_item.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,8 @@ class ListaObjectivos extends StatelessWidget {
       bloc: context.read<ListarObjetivosCubit>()..loadData(),
       builder: (context, state) {
         if (state is ListarObjetivosLoading) {
-          return const SizedBox.square(
-            dimension: 50,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -28,21 +26,22 @@ class ListaObjectivos extends StatelessWidget {
         }
 
         if (state is ListarObjetivosEmpty) {
-          return const SizedBox.square(
-            dimension: 50,
-            child: Center(
-              child: Text('Os seus objetivos serão listados aqui'),
+          return const Center(
+            child: EmptyWidget(
+              title: 'Os seus objectivos serão exibidos aqui.',
             ),
           );
         }
 
         if (state is ListarObjetivosLoaded) {
-          return Column(
-            children: [
-              ...state.objectivos
-                  .map((obj) => ListaObjectivoItem(objectivo: obj)),
-              const GutterLarge(),
-            ],
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                ...state.objectivos
+                    .map((obj) => ListaObjectivoItem(objectivo: obj)),
+                const GutterLarge(),
+              ],
+            ),
           );
         }
 

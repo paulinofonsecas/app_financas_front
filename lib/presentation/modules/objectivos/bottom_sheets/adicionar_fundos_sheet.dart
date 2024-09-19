@@ -16,9 +16,14 @@ class AdicionarFundosSheet extends HookWidget {
   final Objectivo objectivo;
 
   static Future<dynamic> show(BuildContext context, Objectivo objectivo) {
+    final size = MediaQuery.of(context).size;
+
     return showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
+      showDragHandle: true,
+      constraints: BoxConstraints.expand(
+        height: size.height * 0.8,
+      ),
       builder: (context) => MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -47,7 +52,6 @@ class AdicionarFundosSheet extends HookWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(

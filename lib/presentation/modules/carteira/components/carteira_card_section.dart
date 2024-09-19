@@ -79,7 +79,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
         id: 'geral',
         builder: (c) {
           return SizedBox(
-            height: size.height * .25,
+            height: size.height * (size.height < 600 ? .35 : .25),
             child: BlocBuilder<ContasCubit, ContasState>(
               bloc: context.read<ContasCubit>()..getContas(),
               buildWhen: (previous, current) =>

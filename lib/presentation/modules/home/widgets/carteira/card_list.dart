@@ -26,6 +26,8 @@ class _CardListWidgetState extends State<CardListWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    print(size);
+
     return MultiBlocListener(
       listeners: [
         BlocListener<ContaMostrarNaTelaInicialCubit,
@@ -86,7 +88,7 @@ class _CardListWidgetState extends State<CardListWidget> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: size.height * .25,
+                  height: size.height * (size.height < 600 ? .35 : .25),
                   child: CarouselView(
                     scrollDirection: Axis.horizontal,
                     shrinkExtent: size.width * .7,

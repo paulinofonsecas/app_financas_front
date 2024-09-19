@@ -70,49 +70,51 @@ class ListaObjectivoItem extends StatelessWidget {
                 ),
                 const GutterSmall(),
                 const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton.icon(
-                      onPressed: () {
-                        AdicionarFundosSheet.show(
-                          context,
-                          objectivo,
-                        ).then((value) {
-                          // ignore: use_build_context_synchronously
-                          context.read<ListarObjetivosCubit>().loadData();
-                        });
-                      },
-                      icon: const Icon(Icons.add),
-                      label: const Text(
-                        'Adicionar fundos',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {
+                          AdicionarFundosSheet.show(
+                            context,
+                            objectivo,
+                          ).then((value) {
+                            // ignore: use_build_context_synchronously
+                            context.read<ListarObjetivosCubit>().loadData();
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                        label: const Text(
+                          'Adicionar fundos',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    TextButton.icon(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(CreateObjectivoPage.route(
-                          objectivo: objectivo,
-                        ))
-                            .then((value) {
-                          // ignore: use_build_context_synchronously
-                          context.read<ListarObjetivosCubit>().loadData();
-                        });
-                      },
-                      icon: const Icon(Icons.info_outline),
-                      label: const Text(
-                        'Detalhes',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                      TextButton.icon(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(CreateObjectivoPage.route(
+                            objectivo: objectivo,
+                          ))
+                              .then((value) {
+                            // ignore: use_build_context_synchronously
+                            context.read<ListarObjetivosCubit>().loadData();
+                          });
+                        },
+                        icon: const Icon(Icons.info_outline),
+                        label: const Text(
+                          'Detalhes',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),

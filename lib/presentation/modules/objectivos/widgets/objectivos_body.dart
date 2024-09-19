@@ -12,12 +12,6 @@ class ObjectivosBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          ListaObjectivos(),
-        ],
-      ),
-    );
+    return const ListaObjectivos();
   }
 }
