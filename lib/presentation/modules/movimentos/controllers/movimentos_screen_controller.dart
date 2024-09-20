@@ -1,6 +1,7 @@
 import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,9 +17,9 @@ class MovimentoScreenController extends GetxController {
 
   @override
   void onInit() {
-    service = Get.find();
+    service = getIt();
     pagingController = PagingController(firstPageKey: 1);
-    date = DateTime.now(); 
+    date = DateTime.now();
 
     pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey);

@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
-
 import 'package:app_financas/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DefaultActionButton extends StatelessWidget {
   const DefaultActionButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.style,
     this.backgroundColor,
     this.foregroundColor,
-  }) : super(key: key);
+  });
 
   final String text;
   final ButtonStyle? style;
@@ -22,14 +21,15 @@ class DefaultActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      style: style ?? FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding * 2.8,
-          vertical: kDefaultPadding / 1.5,
-        ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-      ),
+      style: style ??
+          FilledButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding * 2.8,
+              vertical: kDefaultPadding / 1.5,
+            ),
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+          ),
       onPressed: onPressed,
       child: Text(
         text,

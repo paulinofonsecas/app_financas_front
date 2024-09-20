@@ -29,6 +29,7 @@ void main() {
   final movimentoProvider = MovimentoProviderMock();
   final planejamentoProvider = DBPlanejamentoProvider(
     movimentoProvider: movimentoProvider,
+    categoriaService: getIt(),
   );
 
   setUp(() {

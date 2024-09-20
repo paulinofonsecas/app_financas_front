@@ -2,9 +2,8 @@
 import 'dart:convert';
 
 import 'package:app_financas/core/domain/entitys/banco.dart';
-import 'package:flutter/material.dart';
-
 import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
+import 'package:flutter/material.dart';
 
 class Conta {
   final int id;
@@ -39,10 +38,10 @@ class Conta {
 
   factory Conta.fake({
     int id = 0,
-    String nome = 'Conta fake',
-    double saldo = 0.0,
-    double saldoicial = 0.0,
-    String descricao = 'Conta fake',
+    String nome = 'Poupanças',
+    double saldo = 38600.0,
+    double saldoicial = 38600.0,
+    String descricao = 'Conta de poupanças',
     int totalDespesas = 0,
     int totalReceitas = 0,
     Color color = Colors.blue,

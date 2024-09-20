@@ -1,0 +1,117 @@
+import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
+import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/registar_transacao.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:get/get.dart';
+
+class CustomFAB extends StatelessWidget {
+  const CustomFAB({super.key});
+
+  void cloused() {
+    Get.find<HomePageController>().update(['geral']);
+    Get.find<CarteiraPageController>().update(['geral']);
+    Get.back(closeOverlays: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandableFab(
+      type: ExpandableFabType.up,
+      pos: ExpandableFabPos.center,
+      distance: 60,
+      overlayStyle: ExpandableFabOverlayStyle(
+        color: Colors.black.withOpacity(0.6),
+        blur: 4,
+      ),
+      children: [
+        CustomFABItem(
+          title: 'Saída',
+          icon: Icons.arrow_downward,
+          color: Colors.red,
+          onTap: () {
+            Get.to(
+              const RegistarTransacaoPage(
+                movimentoType: 2,
+              ),
+            )?.then(
+              (value) {
+                cloused();
+              },
+            );
+          },
+        ),
+        CustomFABItem(
+          title: 'Entrada',
+          icon: Icons.arrow_upward,
+          color: Colors.green,
+          onTap: () {
+            Get.to(
+              const RegistarTransacaoPage(
+                movimentoType: 1,
+              ),
+            )?.then(
+              (value) {
+                cloused();
+              },
+            );
+          },
+        ),
+        CustomFABItem(
+          title: 'Objectivos',
+          icon: Icons.radar,
+          color: Colors.orange[700]!,
+          onTap: () {},
+        ),
+        CustomFABItem(
+          title: 'Transferências',
+          icon: Icons.radar,
+          color: Colors.blue[700]!,
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class CustomFABItem extends StatelessWidget {
+  const CustomFABItem({
+    super.key,
+    this.title,
+    required this.icon,
+    required this.color,
+    this.onTap,
+  });
+
+  final String? title;
+  final IconData icon;
+  final Color color;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (title != null)
+          Text(
+            title!,
+            style: context.textTheme.bodyLarge!.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        if (title != null) const GutterSmall(),
+        FloatingActionButton.small(
+          backgroundColor: color,
+          heroTag: null,
+          onPressed: onTap,
+          child: Icon(icon),
+        ),
+      ],
+    );
+  }
+}

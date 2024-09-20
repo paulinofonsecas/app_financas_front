@@ -1,5 +1,3 @@
-import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
-import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
@@ -7,7 +5,10 @@ import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +42,9 @@ class EditTransacaoController extends GetxController {
 
   @override
   void onInit() {
-    movimentoService = Get.find();
+    movimentoService = getIt();
     setupConfiguration = Get.find();
-    categoriaService = Get.find();
+    categoriaService = getIt();
 
     descricaoTextController = TextEditingController(text: movimento.descricao);
     dateTextController = TextEditingController(text: getSelectedDate());

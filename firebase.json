@@ -1,16 +1,36 @@
 {
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+    "hosting": {
+        "public": "build/web",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    },
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "kzgest",
+                    "appId": "1:307729695573:android:cb77c563d66fe87713a5dc",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "kzgest",
+                    "configurations": {
+                        "android": "1:307729695573:android:842a8f0b4d1de87813a5dc",
+                        "web": "1:307729695573:web:db733039e0fb299f13a5dc"
+                    }
+                }
+            }
+        }
+    }
 }

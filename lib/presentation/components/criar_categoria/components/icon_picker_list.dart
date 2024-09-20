@@ -1,57 +1,81 @@
+import 'package:app_financas/presentation/components/criar_categoria/cubit/color_field_cubit.dart';
+import 'package:app_financas/presentation/components/criar_categoria/cubit/icon_field_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:get/get.dart';
 
-import '../controllers/criar_categoria_controller.dart';
 import 'icon_item_comp.dart';
 import 'select_outros_icons_comp.dart';
 
-class IconPickerList extends StatelessWidget {
+class IconPickerList extends StatefulWidget {
   const IconPickerList({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var controller = Get.find<CriarCategoriaController>();
+  State<IconPickerList> createState() => _IconPickerListState();
+}
 
-    return GetBuilder(
-      init: controller,
-      id: 'icon',
-      builder: (context) {
-        return Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconItemComponent(
-              color: controller.selectedColor,
-              isSelected: controller.selectedIconIndex == 0,
-              icon: controller.icons[0],
-              onTap: () {
-                controller.setSelectedIconIndex(0);
-              },
-            ),
-            const Gutter(),
-            IconItemComponent(
-              color: controller.selectedColor,
-              isSelected: controller.selectedIconIndex == 1,
-              icon: controller.icons[1],
-              onTap: () {
-                controller.setSelectedIconIndex(1);
-              },
-            ),
-            const Gutter(),
-            IconItemComponent(
-              color: controller.selectedColor,
-              isSelected: controller.selectedIconIndex == 2,
-              icon: controller.icons[2],
-              onTap: () {
-                controller.setSelectedIconIndex(2);
-              },
-            ),
-            const Gutter(),
-            const Expanded(child: SelectOutrosIconsComponent()),
-            const GutterLarge(),
-          ],
-        );
+class _IconPickerListState extends State<IconPickerList> {
+  var selectedIconIndex = 0;
+  final icons = [
+    Icons.credit_card,
+    Icons.attach_money,
+    Icons.pie_chart,
+    Icons.savings,
+    Icons.monetization_on,
+    Icons.receipt_long,
+    Icons.shopping_cart,
+  ];
+
+  @override
+  void initState() {
+    icons.remove(context.read<IconFieldCubit>().state.icon);
+    icons.insert(0, context.read<IconFieldCubit>().state.icon);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<IconFieldCubit>();
+
+    return BlocListener<IconFieldCubit, IconFieldState>(
+      listener: (context, state) {
+        if (state is IconFieldSelected) {
+          if (!icons.contains(state.icon)) {
+            icons.removeAt(0);
+            icons.insert(0, state.icon);
+          }
+          selectedIconIndex = icons.indexOf(state.icon);
+          setState(() {});
+        }
       },
+      child: Column(
+        children: [
+          FittedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: icons
+                  .map(
+                    (icon) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: IconItemComponent(
+                        color: context.watch<ColorFieldCubit>().state.color,
+                        isSelected: icons.indexOf(icon) == selectedIconIndex,
+                        icon: icon,
+                        onTap: () {
+                          cubit.setSelectedIcon(icon);
+                          selectedIconIndex = icons.indexOf(icon);
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          const Gutter(),
+          const SelectOutrosIconsComponent(),
+        ],
+      ),
     );
   }
 }

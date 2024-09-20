@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -34,8 +35,8 @@ class EstatisticasPageController extends GetxController
 
   @override
   void onInit() {
-    movimentoService = Get.find();
-    categoriaService = Get.find();
+    movimentoService = getIt();
+    categoriaService = getIt();
     periodoMes.value = DateTime.now().month;
 
     periodoId = 1;

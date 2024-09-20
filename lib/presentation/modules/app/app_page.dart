@@ -1,32 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/presentation/bloc/app/app_bloc.dart';
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/carteira/cubit/change_conta_cubit.dart';
-import 'package:app_financas/presentation/modules/carteira/cubit/change_tipo_movimento_cubit.dart';
-import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
-import 'package:app_financas/presentation/modules/carteira/cubit/movimentos_by_conta_cubit.dart';
-import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
-import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
-import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-
-import 'package:app_financas/presentation/components/escolher_tipo_movimento.dart';
+import 'package:app_financas/app/bloc/app_bloc.dart';
 import 'package:app_financas/presentation/components/my_drawer.dart';
+import 'package:app_financas/presentation/modules/app/widgets/bottom_nav_widget.dart';
+import 'package:app_financas/presentation/modules/app/widgets/custom_fab.dart';
 import 'package:app_financas/presentation/modules/carteira/carteira_page.dart';
-import 'package:app_financas/presentation/modules/carteira/controllers/carteira_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/home_page.dart';
 import 'package:app_financas/presentation/modules/setting/setting_page.dart';
-import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:get/get.dart';
 
 import '../estatisticas/estatisticas_page.dart';
-import '../home/controllers/home_page_controller.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
+
+  static Route<dynamic> route() {
+    return MaterialPageRoute<dynamic>(builder: (_) => const AppPage());
+  }
 
   @override
   State<AppPage> createState() => _AppPageState();
@@ -43,37 +35,8 @@ class _AppPageState extends State<AppPage> {
   @override
   void initState() {
     telas = [
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => getIt<HomePageCubit>(),
-          ),
-          BlocProvider(
-            create: (context) => ListMovimentosCubit(),
-          ),
-          BlocProvider(
-            create: (context) => ShowMoneyCubit(),
-          ),
-        ],
-        child: const HomePage(),
-      ),
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (c) => ContasCubit(),
-          ),
-          BlocProvider(
-            create: (context) => getIt<MovimentosByContaCubit>(),
-          ),
-          BlocProvider(
-            create: (context) => getIt<ChangeContaCubit>(),
-          ),
-          BlocProvider(
-            create: (context) => getIt<ChangeTipoMovimentoCubit>(),
-          ),
-        ],
-        child: const CarteiraPage(),
-      ),
+      const HomePage(),
+      const CarteiraPage(),
       const EstatisticasPage(),
       const SettingPage(),
     ];
@@ -87,45 +50,21 @@ class _AppPageState extends State<AppPage> {
       buildWhen: (previous, current) {
         return previous.bottomNavIndex != current.bottomNavIndex;
       },
-      builder: (context, state) {
+      builder: (context, navBarState) {
         return Scaffold(
           backgroundColor: context.theme.colorScheme.surface,
           drawer: const MyDrawer(),
           body: SafeArea(
             child: IndexedStack(
-              index: state.bottomNavIndex,
+              index: navBarState.bottomNavIndex,
               children: telas,
             ),
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: canShowFAB(state)
-              ? FloatingActionButton(
-                  onPressed: () {
-                    customShowModalBottomSheet(
-                      context,
-                      isScrollControlled: false,
-                      constraints: const BoxConstraints.tightFor(),
-                      child: BottomEscolherTipoMovimento(
-                        cloused: () {
-                          Get.find<HomePageController>().update(['geral']);
-                          Get.find<CarteiraPageController>().update(['geral']);
-                          Get.back(closeOverlays: true);
-                          setState(() {});
-                        },
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    CupertinoIcons.add,
-                    color: Theme.of(context)
-                        .floatingActionButtonTheme
-                        .foregroundColor,
-                  ),
-                )
-              : null,
+          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButton:
+              canShowFAB(navBarState) ? const CustomFAB() : null,
           bottomNavigationBar: BottomNavBar(
-            index: state.bottomNavIndex,
+            index: navBarState.bottomNavIndex,
             onTap: (index) {
               context.read<AppBloc>().add(AppChangeBottomNavIndexEvent(index));
             },
@@ -137,53 +76,5 @@ class _AppPageState extends State<AppPage> {
 
   bool canShowFAB(AppState state) {
     return (state.bottomNavIndex == 0 || state.bottomNavIndex == 1);
-  }
-}
-
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    Key? key,
-    required this.index,
-    required this.onTap,
-  }) : super(key: key);
-
-  final int index;
-  final Function(int)? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: index,
-      onTap: onTap,
-      type: BottomNavigationBarType.fixed,
-      useLegacyColorScheme: false,
-      backgroundColor: Theme.of(context).bottomAppBarTheme.color,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(
-            CupertinoIcons.home,
-          ),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            FontAwesomeIcons.creditCard,
-          ),
-          label: 'Contas',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            FontAwesomeIcons.chartColumn,
-          ),
-          label: 'Estatisticas',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            FontAwesomeIcons.ellipsis,
-          ),
-          label: 'Mais',
-        ),
-      ],
-    );
   }
 }

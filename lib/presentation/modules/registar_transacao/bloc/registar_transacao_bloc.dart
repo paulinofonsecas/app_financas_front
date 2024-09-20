@@ -6,6 +6,7 @@ import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/campos_mixin.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -112,6 +113,9 @@ class RegistarTransacaoBloc
           'O saldo do cartão é insuficiente para realizar o movimento',
         );
       } else {
+        if (kDebugMode) {
+          print(error.message);
+        }
         showErrorMessage(
           'Erro',
           'Erro ao registrar movimento',

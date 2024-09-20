@@ -180,7 +180,7 @@ class DbMovimentoProvider implements IMovimentoProvider {
 
       return const Right(true);
     } catch (e) {
-      return Left(HttpException('Erro ao salvar movimento'));
+      return Left(HttpException('Erro ao salvar movimento ${e.toString()}'));
     }
   }
 

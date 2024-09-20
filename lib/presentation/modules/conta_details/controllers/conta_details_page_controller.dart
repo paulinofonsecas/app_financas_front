@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
 import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -23,8 +24,8 @@ class ContaDetailsPageController extends GetxController {
 
   @override
   void onInit() {
-    contaService = Get.find();
-    movimentoService = Get.find();
+    contaService = getIt();
+    movimentoService = getIt();
     pagingController = PagingController(firstPageKey: 1);
 
     pagingController.addPageRequestListener((pageKey) {

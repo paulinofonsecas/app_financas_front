@@ -3,7 +3,9 @@
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/app/app_page.dart';
+import 'package:app_financas/presentation/modules/on_boarding/view/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,8 +19,8 @@ class SplashPageController extends GetxController {
 
   @override
   void onInit() {
-    categoriaService = Get.find();
-    contaService = Get.find();
+    categoriaService = getIt();
+    contaService = getIt();
 
     super.onInit();
   }
@@ -47,7 +49,7 @@ class SplashPageController extends GetxController {
 
   Future? _goToHomePage(SetupConfiguration setupConfig) {
     Get.replace(setupConfig);
-    return Get.off(() => const AppPage());
+    return Get.off(() => const OnBoardingPage());
   }
 
   void showErrorSnackBar() {

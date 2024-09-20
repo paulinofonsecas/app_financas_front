@@ -66,24 +66,33 @@ class _CreatePlanejamentoBodyState extends State<CreatePlanejamentoBody> {
           },
         ),
       ],
-      child: Column(
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          CreatePlanejamentoStepper(activeStep2: activeStep),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: IndexedStack(
-                index: activeStep,
-                sizing: StackFit.expand,
-                children: _stepScreens,
-              ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                CreatePlanejamentoStepper(activeStep2: activeStep),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  child: IndexedStack(
+                    index: activeStep,
+                    // sizing: StackFit.expand,
+                    children: _stepScreens,
+                  ),
+                ),
+              ],
             ),
           ),
           if (context.watch<CreatePlanejamentoBloc>().state
                   is CreateNewPlanejamentoInitial ||
               context.watch<CreatePlanejamentoBloc>().state
                   is CreateNewPlanejamentoError)
-            _ControlButtons(activeStep: activeStep),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _ControlButtons(activeStep: activeStep),
+            ),
         ],
       ),
     );

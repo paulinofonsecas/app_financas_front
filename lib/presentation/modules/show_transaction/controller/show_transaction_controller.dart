@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/core/domain/entitys/sertup_configuration.dart';
 import 'package:app_financas/core/domain/services/i_categoria_service.dart';
 import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class ShowTransactionController extends GetxController {
 
   @override
   onInit() {
-    categoriaService = Get.find<ICategoriaService>();
+    categoriaService = getIt();
     setupConfiguration = Get.find<SetupConfiguration>();
     super.onInit();
   }

@@ -1,9 +1,10 @@
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/components/empty_widget.dart';
 import 'package:app_financas/presentation/modules/home/abbas/movimentos_at_home_page.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:app_financas/presentation/modules/movimentos/movimentos_screen.dart';
-import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,6 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Column(
         children: [
-          const SizedBox(height: kDefaultPadding * 2),
           BlocBuilder<ListMovimentosCubit, LastMovimentosState>(
             bloc: context.read<ListMovimentosCubit>()..getLastMovimentos(),
             builder: (context, state) {
@@ -33,7 +33,7 @@ class HomeScreenMovimentosWidget extends StatelessWidget {
               }
 
               if (state is LastMovimentosEmpty) {
-                return const Text('Sem movimentos para apresentar');
+                return const EmptyWidget(title: 'Nenhum movimento cadastrado.');
               }
 
               if (state is LastMovimentosSuccess) {

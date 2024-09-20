@@ -58,27 +58,29 @@ class _GlobalSearchCategoriaBodyState extends State<GlobalSearchCategoriaBody> {
           ),
         ),
         const Gutter(),
-        Expanded(
-          child:
-              BlocBuilder<SearchListCategoriasCubit, SearchListCategoriasState>(
-            bloc: context.read<SearchListCategoriasCubit>(),
-            builder: (context, state) {
-              if (state is SearchListCategoriasLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+        BlocBuilder<SearchListCategoriasCubit, SearchListCategoriasState>(
+          bloc: context.read<SearchListCategoriasCubit>(),
+          builder: (context, state) {
+            if (state is SearchListCategoriasLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-              if (state is SearchListCategoriasError) {
-                return const Center(
-                  child: Text('Ups, algo deu errado'),
-                );
-              }
+            if (state is SearchListCategoriasError) {
+              return const Center(
+                child: Text('Ups, algo deu errado'),
+              );
+            }
 
-              if (state is SearchListCategoriasLoaded) {
-                return SearchableList<Categoria>(
+            if (state is SearchListCategoriasLoaded) {
+              return AspectRatio(
+                aspectRatio: 2 / 3,
+                child: SearchableList<Categoria>(
                   searchTextController: controller,
                   initialList: state.categorias,
+                  shrinkWrap: false,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (Categoria categoria) => CategoriaItem(
                     onTap: () {
                       controller.clear();
@@ -101,12 +103,12 @@ class _GlobalSearchCategoriaBodyState extends State<GlobalSearchCategoriaBody> {
                     hintText: 'Pesquisar categorias',
                     fillColor: Colors.white,
                   ),
-                );
-              }
+                ),
+              );
+            }
 
-              return const Placeholder();
-            },
-          ),
+            return const Placeholder();
+          },
         ),
       ],
     );

@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/components/banco_img_widget.dart';
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
@@ -6,10 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/components/banco_img_widget.dart';
 
 class ContaListItemComponent extends StatelessWidget {
   const ContaListItemComponent({super.key});
@@ -33,31 +32,34 @@ class ContaListItemView extends StatelessWidget {
           context.read<SelectContaCubit>(),
         );
       },
-      child: Row(
-        children: [
-          BlocBuilder<SelectContaCubit, SelectContaState>(
-            bloc: context.read<SelectContaCubit>()..selectDefaultConta(),
-            builder: (context, state) {
-              if (state is SelectContaLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: [
+            BlocBuilder<SelectContaCubit, SelectContaState>(
+              bloc: context.read<SelectContaCubit>()..selectDefaultConta(),
+              builder: (context, state) {
+                if (state is SelectContaLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-              if (state is SelectContaError) {
-                return Text('//${state.errorMessage}');
-              }
+                if (state is SelectContaError) {
+                  return Text('//${state.errorMessage}');
+                }
 
-              if (state is SelectContaSuccess) {
-                return _ShowContaWidget(conta: state.conta);
-              }
+                if (state is SelectContaSuccess) {
+                  return _ShowContaWidget(conta: state.conta);
+                }
 
-              return const SizedBox();
-            },
-          ),
-          const Spacer(),
-          const Icon(Icons.chevron_right),
-        ],
+                return const SizedBox();
+              },
+            ),
+            const Spacer(),
+            const Icon(Icons.chevron_right),
+          ],
+        ),
       ),
     );
   }

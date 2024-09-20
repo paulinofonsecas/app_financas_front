@@ -1,6 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/planejamento.dart';
-import 'package:app_financas/presentation/global/duet_info.dart';
+import 'package:app_financas/presentation/components/duet_info.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/widgets/steps/discribuicao_step/item_distribuicao_widget.dart';

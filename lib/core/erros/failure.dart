@@ -3,6 +3,14 @@ class Failure implements Exception {
   Failure(this.message);
 }
 
+final class ObjectivoNaoEncontrado extends Failure {
+  ObjectivoNaoEncontrado(super.message);
+}
+
+final class ErroAoCriarObjectivo extends Failure {
+  ErroAoCriarObjectivo(super.message);
+}
+
 final class NaoExistePlanejamentoAtual extends Failure {
   NaoExistePlanejamentoAtual(super.message);
 }

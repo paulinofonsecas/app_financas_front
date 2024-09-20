@@ -1,17 +1,16 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'dart:developer';
-
-import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/home/abbas/components/abba_header.dart';
+import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/cubit/show_planejamento_in_home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/view/movimentos_pendentes_abba.dart';
+import 'package:app_financas/presentation/modules/home/widgets/carteira/card_list.dart';
 import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/funcionalidades_widget.dart';
-import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
-import 'package:app_financas/presentation/modules/planejamento/view/planejamento_page.dart';
-import 'package:app_financas/presentation/modules/planejamento/widgets/info_planejamento_section.dart';
+import 'package:app_financas/presentation/modules/home/widgets/planejamento_widget.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/last_movimentos_cubit.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -41,100 +40,58 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     controller.setContext(context);
 
-    return BlocProvider(
-      create: (context) => ShowPlanejamentoInHomePageCubit(getIt()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ShowPlanejamentoInHomePageCubit(getIt()),
+        ),
+        BlocProvider(
+          create: (context) => getIt<HomePageCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => ListMovimentosCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ShowMoneyCubit(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ContasCubit>(),
+        ),
+      ],
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: context.theme.colorScheme.surface,
-          body: SafeArea(
-            bottom: false,
-            child: GetBuilder(
-              init: controller,
-              id: 'geral',
-              builder: (context) {
-                return ListView(
-                  children: [
-                    ActionBar(),
-                    Gutter(),
-                    SaldoDisponivelCardWidget(),
-                    Gutter(),
-                    FuncionalidadesWidget(),
-                    Gutter(),
-                    _PlanejamentoWidget(),
-                    MovimentosPendentesAbba(),
-                    Gutter(),
-                    HomeScreenMovimentosWidget(),
-                  ],
-                );
-              },
+          body: RefreshIndicator(
+            onRefresh: () async {
+              setState(() {});
+            },
+            child: SafeArea(
+              bottom: false,
+              child: GetBuilder(
+                init: controller,
+                id: 'geral',
+                builder: (context) {
+                  return ListView(
+                    children: [
+                      ActionBar(),
+                      SaldoDisponivelCardWidget(),
+                      Gutter(),
+                      CardListWidget(),
+                      Gutter(),
+                      FuncionalidadesWidget(),
+                      Gutter(),
+                      PlanejamentoWidget(),
+                      MovimentosPendentesAbba(),
+                      Gutter(),
+                      HomeScreenMovimentosWidget(),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         );
       }),
-    );
-  }
-}
-
-class _PlanejamentoWidget extends StatelessWidget {
-  const _PlanejamentoWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: BlocListener<PlanejamentoAtualCubit, PlanejamentoAtualState>(
-        bloc: getIt<PlanejamentoAtualCubit>(),
-        listener: (context, state) {
-          if (state is PlanejamentoAtualSuccess ||
-              state is PlanejamentoAtualEmpty) {
-            context.read<ShowPlanejamentoInHomePageCubit>().getPlanejamento();
-          }
-        },
-        child: BlocBuilder<ShowPlanejamentoInHomePageCubit,
-            ShowPlanejamentoInHomePageState>(
-          bloc: context.read<ShowPlanejamentoInHomePageCubit>()
-            ..getPlanejamento(),
-          builder: (context, state) {
-            if (state is ShowPlanejamentoInHomePageLoading) {
-              return Center(child: const CircularProgressIndicator());
-            }
-
-            if (state is ShowPlanejamentoInHomePageEmpty) {
-              return SizedBox();
-            }
-
-            if (state is ShowPlanejamentoInHomePageError) {
-              log(state.message);
-              return SizedBox();
-            }
-
-            if (state is ShowPlanejamentoInHomePageSuccess) {
-              return Column(
-                children: [
-                  Gutter(),
-                  AbbaHeader(
-                    title: 'Planejamento',
-                    verMaisAction: () {
-                      Navigator.of(context).push(PlanejamentoPage.route());
-                    },
-                  ),
-                  Gutter(),
-                  InkWell(
-                    onTap: () =>
-                        Navigator.of(context).push(PlanejamentoPage.route()),
-                    child: InfoPlanejamentoSection(
-                      planejamento: state.planejamento,
-                    ),
-                  ),
-                  Gutter(),
-                ],
-              );
-            }
-
-            return const SizedBox();
-          },
-        ),
-      ),
     );
   }
 }
