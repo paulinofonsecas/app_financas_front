@@ -26,7 +26,9 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     }
   }
 
-  FutureOr<void> setPrimeiraVez() async {
+  Future<void> setPrimeiraVez() async {
+    emit(OnBoardingLoading());
+
     try {
       final Box<bool> box = await Hive.openBox('onBoarding');
       await box.put('primeiraVez', true);

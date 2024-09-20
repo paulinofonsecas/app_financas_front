@@ -1,4 +1,3 @@
-import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:app_financas/presentation/modules/on_boarding/cubit/on_boarding_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -40,16 +39,26 @@ class OnBoardingBody extends StatelessWidget {
               ),
             ),
             const Spacer(flex: 3),
-            FilledButton.icon(
-              onPressed: () {
-                context.read<OnBoardingCubit>().setPrimeiraVez();
+            BlocBuilder<OnBoardingCubit, OnBoardingState>(
+              builder: (context, state) {
+                if (state is OnBoardingLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return FilledButton.icon(
+                  onPressed: () {
+                    context.read<OnBoardingCubit>().setPrimeiraVez();
+                  },
+                  iconAlignment: IconAlignment.end,
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                  ),
+                  label: const Text("Continuar"),
+                );
               },
-              iconAlignment: IconAlignment.end,
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
-              ),
-              label: const Text("Continuar"),
             ),
             const Spacer(),
           ],

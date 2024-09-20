@@ -49,7 +49,7 @@ class SplashPageController extends GetxController {
 
   Future? _goToHomePage(SetupConfiguration setupConfig) {
     Get.replace(setupConfig);
-    return Get.off(() => const OnBoardingPage());
+    return Get.off(() => const OnBoardingPage(), transition: Transition.fadeIn);
   }
 
   void showErrorSnackBar() {
