@@ -1,9 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'firebase_options.dart';
-
 import 'package:app_financas/app/app.dart';
 import 'package:app_financas/app/bloc/app_bloc.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
@@ -38,7 +34,6 @@ Future<void> main() async {
 
   // PlatformDispatcher.instance.onError = (error, stack) {
   //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  //   return true;
   // };
 
   // if (kDebugMode) {

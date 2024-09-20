@@ -53,16 +53,17 @@ class _TipoMovimentosWidgetState extends State<TipoMovimentosWidget> {
             });
           },
         ),
-        const SizedBox(width: 10),
-        FilterChip(
-          selected: filter == SelectedType.ambos,
-          label: const Text('Ambos'),
-          onSelected: (value) {
-            setState(() {
-              filter = SelectedType.ambos;
-            });
-          },
-        ),
+        //! fix-me
+        // const SizedBox(width: 10),
+        // FilterChip(
+        //   selected: filter == SelectedType.ambos,
+        //   label: const Text('Ambos'),
+        //   onSelected: (value) {
+        //     setState(() {
+        //       filter = SelectedType.ambos;
+        //     });
+        //   },
+        // ),
       ],
     );
   }
