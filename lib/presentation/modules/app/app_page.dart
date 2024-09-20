@@ -16,6 +16,10 @@ import '../estatisticas/estatisticas_page.dart';
 class AppPage extends StatefulWidget {
   const AppPage({super.key});
 
+  static Route<dynamic> route() {
+    return MaterialPageRoute<dynamic>(builder: (_) => const AppPage());
+  }
+
   @override
   State<AppPage> createState() => _AppPageState();
 }
