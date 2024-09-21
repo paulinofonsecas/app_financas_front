@@ -1,10 +1,8 @@
-import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
 
 import '../cubit/select_categoria_cubit.dart';
 
@@ -86,30 +84,24 @@ class _CategoriaItemWidget extends StatelessWidget {
       },
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding / 2,
-              vertical: kDefaultPadding / 3,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(90),
-              border: Border.all(
-                color: categoria.color ?? Colors.white,
-                width: 1,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  categoria.icon ?? Icons.category_outlined,
-                  size: 18,
-                  color: categoria.color,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Categoria',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
-                const GutterSmall(),
-                Text(categoria.name),
-              ],
-            ),
+              ),
+              Text(
+                categoria.name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
           const Spacer(),
           const Icon(Icons.chevron_right),

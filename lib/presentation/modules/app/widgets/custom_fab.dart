@@ -41,6 +41,19 @@ class _CustomFABState extends State<CustomFAB> {
         color: Colors.black.withOpacity(0.6),
         blur: 4,
       ),
+      openButtonBuilder: FloatingActionButtonBuilder(
+        size: 56,
+        builder: (
+          BuildContext context,
+          void Function()? onPressed,
+          Animation<double> progress,
+        ) {
+          return FloatingActionButton(
+            onPressed: onPressed,
+            child: const Icon(Icons.add),
+          );
+        },
+      ),
       children: [
         CustomFABItem(
           title: 'Saída',

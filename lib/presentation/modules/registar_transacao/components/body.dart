@@ -3,6 +3,7 @@ import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,53 +56,69 @@ class _MainContentWidget extends StatelessWidget {
           top: Radius.circular(30),
         ),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          GutterLarge(),
+          const GutterLarge(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ConfirmarTransacaoWidget(),
-                GutterSmall(),
-                MyDivider(),
-                GutterSmall(),
-                WithIcon(
+                const _ConfirmarTransacaoWidget(),
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterSmall(),
+                const WithIcon(
                   icon: Icons.calendar_today_outlined,
                   child: SelectDateComponent(),
                 ),
-                GutterSmall(),
-                MyDivider(),
-                GutterSmall(),
-                WithIcon(
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterSmall(),
+                const WithIcon(
                   icon: Icons.create_rounded,
                   child: _DecricaoTestWidget(),
                 ),
-                GutterSmall(),
-                MyDivider(),
-                Gutter(),
-                WithIcon(
-                  icon: FontAwesomeIcons.layerGroup,
-                  child: CategoryListItemComponent(),
+                const GutterSmall(),
+                const MyDivider(),
+                const Gutter(),
+                BlocBuilder<SelectCategoriaCubit, SelectCategoriaState>(
+                  builder: (context, state) {
+                    late IconData icon;
+
+                    if (state is SelectCategoriaChanged) {
+                      icon =
+                          state.categoria.icon ?? FontAwesomeIcons.layerGroup;
+                    } else {
+                      icon = FontAwesomeIcons.layerGroup;
+                    }
+
+                    return WithIcon(
+                      icon: icon,
+                      color: state is SelectCategoriaChanged
+                          ? state.categoria.color
+                          : null,
+                      child: const CategoryListItemComponent(),
+                    );
+                  },
                 ),
-                Gutter(),
-                MyDivider(),
-                Gutter(),
-                WithIcon(
+                const Gutter(),
+                const MyDivider(),
+                const Gutter(),
+                const WithIcon(
                   icon: FontAwesomeIcons.creditCard,
                   child: ContaListItemComponent(),
                 ),
-                Gutter(),
-                MyDivider(),
-                GutterSmall(),
-                _ObsWidget(), // Observações
-                GutterSmall(),
-                MyDivider(),
-                GutterLarge(),
+                const Gutter(),
+                const MyDivider(),
+                const GutterSmall(),
+                const _ObsWidget(), // Observações
+                const GutterSmall(),
+                const MyDivider(),
+                const GutterLarge(),
               ],
             ),
           ),
