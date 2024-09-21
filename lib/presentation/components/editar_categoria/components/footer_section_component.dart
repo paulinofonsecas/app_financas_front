@@ -1,5 +1,5 @@
-import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,24 +13,12 @@ class FooterSectionComponent extends StatelessWidget {
     var controller = Get.find<EditarCategoriaController>();
     return Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        OutlinedButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          style: OutlinedButton.styleFrom(
-            minimumSize: Size(Get.size.width / 2.5, 50),
-            padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding * 3,
-              vertical: kDefaultPadding,
-            ),
-            side: const BorderSide(
-              color: Colors.purple,
-              width: 2,
-            ),
-            foregroundColor: Colors.purple,
-          ),
           child: Text(
             'Cancelar',
             style: GoogleFonts.inter(
@@ -39,17 +27,13 @@ class FooterSectionComponent extends StatelessWidget {
             ),
           ),
         ),
-        ElevatedButton(
+        const Gutter(),
+        FilledButton(
           onPressed: () {
             controller.editarCategoria().then((value) {
               Navigator.of(context).pop();
             });
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.purple,
-            foregroundColor: Colors.white,
-            minimumSize: Size(Get.size.width / 2.5, 50),
-          ),
           child: Text(
             'salvar',
             style: GoogleFonts.inter(

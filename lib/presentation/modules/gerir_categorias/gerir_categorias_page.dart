@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 
 import '../../components/criar_categoria/criar_categoria_component.dart';
 import 'components/header_comp.dart';
@@ -14,9 +13,9 @@ import 'controllers/gerir_categoria_controller.dart';
 
 class GerirCategoriasPage extends StatefulWidget {
   const GerirCategoriasPage({
-    Key? key,
+    super.key,
     required this.tipoCategoria,
-  }) : super(key: key);
+  });
 
   final TipoCategoria tipoCategoria;
 
@@ -46,7 +45,7 @@ class _GerirCategoriasPageState extends State<GerirCategoriasPage> {
               ? kVerdeAccentColor
               : kVermelhaColor,
           body: const SafeArea(
-        bottom: false,
+            bottom: false,
             child: Column(
               children: [
                 HeaderComp(),
