@@ -1,14 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/components/banco_img_widget.dart';
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gutter/flutter_gutter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContaListItemComponent extends StatelessWidget {
   const ContaListItemComponent({super.key});
@@ -74,31 +70,24 @@ class _ShowContaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding / 2,
-        vertical: kDefaultPadding / 3,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(90),
-        border: Border.all(
-          color: conta.color,
-          width: 1,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Conta',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          conta.banco.imgAsset != null && conta.banco.imgAsset!.isNotEmpty
-              ? BancoImgCircularWidget(conta: conta)
-              : const Icon(
-                  FontAwesomeIcons.buildingColumns,
-                  size: 18,
-                ),
-          const GutterSmall(),
-          Text(conta.nome),
-        ],
-      ),
+        Text(
+          conta.nome,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }

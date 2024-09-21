@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/presentation/components/banco_img_widget.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
+import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/select_date_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
@@ -108,9 +110,25 @@ class _MainContentWidget extends StatelessWidget {
                 const Gutter(),
                 const MyDivider(),
                 const Gutter(),
-                const WithIcon(
-                  icon: FontAwesomeIcons.creditCard,
-                  child: ContaListItemComponent(),
+                BlocBuilder<SelectContaCubit, SelectContaState>(
+                  builder: (context, state) {
+                    if (state is SelectContaSuccess &&
+                        state.conta.banco.imgAsset != null &&
+                        state.conta.banco.imgAsset!.isNotEmpty) {
+                      return Row(
+                        children: [
+                          BancoImgCircularWidget(conta: state.conta),
+                          const Gutter(),
+                          const Expanded(child: ContaListItemComponent()),
+                        ],
+                      );
+                    } else {
+                      return const WithIcon(
+                        icon: FontAwesomeIcons.creditCard,
+                        child: ContaListItemComponent(),
+                      );
+                    }
+                  },
                 ),
                 const Gutter(),
                 const MyDivider(),
