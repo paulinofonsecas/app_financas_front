@@ -1,4 +1,5 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -33,18 +34,38 @@ class RegisterHeader extends StatelessWidget {
                 ? kVerdeColor
                 : kVermelhaColor,
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
-              _CancelarButton(),
-              _SwitchTransactionButton(),
+              const _CancelarButton(),
+              const _SwitchTransactionButton(),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    context
+                        .read<RegistarTransacaoBloc>()
+                        .add(SalvarTransacaoEvent(context));
+                  },
+                  child: Text(
+                    'Salvar',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-          GutterLarge(),
-          ValorTextWidget(),
-          Gutter(),
+          const GutterLarge(),
+          const ValorTextWidget(),
+          const Gutter(),
         ],
       ),
     );
@@ -151,7 +172,7 @@ class _SwitchTransactionButton extends StatelessWidget {
 }
 
 class MoneyTextFormField extends StatefulWidget {
-  const MoneyTextFormField({Key? key}) : super(key: key);
+  const MoneyTextFormField({super.key});
 
   @override
   State<MoneyTextFormField> createState() => _MoneyTextFormFieldState();
@@ -159,7 +180,7 @@ class MoneyTextFormField extends StatefulWidget {
 
 class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
   final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-        NumberFormat.currency(symbol: 'Kz'),
+    NumberFormat.currency(symbol: 'Kz'),
   );
 
   @override

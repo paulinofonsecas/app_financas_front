@@ -1,4 +1,3 @@
-import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,13 +19,9 @@ class DefaultActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
+    return OutlinedButton(
       style: style ??
-          FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding * 2.8,
-              vertical: kDefaultPadding / 1.5,
-            ),
+          OutlinedButton.styleFrom(
             backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
           ),
