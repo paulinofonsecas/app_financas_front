@@ -5,12 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PeriodoPickerWidget extends StatelessWidget {
   const PeriodoPickerWidget({
-    Key? key,
+    super.key,
     this.onLeftTap,
     this.onRightTap,
     this.defaultColor,
     required this.periodoMes,
-  }) : super(key: key);
+  });
 
   final GestureTapCallback? onLeftTap;
   final GestureTapCallback? onRightTap;

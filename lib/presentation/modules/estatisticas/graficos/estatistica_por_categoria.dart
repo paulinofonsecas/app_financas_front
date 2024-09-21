@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:app_financas/constants.dart';
 
 import '../controller/estatisticas_page_controller.dart';
-import '../components/categorie_circle_chart.dart';
-import '../components/categories_bar_chart.dart';
+import '../widgets/categorie_circle_chart.dart';
+import '../widgets/categories_bar_chart.dart';
 
 class EstatisticaPorCategoria extends StatelessWidget {
   const EstatisticaPorCategoria({super.key});
