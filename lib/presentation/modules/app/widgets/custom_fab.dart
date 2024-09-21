@@ -6,8 +6,15 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
-class CustomFAB extends StatelessWidget {
+class CustomFAB extends StatefulWidget {
   const CustomFAB({super.key});
+
+  @override
+  State<CustomFAB> createState() => _CustomFABState();
+}
+
+class _CustomFABState extends State<CustomFAB> {
+  final _key = GlobalKey<ExpandableFabState>();
 
   void cloused() {
     Get.find<HomePageController>().update(['geral']);
@@ -15,9 +22,18 @@ class CustomFAB extends StatelessWidget {
     Get.back(closeOverlays: true);
   }
 
+  void closeFAB() {
+    final state = _key.currentState;
+    if (state != null) {
+      debugPrint('isOpen:${state.isOpen}');
+      state.toggle();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ExpandableFab(
+      key: _key,
       type: ExpandableFabType.up,
       pos: ExpandableFabPos.center,
       distance: 60,
@@ -31,6 +47,7 @@ class CustomFAB extends StatelessWidget {
           icon: Icons.arrow_downward,
           color: Colors.red,
           onTap: () {
+            closeFAB();
             Get.to(
               const RegistarTransacaoPage(
                 movimentoType: 2,
@@ -47,6 +64,7 @@ class CustomFAB extends StatelessWidget {
           icon: Icons.arrow_upward,
           color: Colors.green,
           onTap: () {
+            closeFAB();
             Get.to(
               const RegistarTransacaoPage(
                 movimentoType: 1,
