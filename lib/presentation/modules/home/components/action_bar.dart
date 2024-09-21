@@ -49,7 +49,9 @@ class ActionBar extends StatelessWidget {
                 builder: (context, state) {
                   return IconButton(
                     onPressed: () {
-                      context.read<AppThemeCubit>().toggleTheme();
+                      context
+                          .read<AppThemeCubit>()
+                          .toggleTheme(Theme.of(context).brightness);
                     },
                     icon: Icon(
                       !isDarkMode(context)

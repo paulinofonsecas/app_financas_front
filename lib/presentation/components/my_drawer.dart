@@ -35,7 +35,9 @@ class MyDrawer extends StatelessWidget {
                       : Icons.light_mode,
                 ),
                 onTap: () {
-                  context.read<AppThemeCubit>().toggleTheme();
+                  context
+                      .read<AppThemeCubit>()
+                      .toggleTheme(Theme.of(context).brightness);
                 },
               );
             },
