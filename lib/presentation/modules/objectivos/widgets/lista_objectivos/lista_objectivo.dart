@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/components/empty_widget.dart';
+import 'package:app_financas/presentation/modules/create_objectivo/view/pre_create_objectivo.dart';
 import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:app_financas/presentation/modules/objectivos/widgets/lista_objectivos/lista_objectivo_item.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,29 @@ class ListaObjectivos extends StatelessWidget {
         }
 
         if (state is ListarObjetivosEmpty) {
-          return const Center(
-            child: EmptyWidget(
-              title: 'Os seus objectivos serão exibidos aqui.',
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const EmptyWidget(
+                  title: 'Os seus objectivos serão exibidos aqui.',
+                ),
+                const Gutter(),
+                TextButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      builder: (context) => const PreCreateObjectivo(),
+                    ).then((value) {
+                      // ignore: use_build_context_synchronously
+                      context.read<ListarObjetivosCubit>().loadData();
+                    });
+                  },
+                  child: const Text('Adicionar objectivo'),
+                )
+              ],
             ),
           );
         }
