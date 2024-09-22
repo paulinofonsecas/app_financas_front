@@ -88,6 +88,7 @@ class RegistarTransacaoBloc
     }
 
     var movimento = Movimento.make(
+      id: event.movimento?.id,
       valor: valorTransacao,
       data: data!,
       descricao: descricao,

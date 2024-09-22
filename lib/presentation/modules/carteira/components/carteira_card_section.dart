@@ -66,6 +66,7 @@ class _CarteiraCardSectionState extends State<CarteiraCardSection> {
             }
           },
         ),
+        //! Atualiza em funcao de um novo cadastro
         BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
           listener: (context, state) {
             if (state is RegistarTransacaoSuccess) {

@@ -55,6 +55,7 @@ class _SaldoDisponivelCardWidgetState extends State<SaldoDisponivelCardWidget> {
               }
             },
           ),
+        //! Atualiza em funcao de um novo cadastro
           BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
             listener: (context, state) {
               if (state is RegistarTransacaoSuccess) {

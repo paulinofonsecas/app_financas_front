@@ -1,4 +1,5 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -48,9 +50,16 @@ class RegisterHeader extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
+                    final movimento = Get.isRegistered<Movimento>()
+                        ? Get.find<Movimento>()
+                        : null;
+
                     context
                         .read<RegistarTransacaoBloc>()
-                        .add(SalvarTransacaoEvent(context));
+                        .add(SalvarTransacaoEvent(
+                          context: context,
+                          movimento: movimento,
+                        ));
                   },
                   child: Text(
                     'Salvar',
@@ -188,7 +197,11 @@ class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
     var valorTransacao = context.read<ValorTransacaoCubit>();
 
     return TextFormField(
-      initialValue: _formatter.formatDouble(0),
+      initialValue: _formatter.formatDouble(
+        valorTransacao.state.valor.isNotEmpty
+            ? double.parse(valorTransacao.state.valor)
+            : 0,
+      ),
       onChanged: (v) {
         valorTransacao.changeValorTransacao(
           _formatter.getUnformattedValue().toString(),

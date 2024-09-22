@@ -20,6 +20,7 @@ class MovimentosPendentesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        //! Atualiza em funcao de um novo cadastro
         BlocListener<RegistarTransacaoBloc, RegistarTransacaoState>(
           listener: (context, state) {
             getIt<MovimentosPendentesBloc>()

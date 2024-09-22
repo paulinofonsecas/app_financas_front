@@ -9,7 +9,10 @@ part 'select_categoria_state.dart';
 
 class SelectCategoriaCubit extends Cubit<SelectCategoriaState> {
   late final ICategoriaService _categoriaService;
-  SelectCategoriaCubit() : super(SelectCategoriaInitial()) {
+  SelectCategoriaCubit(Categoria? categoria)
+      : super(categoria == null
+            ? SelectCategoriaInitial()
+            : SelectCategoriaChanged(categoria)) {
     _categoriaService = getIt();
   }
 

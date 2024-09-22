@@ -5,6 +5,7 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
@@ -41,10 +42,13 @@ class BottomCategoryComponent extends StatefulWidget {
       constraints: BoxConstraints.expand(
         height: size.height * 0.8,
       ),
-      builder: (BuildContext context) {
-        return BottomCategoryComponent(
-          tipoCategoria: tipoCategoria,
-          selectedCategoriaId: selectedCategoriaId,
+      builder: (_) {
+        return BlocProvider.value(
+          value: BlocProvider.of<SelectCategoriaCubit>(context),
+          child: BottomCategoryComponent(
+            tipoCategoria: tipoCategoria,
+            selectedCategoriaId: selectedCategoriaId,
+          ),
         );
       },
     );

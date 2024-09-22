@@ -7,7 +7,14 @@ sealed class SelectContaState extends Equatable {
   List<Object> get props => [];
 }
 
-final class SelectContaInitial extends SelectContaState {}
+final class SelectContaInitial extends SelectContaState {
+  const SelectContaInitial(this.contaId);
+
+  final int? contaId;
+
+  @override
+  List<Object> get props => [contaId ?? 0];
+}
 // select default conta
 
 final class SelectContaLoading extends SelectContaState {}

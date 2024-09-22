@@ -1,15 +1,15 @@
-import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
-import 'package:app_financas/presentation/modules/confirmar_transacao/confirmar_transacao_page.dart';
-import 'package:app_financas/presentation/modules/edit_transaction/edit_transaction_page.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/confirmar_transacao/confirmar_transacao_page.dart';
+import 'package:app_financas/presentation/modules/registar_transacao/view/registar_transacao_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'components/expanded_info.dart';
 import 'components/header_info.dart';
 import 'components/info.dart';
 import 'controller/show_transaction_controller.dart';
@@ -50,39 +50,22 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
         child: Padding(
           padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
               HeaderInfo(movimento: controller.movimento),
               const GutterTiny(),
               Divider(color: Colors.grey[100]),
               const GutterTiny(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDescricaoInput(),
-                      const Gutter(),
-                      _buildDataInput(),
-                      const Gutter(),
-                      _buildContaInput(),
-                    ],
-                  ),
-                  const Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildValorInput(),
-                      const Gutter(),
-                      _buildCategoriaInput(),
-                    ],
-                  ),
-                  const SizedBox(),
-                ],
-              ),
+              _buildValorInput(),
+              const Gutter(),
+              _buildDescricaoInput(),
+              const Gutter(),
+              _buildDataInput(),
+              const Gutter(),
+              _buildCategoriaInput(),
+              const Gutter(),
+              _buildContaInput(),
               const Gutter(),
               _buildObservacoesInput(),
               const Spacer(),
@@ -149,11 +132,20 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
     var controller = Get.find<ShowTransactionController>();
     return ElevatedButton(
       onPressed: () {
-        Get.to(EditTransactionPage(
+        Get.to(RegistarTransacaoPage(
           movimentoType: controller.movimento.tipoMovimentoId,
           movimento: controller.movimento,
         ))?.then((value) {
-          if (value != null) {
+          if (value == null) return;
+
+          // transação deletada
+          if (value is bool && value) {
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).pop();
+          }
+
+          // transação editada
+          if (value is Movimento) {
             widget.onEdit?.call();
             controller.updateMovimento(value);
             setState(() {});
@@ -177,12 +169,44 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
 
   dynamic _buildObservacoesInput() {
     var controller = Get.find<ShowTransactionController>();
-    return ExpandedInfo(
-      desc: 'Observações',
-      value: controller.movimento.obsMovimento ?? '',
-      icon: const Icon(
-        Icons.create_sharp,
-      ),
+    // return ExpandedInfo(
+    //   desc: 'Observações',
+    //   value: controller.movimento.obsMovimento ?? '',
+    //   icon: const Icon(
+    //     Icons.create_sharp,
+    //   ),
+    // );
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(
+          Icons.create_sharp,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Observações',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const GutterTiny(),
+              Text(
+                controller.movimento.obsMovimento ?? '',
+                maxLines: 3,
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

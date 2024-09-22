@@ -16,25 +16,26 @@ class CategoryListItemComponent extends StatefulWidget {
 
 class _CategoryListItemComponentState extends State<CategoryListItemComponent> {
   @override
-  void initState() {
-    var isEntrada =
-        context.read<SwitchTransacaoCubit>().state is SwitchTransacaoEntrada;
-    context.read<SelectCategoriaCubit>().selectDefaultCategoria(isEntrada);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocConsumer<SwitchTransacaoCubit, SwitchTransacaoState>(
       listener: (context, state) {
-        var isEntrada = state is SwitchTransacaoEntrada;
-        context.read<SelectCategoriaCubit>().selectDefaultCategoria(isEntrada);
+        context
+            .read<SelectCategoriaCubit>()
+            .selectDefaultCategoria(state is SwitchTransacaoEntrada);
       },
       builder: (_, switchState) {
         return BlocBuilder<SelectCategoriaCubit, SelectCategoriaState>(
           buildWhen: (previous, current) => previous != current,
           builder: (context, state) {
             var isEntrada = switchState is SwitchTransacaoEntrada;
+
+            if (state is SelectCategoriaInitial) {
+              context
+                  .read<SelectCategoriaCubit>()
+                  .selectDefaultCategoria(isEntrada);
+
+              return const SizedBox();
+            }
 
             if (state is SelectCategoriaLoading) {
               return const Center(

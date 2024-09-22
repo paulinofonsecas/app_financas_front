@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'obs_text_state.dart';
 
 class ObsTextCubit extends Cubit<ObsTextState> {
-  ObsTextCubit() : super(const ObsTextInitial(''));
+  ObsTextCubit(String? obsMovimento)
+      : super(ObsTextInitial(obsMovimento ?? ''));
 
   changeText(String v) {
     if (v.isNotEmpty) {

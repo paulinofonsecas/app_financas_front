@@ -117,9 +117,9 @@ mixin CamposMixin {
     Emitter<RegistarTransacaoState> emit,
   ) {
     try {
-      var cubit =
+      var state =
           (context.read<SelectContaCubit>().state as SelectContaSuccess);
-      return cubit.conta;
+      return state.conta;
     } catch (e) {
       return null;
     }
