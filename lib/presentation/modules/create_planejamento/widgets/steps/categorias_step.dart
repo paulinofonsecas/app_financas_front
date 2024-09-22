@@ -80,7 +80,7 @@ class _GlobalSearchCategoriaBodyState extends State<GlobalSearchCategoriaBody> {
                   searchTextController: controller,
                   initialList: state.categorias,
                   shrinkWrap: false,
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (Categoria categoria) => CategoriaItem(
                     onTap: () {
                       controller.clear();
