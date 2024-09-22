@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsBody extends HookWidget {
@@ -13,7 +14,7 @@ class SettingsBody extends HookWidget {
     return SettingsList(
       sections: [
         SettingsSection(
-          title: const Text('Common'),
+          title: const Text('Geral'),
           tiles: <SettingsTile>[
             SettingsTile.navigation(
               leading: const Icon(Icons.language),
@@ -34,6 +35,33 @@ class SettingsBody extends HookWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: const Text('Planejamento'),
+          tiles: <SettingsTile>[
+            SettingsTile.switchTile(
+              initialValue: true,
+              onToggle: (value) {},
+              leading: const Icon(FontAwesomeIcons.listCheck),
+              title: const Text('Incluir movimentos anteriores'),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: const Text('Dados'),
+          tiles: <SettingsTile>[
+            SettingsTile.navigation(
+              leading: const Icon(FontAwesomeIcons.database),
+              title: const Text('Deletar todos movimentos'),
+            ),
+            SettingsTile.navigation(
+              leading: const Icon(
+                FontAwesomeIcons.trashCan,
+                color: Colors.red,
+              ),
+              title: const Text('Limpar base de dados'),
             ),
           ],
         ),

@@ -10,9 +10,9 @@ import '../controller/estatisticas_page_controller.dart';
 
 class BuildCategoriesPieChart extends StatelessWidget {
   const BuildCategoriesPieChart({
-    Key? key,
+    super.key,
     this.data,
-  }) : super(key: key);
+  });
 
   final List<PieChartSectionData>? data;
 
