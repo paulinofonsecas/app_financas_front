@@ -19,6 +19,11 @@ class GerirCategoriasPage extends StatefulWidget {
 
   final TipoCategoria tipoCategoria;
 
+  static Route<dynamic> route(TipoCategoria tipoCategoria) {
+    return MaterialPageRoute<dynamic>(
+        builder: (_) => GerirCategoriasPage(tipoCategoria: tipoCategoria));
+  }
+
   @override
   State<GerirCategoriasPage> createState() => _GerirCategoriasPageState();
 }

@@ -1,5 +1,5 @@
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
-import 'package:app_financas/presentation/modules/setting/setting_page.dart';
+import 'package:app_financas/presentation/modules/setting/view/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -22,7 +22,7 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Configurações'),
             leading: const Icon(Icons.settings),
             onTap: () {
-              Get.to(const SettingPage());
+              Get.to(const SettingsPage());
             },
           ),
           BlocBuilder<AppThemeCubit, AppThemeState>(

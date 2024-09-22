@@ -1,6 +1,7 @@
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
+import 'package:app_financas/presentation/modules/setting/cubit/change_theme_color_cubit.dart';
 import 'package:app_financas/presentation/modules/splash/splash_page.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/gestures.dart';
@@ -17,19 +18,17 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Kz Gest',
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData.dark(
-        useMaterial3: true,
-      ).copyWith(
+      darkTheme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
+          seedColor: context.watch<ChangeThemeColorCubit>().state.color,
           brightness: Brightness.dark,
         ),
-        brightness: Brightness.dark,
+          brightness: Brightness.dark,
       ),
       theme: ThemeData(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
+          seedColor: context.watch<ChangeThemeColorCubit>().state.color,
+          brightness: Brightness.light,
         ),
       ),
       scrollBehavior: const ScrollBehavior().copyWith(dragDevices: {

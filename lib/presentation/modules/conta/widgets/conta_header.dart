@@ -20,6 +20,7 @@ class ContaHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding / 2),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             style: IconButton.styleFrom(
@@ -30,7 +31,6 @@ class ContaHeader extends StatelessWidget {
             },
             icon: const Icon(CupertinoIcons.chevron_left),
           ),
-          const Spacer(),
           Text(
             title,
             style: GoogleFonts.inter(
@@ -39,15 +39,13 @@ class ContaHeader extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          const Spacer(),
-          if (trailing != null)
-            IconButton(
-              style: IconButton.styleFrom(
-                foregroundColor: defaultColor,
-              ),
-              onPressed: () {},
-              icon: const Icon(Icons.more_horiz),
-            )
+          const IconButton(
+            onPressed: null,
+            icon: Icon(
+              CupertinoIcons.ellipsis_vertical,
+              color: Colors.transparent,
+            ),
+          ),
         ],
       ),
     );

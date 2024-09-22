@@ -8,6 +8,7 @@ import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
+import 'package:app_financas/presentation/modules/setting/cubit/change_theme_color_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -81,6 +82,9 @@ Future<void> main() async {
     ),
     BlocProvider(
       create: (context) => ListarCategoriaCubit(),
+    ),
+    BlocProvider(
+      create: (context) => ChangeThemeColorCubit(Colors.green)..loadDefaultThemeColor(),
     ),
   ];
 

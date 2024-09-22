@@ -10,7 +10,7 @@ sealed class AppThemeState extends Equatable {
 }
 
 final class AppThemeChanged extends AppThemeState {
-  const AppThemeChanged(ThemeMode themeMode) : super(themeMode);
+  const AppThemeChanged(super.themeMode);
 
   @override
   List<Object?> get props => [themeMode];

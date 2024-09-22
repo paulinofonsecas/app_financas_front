@@ -6,7 +6,7 @@ import 'package:app_financas/core/domain/services/i_movimento_service.dart';
 import 'package:app_financas/core/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/conta/conta.dart';
+import 'package:app_financas/presentation/modules/conta/widgets/conta.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 

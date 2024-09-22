@@ -5,7 +5,7 @@ import 'package:app_financas/presentation/modules/app/widgets/bottom_nav_widget.
 import 'package:app_financas/presentation/modules/app/widgets/custom_fab.dart';
 import 'package:app_financas/presentation/modules/carteira/carteira_page.dart';
 import 'package:app_financas/presentation/modules/home/home_page.dart';
-import 'package:app_financas/presentation/modules/setting/setting_page.dart';
+import 'package:app_financas/presentation/modules/mais_funcionalidades/view/mais_funcionalidades_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -38,7 +38,7 @@ class _AppPageState extends State<AppPage> {
       const HomePage(),
       const CarteiraPage(),
       const EstatisticasPage(),
-      const SettingPage(),
+      const MaisFuncionalidadesPage(),
     ];
 
     super.initState();

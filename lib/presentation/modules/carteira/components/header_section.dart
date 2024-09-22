@@ -1,6 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/modules/archived_accounts/view/archived_accounts_page.dart';
-import 'package:app_financas/presentation/modules/conta/conta.dart';
+import 'package:app_financas/presentation/modules/conta/widgets/conta.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
