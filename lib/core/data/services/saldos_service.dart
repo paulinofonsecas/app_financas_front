@@ -67,4 +67,51 @@ class SaldosService implements ISaldosService {
   List<Movimento> _getList(Either<Failure, List<Movimento>> result) {
     return result.getOrElse(() => []);
   }
+
+  @override
+  Future<Either<Failure, double>> getEntradasByConta(int contaId) async {
+    var list = _getList(await movimentoService.listMovimentos());
+    var result = list
+        .where((element) =>
+            element.tipoMovimentoId == 1 &&
+            element.confirmado &&
+            element.cartaoId == contaId)
+        .toList();
+
+    var soma = 0.0;
+    for (var mov in result) {
+      var conta = (await contaService.getConta(mov.cartaoId))
+          .getOrElse(() => Conta.fake());
+
+      if (mov.cartaoId == conta.id && conta.showInSoma == true) {
+        soma += mov.valor;
+      }
+    }
+
+    return Right(soma);
+  }
+
+  @override
+  Future<Either<Failure, double>> getSaidasByConta(int contaId) async {
+    var list = _getList(await movimentoService.listMovimentos());
+
+    var result = list
+        .where((element) =>
+            element.tipoMovimentoId == 2 &&
+            element.confirmado &&
+            element.cartaoId == contaId)
+        .toList();
+
+    var soma = 0.0;
+    for (var mov in result) {
+      var conta = (await contaService.getConta(mov.cartaoId))
+          .getOrElse(() => Conta.fake());
+
+      if (mov.cartaoId == conta.id && conta.showInSoma == true) {
+        soma += mov.valor;
+      }
+    }
+
+    return Right(soma);
+  }
 }

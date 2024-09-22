@@ -24,8 +24,6 @@ class EmptyWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleSmall,
         ),
-        const GutterLarge(),
-        const GutterLarge(),
       ],
     );
   }

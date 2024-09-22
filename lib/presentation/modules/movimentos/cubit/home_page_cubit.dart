@@ -110,6 +110,16 @@ class HomePageCubit extends Cubit<HomePageState> {
     });
   }
 
+  Future<double> getSaldoTotalEntradasByConta(int contaId) async {
+    final result = await _saldosService.getEntradasByConta(contaId);
+    return result.getOrElse(() => 0);
+  }
+
+  Future<double> getSaldoTotalSaidasByConta(int contaId) async {
+    final result = await _saldosService.getSaidasByConta(contaId);
+    return result.getOrElse(() => 0);
+  }
+
   void dispose() {
     _movimentoBloc.close();
   }

@@ -8,7 +8,8 @@ import 'confirmar_transacao_cubit.dart';
 part 'select_data_state.dart';
 
 class SelectDataCubit extends Cubit<SelectDataState> {
-  SelectDataCubit() : super(SelectDataInitial(DateTime.now()));
+  SelectDataCubit(DateTime? data)
+      : super(SelectDataSuccess(data ?? DateTime.now()));
 
   void selecionarDateTime(
     BuildContext context,

@@ -8,19 +8,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'select_conta_state.dart';
 
 class SelectContaCubit extends Cubit<SelectContaState> {
-  SelectContaCubit() : super(SelectContaInitial()) {
+  SelectContaCubit(int? i) : super(SelectContaInitial(i)) {
     _contaService = getIt();
   }
 
   late final IContaService _contaService;
 
-  void selectDefaultConta() async {
+  void selectDefaultConta(int? contaId) async {
     emit(SelectContaLoading());
 
     var result = await _contaService.listContas();
 
     if (result is Right) {
-      emit(SelectContaSuccess(result.getOrElse(() => []).first));
+      final contas = result.getOrElse(() => []);
+      if (contaId == null) {
+        emit(SelectContaSuccess(contas.first));
+      } else {
+        final conta = contas.firstWhere(
+          (element) => element.id == contaId,
+          orElse: () => contas.first,
+        );
+        emit(SelectContaSuccess(conta));
+      }
     } else {
       emit(
         const SelectContaError(

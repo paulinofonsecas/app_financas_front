@@ -33,8 +33,14 @@ class ContaListItemView extends StatelessWidget {
         child: Row(
           children: [
             BlocBuilder<SelectContaCubit, SelectContaState>(
-              bloc: context.read<SelectContaCubit>()..selectDefaultConta(),
               builder: (context, state) {
+                if (state is SelectContaInitial) {
+                  context
+                      .read<SelectContaCubit>()
+                      .selectDefaultConta(state.contaId);
+                  return const SizedBox();
+                }
+
                 if (state is SelectContaLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),

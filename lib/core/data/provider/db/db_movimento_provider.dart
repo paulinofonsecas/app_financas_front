@@ -162,10 +162,15 @@ class DbMovimentoProvider implements IMovimentoProvider {
     try {
       await initDb();
 
-      var lastId = 1;
+      late int lastId;
+      if (movimento.id <= 0) {
+        lastId = 1;
 
-      if (_movimentosBox.values.isNotEmpty) {
-        lastId = _movimentosBox.keys.last + 1;
+        if (_movimentosBox.values.isNotEmpty) {
+          lastId = _movimentosBox.keys.last + 1;
+        }
+      } else {
+        lastId = movimento.id;
       }
 
       // if (!(await saldoIsSuficiente(movimento))) {

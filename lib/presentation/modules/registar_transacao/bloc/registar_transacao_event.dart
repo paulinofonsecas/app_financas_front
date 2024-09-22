@@ -8,9 +8,10 @@ sealed class RegistarTransacaoEvent extends Equatable {
 }
 
 class SalvarTransacaoEvent extends RegistarTransacaoEvent {
-  const SalvarTransacaoEvent(this.context);
+  const SalvarTransacaoEvent({required this.context, this.movimento});
 
   final BuildContext context;
+  final Movimento? movimento;
 
   @override
   List<Object> get props => [context];

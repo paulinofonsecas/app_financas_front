@@ -155,7 +155,8 @@ class _ObsWidget extends StatelessWidget {
 
     return WithIcon(
       icon: FontAwesomeIcons.clipboard,
-      child: TextField(
+      child: TextFormField(
+        initialValue: obsTextCubit.state.obs,
         onChanged: (v) => obsTextCubit.changeText(v),
         maxLines: 1,
         decoration: const InputDecoration(
@@ -174,7 +175,8 @@ class _DecricaoTestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var descricaoTextCubit = context.read<DescricaoTextCubit>();
 
-    return TextField(
+    return TextFormField(
+      initialValue: descricaoTextCubit.state.descricao,
       onChanged: (valor) => descricaoTextCubit.changeText(valor),
       textCapitalization: TextCapitalization.sentences,
       decoration: const InputDecoration(

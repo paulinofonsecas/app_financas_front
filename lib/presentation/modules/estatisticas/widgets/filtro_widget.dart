@@ -32,11 +32,14 @@ class FiltrosWidget extends StatelessWidget {
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         const GutterSmall(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ...FiltroSelectedType.values.map((f) => _FiltroItem(filtro: f)),
-          ],
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ...FiltroSelectedType.values.map((f) => _FiltroItem(filtro: f)),
+            ],
+          ),
         ),
       ],
     );

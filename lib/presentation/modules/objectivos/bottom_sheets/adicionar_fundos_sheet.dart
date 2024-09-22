@@ -27,7 +27,7 @@ class AdicionarFundosSheet extends HookWidget {
       builder: (context) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => SelectContaCubit(),
+            create: (context) => SelectContaCubit(1),
           ),
           BlocProvider(
             create: (context) => AdicionarFundosCubit(getIt()),

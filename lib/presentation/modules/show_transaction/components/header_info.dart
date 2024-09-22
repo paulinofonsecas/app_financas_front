@@ -44,13 +44,13 @@ class HeaderInfo extends StatelessWidget {
               movimento.tipoMovimentoId == 1 ? kVerdeColor : kVermelhaColor,
           title: movimento.tipoMovimentoId == 1 ? 'Receita' : 'Despesa',
         ),
-        const CircleInfo(
-          icon: Icon(
-            CupertinoIcons.heart,
-            color: Colors.white,
-          ),
-          title: 'Favorita',
-        ),
+        // const CircleInfo(
+        //   icon: Icon(
+        //     CupertinoIcons.heart,
+        //     color: Colors.white,
+        //   ),
+        //   title: 'Favorita',
+        // ),
       ],
     );
   }
