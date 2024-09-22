@@ -1,4 +1,5 @@
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/presentation/modules/about/view/about_app_page.dart';
 import 'package:app_financas/presentation/modules/conta/view/conta_home_page.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/gerir_categorias_page.dart';
 import 'package:app_financas/presentation/modules/setting/view/settings_page.dart';
@@ -50,7 +51,7 @@ class MaisFuncionalidadesBody extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              // Navigator.of(context).push(SettingsPage.route());
+              Navigator.of(context).push(AboutAppPage.route());
             },
             title: const Text('Sobre'),
             leading: const Icon(FontAwesomeIcons.circleInfo),
