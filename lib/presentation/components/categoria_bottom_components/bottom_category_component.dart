@@ -82,7 +82,8 @@ class _BottomCategoryComponentState extends State<BottomCategoryComponent> {
     List<Categoria> categorias,
   ) {
     return categorias
-        .where((cat) => cat.name.contains(_searchedValue))
+        .where((cat) =>
+            cat.name.toLowerCase().contains(_searchedValue.toLowerCase()))
         .toList();
   }
 

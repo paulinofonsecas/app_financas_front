@@ -1,8 +1,10 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
+import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 class CardWidget extends StatelessWidget {
@@ -50,7 +52,7 @@ class CardWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: AutoSizeText(
-                        conta.descricao,
+                        conta.nome,
                         maxLines: 1,
                         minFontSize: 10,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -77,27 +79,61 @@ class CardWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Center(
-            child: Column(
-              children: [
-                const Text(
-                  'Entradas',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(numberFormat.format(0)),
-              ],
+            child: FutureBuilder<double>(
+              future: context
+                  .read<HomePageCubit>()
+                  .getSaldoTotalEntradasByConta(conta.id),
+              builder: (context, snapshot) {
+                var saldo = 0.0;
+
+                if (snapshot.hasData) {
+                  saldo = snapshot.data ?? 0;
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                return Column(
+                  children: [
+                    const Text(
+                      'Entradas',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(numberFormat.format(saldo)),
+                  ],
+                );
+              },
             ),
           ),
         ),
         Expanded(
           child: Center(
-            child: Column(
-              children: [
-                const Text(
-                  'Saidas',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(numberFormat.format(0)),
-              ],
+            child: FutureBuilder<double>(
+              future: context
+                  .read<HomePageCubit>()
+                  .getSaldoTotalSaidasByConta(conta.id),
+              builder: (context, snapshot) {
+                var saldo = 0.0;
+
+                if (snapshot.hasData) {
+                  saldo = snapshot.data ?? 0;
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                return Column(
+                  children: [
+                    const Text(
+                      'Saidas',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(numberFormat.format(saldo)),
+                  ],
+                );
+              },
             ),
           ),
         ),

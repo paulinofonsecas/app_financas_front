@@ -70,18 +70,6 @@ class ContaService implements IContaService {
     var contasPadrao = [
       Conta(
         id: 1,
-        nome: 'Carteira',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de gastos diversos',
-        color: Colors.orangeAccent,
-      ),
-      Conta(
-        id: 2,
         nome: 'Salário',
         saldo: 0.0,
         saldoInicial: 0.0,
@@ -90,19 +78,7 @@ class ContaService implements IContaService {
         banco: Banco.fake(),
         tipoConta: TipoConta.tipoContas.first,
         descricao: 'Conta salarial',
-        color: Colors.brown,
-      ),
-      Conta(
-        id: 3,
-        nome: 'Pupança',
-        saldo: 0.0,
-        saldoInicial: 0.0,
-        totalDespesas: 0,
-        totalReceitas: 0,
-        banco: Banco.fake(),
-        tipoConta: TipoConta.tipoContas.first,
-        descricao: 'Conta de pupança à curto prazo',
-        color: Colors.blueAccent,
+        color: Colors.blue,
       ),
     ];
 
