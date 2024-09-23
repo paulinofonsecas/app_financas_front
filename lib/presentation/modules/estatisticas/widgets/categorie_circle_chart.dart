@@ -1,4 +1,5 @@
 import 'package:app_financas/constants.dart';
+import 'package:app_financas/presentation/components/empty_widget.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -55,27 +56,8 @@ class BuildCategoriesPieChart extends StatelessWidget {
               ),
             ],
           )
-        : const SizedBox.square(
-            dimension: 200,
-            child: Column(
-              children: [
-                Gutter(),
-                Icon(
-                  Icons.sentiment_dissatisfied_outlined,
-                  size: 50,
-                  color: Colors.orange,
-                ),
-                Gutter(),
-                Text(
-                  'Sem dados para apresentar. '
-                  'Tente alterar o tempo de visualização',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
+        : const EmptyWidget(
+            title: 'Sem dados para apresentar',
           );
   }
 

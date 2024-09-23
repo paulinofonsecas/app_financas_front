@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'filtro_state.dart';
 
 class FiltroCubit extends Cubit<FiltroState> {
-  FiltroCubit() : super(const FiltroChanged(FiltroSelectedType.mes));
+  FiltroCubit() : super(const FiltroChanged(FiltroSelectedType.semana));
 
   void changeFiltro(FiltroSelectedType filtro) {
     emit(FiltroChanged(filtro));
