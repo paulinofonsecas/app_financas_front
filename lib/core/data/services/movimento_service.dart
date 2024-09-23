@@ -202,4 +202,16 @@ class MovimentoService implements IMovimentoService {
       return Left(Failure('Erro ao processar o total de movimentos'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Movimento>>> listMovimentosDaSemana() async {
+    final result = await _provider.listMovimentos();
+    final now = DateTime.now();
+
+    return result.fold(
+        (l) => Left(l),
+        (r) => Right(r
+            .where((element) => element.data.weekday == now.weekday)
+            .toList()));
+  }
 }

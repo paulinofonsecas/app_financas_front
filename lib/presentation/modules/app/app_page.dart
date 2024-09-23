@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 
-import '../estatisticas/estatisticas_page.dart';
+import '../estatisticas/view/estatisticas_page.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});

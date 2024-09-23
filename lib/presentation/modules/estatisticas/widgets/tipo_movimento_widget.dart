@@ -1,6 +1,8 @@
 import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
 import 'package:app_financas/presentation/modules/estatisticas/controller/estatisticas_page_controller.dart';
+import 'package:app_financas/presentation/modules/estatisticas/cubit/select_tipo_movimente_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +49,9 @@ class _TipoMovimentosWidgetState extends State<TipoMovimentosWidget> {
               selected: filter == SelectedType.saida,
               label: const Text('Saidas'),
               onSelected: (value) {
+                context
+                    .read<SelectTipoMovimentoCubit>()
+                    .changeFilter(TipoMovimento.SAIDA);
                 setState(() {
                   filter = SelectedType.saida;
                   controller.changeESFilter(TipoMovimento.SAIDA);
@@ -58,23 +63,15 @@ class _TipoMovimentosWidgetState extends State<TipoMovimentosWidget> {
               selected: filter == SelectedType.entrada,
               label: const Text('Entradas'),
               onSelected: (value) {
+                context
+                    .read<SelectTipoMovimentoCubit>()
+                    .changeFilter(TipoMovimento.ENTRADA);
                 setState(() {
                   filter = SelectedType.entrada;
                   controller.changeESFilter(TipoMovimento.ENTRADA);
                 });
               },
             ),
-            //! fix-me
-            // const SizedBox(width: 10),
-            // FilterChip(
-            //   selected: filter == SelectedType.ambos,
-            //   label: const Text('Ambos'),
-            //   onSelected: (value) {
-            //     setState(() {
-            //       filter = SelectedType.ambos;
-            //     });
-            //   },
-            // ),
           ],
         ),
       ],

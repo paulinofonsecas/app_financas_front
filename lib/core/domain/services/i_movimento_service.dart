@@ -8,6 +8,7 @@ abstract class IMovimentoService {
   Future<Either<Failure, Movimento>> getMovimento(int id);
   Future<Either<Failure, double>> getSaldo(int contaId, [int? mes]);
   Future<Either<Failure, List<Movimento>>> listMovimentos();
+  Future<Either<Failure, List<Movimento>>> listMovimentosDaSemana();
   Future<Either<Failure, List<Movimento>>> listMovimentosPendentes();
   Future<Either<Failure, List<Movimento>>> listMovimentosEntrada(
       {DateTime? date});
