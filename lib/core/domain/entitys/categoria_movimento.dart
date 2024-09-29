@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 enum TipoCategoria {
   entrada,
@@ -17,6 +18,7 @@ class Categoria {
   Color? color;
   IconData? icon;
   bool isArchived;
+  List<Categoria> subCategorias = [];
 
   Categoria({
     required this.id,
@@ -24,6 +26,7 @@ class Categoria {
     this.isArchived = false,
     this.color,
     this.icon,
+    this.subCategorias = const [],
   });
 
   factory Categoria.make({
@@ -31,13 +34,15 @@ class Categoria {
     Color? color,
     IconData? icon,
     isArchived = false,
+    List<Categoria> subCategorias = const [],
   }) {
     return Categoria(
-      id: -1,
+      id: const Uuid().v4().hashCode,
       name: name,
       color: color,
       icon: icon,
       isArchived: isArchived,
+      subCategorias: subCategorias,
     );
   }
 
@@ -74,6 +79,7 @@ class Categoria {
     Color? color,
     IconData? icon,
     bool? isArchived,
+    List<Categoria>? subCategorias,
   }) {
     return Categoria(
       id: id ?? this.id,
@@ -81,6 +87,7 @@ class Categoria {
       color: color ?? this.color,
       icon: icon ?? this.icon,
       isArchived: isArchived ?? this.isArchived,
+      subCategorias: subCategorias ?? this.subCategorias,
     );
   }
 
@@ -92,23 +99,28 @@ class Categoria {
       'icon': icon != null
           ? serializeIcon(icon!, iconPack: IconPack.material)
           : null,
-      'isArchived': isArchived
+      'isArchived': isArchived,
+      'subCategorias': subCategorias.map((e) => e.toMap()).toList(),
     };
   }
 
   factory Categoria.fromMap(Map<String, dynamic> map) {
     return Categoria(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      color: map['color'] != null ? Color(map['color'] as int) : null,
-      isArchived: map['isArchived'] as bool? ?? false,
-      icon: map['icon'] != null
-          ? deserializeIcon(
-              map['icon'].cast<String, dynamic>(),
-              iconPack: IconPack.material,
-            )
-          : null,
-    );
+        id: map['id'] as int,
+        name: map['name'] as String,
+        color: map['color'] != null ? Color(map['color'] as int) : null,
+        isArchived: map['isArchived'] as bool? ?? false,
+        icon: map['icon'] != null
+            ? deserializeIcon(
+                map['icon'].cast<String, dynamic>(),
+                iconPack: IconPack.material,
+              )
+            : null,
+        subCategorias: map['subCategorias'] == null
+            ? []
+            : (map['subCategorias'] as List<dynamic>)
+                .map((e) => Categoria.fromMap(e))
+                .toList());
   }
 
   String toJson() => json.encode(toMap());
