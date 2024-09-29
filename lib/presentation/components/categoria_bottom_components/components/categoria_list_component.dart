@@ -51,7 +51,8 @@ class CategoriaListComponent extends StatelessWidget {
                       Navigator.of(context).pop(categoria);
                     },
                     categoria: categoria,
-                    isSelected: categoria.id == selectedCategoriaId,
+                    isSelected: false,
+                    selectedCategoriaId: selectedCategoriaId ?? -1,
                   );
                 }),
 

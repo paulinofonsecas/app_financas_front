@@ -88,6 +88,8 @@ class EditarCategoriaController extends GetxController {
       color: color,
       icon: icon,
       isArchived: categoria.isArchived,
+      subCategoria: categoria.subCategoria,
+      subCategorias: categoria.subCategorias,
     );
 
     late Either<Exception, bool> result;

@@ -88,13 +88,6 @@ class _CategoriaItemWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Categoria',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
               Text(
                 categoria.name,
                 style: const TextStyle(
@@ -102,6 +95,14 @@ class _CategoriaItemWidget extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+              if (categoria.subCategoria != null)
+                Text(
+                  categoria.subCategoria!.name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
             ],
           ),
           const Spacer(),

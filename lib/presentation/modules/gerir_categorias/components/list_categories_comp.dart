@@ -1,15 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:app_financas/presentation/components/editar_categoria/editar_categoria_component.dart';
-import 'package:app_financas/presentation/modules/gerir_categorias/controllers/gerir_categoria_controller.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/presentation/components/editar_categoria/editar_categoria_component.dart';
+import 'package:app_financas/presentation/modules/gerir_categorias/components/categoria_item.dart';
+import 'package:app_financas/presentation/modules/gerir_categorias/controllers/gerir_categoria_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ListCategoriesComp extends StatelessWidget {
   const ListCategoriesComp({super.key});
@@ -64,10 +62,14 @@ class ListCategoriesComp extends StatelessWidget {
     );
   }
 
-  CategoriaItem _buildCategoriaItem(Categoria categoria, BuildContext context,
-      GerirCategoriaController controller) {
+  CategoriaItem _buildCategoriaItem(
+    Categoria categoria,
+    BuildContext context,
+    GerirCategoriaController controller,
+  ) {
     return CategoriaItem(
       categoria: categoria,
+      tipoCategoria: controller.tipoCategoria,
       onTap: () {
         EditarCategoriaComponent.openModalBottomSheet(
           context: context,
@@ -101,6 +103,7 @@ class ListCategoriesComp extends StatelessWidget {
               onPressed: () {
                 controller.arquivarCategoria(categoria.id).then(
                   (value) {
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   },
                 );
@@ -110,61 +113,6 @@ class ListCategoriesComp extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class CategoriaItem extends StatelessWidget {
-  const CategoriaItem({
-    Key? key,
-    required this.categoria,
-    this.onTap,
-    this.onActionTap,
-  }) : super(key: key);
-
-  final Categoria categoria;
-  final GestureTapCallback? onTap;
-  final GestureTapCallback? onActionTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: kDefaultPadding / 2),
-      child: ListTile(
-        onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding,
-          vertical: kDefaultPadding / 4,
-        ),
-        title: Text(
-          categoria.name.capitalize.toString(),
-          style: GoogleFonts.roboto(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            // color: Colors.black,
-          ),
-        ),
-        leading: CircleAvatar(
-          backgroundColor: categoria.color ?? Colors.purple,
-          child: Icon(
-            categoria.icon ?? Icons.icecream,
-            color: Colors.white,
-            size: 16,
-          ),
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: onActionTap,
-              icon: Icon(
-                CupertinoIcons.archivebox,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

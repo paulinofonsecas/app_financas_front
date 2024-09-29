@@ -18,6 +18,7 @@ class Categoria {
   Color? color;
   IconData? icon;
   bool isArchived;
+  Categoria? subCategoria;
   List<Categoria> subCategorias = [];
 
   Categoria({
@@ -26,6 +27,7 @@ class Categoria {
     this.isArchived = false,
     this.color,
     this.icon,
+    this.subCategoria,
     this.subCategorias = const [],
   });
 
@@ -33,6 +35,7 @@ class Categoria {
     required String name,
     Color? color,
     IconData? icon,
+    Categoria? subCategoria,
     isArchived = false,
     List<Categoria> subCategorias = const [],
   }) {
@@ -41,6 +44,7 @@ class Categoria {
       name: name,
       color: color,
       icon: icon,
+      subCategoria: subCategoria,
       isArchived: isArchived,
       subCategorias: subCategorias,
     );
@@ -79,6 +83,7 @@ class Categoria {
     Color? color,
     IconData? icon,
     bool? isArchived,
+    Categoria? subCategoria,
     List<Categoria>? subCategorias,
   }) {
     return Categoria(
@@ -86,6 +91,7 @@ class Categoria {
       name: name ?? this.name,
       color: color ?? this.color,
       icon: icon ?? this.icon,
+      subCategoria: subCategoria ?? this.subCategoria,
       isArchived: isArchived ?? this.isArchived,
       subCategorias: subCategorias ?? this.subCategorias,
     );
@@ -100,15 +106,17 @@ class Categoria {
           ? serializeIcon(icon!, iconPack: IconPack.material)
           : null,
       'isArchived': isArchived,
+      'subCategoria': subCategoria,
       'subCategorias': subCategorias.map((e) => e.toMap()).toList(),
     };
   }
 
-  factory Categoria.fromMap(Map<String, dynamic> map) {
+  factory Categoria.fromMap(Map<dynamic, dynamic> map) {
     return Categoria(
         id: map['id'] as int,
         name: map['name'] as String,
         color: map['color'] != null ? Color(map['color'] as int) : null,
+        subCategoria: map['subCategoria'],
         isArchived: map['isArchived'] as bool? ?? false,
         icon: map['icon'] != null
             ? deserializeIcon(
@@ -141,6 +149,8 @@ class Categoria {
     return other.id == id &&
         other.name == name &&
         other.color == color &&
+        other.subCategoria == subCategoria &&
+        other.subCategorias == subCategorias &&
         other.isArchived == isArchived &&
         other.icon == icon;
   }
@@ -151,6 +161,8 @@ class Categoria {
         name.hashCode ^
         color.hashCode ^
         icon.hashCode ^
+        subCategoria.hashCode ^
+        subCategorias.hashCode ^
         isArchived.hashCode;
   }
 }

@@ -27,9 +27,10 @@ class MaisFuncionalidadesBody extends StatelessWidget {
               );
             },
             title: const Text('Gerir categorias'),
-            leading: const Icon(FontAwesomeIcons.layerGroup),
+            leading: const Icon(FontAwesomeIcons.bookmark),
             trailing: const Icon(Icons.chevron_right),
           ),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).push(
@@ -37,7 +38,7 @@ class MaisFuncionalidadesBody extends StatelessWidget {
               );
             },
             title: const Text('Gerir contas'),
-            leading: const Icon(FontAwesomeIcons.creditCard),
+            leading: const Icon(FontAwesomeIcons.buildingColumns),
             trailing: const Icon(Icons.chevron_right),
           ),
           const Divider(),
@@ -49,6 +50,7 @@ class MaisFuncionalidadesBody extends StatelessWidget {
             leading: const Icon(FontAwesomeIcons.gear),
             trailing: const Icon(Icons.chevron_right),
           ),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).push(AboutAppPage.route());
@@ -57,6 +59,7 @@ class MaisFuncionalidadesBody extends StatelessWidget {
             leading: const Icon(FontAwesomeIcons.circleInfo),
             trailing: const Icon(Icons.chevron_right),
           ),
+          const Divider(),
         ],
       ),
     );
