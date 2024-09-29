@@ -71,7 +71,7 @@ class WeekBarChartWidgetState extends State<WeekBarChartWidget> {
       x: x,
       barRods: [
         BarChartRodData(
-          toY: isTouched ? y + 1 : y,
+          toY: y,
           color: isTouched ? widget.touchedBarColor : barColor,
           width: width,
           borderSide: isTouched

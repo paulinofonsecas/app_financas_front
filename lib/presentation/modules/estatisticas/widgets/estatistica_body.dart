@@ -2,9 +2,8 @@ import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/components/periodo_picker_widget.dart';
 import 'package:app_financas/presentation/modules/estatisticas/controller/estatisticas_page_controller.dart';
 import 'package:app_financas/presentation/modules/estatisticas/cubit/filtro_cubit.dart';
-import 'package:app_financas/presentation/modules/estatisticas/cubit/select_tipo_movimente_cubit.dart';
 import 'package:app_financas/presentation/modules/estatisticas/graficos/estatistica_por_categoria.dart';
-import 'package:app_financas/presentation/modules/estatisticas/widgets/bar_week_chart_builder.dart';
+import 'package:app_financas/presentation/modules/estatisticas/widgets/estatisticas_bar_widget.dart';
 import 'package:app_financas/presentation/modules/estatisticas/widgets/filtro_widget.dart';
 import 'package:app_financas/presentation/modules/estatisticas/widgets/tipo_movimento_widget.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
@@ -30,8 +29,9 @@ class EstatisticaBody extends StatelessWidget {
               const Gutter(),
               Obx(
                 () => PeriodoPickerWidget(
-                  periodoMes:
-                      controller.mygetMonthName(controller.periodoMes.value),
+                  periodoMes: controller.mygetMonthName(
+                    controller.periodoMes.value,
+                  ),
                   onLeftTap: controller.previousMonth,
                   onRightTap: controller.nextMonth,
                 ),
@@ -51,26 +51,9 @@ class EstatisticaBody extends StatelessWidget {
               const Gutter(),
               const Divider(),
               const Gutter(),
-              Column(
-                children: [
-                  BlocBuilder<FiltroCubit, FiltroState>(
-                    builder: (context, state) {
-                      if (state.filtro == FiltroSelectedType.semana) {
-                        return BarWeekChartBuilder(
-                          tipoMovimento: context
-                              .watch<SelectTipoMovimentoCubit>()
-                              .state
-                              .filter,
-                        );
-                      }
-
-                      return const SizedBox();
-                    },
-                  ),
-                  const Gutter(),
-                  const EstatisticaPorCategoria(),
-                ],
-              )
+              const EstatisticasBarWidget(),
+              const Gutter(),
+              const EstatisticaPorCategoria()
             ],
           ),
         ),
