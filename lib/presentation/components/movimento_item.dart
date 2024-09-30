@@ -2,8 +2,8 @@
 
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
 import 'package:app_financas/presentation/components/categorie_avatar.dart';
+import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/string_helpers.dart';
 import 'package:flutter/material.dart';
@@ -88,11 +88,29 @@ class MovimentoItem extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
-                            movimento.categoria?.name ?? '',
-                            style: GoogleFonts.inter(
-                              fontSize: 10,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                movimento.categoria?.name ?? '',
+                                style: GoogleFonts.inter(
+                                  fontSize: 10,
+                                ),
+                              ),
+                              if (movimento.subCategoria != null) ...[
+                                Text(
+                                  ' | ',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                Text(
+                                  movimento.subCategoria!.name,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ]
+                            ],
                           ),
                         ],
                       ),

@@ -13,6 +13,7 @@ class Movimento {
   final int tipoMovimentoId;
   final int categoriaMovimentoId;
   final Categoria? categoria;
+  final Categoria? subCategoria;
   final String? obsMovimento;
   final bool confirmado;
   final DateTime createdAt;
@@ -28,6 +29,7 @@ class Movimento {
     required this.tipoMovimentoId,
     required this.categoriaMovimentoId,
     this.categoria,
+    this.subCategoria,
     required this.obsMovimento,
     required this.confirmado,
     required this.createdAt,
@@ -44,6 +46,7 @@ class Movimento {
     required int categoriaMovimentoId,
     required String? obsMovimento,
     required bool confirmado,
+    Categoria? subCategoria,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -58,6 +61,7 @@ class Movimento {
       categoriaMovimentoId: categoriaMovimentoId,
       obsMovimento: obsMovimento,
       confirmado: confirmado,
+      subCategoria: subCategoria,
       createdAt: createdAt ?? DateTime.now(),
       updatedAt: updatedAt ?? DateTime.now(),
     );
@@ -95,6 +99,7 @@ class Movimento {
     int? tipoMovimentoId,
     int? categoriaMovimentoId,
     Categoria? categoria,
+    Categoria? subCategoria,
     String? obsMovimento,
     bool? confirmado,
     DateTime? createdAt,
@@ -109,7 +114,8 @@ class Movimento {
       cartaoId: cartaoId ?? this.cartaoId,
       tipoMovimentoId: tipoMovimentoId ?? this.tipoMovimentoId,
       categoriaMovimentoId: categoriaMovimentoId ?? this.categoriaMovimentoId,
-      categoria: categoria,
+      categoria: categoria ?? this.categoria,
+      subCategoria: subCategoria ?? this.subCategoria,
       obsMovimento: obsMovimento ?? this.obsMovimento,
       confirmado: confirmado ?? this.confirmado,
       createdAt: createdAt ?? this.createdAt,
@@ -127,6 +133,7 @@ class Movimento {
       'cartao_id': cartaoId,
       'tipo_movimento_id': tipoMovimentoId,
       'categoria_movimento_id': categoriaMovimentoId,
+      'subCategoria': subCategoria?.toMap(),
       'obs_movimento': obsMovimento ?? '',
       'confirmado': confirmado ? 1 : 0,
       'created_at': createdAt.toIso8601String(),
@@ -144,6 +151,9 @@ class Movimento {
       cartaoId: map['cartao_id'] as int,
       tipoMovimentoId: map['tipo_movimento_id'] as int,
       categoriaMovimentoId: map['categoria_movimento_id'] as int,
+      subCategoria: map['subCategoria'] != null
+          ? Categoria.fromMap(map['subCategoria'])
+          : null,
       obsMovimento: map['obs_movimento'] ?? '',
       confirmado: map['confirmado'] == 1 ? true : false,
       createdAt: DateTime.parse(map['created_at']),
@@ -175,6 +185,7 @@ class Movimento {
         other.descricao == descricao &&
         other.userId == userId &&
         other.cartaoId == cartaoId &&
+        other.subCategoria == subCategoria &&
         other.tipoMovimentoId == tipoMovimentoId &&
         other.categoriaMovimentoId == categoriaMovimentoId &&
         other.obsMovimento == obsMovimento &&
@@ -190,6 +201,7 @@ class Movimento {
         data.hashCode ^
         descricao.hashCode ^
         userId.hashCode ^
+        subCategoria.hashCode ^
         cartaoId.hashCode ^
         tipoMovimentoId.hashCode ^
         categoriaMovimentoId.hashCode ^

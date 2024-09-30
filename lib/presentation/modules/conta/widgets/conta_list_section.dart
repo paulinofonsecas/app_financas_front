@@ -1,13 +1,11 @@
-import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/view/create_conta_page.dart';
+import 'package:app_financas/presentation/modules/conta/widgets/conta_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/modules/conta/widgets/conta_list_item.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 import '../cubit/conta_periodo_picker_cubit_cubit.dart';
@@ -15,8 +13,8 @@ import '../view/conta_details.dart';
 
 class ContaListSection extends StatelessWidget {
   const ContaListSection({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +118,7 @@ class _ContentBody extends StatelessWidget {
               );
             },
           ),
-        ).toList(),
+        ),
         const GutterLarge(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

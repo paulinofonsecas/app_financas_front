@@ -56,7 +56,10 @@ class RegistarTransacaoPage extends StatelessWidget {
           create: (context) => DescricaoTextCubit(movimento?.descricao),
         ),
         BlocProvider(
-          create: (context) => SelectCategoriaCubit(movimento?.categoria),
+          create: (context) =>
+              SelectCategoriaCubit(movimento?.categoria?.copyWith(
+            subCategoria: movimento?.subCategoria,
+          )),
         ),
         BlocProvider(
           create: (context) => SelectContaCubit(movimento?.cartaoId ?? contaId),

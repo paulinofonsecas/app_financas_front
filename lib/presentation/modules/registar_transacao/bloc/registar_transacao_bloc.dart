@@ -95,6 +95,7 @@ class RegistarTransacaoBloc
       contaId: conta.id,
       tipoMovimentoId: tipoMovimento == true ? 1 : 2,
       categoriaMovimentoId: categoria.id,
+      subCategoria: categoria.subCategoria,
       obsMovimento: obs,
       confirmado: confimarTransacao,
     );

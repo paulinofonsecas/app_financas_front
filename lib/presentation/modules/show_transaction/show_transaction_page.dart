@@ -136,20 +136,20 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
           movimentoType: controller.movimento.tipoMovimentoId,
           movimento: controller.movimento,
         ))?.then((value) {
-          if (value == null) return;
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
+          // if (value == null) return;
 
-          // transação deletada
-          if (value is bool && value) {
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pop();
-          }
+          // // transação deletada
+          // if (value is bool && value) {
+          // }
 
-          // transação editada
-          if (value is Movimento) {
-            widget.onEdit?.call();
-            controller.updateMovimento(value);
-            setState(() {});
-          }
+          // // transação editada
+          // if (value is Movimento) {
+          //   widget.onEdit?.call();
+          //   controller.updateMovimento(value);
+          //   setState(() {});
+          // }
         });
       },
       style: ElevatedButton.styleFrom(
@@ -213,9 +213,18 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
   Widget _buildCategoriaInput() {
     var controller = Get.find<ShowTransactionController>();
 
+    String subCategoriaName() {
+      if (controller.movimento.subCategoria != null) {
+        return ' | ${controller.movimento.subCategoria!.name}';
+      } else {
+        return '';
+      }
+    }
+
     return InfoWidget(
       desc: 'Categoria',
-      value: controller.movimento.categoria?.name ?? 'Invalido',
+      value: (controller.movimento.categoria?.name ?? 'Invalido') +
+          subCategoriaName(),
       icon: Icon(
         controller.movimento.categoria?.icon ?? Icons.category_outlined,
         color: controller.movimento.categoria?.color ??
