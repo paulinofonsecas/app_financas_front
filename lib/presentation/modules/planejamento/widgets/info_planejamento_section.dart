@@ -31,7 +31,7 @@ class InfoPlanejamentoSection extends StatelessWidget {
             UsageProgress(
               finalValue: planejamento.plafound,
               actualValue: planejamento.totalGasto,
-              color: null,
+              color: Theme.of(context).primaryColor,
             ),
             const GutterSmall(),
           ],

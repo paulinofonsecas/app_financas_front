@@ -5,9 +5,9 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 
 class CategoryItemPieChart extends StatelessWidget {
   const CategoryItemPieChart({
-    Key? key,
+    super.key,
     required this.categoria,
-  }) : super(key: key);
+  });
 
   final Categoria categoria;
 
@@ -20,6 +20,7 @@ class CategoryItemPieChart extends StatelessWidget {
       ),
       margin: const EdgeInsets.only(right: kDefaultPadding / 2),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(categoria.icon, color: categoria.color, size: 14),
           const Gutter(),

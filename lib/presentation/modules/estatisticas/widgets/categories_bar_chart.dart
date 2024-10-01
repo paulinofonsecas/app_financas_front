@@ -1,13 +1,13 @@
 import 'package:app_financas/presentation/modules/estatisticas/controller/estatisticas_page_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+
 import 'category_item_pie_chart.dart';
 
 class CategoriesPieChart extends StatelessWidget {
   const CategoriesPieChart({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,12 @@ class CategoriesPieChart extends StatelessWidget {
       id: 'chartCategorias',
       builder: (context) {
         var categorias = controller.categorias;
+
+        return Wrap(
+          children: categorias.map((categoria) {
+            return CategoryItemPieChart(categoria: categoria);
+          }).toList(),
+        );
 
         return SizedBox(
           height: 40,

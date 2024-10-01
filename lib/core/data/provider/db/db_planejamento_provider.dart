@@ -107,6 +107,7 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
       } else {
         return Left(movimentosResult.swap().getOrElse(() => Failure('')));
       }
+
       final date = dataReferencia ?? DateTime.now();
       movimentos = movimentos
           .where(
@@ -129,10 +130,20 @@ class DBPlanejamentoProvider implements IPlanejamentoProvider {
         final itemPlanejamentoList = (planejamentoData['itens'] as List).map(
           (e) {
             final movimentosDoIten = movimentos
-                .where((mov) => mov.categoria!.id == e['categoria'])
+                .where((mov) =>
+                    mov.categoria!.id == e['categoria'] ||
+                    mov.subCategoria?.id == e['categoria'])
                 .toList();
-            final categoria =
-                categorias.where((c) => c.id == e['categoria']).first;
+
+            final subCategorias = categorias
+                .map(
+                    (f) => f.subCategorias.map((g) => g.copyWith(icon: f.icon)))
+                .reduce(
+                  (value, element) => [...value, ...element],
+                );
+            final categoria = [...categorias, ...subCategorias]
+                .where((c) => c.id == e['categoria'])
+                .first;
 
             var item = ItemPlanejamento.fromMap(e);
             item = item.copyWith(

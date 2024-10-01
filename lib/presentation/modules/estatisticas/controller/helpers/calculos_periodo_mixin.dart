@@ -101,6 +101,20 @@ mixin CalculoPeiriodoMixin {
     return ultimoDiaDoMes.day;
   }
 
+  DateTime ultimoDomingo(DateTime periodo) {
+    if (periodo.weekday == DateTime.sunday) {
+      return periodo;
+    } else {
+      DateTime saida = periodo.copyWith();
+
+      while (saida.weekday != DateTime.sunday) {
+        saida = saida.subtract(const Duration(days: 1));
+      }
+
+      return saida;
+    }
+  }
+
   List<Movimento> calculateSumOfPeriod(
     List<Movimento> movements,
     DateTime currentDate, {
@@ -131,8 +145,7 @@ mixin CalculoPeiriodoMixin {
           DateTime(currentDate.year, currentDate.month, currentDate.day);
       endOfPeriod = startOfPeriod.add(const Duration(days: 1));
     } else {
-      startOfPeriod =
-          currentDate.subtract(Duration(days: currentDate.weekday - 1));
+      startOfPeriod = ultimoDomingo(currentDate);
       endOfPeriod = startOfPeriod.add(const Duration(days: 6));
     }
 

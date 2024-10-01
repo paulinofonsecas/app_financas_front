@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
-
-import 'package:app_financas/constants.dart';
 
 import '../controller/estatisticas_page_controller.dart';
 import '../widgets/categorie_circle_chart.dart';
@@ -28,7 +27,7 @@ class EstatisticaPorCategoria extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const GutterLarge(),
+              const Gutter(),
               _buildCategoriaChartData(),
               const GutterLarge(),
             ],

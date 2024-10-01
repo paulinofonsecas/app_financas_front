@@ -3,7 +3,6 @@ import 'package:app_financas/presentation/components/periodo_picker_widget.dart'
 import 'package:app_financas/presentation/modules/estatisticas/controller/estatisticas_page_controller.dart';
 import 'package:app_financas/presentation/modules/estatisticas/cubit/filtro_cubit.dart';
 import 'package:app_financas/presentation/modules/estatisticas/graficos/estatistica_por_categoria.dart';
-import 'package:app_financas/presentation/modules/estatisticas/widgets/estatisticas_bar_widget.dart';
 import 'package:app_financas/presentation/modules/estatisticas/widgets/filtro_widget.dart';
 import 'package:app_financas/presentation/modules/estatisticas/widgets/tipo_movimento_widget.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
@@ -50,9 +49,9 @@ class EstatisticaBody extends StatelessWidget {
               ),
               const Gutter(),
               const Divider(),
-              const Gutter(),
-              const EstatisticasBarWidget(),
-              const Gutter(),
+              // const Gutter(),
+              // const EstatisticasBarWidget(),
+              // const Gutter(),
               const EstatisticaPorCategoria()
             ],
           ),

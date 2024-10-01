@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 enum FiltroSelectedType {
-  semana(0, 'Semana'),
-  mes(1, 'Mês'),
-  semestre(2, 'Semestre'),
-  ano(3, 'Ano');
+  dia(0, 'Dia'),
+  semana(1, 'Semana'),
+  mes(2, 'Mês'),
+  semestre(3, 'Semestre'),
+  ano(4, 'Ano');
 
   final int id;
   final String nome;
@@ -62,7 +63,7 @@ class _FiltroItem extends StatelessWidget {
           child: FilterChip(
             selected: state.filtro == filtro,
             label: Text(filtro.nome),
-            onSelected: (value) {
+            onSelected: (value) { 
               context.read<FiltroCubit>().changeFiltro(filtro);
             },
           ),
