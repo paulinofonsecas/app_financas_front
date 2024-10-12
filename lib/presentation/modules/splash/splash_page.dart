@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use
 
-import 'dart:isolate';
-
 import 'package:app_financas/presentation/modules/splash/controllers/splash_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

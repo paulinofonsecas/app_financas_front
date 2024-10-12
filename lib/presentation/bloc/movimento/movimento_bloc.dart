@@ -172,9 +172,7 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
         list = list.sublist(0, 6);
       }
 
-      return list
-          .where((element) => element.categoriaMovimentoId < 3030)
-          .toList();
+      return list.toList();
     } else {
       return [];
     }

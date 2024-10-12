@@ -56,13 +56,13 @@ dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/imgs/logo.jpg"
+  image_path: "assets/imgs/logo.png"
   web:
     generate: true
-    image_path: "assets/imgs/logo.jpg"
+    image_path: "assets/imgs/logo.png"
   windows:
     generate: true
-    image_path: "assets/imgs/logo.jpg"
+    image_path: "assets/imgs/logo.png"
     icon_size: 48 # min:48, max:256, default: 48
 
 dev_dependencies:
