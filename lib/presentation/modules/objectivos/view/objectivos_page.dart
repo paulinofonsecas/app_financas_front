@@ -36,16 +36,16 @@ class ObjectivosPage extends StatelessWidget {
             centerTitle: true,
             actions: [
               TextButton.icon(
-                onPressed: () {
-                  showModalBottomSheet(
+                onPressed: () async {
+                  await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     showDragHandle: true,
-                    builder: (context) => const PreCreateObjectivo(),
-                  ).then((value) {
-                    // ignore: use_build_context_synchronously
-                    context.read<ListarObjetivosCubit>().loadData();
-                  });
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<ListarObjetivosCubit>(),
+                      child: const PreCreateObjectivo(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.add),
                 iconAlignment: IconAlignment.end,

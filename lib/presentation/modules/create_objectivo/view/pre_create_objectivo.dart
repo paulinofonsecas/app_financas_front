@@ -1,6 +1,8 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/view/create_objectivo_page.dart';
+import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
 class PreCreateObjModel {
@@ -119,8 +121,13 @@ class PreCreateObjectivo extends StatelessWidget {
                     obj: preObj[index],
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.of(context).push(CreateObjectivoPage.route(
-                        preObjectivo: index == 0 ? null : preObj[index],
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<ListarObjetivosCubit>(),
+                          child: CreateObjectivoPage(
+                            preObj: index == 0 ? null : preObj[index],
+                          ),
+                        ),
                       ));
                     },
                   ),

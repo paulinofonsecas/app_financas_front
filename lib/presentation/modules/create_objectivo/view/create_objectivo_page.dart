@@ -6,6 +6,7 @@ import 'package:app_financas/presentation/modules/create_objectivo/bloc/bloc.dar
 import 'package:app_financas/presentation/modules/create_objectivo/cubit/delete_objectivo_cubit.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/view/pre_create_objectivo.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/widgets/create_objectivo_body.dart';
+import 'package:app_financas/presentation/modules/objectivos/cubit/listar_objetivos_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 
@@ -107,6 +108,7 @@ class CreateObjectivoView extends StatelessWidget {
         BlocListener<CreateObjectivoBloc, CreateObjectivoState>(
           listener: (context, state) {
             if (state is CreateObjectivoSuccess) {
+              context.read<ListarObjetivosCubit>().loadData();
               Navigator.pop(context);
             }
 
