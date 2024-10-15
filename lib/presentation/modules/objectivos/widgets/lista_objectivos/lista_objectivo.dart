@@ -41,7 +41,10 @@ class ListaObjectivos extends StatelessWidget {
                       context: context,
                       isScrollControlled: true,
                       showDragHandle: true,
-                      builder: (context) => const PreCreateObjectivo(),
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<ListarObjetivosCubit>(),
+                        child: const PreCreateObjectivo(),
+                      ),
                     ).then((value) {
                       // ignore: use_build_context_synchronously
                       context.read<ListarObjetivosCubit>().loadData();

@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           const DrawerHeader(
             child: Center(
-              child: Text('Kwanzagest'),
+              child: Text('Poupa+'),
             ),
           ),
           ListTile(

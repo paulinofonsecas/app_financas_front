@@ -131,10 +131,7 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     var result = await movimentoService.listPaginatedMovimentos(page, pageSize);
 
     if (result is Right) {
-      return result
-          .getOrElse(() => [])
-          .where((element) => element.categoriaMovimentoId < 3030)
-          .toList();
+      return result.getOrElse(() => []).toList();
     } else {
       return null;
     }
@@ -152,10 +149,7 @@ class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
     );
 
     if (result is Right) {
-      return result
-          .getOrElse(() => [])
-          .where((element) => element.categoriaMovimentoId < 3030)
-          .toList();
+      return result.getOrElse(() => []).toList();
     } else {
       return null;
     }

@@ -29,7 +29,7 @@ class HeaderMovimentoSection extends StatelessWidget {
             ),
             const GutterTiny(),
             MyTextFilter(
-              title: 'Saídas',
+              title: 'Saída',
               isActive: state.index == 2,
               onTap: () {
                 context.read<ChangeTipoMovimentoCubit>().updateTipoMovimento(2);

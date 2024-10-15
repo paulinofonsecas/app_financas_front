@@ -1,7 +1,7 @@
+import 'package:app_financas/constants.dart';
 import 'package:app_financas/presentation/components/page_action_bar.dart';
 import 'package:app_financas/presentation/modules/home/components/entradas_saidas.dart';
 import 'package:app_financas/presentation/modules/movimentos/controllers/movimentos_screen_controller.dart';
-import 'package:app_financas/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,12 +32,7 @@ class _MovimentosScreenState extends State<MovimentosScreen> {
               children: [
                 PageActionBar(
                   title: 'Movimentos',
-                  rightWidget: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.filter_list,
-                    ),
-                  ),
+                  rightWidget: null,
                   actionBack: () {
                     Get.back();
                   },

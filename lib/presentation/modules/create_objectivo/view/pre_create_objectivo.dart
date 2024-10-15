@@ -24,6 +24,8 @@ class PreCreateObjectivo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listarObjetivosCubit = context.read<ListarObjetivosCubit>();
+
     var size = MediaQuery.of(context).size;
     final preObj = [
       PreCreateObjModel(
@@ -123,7 +125,7 @@ class PreCreateObjectivo extends StatelessWidget {
                       Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) => BlocProvider.value(
-                          value: context.read<ListarObjetivosCubit>(),
+                          value: listarObjetivosCubit,
                           child: CreateObjectivoPage(
                             preObj: index == 0 ? null : preObj[index],
                           ),

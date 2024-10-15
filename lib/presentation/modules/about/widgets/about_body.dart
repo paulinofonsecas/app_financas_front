@@ -29,7 +29,7 @@ class AboutBody extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.asset(
-            'assets/imgs/launcher_icon.png',
+            'assets/imgs/logo.png',
           ),
         ),
       ),

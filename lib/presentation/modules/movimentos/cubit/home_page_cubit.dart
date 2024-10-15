@@ -61,6 +61,10 @@ class HomePageCubit extends Cubit<HomePageState> {
       emit(HomePageGetLastPaginatedListSuccess(event.movimentos));
     }
 
+    if (event is MovimentoGetPaginatedListEmpty) {
+      emit(const HomePageGetLastPaginatedListSuccess([]));
+    }
+
     if (event is MovimentoGetPaginatedListError) {
       emit(HomePageGetPaginatedListError(event.errorMessage));
     }

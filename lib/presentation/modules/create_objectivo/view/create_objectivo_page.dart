@@ -108,8 +108,8 @@ class CreateObjectivoView extends StatelessWidget {
         BlocListener<CreateObjectivoBloc, CreateObjectivoState>(
           listener: (context, state) {
             if (state is CreateObjectivoSuccess) {
-              context.read<ListarObjetivosCubit>().loadData();
               Navigator.pop(context);
+              context.read<ListarObjetivosCubit>().loadData();
             }
 
             if (state is CreateObjectivoError) {

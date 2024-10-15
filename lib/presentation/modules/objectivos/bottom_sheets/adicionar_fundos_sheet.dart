@@ -22,8 +22,9 @@ class AdicionarFundosSheet extends HookWidget {
       context: context,
       showDragHandle: true,
       constraints: BoxConstraints.expand(
-        height: size.height * 0.8,
+        height: size.height * 0.9,
       ),
+      isScrollControlled: true,
       builder: (context) => MultiBlocProvider(
         providers: [
           BlocProvider(

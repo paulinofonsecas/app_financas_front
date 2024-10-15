@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
     var themeModeState = context.watch<AppThemeCubit>().state;
 
     return GetMaterialApp(
-      title: 'Kz Gest',
+      title: 'Poupa+',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSeed(
           seedColor: context.watch<ChangeThemeColorCubit>().state.color,
           brightness: Brightness.dark,
         ),
-          brightness: Brightness.dark,
+        brightness: Brightness.dark,
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

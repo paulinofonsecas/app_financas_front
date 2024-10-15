@@ -66,8 +66,9 @@ class ObjectivoService implements IObjectivoService {
       return right(false);
     }
 
-    final objectivoResult = await _provider
-        .updateObjectivo(objectivo.copyWith(currentValue: fundo));
+    final objectivoResult = await _provider.updateObjectivo(
+      objectivo.copyWith(currentValue: objectivo.currentValue + fundo),
+    );
 
     return objectivoResult.fold(
       (failure) => left(failure),
