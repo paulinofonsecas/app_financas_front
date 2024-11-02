@@ -22,7 +22,7 @@ class DefaultActionButton extends StatelessWidget {
     return OutlinedButton(
       style: style ??
           OutlinedButton.styleFrom(
-            backgroundColor: backgroundColor,
+            // backgroundColor: backgroundColor,
             foregroundColor: foregroundColor,
           ),
       onPressed: onPressed,
@@ -30,7 +30,7 @@ class DefaultActionButton extends StatelessWidget {
         text,
         style: GoogleFonts.inter(
           fontSize: 16,
-          color: foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
+          // color: foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:app_financas/core/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/bottom_sheets/conta_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -380,11 +381,12 @@ class _ContaDetailsHeader extends StatelessWidget {
             const Spacer(),
             IconButton(
               icon: const Icon(
-                FontAwesomeIcons.scaleBalanced,
+                Icons.more_vert,
                 color: Colors.white,
-                size: 18,
               ),
-              onPressed: () {},
+              onPressed: () {
+                ContaBottomSheet.show(context);
+              },
             ),
           ],
         ),

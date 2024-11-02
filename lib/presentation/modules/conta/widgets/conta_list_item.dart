@@ -68,7 +68,7 @@ class _ContaItemWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(
         top: kDefaultPadding,
-        bottom: kDefaultPadding / 4,
+        bottom: kDefaultPadding,
         left: kDefaultPadding,
         right: kDefaultPadding,
       ),
@@ -86,9 +86,9 @@ class _ContaItemWidget extends StatelessWidget {
                   ),
                 )
               : const Icon(
-                  FontAwesomeIcons.building,
+                  FontAwesomeIcons.circleDot,
                   color: kVerdeAccentColor,
-                  size: 20,
+                  size: 28,
                 ),
           const Gutter(),
           Expanded(

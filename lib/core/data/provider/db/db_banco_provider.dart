@@ -44,8 +44,8 @@ class DbBancoProvider implements IBancoProvider {
     var bancos = [
       Banco(
         id: 10000,
-        nome: 'Nenhum',
-        acronimo: 'Nenhum',
+        nome: 'Sem banco',
+        acronimo: 'S/B',
       ),
       Banco(
         id: 1,

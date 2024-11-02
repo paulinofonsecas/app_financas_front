@@ -27,11 +27,12 @@ class CardWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        conta.banco.imgAsset ?? 'assets/imgs/bancos/BAI.png',
-                        width: 25,
-                        height: 25,
-                      ),
+                      if (conta.banco.imgAsset != null)
+                        Image.asset(
+                          conta.banco.imgAsset!,
+                          width: 25,
+                          height: 25,
+                        ),
                       const GutterTiny(),
                       Text(
                         conta.banco.acronimo ?? 'N/A',
