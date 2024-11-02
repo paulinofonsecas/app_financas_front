@@ -1,3 +1,7 @@
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/components/default_action_button.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,18 +11,13 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/components/default_action_button.dart';
-import 'package:app_financas/presentation/helders/format_helpers.dart';
-
 import '../dialogs/reajustar_saldo_dialog.dart';
 
 class ContaMonstDetailsPage extends StatelessWidget {
   const ContaMonstDetailsPage({
-    Key? key,
+    super.key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 
@@ -77,9 +76,9 @@ class ContentView extends StatelessWidget {
 
 class ContaDetailsBody extends StatelessWidget {
   const ContaDetailsBody({
-    Key? key,
+    super.key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 
@@ -101,9 +100,9 @@ class ContaDetailsBody extends StatelessWidget {
 
 class _ContaDetailsContent extends StatelessWidget {
   const _ContaDetailsContent({
-    Key? key,
+    super.key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 
@@ -298,12 +297,12 @@ class _MainInfoWidget extends StatelessWidget {
 
 class _ContaInforWidget extends StatelessWidget {
   const _ContaInforWidget({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
     this.subtitleColor,
-  }) : super(key: key);
+  });
 
   final Icon icon;
   final String title;

@@ -1,21 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/presentation/helders/format_helpers.dart';
-
 class ContaListItem extends StatelessWidget {
   const ContaListItem({
-    Key? key,
+    super.key,
     required this.conta,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final Conta conta;
   final GestureTapCallback? onTap;
@@ -61,9 +58,8 @@ class ContaListItem extends StatelessWidget {
 
 class _ContaItemWidget extends StatelessWidget {
   const _ContaItemWidget({
-    Key? key,
     required this.conta,
-  }) : super(key: key);
+  });
 
   final Conta conta;
 
@@ -77,7 +73,7 @@ class _ContaItemWidget extends StatelessWidget {
         right: kDefaultPadding,
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           conta.banco.imgAsset != null
               ? ClipRRect(
@@ -96,11 +92,11 @@ class _ContaItemWidget extends StatelessWidget {
                 ),
           const Gutter(),
           Expanded(
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       conta.nome,
@@ -109,20 +105,6 @@ class _ContaItemWidget extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const Spacer(),
-                    _CustomIconButton(
-                      icon: const Icon(Icons.more_horiz),
-                      onTap: () {
-                        getIt<ContaBloc>().add(
-                          ArquivarContaEvent(conta: conta),
-                        );
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
                     Text(
                       conta.banco.acronimo ?? conta.banco.nome,
                       style: GoogleFonts.inter(
@@ -130,47 +112,21 @@ class _ContaItemWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const Spacer(),
-                    Text(
-                      numberFormat.format(conta.saldo),
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        color: kVerdeAccentColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
                   ],
                 ),
-                const GutterTiny(),
+                const Spacer(),
+                Text(
+                  numberFormat.format(conta.saldo),
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: kVerdeAccentColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CustomIconButton extends StatelessWidget {
-  const _CustomIconButton({
-    Key? key,
-    this.onTap,
-    required this.icon,
-  }) : super(key: key);
-
-  final GestureTapCallback? onTap;
-  final Icon icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(100),
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-          child: icon,
-        ),
       ),
     );
   }
