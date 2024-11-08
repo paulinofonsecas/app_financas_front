@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/core/domain/entitys/tipo_conta.dart';
-import 'package:app_financas/core/domain/services/i_conta_service.dart';
-import 'package:app_financas/core/domain/services/i_movimento_service.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/tipo_conta.dart';
+import 'package:app_financas/score/domain/services/i_conta_service.dart';
+import 'package:app_financas/score/domain/services/i_movimento_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';

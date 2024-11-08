@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/gerir_categorias_page.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dart';

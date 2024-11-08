@@ -1,8 +1,8 @@
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/core/domain/services/i_conta_service.dart';
-import 'package:app_financas/core/domain/services/i_movimento_service.dart';
-import 'package:app_financas/core/erros/failure.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/services/i_conta_service.dart';
+import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/score/erros/failure.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';

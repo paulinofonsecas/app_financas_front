@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/components/bottom_sheet_contas.dart';
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';

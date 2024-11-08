@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/create_planejamento.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/search_list_categorias_cubit.dart';

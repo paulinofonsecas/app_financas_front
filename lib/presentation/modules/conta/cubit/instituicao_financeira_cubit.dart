@@ -1,5 +1,5 @@
-import 'package:app_financas/core/domain/entitys/banco.dart';
-import 'package:app_financas/core/domain/services/i_banco_service.dart';
+import 'package:app_financas/score/domain/entitys/banco.dart';
+import 'package:app_financas/score/domain/services/i_banco_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

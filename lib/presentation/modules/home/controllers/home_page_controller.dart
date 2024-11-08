@@ -1,9 +1,9 @@
-import 'package:app_financas/core/data/provider/interfaces/i_categoria_provider.dart';
-import 'package:app_financas/core/data/provider/interfaces/i_contas_provider.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/core/domain/services/i_movimento_service.dart';
-import 'package:app_financas/core/domain/services/i_saldos_service.dart';
+import 'package:app_financas/score/data/provider/interfaces/i_categoria_provider.dart';
+import 'package:app_financas/score/data/provider/interfaces/i_contas_provider.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/score/domain/services/i_saldos_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/presentation/cubit/update_categoria_cubit.dart';

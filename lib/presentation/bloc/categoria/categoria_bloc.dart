@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/services/i_categoria_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';

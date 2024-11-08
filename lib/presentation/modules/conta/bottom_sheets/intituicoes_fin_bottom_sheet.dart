@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:app_financas/core/domain/entitys/banco.dart';
+import 'package:app_financas/score/domain/entitys/banco.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

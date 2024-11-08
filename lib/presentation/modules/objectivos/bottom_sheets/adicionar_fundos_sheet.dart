@@ -1,4 +1,4 @@
-import 'package:app_financas/core/domain/entitys/objectivo.dart';
+import 'package:app_financas/score/domain/entitys/objectivo.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/objectivos/bottom_sheets/widgets/add_fundos_body.dart';

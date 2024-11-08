@@ -4,13 +4,13 @@ import 'package:app_financas/presentation/modules/carteira/components/my_text_fi
 import 'package:app_financas/presentation/modules/conta_details/components/card_section_comp.dart';
 import 'package:app_financas/presentation/modules/conta_details/controllers/conta_details_page_controller.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
-import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/tipo_movimento.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

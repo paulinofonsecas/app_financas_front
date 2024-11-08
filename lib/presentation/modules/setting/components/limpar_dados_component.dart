@@ -1,4 +1,4 @@
-import 'package:app_financas/core/data/provider/db/helpers/db_hive_box_names.dart';
+import 'package:app_financas/score/data/provider/db/helpers/db_hive_box_names.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

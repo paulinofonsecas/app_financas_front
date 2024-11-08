@@ -1,0 +1,14 @@
+import 'package:app_financas/score/domain/entitys/planejamento.dart';
+import 'package:app_financas/score/erros/failure.dart';
+import 'package:dartz/dartz.dart';
+
+abstract class IPlanejamentoProvider {
+  Future<Either<Failure, Planejamento>> createPlanejamento(
+      Planejamento planejamento);
+  Future<Either<Failure, Planejamento>> updatePlanejamento(
+      Planejamento planejamento);
+  Future<Either<Failure, void>> deletePlanejamento(
+      String planejamentoId);
+  Future<Either<Failure, Planejamento>> getPlanejamento(String planejamentoId);
+  Future<Either<Failure, List<Planejamento>>> getAllPlanejamentos({DateTime? dataReferencia});
+}

@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';

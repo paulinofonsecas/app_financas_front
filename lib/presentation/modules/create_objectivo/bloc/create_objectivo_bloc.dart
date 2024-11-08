@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:app_financas/core/domain/entitys/objectivo.dart';
-import 'package:app_financas/core/domain/services/i_objetivo_service.dart';
+import 'package:app_financas/score/domain/entitys/objectivo.dart';
+import 'package:app_financas/score/domain/services/i_objetivo_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 
 class ContaItem extends StatelessWidget {

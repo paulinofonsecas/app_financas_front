@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:app_financas/core/domain/entitys/movimentos_pendentes.dart';
-import 'package:app_financas/core/domain/entitys/tipo_movimento.dart';
-import 'package:app_financas/core/domain/services/i_movimento_service.dart';
+import 'package:app_financas/score/domain/entitys/movimentos_pendentes.dart';
+import 'package:app_financas/score/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/score/domain/services/i_movimento_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';

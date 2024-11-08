@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/movimentos_pendentes.dart';
+import 'package:app_financas/score/domain/entitys/movimentos_pendentes.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/widgets/movimentos_pendentes_item.dart';
 import 'package:flutter/material.dart';
 

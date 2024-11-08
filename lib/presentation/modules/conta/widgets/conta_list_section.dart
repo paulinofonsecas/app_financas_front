@@ -1,4 +1,4 @@
-import 'package:app_financas/core/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';

@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/services/i_categoria_service.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 class BottomCategoryCompController extends GetxController {

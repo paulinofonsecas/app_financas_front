@@ -1,4 +1,4 @@
-import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/helders/periodo.dart';
 
 import 'helpers.dart';

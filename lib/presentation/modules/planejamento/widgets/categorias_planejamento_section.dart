@@ -1,4 +1,4 @@
-import 'package:app_financas/core/domain/entitys/planejamento.dart';
+import 'package:app_financas/score/domain/entitys/planejamento.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/item_planejamento_list_item.dart';
 import 'package:flutter/material.dart';
 

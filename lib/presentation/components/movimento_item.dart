@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/components/categorie_avatar.dart';
 import 'package:app_financas/presentation/components/not_confirm_widget_indicator.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';

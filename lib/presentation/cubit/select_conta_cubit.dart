@@ -1,5 +1,5 @@
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/services/i_conta_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';

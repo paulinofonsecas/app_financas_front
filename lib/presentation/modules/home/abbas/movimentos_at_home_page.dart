@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/core/domain/entitys/movimento.dart';
+import 'package:app_financas/score/domain/entitys/movimento.dart';
 import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';

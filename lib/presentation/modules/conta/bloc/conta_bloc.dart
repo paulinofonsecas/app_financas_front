@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/core/domain/entitys/balanco_mensal.dart';
-import 'package:app_financas/core/domain/entitys/conta.dart';
-import 'package:app_financas/core/domain/services/i_conta_service.dart';
+import 'package:app_financas/score/domain/entitys/balanco_mensal.dart';
+import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/score/domain/services/i_conta_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';

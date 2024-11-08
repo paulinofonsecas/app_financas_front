@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/core/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/core/domain/services/i_categoria_service.dart';
+import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/score/domain/services/i_categoria_service.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
