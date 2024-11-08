@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:flutter/material.dart';
 
 class BancoImgCircularWidget extends StatelessWidget {

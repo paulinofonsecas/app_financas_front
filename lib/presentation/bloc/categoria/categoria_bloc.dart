@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -10,7 +10,7 @@ part 'categoria_event.dart';
 part 'categoria_state.dart';
 
 class CategoriaBloc extends Bloc<CategoriaEvent, CategoriaState> {
-  late final ICategoriaService _categoriaService;
+  late final ICategoriaUseCases _categoriaService;
 
   CategoriaBloc(this._categoriaService) : super(CategoriaInitial()) {
     on<GetCategoriaByIdEvent>(_onCategoriaCategoriaByIdEvent);

@@ -1,19 +1,19 @@
-import 'package:app_financas/score/data/provider/interfaces/i_categoria_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_contas_provider.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/domain/services/i_saldos_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+import 'package:app_financas/domain/usecases/i_saldos_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
-  late final IMovimentoService movimentoService;
-  late final ISaldosService saldosService;
-  late ICategoriaProvider categoriaProvider;
-  late IContaProvider contaProvider;
+  late final IMovimentoUseCases movimentoService;
+  late final ISaldosUseCases saldosService;
+  late ICategoriaUseCases categoriaProvider;
+  late IContaUseCases contaProvider;
   var showMoneyOnCards = false.obs;
   var cartoes = <Conta>[];
 
@@ -77,7 +77,7 @@ class HomePageController extends GetxController {
   }
 
   Future<List<Conta>> getCartoes() async {
-    var contaService = getIt<IContaProvider>();
+    var contaService = getIt<IContaUseCases>();
     var result = await contaService.listContas();
 
     if (result is Right) {

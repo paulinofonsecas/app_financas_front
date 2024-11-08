@@ -1,6 +1,7 @@
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/campos_mixin.dart';
@@ -31,7 +32,7 @@ class RegistarTransacaoBloc
     on<SalvarTransacaoEvent>(onRegistarTransacao);
   }
 
-  late final IMovimentoService _movimentoService;
+  late final IMovimentoUseCases _movimentoService;
 
   void onRegistarTransacao(
     SalvarTransacaoEvent event,

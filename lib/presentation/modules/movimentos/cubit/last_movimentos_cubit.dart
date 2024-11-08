@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:bloc/bloc.dart';

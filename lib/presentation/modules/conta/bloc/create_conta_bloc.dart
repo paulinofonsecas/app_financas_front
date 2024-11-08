@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/entitys/tipo_conta.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/entities/tipo_conta.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
@@ -19,8 +19,8 @@ part 'create_conta_event.dart';
 part 'create_conta_state.dart';
 
 class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
-  late final IContaService contaService;
-  late final IMovimentoService _movimentoService;
+  late final IContaUseCases contaService;
+  late final IMovimentoUseCases _movimentoService;
 
   CreateContaBloc() : super(CreateContaInitial()) {
     contaService = getIt();

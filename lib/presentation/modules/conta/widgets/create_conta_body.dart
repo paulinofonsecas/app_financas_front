@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/banco.dart';
+import 'package:app_financas/domain/entities/banco.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/components/default_money_textfield.dart';
 import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';

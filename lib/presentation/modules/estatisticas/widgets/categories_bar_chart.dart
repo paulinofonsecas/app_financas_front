@@ -25,20 +25,20 @@ class CategoriesPieChart extends StatelessWidget {
           }).toList(),
         );
 
-        return SizedBox(
-          height: 40,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: categorias.length,
-            separatorBuilder: (context, index) {
-              return const VerticalDivider();
-            },
-            itemBuilder: (context, index) {
-              var categoria = categorias[index];
-              return CategoryItemPieChart(categoria: categoria);
-            },
-          ),
-        );
+        // return SizedBox(
+        //   height: 40,
+        //   child: ListView.separated(
+        //     scrollDirection: Axis.horizontal,
+        //     itemCount: categorias.length,
+        //     separatorBuilder: (context, index) {
+        //       return const VerticalDivider();
+        //     },
+        //     itemBuilder: (context, index) {
+        //       var categoria = categorias[index];
+        //       return CategoryItemPieChart(categoria: categoria);
+        //     },
+        //   ),
+        // );
       },
     );
   }

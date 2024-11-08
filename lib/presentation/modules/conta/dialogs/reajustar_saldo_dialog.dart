@@ -7,7 +7,7 @@ import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';

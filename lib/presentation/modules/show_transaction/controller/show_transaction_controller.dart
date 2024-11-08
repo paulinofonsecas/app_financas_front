@@ -1,15 +1,16 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/entitys/sertup_configuration.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/entities/sertup_configuration.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
+
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
 class ShowTransactionController extends GetxController {
-  late final ICategoriaService categoriaService;
+  late final ICategoriaUseCases categoriaService;
   late final SetupConfiguration setupConfiguration;
   late Movimento movimento;
 

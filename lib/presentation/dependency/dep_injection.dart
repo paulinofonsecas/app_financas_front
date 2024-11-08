@@ -1,30 +1,28 @@
 import 'package:app_financas/app/bloc/app_bloc.dart';
-import 'package:app_financas/score/data/provider/db/db_banco_provider.dart';
-import 'package:app_financas/score/data/provider/db/db_categoria_provider.dart';
-import 'package:app_financas/score/data/provider/db/db_conta_provider.dart';
-import 'package:app_financas/score/data/provider/db/db_movimento_provider.dart';
-import 'package:app_financas/score/data/provider/db/db_objectivo_provider.dart';
-import 'package:app_financas/score/data/provider/db/db_planejamento_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_banco_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_categoria_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_contas_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_objectivo_provider.dart';
-import 'package:app_financas/score/data/provider/interfaces/i_planejamento_provider.dart';
-import 'package:app_financas/score/data/services/banco_service.dart';
-import 'package:app_financas/score/data/services/categoria_service.dart';
-import 'package:app_financas/score/data/services/conta_service.dart';
-import 'package:app_financas/score/data/services/movimento_service.dart';
-import 'package:app_financas/score/data/services/objectivo_service.dart';
-import 'package:app_financas/score/data/services/planejamento_service.dart';
-import 'package:app_financas/score/data/services/saldos_service.dart';
-import 'package:app_financas/score/domain/services/i_banco_service.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/domain/services/i_objetivo_service.dart';
-import 'package:app_financas/score/domain/services/i_planejamento_service.dart';
-import 'package:app_financas/score/domain/services/i_saldos_service.dart';
+import 'package:app_financas/data/datasources/interfaces/i_saldos_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_saldos_provider.dart';
+import 'package:app_financas/data/repositories/banco_repository.dart';
+import 'package:app_financas/data/repositories/categoria_repository.dart';
+import 'package:app_financas/data/repositories/conta_repository.dart';
+import 'package:app_financas/data/repositories/movimento_repository.dart';
+import 'package:app_financas/data/repositories/objectivo_repository.dart';
+import 'package:app_financas/data/repositories/planejamento_repository.dart';
+import 'package:app_financas/data/repositories/saldos_repository.dart';
+import 'package:app_financas/domain/repositories/i_banco_repository.dart';
+import 'package:app_financas/domain/repositories/i_categoria_repository.dart';
+import 'package:app_financas/domain/repositories/i_conta_repository.dart';
+import 'package:app_financas/domain/repositories/i_movimento_repository.dart';
+import 'package:app_financas/domain/repositories/i_objetivo_repository.dart';
+import 'package:app_financas/domain/repositories/i_planejamento_repository.dart';
+import 'package:app_financas/domain/repositories/i_saldos_repository.dart';
+import 'package:app_financas/domain/usecases/i_banco_usecases.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+import 'package:app_financas/domain/usecases/i_objetivo_usecase.dart';
+import 'package:app_financas/domain/usecases/i_planejamento_usecase.dart';
+import 'package:app_financas/domain/usecases/i_saldos_usecase.dart';
+import 'package:app_financas/domain/usecases/movimento_usecases.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/helders/http_helpers.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
@@ -40,6 +38,18 @@ import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.d
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/movimentos_pendentes_bloc.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
+import 'package:app_financas/data/datasources/local/db/db_banco_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_categoria_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_conta_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_movimento_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_objectivo_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_planejamento_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_banco_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_categoria_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_contas_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_objectivo_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_planejamento_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -52,8 +62,10 @@ void dependencyInitialize() {
 
   // Objectivos
   getIt.registerLazySingleton<IObjectivoProvider>(() => DBObjectivoProvider());
-  getIt.registerLazySingleton<IObjectivoService>(
-      () => ObjectivoService(getIt()));
+  getIt.registerLazySingleton<IObjectivoRepository>(
+      () => ObjectivoRepository(getIt()));
+  getIt.registerLazySingleton<IObjectivoUseCases>(
+      () => ObjectivoUseCases(getIt()));
 
   // Planejamento
   getIt.registerLazySingleton<IPlanejamentoProvider>(
@@ -61,40 +73,50 @@ void dependencyInitialize() {
             movimentoProvider: getIt(),
             categoriaService: getIt(),
           ));
-  getIt.registerLazySingleton<IPlanejamentoService>(
-      () => PlanejamentoService(provider: getIt()));
-
-  getIt.registerLazySingleton(() => ContasCubit());
-  getIt.registerLazySingleton(() => PlanejamentoAtualCubit(getIt()));
+  getIt.registerLazySingleton<IPlanejamentoRepository>(
+      () => PlanejamentoRepository(provider: getIt()));
+  getIt.registerLazySingleton<IPlanejamentoUseCases>(
+      () => PlanejamentoUseCases(getIt()));
 
   // Banco
   getIt.registerLazySingleton<IBancoProvider>(() => DbBancoProvider());
-  getIt.registerLazySingleton<IBancoService>(() => BancoService(getIt()));
+  getIt.registerLazySingleton<IBancoRepository>(() => BancoRepository(getIt()));
+  getIt.registerLazySingleton<IBancoUseCases>(() => BancoUseCases(getIt()));
 
+  getIt.registerLazySingleton(() => ContasCubit());
+  getIt.registerLazySingleton(() => PlanejamentoAtualCubit(getIt()));
   // Categoria
   getIt.registerLazySingleton<ICategoriaProvider>(() => DbCategoriaProvider());
-  getIt.registerLazySingleton<ICategoriaService>(
-      () => CategoriaService(getIt()));
+  getIt.registerLazySingleton<ICategoriaRepository>(
+      () => CategoriaRepository(getIt()));
+  getIt.registerLazySingleton<ICategoriaUseCases>(
+      () => CategoriaUseCases(getIt()));
 
   // Movimentos
   getIt.registerLazySingleton<IMovimentoProvider>(
       () => DbMovimentoProvider(getIt()));
-  getIt.registerLazySingleton<IMovimentoService>(
-      () => MovimentoService(provider: getIt()));
+  getIt.registerLazySingleton<IMovimentoRepository>(
+      () => MovimentoRepository(provider: getIt()));
+  getIt.registerLazySingleton<IMovimentoUseCases>(
+      () => MovimentoUsecases(getIt()));
 
   // Conta
   getIt.registerLazySingleton<IContaProvider>(() => DbContaProvider(getIt()));
-  getIt.registerLazySingleton<IContaService>(
-      () => ContaService(getIt(), getIt(), getIt()));
-
-  // saldos
-  getIt.registerLazySingleton<ISaldosService>(() => SaldosService(getIt()));
+  getIt.registerLazySingleton<IContaRepository>(
+      () => ContaRepository(getIt(), getIt(), getIt()));
+  getIt.registerLazySingleton<IContaUseCases>(() => ContaUseCases(getIt()));
 
   // blocs
   getIt.registerLazySingleton<AppBloc>(() => AppBloc());
   getIt.registerLazySingleton<ContaBloc>(() => ContaBloc());
   getIt.registerLazySingleton<MovimentoBloc>(() => MovimentoBloc(getIt()));
   getIt.registerLazySingleton(() => MovimentosPendentesBloc());
+
+  getIt.registerLazySingleton<ISaldosProvider>(
+      () => DBSaldosProvider(getIt(), getIt()));
+  getIt.registerLazySingleton<ISaldosRepository>(
+      () => SaldosRepository(getIt(), getIt()));
+  getIt.registerLazySingleton<ISaldosUseCases>(() => SaldosUseCases(getIt()));
 
   // cubits
   getIt.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());

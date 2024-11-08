@@ -1,5 +1,5 @@
-import 'package:app_financas/score/domain/entitys/banco.dart';
-import 'package:app_financas/score/domain/services/i_banco_service.dart';
+import 'package:app_financas/domain/entities/banco.dart';
+import 'package:app_financas/domain/usecases/i_banco_usecases.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'instituicao_financeira_state.dart';
 
 class InstituicaoFinanceiraCubit extends Cubit<InstituicaoFinanceiraState> {
-  final IBancoService _bancoService;
+  final IBancoUseCases _bancoService;
   InstituicaoFinanceiraCubit(this._bancoService)
       : super(InstituicaoFinanceiraInitial());
 

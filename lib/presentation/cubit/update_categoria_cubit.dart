@@ -1,5 +1,5 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +12,7 @@ class UpdateCategoriaCubit extends Cubit<UpdateCategoriaState> {
     required this.tipoCategoria,
   }) : super(UpdateCategoriaInitial());
 
-  final ICategoriaService categoriaService;
+  final ICategoriaUseCases categoriaService;
   final TipoCategoria tipoCategoria;
 
   void updateCategoria(Categoria oldCategoria) async {

@@ -1,9 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/domain/services/i_saldos_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+import 'package:app_financas/domain/usecases/i_saldos_usecase.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/widgets/conta.dart';
@@ -14,7 +14,7 @@ part 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   late final MovimentoBloc _movimentoBloc;
-  late final ISaldosService _saldosService;
+  late final ISaldosUseCases _saldosService;
   final int pageSize = 10;
 
   HomePageCubit() : super(HomePageInitialState()) {
@@ -25,7 +25,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   void _startListeningMovimentoUpdates() {
-    final movimentoProvider = getIt<IMovimentoService>();
+    final movimentoProvider = getIt<IMovimentoUseCases>();
     movimentoProvider.addListener(() {
       getSaldoTotalEntradas();
       getSaldoTotalSaidas();

@@ -1,17 +1,42 @@
-abstract class Failure {
+class Failure implements Exception {
+  final String message;
+  Failure(this.message);
+}
+
+final class ObjectivoNaoEncontrado extends Failure {
+  ObjectivoNaoEncontrado(super.message);
+}
+
+final class ErroAoCriarObjectivo extends Failure {
+  ErroAoCriarObjectivo(super.message);
+}
+
+final class NaoExistePlanejamentoAtual extends Failure {
+  NaoExistePlanejamentoAtual(super.message);
+}
+
+class ValorInvalido implements Failure {
+  @override
   final String message;
 
-  const Failure(this.message);
+  ValorInvalido(this.message);
 }
 
-class ServerFailure extends Failure {
-  const ServerFailure({required String message}) : super(message);
+class HttpException extends Failure {
+  Object? error;
+  HttpException(super.message, {this.error});
 }
 
-class WriteFileFailure extends Failure {
-  const WriteFileFailure({required String message}) : super(message);
+class NotFoundError extends Failure {
+  Object? error;
+  NotFoundError(super.message, {this.error});
 }
 
-class ReadDatabaseFailure extends Failure {
-  const ReadDatabaseFailure({required String message}) : super(message);
+class DbException extends Failure {
+  Object? error;
+  DbException(super.message, {this.error});
+}
+
+class SaldoInsuficiente extends Failure {
+  SaldoInsuficiente(super.message);
 }

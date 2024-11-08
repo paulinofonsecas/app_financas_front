@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/domain/entities/tipo_movimento.dart';
 import 'package:app_financas/presentation/modules/estatisticas/controller/estatisticas_page_controller.dart';
 import 'package:app_financas/presentation/modules/estatisticas/cubit/select_tipo_movimente_cubit.dart';
 import 'package:flutter/material.dart';

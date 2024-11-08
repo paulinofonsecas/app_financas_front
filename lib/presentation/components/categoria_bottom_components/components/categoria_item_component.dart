@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/categoria_bottom_components/components/bottom_category_comp_controller.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/select_categoria_cubit.dart';
 import 'package:flutter/material.dart';

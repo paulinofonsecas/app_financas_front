@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/planejamento.dart';
+import 'package:app_financas/domain/entities/planejamento.dart';
 import 'package:app_financas/presentation/components/duet_info.dart';
 import 'package:app_financas/presentation/modules/planejamento/widgets/usage_progress.dart';
 import 'package:flutter/material.dart';

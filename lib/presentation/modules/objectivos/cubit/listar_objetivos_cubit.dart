@@ -1,5 +1,5 @@
-import 'package:app_financas/score/domain/entitys/objectivo.dart';
-import 'package:app_financas/score/domain/services/i_objetivo_service.dart';
+import 'package:app_financas/domain/entities/objectivo.dart';
+import 'package:app_financas/domain/usecases/i_objetivo_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +9,7 @@ class ListarObjetivosCubit extends Cubit<ListarObjetivosState> {
   ListarObjetivosCubit(this._iObjectivoService)
       : super(ListarObjetivosInitial());
 
-  final IObjectivoService _iObjectivoService;
+  final IObjectivoUseCases _iObjectivoService;
 
   void loadData() async {
     emit(ListarObjetivosLoading());

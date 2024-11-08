@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -10,7 +10,7 @@ part 'movimento_event.dart';
 part 'movimento_state.dart';
 
 class MovimentoBloc extends Bloc<MovimentoEvent, MovimentoState> {
-  late final IMovimentoService movimentoService;
+  late final IMovimentoUseCases movimentoService;
 
   MovimentoBloc(this.movimentoService) : super(MovimentoInitial()) {
     on<MovimentoGetPaginatedListByContaEvent>(

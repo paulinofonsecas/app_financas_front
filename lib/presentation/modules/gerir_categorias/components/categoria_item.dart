@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 import 'package:app_financas/presentation/modules/criar_sub_categoria/view/criar_sub_categoria_page.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/components/sub_categoria_item.dart';
 import 'package:app_financas/presentation/modules/gerir_categorias/controllers/gerir_categoria_controller.dart';

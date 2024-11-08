@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/criar_sub_categoria/cubit/cubit.dart';
 import 'package:app_financas/presentation/modules/criar_sub_categoria/widgets/criar_sub_categoria_body.dart';

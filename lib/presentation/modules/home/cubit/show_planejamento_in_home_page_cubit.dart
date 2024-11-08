@@ -1,6 +1,7 @@
-import 'package:app_financas/score/domain/entitys/planejamento.dart';
-import 'package:app_financas/score/domain/services/i_planejamento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/planejamento.dart';
+import 'package:app_financas/domain/usecases/i_planejamento_usecase.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,7 @@ class ShowPlanejamentoInHomePageCubit
   ShowPlanejamentoInHomePageCubit(this._service)
       : super(ShowPlanejamentoInHomePageInitial());
 
-  final IPlanejamentoService _service;
+  final IPlanejamentoUseCases _service;
 
   void getPlanejamento() async {
     emit(ShowPlanejamentoInHomePageLoading());

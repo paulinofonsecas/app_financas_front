@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -13,7 +13,7 @@ class SearchListCategoriasCubit extends Cubit<SearchListCategoriasState> {
     _iCategoriaService = getIt();
   }
 
-  late final ICategoriaService _iCategoriaService;
+  late final ICategoriaUseCases _iCategoriaService;
 
   void loadCategoriaList() async {
     emit(SearchListCategoriasLoading());

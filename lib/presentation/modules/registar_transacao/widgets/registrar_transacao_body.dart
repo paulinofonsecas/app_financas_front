@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/components/body.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/widgets/deletar_transacao.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -35,7 +35,7 @@ class ContasCubit extends Cubit<ContasState> {
   }
 
   void _startListeningMovimentoUpdates() {
-    final movimentoProvider = getIt<IMovimentoService>();
+    final movimentoProvider = getIt<IMovimentoUseCases>();
     movimentoProvider.addListener(() {
       getContas();
     });

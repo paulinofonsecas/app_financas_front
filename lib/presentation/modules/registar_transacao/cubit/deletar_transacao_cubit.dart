@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +8,7 @@ class DeleteTransacaoCubit extends Cubit<DeleteTransacaoState> {
   DeleteTransacaoCubit(this._movimentoService)
       : super(DeleteTransacaoInitial());
 
-  final IMovimentoService _movimentoService;
+  final IMovimentoUseCases _movimentoService;
 
   void deletarTransacao(int id) async {
     emit(DeleteTransacaoLoading());

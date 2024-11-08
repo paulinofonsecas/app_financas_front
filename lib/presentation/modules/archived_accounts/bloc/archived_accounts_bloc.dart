@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -15,7 +15,7 @@ class ArchivedAccountsBloc
     on<LoadArchivedAccountsEvent>(_onLoadArchivedAccountsEvent);
   }
 
-  late final IContaService _contaService;
+  late final IContaUseCases _contaService;
 
   FutureOr<void> _onLoadArchivedAccountsEvent(
     LoadArchivedAccountsEvent event,

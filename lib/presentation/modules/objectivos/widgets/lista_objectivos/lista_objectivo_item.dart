@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/objectivo.dart';
+import 'package:app_financas/domain/entities/objectivo.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/view/create_objectivo_page.dart';
 import 'package:app_financas/presentation/modules/objectivos/bottom_sheets/adicionar_fundos_sheet.dart';

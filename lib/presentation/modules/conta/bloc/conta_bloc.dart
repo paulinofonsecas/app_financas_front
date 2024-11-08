@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:app_financas/score/domain/entitys/balanco_mensal.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
+import 'package:app_financas/domain/entities/balanco_mensal.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -12,7 +12,7 @@ part 'conta_event.dart';
 part 'conta_state.dart';
 
 class ContaBloc extends Bloc<ContaEvent, GContaState> {
-  late final IContaService contaService;
+  late final IContaUseCases contaService;
 
   ContaBloc() : super(ContaInitial()) {
     contaService = getIt();

@@ -1,8 +1,9 @@
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -11,8 +12,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class CarteiraPageController extends GetxController {
   late final PagingController<int, Movimento> pagingController;
-  late final IContaService contaService;
-  late final IMovimentoService movimentoService;
+  late final IContaUseCases contaService;
+  late final IMovimentoUseCases movimentoService;
   Conta? conta;
   int currentIndex = 1;
   int esFilter = 0;

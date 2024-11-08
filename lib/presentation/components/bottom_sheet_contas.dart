@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/components/create_account_widget.dart';
 import 'package:app_financas/presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';

@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/objectivo.dart';
+import 'package:app_financas/domain/entities/objectivo.dart';
 import 'package:app_financas/presentation/components/criar_categoria/cubit/color_field_cubit.dart';
 import 'package:app_financas/presentation/components/criar_categoria/cubit/icon_field_cubit.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';

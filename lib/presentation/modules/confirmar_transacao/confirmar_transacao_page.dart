@@ -4,7 +4,7 @@ import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
 import 'package:app_financas/presentation/components/my_divider.dart';
 import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

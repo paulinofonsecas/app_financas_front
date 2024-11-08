@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
@@ -26,6 +26,11 @@ class MovimentosAtHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<HomePageController>();
+    movimentos.removeWhere(
+      (movimento) =>
+          movimento.categoriaMovimentoId == 303030 ||
+          movimento.categoriaMovimentoId == 303040,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +45,6 @@ class MovimentosAtHomePage extends StatelessWidget {
             (movimento) {
               return MovimentoItem(
                 onTap: () {
-                  if (movimento.categoriaMovimentoId == 303030) return;
-                  if (movimento.categoriaMovimentoId == 303040) return;
                   customShowModalBottomSheet(
                     context,
                     child: ShowTransactionPage(movimento: movimento),

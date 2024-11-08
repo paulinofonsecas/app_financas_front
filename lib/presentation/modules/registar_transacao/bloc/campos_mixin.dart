@@ -2,8 +2,8 @@ import 'package:app_financas/presentation/modules/registar_transacao/cubit/switc
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/confirmar_transacao_cubit.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/descricao_text_cubit.dart';

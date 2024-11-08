@@ -1,5 +1,5 @@
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/services/i_conta_service.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/repositories/i_conta_repository.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +12,7 @@ class SelectContaCubit extends Cubit<SelectContaState> {
     _contaService = getIt();
   }
 
-  late final IContaService _contaService;
+  late final IContaRepository _contaService;
 
   void selectDefaultConta(int? contaId) async {
     emit(SelectContaLoading());

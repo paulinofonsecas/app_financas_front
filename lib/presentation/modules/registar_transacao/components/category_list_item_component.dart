@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:flutter/material.dart';

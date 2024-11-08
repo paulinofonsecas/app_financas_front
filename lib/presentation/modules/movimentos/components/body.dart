@@ -2,7 +2,7 @@ import 'package:app_financas/presentation/components/movimento_item.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/modules/show_transaction/show_transaction_page.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

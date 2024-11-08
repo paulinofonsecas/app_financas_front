@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/movimentos_pendentes.dart';
+import 'package:app_financas/domain/entities/movimentos_pendentes.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

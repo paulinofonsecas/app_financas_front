@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/planejamento.dart';
+import 'package:app_financas/domain/entities/planejamento.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';

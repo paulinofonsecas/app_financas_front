@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 
 class ArchivedCategoriaItem extends StatelessWidget {
   const ArchivedCategoriaItem({

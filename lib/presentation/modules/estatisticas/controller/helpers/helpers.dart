@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
 
 class CategoriaAndTotal {
   final Categoria categoria;

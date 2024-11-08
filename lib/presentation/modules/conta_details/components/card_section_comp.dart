@@ -5,7 +5,7 @@ import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta_details/controllers/conta_details_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/helders/custom_show_modal_bottom_sheet.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:flutter/material.dart';

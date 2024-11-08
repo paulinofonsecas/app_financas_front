@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:app_financas/score/domain/entitys/planejamento.dart';
-import 'package:app_financas/score/domain/services/i_planejamento_service.dart';
+import 'package:app_financas/domain/entities/planejamento.dart';
+import 'package:app_financas/domain/usecases/i_planejamento_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +16,7 @@ class CreatePlanejamentoBloc
     on<FinishCreatePlanejamentoEvent>(_onFinishCreatePlanejamentoEvent);
   }
 
-  final IPlanejamentoService _planejamentoService;
+  final IPlanejamentoUseCases _planejamentoService;
 
   FutureOr<void> _onCustomCreatePlanejamentoEvent(
     CustomCreatePlanejamentoEvent event,

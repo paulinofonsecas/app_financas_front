@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/tipo_conta.dart';
+import 'package:app_financas/domain/entities/tipo_conta.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

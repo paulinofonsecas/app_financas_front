@@ -1,5 +1,5 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/item_planejamento.dart';
+import 'package:app_financas/domain/entities/item_planejamento.dart';
 import 'package:app_financas/presentation/components/categorie_avatar.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';

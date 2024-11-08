@@ -1,10 +1,11 @@
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/entitys/sertup_configuration.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/conta.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/entities/sertup_configuration.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+
 import 'package:app_financas/presentation/components/categoria_bottom_components/bottom_category_component.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
@@ -15,8 +16,8 @@ import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class RegistarTransacaoController extends GetxController {
-  late final IMovimentoService movimentoService;
-  late final ICategoriaService categoriaService;
+  late final IMovimentoUseCases movimentoService;
+  late final ICategoriaUseCases categoriaService;
   late final SetupConfiguration setupConfiguration;
 
   late final TextEditingController descricaoTextController;

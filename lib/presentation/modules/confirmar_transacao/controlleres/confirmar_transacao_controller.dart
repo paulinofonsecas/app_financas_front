@@ -1,6 +1,7 @@
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ConfirmarTransacaoController extends GetxController {
-  late final IMovimentoService movimentoService;
+  late final IMovimentoUseCases movimentoService;
   late final TextEditingController valorTextController;
   late Movimento movimento;
   late DateTime date;

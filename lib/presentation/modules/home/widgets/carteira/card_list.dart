@@ -26,7 +26,6 @@ class _CardListWidgetState extends State<CardListWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print(size);
 
     return MultiBlocListener(
       listeners: [

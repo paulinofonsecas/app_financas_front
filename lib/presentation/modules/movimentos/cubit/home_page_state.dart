@@ -66,7 +66,7 @@ final class HomePageListarContasSuccess extends HomePageListarContasState {
 }
 // end contas
 
-// saldos
+// import 'package:app_financas/core/error/failure.dart';
 abstract class HomePageSaldoDisponivelState extends HomePageState {
   const HomePageSaldoDisponivelState();
 
@@ -91,7 +91,7 @@ final class HomePageSaldoDisponivelSuccess
   List<Object> get props => [saldo];
 }
 
-// end saldos
+// end import 'package:app_financas/core/error/failure.dart';
 
 // entradas
 abstract class HomePageGetEntradasState extends HomePageState {

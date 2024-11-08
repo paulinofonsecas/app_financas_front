@@ -4,13 +4,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:app_financas/score/domain/entitys/categoria_movimento.dart';
-import 'package:app_financas/score/domain/services/i_categoria_service.dart';
+import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 
 class BottomCategoryCompController extends GetxController {
   late final TextEditingController searchTextController;
-  late final ICategoriaService service;
+  late final ICategoriaUseCases service;
   TipoCategoria tipoCategoria;
 
   BottomCategoryCompController({

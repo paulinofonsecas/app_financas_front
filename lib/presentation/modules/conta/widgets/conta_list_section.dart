@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/bloc.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/reajustar_saldo_cubit.dart';
@@ -108,14 +108,18 @@ class _ContentBody extends StatelessWidget {
           contas.length,
           (index) => ContaListItem(
             conta: contas[index],
-            onTap: () {
-              Navigator.of(context).push(
+            onTap: () async {
+              await Navigator.of(context).push(
                 CupertinoPageRoute(builder: (context) {
                   return ContaMonstDetailsPage(
                     conta: contas[index],
                   );
                 }),
               );
+
+              if (context.mounted) {
+                context.read<ContaBloc>().add(ListarContasEvent());
+              }
             },
           ),
         ),

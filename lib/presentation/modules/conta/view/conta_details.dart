@@ -1,9 +1,10 @@
 import 'package:app_financas/constants.dart';
-import 'package:app_financas/score/domain/entitys/conta.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/presentation/components/default_action_button.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/conta_bloc.dart';
 import 'package:app_financas/presentation/modules/conta/bottom_sheets/conta_bottom_sheet.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/archive_conta_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/conta_mostrar_na_tela_inicial_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,15 +25,18 @@ class ContaMonstDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: conta.color,
-          brightness: Theme.of(context).brightness,
+    return BlocProvider(
+      create: (context) => ArchiveContaCubit(),
+      child: Theme(
+        data: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: conta.color,
+            brightness: Theme.of(context).brightness,
+          ),
         ),
-      ),
-      child: ContentView(
-        conta: conta,
+        child: ContentView(
+          conta: conta,
+        ),
       ),
     );
   }
@@ -385,7 +389,7 @@ class _ContaDetailsHeader extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                ContaBottomSheet.show(context);
+                ContaBottomSheet.show(context, conta);
               },
             ),
           ],

@@ -1,6 +1,7 @@
-import 'package:app_financas/score/domain/entitys/movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
-import 'package:app_financas/score/erros/failure.dart';
+import 'package:app_financas/core/error/failure.dart';
+import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
+
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class MovimentoScreenController extends GetxController {
   late final PagingController<int, Movimento> pagingController;
-  late final IMovimentoService service;
+  late final IMovimentoUseCases service;
   var page = 1;
   var pageSize = 10;
   late DateTime date;

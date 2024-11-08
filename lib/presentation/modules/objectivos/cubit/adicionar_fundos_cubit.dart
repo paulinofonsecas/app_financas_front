@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:app_financas/score/domain/entitys/objectivo.dart';
+import 'package:app_financas/domain/entities/objectivo.dart';
+import 'package:app_financas/domain/usecases/i_objetivo_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:app_financas/score/domain/services/i_objetivo_service.dart';
 
 part 'adicionar_fundos_state.dart';
 
@@ -12,7 +11,7 @@ class AdicionarFundosCubit extends Cubit<AdicionarFundosState> {
     this._objectivoService,
   ) : super(AdicionarFundosInitial());
 
-  final IObjectivoService _objectivoService;
+  final IObjectivoUseCases _objectivoService;
 
   void adicionarFundos(Objectivo objectivo, double fundo) async {
     emit(AdicionarFundosLoading());

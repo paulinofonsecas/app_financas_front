@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:app_financas/score/domain/entitys/movimentos_pendentes.dart';
-import 'package:app_financas/score/domain/entitys/tipo_movimento.dart';
-import 'package:app_financas/score/domain/services/i_movimento_service.dart';
+import 'package:app_financas/domain/entities/movimentos_pendentes.dart';
+import 'package:app_financas/domain/entities/tipo_movimento.dart';
+import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -13,15 +13,15 @@ part 'movimentos_pendentes_state.dart';
 class MovimentosPendentesBloc
     extends Bloc<MovimentosPendentesEvent, MovimentosPendentesState> {
   MovimentosPendentesBloc() : super(const MovimentosPendentesInitial()) {
-    _movimentoService = getIt<IMovimentoService>();
+    _movimentoService = getIt<IMovimentoUseCases>();
     _startListeningMovimentoUpdates();
     on<LoadMovimentosPendentesEvent>(_onLoadMovimentosPendentesEvent);
   }
 
-  late final IMovimentoService _movimentoService;
+  late final IMovimentoUseCases _movimentoService;
 
   void _startListeningMovimentoUpdates() {
-    final movimentoProvider = getIt<IMovimentoService>();
+    final movimentoProvider = getIt<IMovimentoUseCases>();
     movimentoProvider.addListener(() {
       add(const LoadMovimentosPendentesEvent());
     });

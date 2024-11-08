@@ -1,4 +1,4 @@
-import 'package:app_financas/score/domain/entitys/tipo_movimento.dart';
+import 'package:app_financas/domain/entities/tipo_movimento.dart';
 import 'package:app_financas/presentation/modules/estatisticas/cubit/week_bar_chart_cubit.dart';
 import 'package:app_financas/presentation/modules/estatisticas/widgets/week_bar_chart_widget.dart';
 import 'package:flutter/material.dart';
