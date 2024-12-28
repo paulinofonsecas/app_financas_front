@@ -34,7 +34,7 @@ class OnBoardingView extends StatelessWidget {
     return BlocListener<OnBoardingCubit, OnBoardingState>(
       listener: (context, state) {
         if (state is OnBoardingSettingPrimeiraVezSuccess ||
-            state is OnBoardingSuccess) {
+            state is OnBoardingSuccess && state.primeiraVez == false) {
           Navigator.pushReplacement(context, AppPage.route());
         }
 
@@ -58,10 +58,10 @@ class OnBoardingView extends StatelessWidget {
         bloc: context.read<OnBoardingCubit>()..isPrimeiraVez(),
         builder: (context, state) {
           if (state is OnBoardingLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const SizedBox.shrink();
           }
 
-          if (state is OnBoardingSuccess ||
+          if (state is OnBoardingSuccess && !state.primeiraVez ||
               state is OnBoardingSettingPrimeiraVezSuccess) {
             return const SizedBox.shrink();
           }

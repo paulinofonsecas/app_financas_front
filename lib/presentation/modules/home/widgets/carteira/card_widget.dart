@@ -18,6 +18,7 @@ class CardWidget extends StatelessWidget {
       builder: (context, contrained) {
         return Container(
           padding: const EdgeInsets.all(kDefaultPadding),
+          margin: const EdgeInsets.only(left: kDefaultPadding / 2),
           color:
               Theme.of(context).colorScheme.primaryContainer.withOpacity(0.4),
           child: Column(

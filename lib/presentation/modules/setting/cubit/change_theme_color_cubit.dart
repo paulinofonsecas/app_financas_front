@@ -17,7 +17,7 @@ class ChangeThemeColorCubit extends Cubit<ChangeThemeColorState> {
 
   void loadDefaultThemeColor() async {
     final Box<int> box = await Hive.openBox('theme_color');
-    final color = Color(box.get('color', defaultValue: Colors.green.value)!);
+    final color = Color(box.get('color', defaultValue: Colors.purple.value)!);
 
     emit(ChangeThemeColorSuccess(color));
   }

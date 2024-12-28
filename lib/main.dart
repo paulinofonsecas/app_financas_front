@@ -84,7 +84,8 @@ Future<void> main() async {
       create: (context) => ListarCategoriaCubit(),
     ),
     BlocProvider(
-      create: (context) => ChangeThemeColorCubit(Colors.purple)..loadDefaultThemeColor(),
+      create: (context) =>
+          ChangeThemeColorCubit(Colors.purple)..loadDefaultThemeColor(),
     ),
   ];
 

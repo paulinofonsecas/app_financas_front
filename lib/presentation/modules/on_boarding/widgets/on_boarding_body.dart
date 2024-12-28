@@ -23,7 +23,7 @@ class OnBoardingBody extends StatelessWidget {
             ),
             const Spacer(flex: 3),
             AutoSizeText(
-              "Bem vindo ao Minhas Finanças",
+              "Bem vindo ao Poupa+",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
@@ -41,14 +41,9 @@ class OnBoardingBody extends StatelessWidget {
             const Spacer(flex: 3),
             BlocBuilder<OnBoardingCubit, OnBoardingState>(
               builder: (context, state) {
-                if (state is OnBoardingLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
                 return FilledButton.icon(
                   onPressed: () {
+                    if (state is OnBoardingLoading) return;
                     context.read<OnBoardingCubit>().setPrimeiraVez();
                   },
                   iconAlignment: IconAlignment.end,

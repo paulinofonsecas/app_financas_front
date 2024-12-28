@@ -31,7 +31,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
     try {
       final Box<bool> box = await Hive.openBox('onBoarding');
-      await box.put('primeiraVez', true);
+      await box.put('primeiraVez', false);
       emit(const OnBoardingSettingPrimeiraVezSuccess());
     } catch (e) {
       emit(const OnBoardingSettingPrimeiraVezError());

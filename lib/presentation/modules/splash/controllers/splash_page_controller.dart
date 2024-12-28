@@ -4,9 +4,11 @@ import 'package:app_financas/domain/entities/sertup_configuration.dart';
 import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:app_financas/presentation/modules/on_boarding/view/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class SplashPageController extends GetxController {
   late ICategoriaUseCases categoriaService;
@@ -46,8 +48,16 @@ class SplashPageController extends GetxController {
     _goToHomePage(setupConfig);
   }
 
-  Future? _goToHomePage(SetupConfiguration setupConfig) {
+  Future? _goToHomePage(SetupConfiguration setupConfig) async {
     Get.replace(setupConfig);
+
+    final Box<bool> box = await Hive.openBox('onBoarding');
+    final primeiraVez = box.get('primeiraVez', defaultValue: true)!;
+
+    if (!primeiraVez) {
+      return Get.off(() => const AppPage(), transition: Transition.fadeIn);
+    }
+
     return Get.off(() => const OnBoardingPage(), transition: Transition.fadeIn);
   }
 
