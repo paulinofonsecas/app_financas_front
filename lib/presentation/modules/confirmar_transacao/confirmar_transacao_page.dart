@@ -1,14 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
-import 'package:app_financas/presentation/components/my_divider.dart';
-import 'package:app_financas/presentation/components/with_icon.dart';
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/presentation/components/custom_bottom_sheet.dart';
+import 'package:app_financas/presentation/components/default_money_textfield.dart';
+import 'package:app_financas/presentation/components/my_divider.dart';
+import 'package:app_financas/presentation/components/with_icon.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,26 +73,14 @@ class _ConfirmarTransacaoState extends State<ConfirmarTransacao> {
                 const Gutter(),
                 WithIcon(
                   icon: CupertinoIcons.money_dollar,
-                  child: TextFormField(
+                  child: DefaultMoneyTextField(
                     controller: controller.valorTextController,
                     onChanged: controller.onValorChange,
-                    focusNode: FocusNode(canRequestFocus: true),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
+                    textInputFormatter:
+                        CurrencyTextInputFormatter(numberFormat),
                     style: GoogleFonts.inter(
                       fontSize: 32,
                       fontWeight: FontWeight.w500,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: '0,00',
-                      hintStyle: GoogleFonts.inter(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      prefixText: 'Kz ',
-                      border: InputBorder.none,
                     ),
                   ),
                 ),

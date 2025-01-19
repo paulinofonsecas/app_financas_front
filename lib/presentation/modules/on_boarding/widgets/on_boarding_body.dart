@@ -32,7 +32,7 @@ class OnBoardingBody extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              "Gerencie suas receitas \ne despesas de form facil e prática.",
+              "Gerencie suas receitas \ne despesas de forma facil e prática.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black.withOpacity(0.74),

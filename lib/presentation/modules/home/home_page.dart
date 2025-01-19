@@ -5,7 +5,6 @@ import 'package:app_financas/presentation/modules/carteira/cubit/contas_cubit.da
 import 'package:app_financas/presentation/modules/home/controllers/home_page_controller.dart';
 import 'package:app_financas/presentation/modules/home/cubit/show_planejamento_in_home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/view/movimentos_pendentes_abba.dart';
-import 'package:app_financas/presentation/modules/home/widgets/carteira/card_list.dart';
 import 'package:app_financas/presentation/modules/home/widgets/funcionalidades/funcionalidades_widget.dart';
 import 'package:app_financas/presentation/modules/home/widgets/planejamento_widget.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
@@ -75,8 +74,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ActionBar(),
                       SaldoDisponivelCardWidget(),
-                      Gutter(),
-                      CardListWidget(),
+                      // Gutter(),
+                      // CardListWidget(),
                       Gutter(),
                       FuncionalidadesWidget(),
                       Gutter(),

@@ -1,10 +1,11 @@
+import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/core/error/failure.dart';
 import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/domain/usecases/i_movimento_usecase.dart';
-
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
+import 'package:currency_textfield/currency_textfield.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ConfirmarTransacaoController extends GetxController {
   late final IMovimentoUseCases movimentoService;
-  late final TextEditingController valorTextController;
+  late final CurrencyTextFieldController valorTextController;
   late Movimento movimento;
   late DateTime date;
   var alterandoTransacao = false.obs;
@@ -25,8 +26,13 @@ class ConfirmarTransacaoController extends GetxController {
   @override
   void onInit() {
     movimentoService = getIt();
-    valorTextController =
-        TextEditingController(text: movimento.valor.toString());
+    final locale = getIt<LocalizationCubit>().state.locale;
+
+    valorTextController = CurrencyTextFieldController(
+      initDoubleValue: movimento.valor,
+      currencySymbol: locale.currencySymbol,
+    );
+
     super.onInit();
   }
 
@@ -59,7 +65,7 @@ class ConfirmarTransacaoController extends GetxController {
 
   Future<void> alterarTransacao() async {
     alterandoTransacao.value = true;
-    var valor = valorTextController.text;
+    var valor = valorTextController.doubleTextWithoutCurrencySymbol.toString();
     if (valor.isEmpty) {
       valor = '0';
     }

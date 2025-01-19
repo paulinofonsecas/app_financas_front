@@ -1,7 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 
 import 'package:app_financas/app/app.dart';
 import 'package:app_financas/app/bloc/app_bloc.dart';
+import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/firebase_options.dart';
 import 'package:app_financas/presentation/bloc/movimento/movimento_bloc.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
@@ -17,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
 import 'presentation/cubit/bottom_sheet_conta_cubit.dart';
 import 'presentation/modules/conta/bloc/conta_bloc.dart';
@@ -27,34 +29,15 @@ import 'presentation/modules/registar_transacao/cubit/listar_categoria_cubit.dar
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (!kIsWeb && Platform.isAndroid) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
 
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
+  await setupApplicationAndConfigurations();
 
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-
-    if (kDebugMode) {
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-    }
-  }
-
-  await initializeDateFormatting('pt_BR', null);
-  Intl.defaultLocale = 'pt_BR';
-  await Hive.initFlutter('./app_financas_db');
-
-  dependencyInitialize();
-
-  final setupBlocs = [
+  final initialDependencies = [
     BlocProvider(
       create: (_) => getIt<AppBloc>(),
+    ),
+    BlocProvider(
+      create: (_) => getIt<LocalizationCubit>(),
     ),
     BlocProvider(
       create: (context) => RegistarTransacaoBloc(),
@@ -63,7 +46,7 @@ Future<void> main() async {
       create: (context) => getIt<MovimentoBloc>(),
     ),
     BlocProvider(
-      create: (context) => getIt<AppThemeCubit>(),
+      create: (context) => AppThemeCubit(),
     ),
     BlocProvider(
       create: (context) => getIt<ContaBloc>(),
@@ -91,19 +74,39 @@ Future<void> main() async {
 
   runApp(
     MultiBlocProvider(
-      providers: setupBlocs,
-      child: _buildApp(),
+      providers: initialDependencies,
+      child: DevicePreview(
+        enabled: !kReleaseMode && !Platform.isAndroid,
+        builder: (c) => const MyApp(),
+      ),
     ),
   );
 }
 
-Builder _buildApp() {
-  return Builder(
-    builder: (context) {
-      return DevicePreview(
-        enabled: !kReleaseMode && !Platform.isAndroid,
-        builder: (c) => const MyApp(),
-      );
-    },
-  );
+Future<void> setupApplicationAndConfigurations() async {
+  await dependencyInitialize();
+
+  if (!kIsWeb && Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+
+    if (kDebugMode) {
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    }
+  }
+
+  await initializeDateFormatting('pt_AO', null);
+  // Intl.defaultLocale =
+  //     const Locale.fromSubtags(languageCode: 'pt', scriptCode: 'AO').toString();
+  await Hive.initFlutter('./app_financas_db');
 }

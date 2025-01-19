@@ -1,9 +1,10 @@
+import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/presentation/modules/setting/cubit/change_theme_color_cubit.dart';
+import 'package:app_financas/presentation/modules/setting/widgets/bottom_sheets/locale_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsBody extends HookWidget {
@@ -11,15 +12,23 @@ class SettingsBody extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.watch<LocalizationCubit>().state.locale;
+
     return SettingsList(
       sections: [
         SettingsSection(
           title: const Text('Geral'),
           tiles: <SettingsTile>[
             SettingsTile.navigation(
+              onPressed: (_) {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (_) => const LocaleBottomSheet(),
+                );
+              },
               leading: const Icon(Icons.language),
-              title: const Text('Language'),
-              value: const Text('English'),
+              title: const Text('Localização'),
+              value: Text('${locale.flag} ${locale.country}'),
             ),
             SettingsTile.navigation(
               onPressed: (_) {
@@ -38,33 +47,33 @@ class SettingsBody extends HookWidget {
             ),
           ],
         ),
-        SettingsSection(
-          title: const Text('Planejamento'),
-          tiles: <SettingsTile>[
-            SettingsTile.switchTile(
-              initialValue: true,
-              onToggle: (value) {},
-              leading: const Icon(FontAwesomeIcons.listCheck),
-              title: const Text('Incluir movimentos anteriores'),
-            ),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('Dados'),
-          tiles: <SettingsTile>[
-            SettingsTile.navigation(
-              leading: const Icon(FontAwesomeIcons.database),
-              title: const Text('Deletar todos movimentos'),
-            ),
-            SettingsTile.navigation(
-              leading: const Icon(
-                FontAwesomeIcons.trashCan,
-                color: Colors.red,
-              ),
-              title: const Text('Limpar base de dados'),
-            ),
-          ],
-        ),
+        // SettingsSection(
+        //   title: const Text('Planejamento'),
+        //   tiles: <SettingsTile>[
+        //     SettingsTile.switchTile(
+        //       initialValue: true,
+        //       onToggle: (value) {},
+        //       leading: const Icon(FontAwesomeIcons.listCheck),
+        //       title: const Text('Incluir movimentos anteriores'),
+        //     ),
+        //   ],
+        // ),
+        // SettingsSection(
+        //   title: const Text('Dados'),
+        //   tiles: <SettingsTile>[
+        //     SettingsTile.navigation(
+        //       leading: const Icon(FontAwesomeIcons.database),
+        //       title: const Text('Deletar todos movimentos'),
+        //     ),
+        //     SettingsTile.navigation(
+        //       leading: const Icon(
+        //         FontAwesomeIcons.trashCan,
+        //         color: Colors.red,
+        //       ),
+        //       title: const Text('Limpar base de dados'),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

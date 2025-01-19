@@ -1,3 +1,4 @@
+import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/presentation/bindings/init_bindings.dart';
 import 'package:app_financas/presentation/modules/app/cubit/app_theme_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/planejamento.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeModeState = context.watch<AppThemeCubit>().state;
+    var localeState = context.watch<LocalizationCubit>().state;
 
     return GetMaterialApp(
       title: 'Poupa+',
@@ -36,8 +38,8 @@ class MyApp extends StatelessWidget {
         PointerDeviceKind.mouse,
         PointerDeviceKind.trackpad,
       }),
+      locale: localeState.locale.locale,
       useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       themeMode: themeModeState.themeMode,
       initialBinding: InitBingings(),

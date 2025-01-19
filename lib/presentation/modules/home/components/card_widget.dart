@@ -2,16 +2,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 // ignore: unused_import
-import 'package:app_financas/constants.dart';
+import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/home/components/saldo_visibility.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/show_money_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SaldoCardWidget extends StatelessWidget {
+class SaldoCardWidget extends StatefulWidget {
   const SaldoCardWidget({
     super.key,
     required this.saldo,
@@ -19,6 +18,11 @@ class SaldoCardWidget extends StatelessWidget {
 
   final double saldo;
 
+  @override
+  State<SaldoCardWidget> createState() => _SaldoCardWidgetState();
+}
+
+class _SaldoCardWidgetState extends State<SaldoCardWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,7 +33,6 @@ class SaldoCardWidget extends StatelessWidget {
         children: [
           Column(
             children: [
-              _buildSaldoVisibility(context),
               _buildSaldoWidget(),
             ],
           ),
@@ -46,7 +49,7 @@ class SaldoCardWidget extends StatelessWidget {
     return BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
       builder: (context, state) {
         return Text(
-          state.value ? ('Kz **,00') : numberFormat.format(saldo),
+          state.value ? ('***') : numberFormat.format(widget.saldo),
           style: GoogleFonts.plusJakartaSans(
             fontSize: 24,
             fontWeight: FontWeight.bold,

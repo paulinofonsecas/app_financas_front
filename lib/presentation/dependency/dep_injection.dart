@@ -1,5 +1,18 @@
 import 'package:app_financas/app/bloc/app_bloc.dart';
+import 'package:app_financas/app/cubit/localization_cubit.dart';
+import 'package:app_financas/data/datasources/interfaces/i_banco_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_categoria_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_contas_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_movimento_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_objectivo_provider.dart';
+import 'package:app_financas/data/datasources/interfaces/i_planejamento_provider.dart';
 import 'package:app_financas/data/datasources/interfaces/i_saldos_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_banco_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_categoria_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_conta_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_movimento_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_objectivo_provider.dart';
+import 'package:app_financas/data/datasources/local/db/db_planejamento_provider.dart';
 import 'package:app_financas/data/datasources/local/db/db_saldos_provider.dart';
 import 'package:app_financas/data/repositories/banco_repository.dart';
 import 'package:app_financas/data/repositories/categoria_repository.dart';
@@ -38,27 +51,21 @@ import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.d
 import 'package:app_financas/presentation/modules/home/movimentos_pendentes/bloc/movimentos_pendentes_bloc.dart';
 import 'package:app_financas/presentation/modules/movimentos/cubit/home_page_cubit.dart';
 import 'package:app_financas/presentation/modules/planejamento/cubit/planejamento_atual_cubit.dart';
-import 'package:app_financas/data/datasources/local/db/db_banco_provider.dart';
-import 'package:app_financas/data/datasources/local/db/db_categoria_provider.dart';
-import 'package:app_financas/data/datasources/local/db/db_conta_provider.dart';
-import 'package:app_financas/data/datasources/local/db/db_movimento_provider.dart';
-import 'package:app_financas/data/datasources/local/db/db_objectivo_provider.dart';
-import 'package:app_financas/data/datasources/local/db/db_planejamento_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_banco_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_categoria_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_contas_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_movimento_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_objectivo_provider.dart';
-import 'package:app_financas/data/datasources/interfaces/i_planejamento_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../modules/conta/bloc/bloc.dart';
 
 final getIt = GetIt.instance;
 
-void dependencyInitialize() {
+Future<void> dependencyInitialize() async {
+  final sp = await SharedPreferences.getInstance();
+
+  getIt.registerLazySingleton(() => LocalizationCubit()..init());
+
   getIt.registerLazySingleton<Dio>(() => makeDefaultDio());
+  getIt.registerLazySingleton<SharedPreferences>(() => sp);
 
   // Objectivos
   getIt.registerLazySingleton<IObjectivoProvider>(() => DBObjectivoProvider());

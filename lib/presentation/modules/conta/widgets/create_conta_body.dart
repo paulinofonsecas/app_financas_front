@@ -1,6 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_financas/constants.dart';
+import 'package:app_financas/domain/entities/banco.dart';
+import 'package:app_financas/presentation/components/default_action_button.dart';
+import 'package:app_financas/presentation/components/default_money_textfield.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/conta/bloc/create_conta_bloc.dart';
+import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/create_conta_theme_cubit.dart';
+import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_inicial_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
@@ -10,14 +17,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:app_financas/constants.dart';
-import 'package:app_financas/domain/entities/banco.dart';
-import 'package:app_financas/presentation/components/default_action_button.dart';
-import 'package:app_financas/presentation/components/default_money_textfield.dart';
-import 'package:app_financas/presentation/modules/conta/bottom_sheets/intituicoes_fin_bottom_sheet.dart';
-import 'package:app_financas/presentation/modules/conta/cubit/instituicao_financeira_cubit.dart';
-import 'package:intl/intl.dart';
 
 import '../bottom_sheets/tipo_conta_bottom_sheet.dart';
 import 'color_picker_widget.dart';
@@ -143,9 +142,8 @@ class _SaldoWidget extends StatefulWidget {
 }
 
 class _SaldoWidgetState extends State<_SaldoWidget> {
-  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    NumberFormat.currency(symbol: 'Kz'),
-  );
+  final CurrencyTextInputFormatter _formatter =
+      CurrencyTextInputFormatter(numberFormat);
 
   @override
   Widget build(BuildContext context) {
@@ -295,9 +293,9 @@ class _InstituicaoFinanceiraWidget extends StatelessWidget {
 
 class _NomeTextFieldWidget extends StatelessWidget {
   const _NomeTextFieldWidget({
-    Key? key,
+    super.key,
     required this.textController,
-  }) : super(key: key);
+  });
 
   final TextEditingController textController;
 

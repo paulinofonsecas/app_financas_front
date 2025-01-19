@@ -53,7 +53,7 @@ class EntrySaldoValue extends StatelessWidget {
           BlocBuilder<ShowMoneyCubit, ShowMoneyState>(
             builder: (context, state) {
               return Text(
-                state.value ? 'Kz **,00' : numberFormat.format(valor),
+                state.value ? '***' : numberFormat.format(valor),
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
