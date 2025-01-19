@@ -68,7 +68,7 @@ Future<void> main() async {
     ),
     BlocProvider(
       create: (context) =>
-          ChangeThemeColorCubit(Colors.purple)..loadDefaultThemeColor(),
+          ChangeThemeColorCubit(Colors.green)..loadDefaultThemeColor(),
     ),
   ];
 

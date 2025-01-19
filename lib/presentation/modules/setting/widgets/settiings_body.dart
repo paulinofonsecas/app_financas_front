@@ -28,7 +28,7 @@ class SettingsBody extends HookWidget {
               },
               leading: const Icon(Icons.language),
               title: const Text('Localização'),
-              value: Text('${locale.flag} ${locale.country}'),
+              value: Text(locale.country),
             ),
             SettingsTile.navigation(
               onPressed: (_) {

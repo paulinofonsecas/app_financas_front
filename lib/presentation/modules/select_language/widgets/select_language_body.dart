@@ -2,7 +2,8 @@ import 'package:app_financas/app/cubit/localization_cubit.dart';
 import 'package:app_financas/domain/entities/supported_locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+
+import 'language_list_item.dart';
 
 /// {@template select_language_body}
 /// Body of the SelectLanguagePage.
@@ -20,48 +21,9 @@ class SelectLanguageBody extends StatelessWidget {
 
     return ListView(
       children: locales.map((locale) {
-        return InkWell(
-          onTap: () {
-            context.read<LocalizationCubit>().changeLocale(locale);
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 42,
-                  child: ClipRRect(
-                    child: locale.flagURL == null
-                        ? null
-                        : SvgPicture.network(
-                            locale.flagURL!,
-                          ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      locale.country,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text('${locale.language} (${locale.currencySymbol})'),
-                  ],
-                ),
-                const Spacer(),
-                if (currentLocale.country == locale.country)
-                  const Icon(Icons.check_circle_outline, color: Colors.green),
-              ],
-            ),
-          ),
+        return LanguageListItem(
+          locale: locale,
+          currentLocale: currentLocale,
         );
       }).toList(),
     );
