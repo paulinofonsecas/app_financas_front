@@ -7,6 +7,7 @@ class SupportedLocale {
   final String languageCode;
   final String countryCode;
   final String currencySymbol;
+  final String? flagURL;
 
   SupportedLocale({
     required this.flag,
@@ -14,6 +15,7 @@ class SupportedLocale {
     required this.language,
     required this.languageCode,
     required this.countryCode,
+    this.flagURL,
     this.currencySymbol = 'R\$',
   });
 
@@ -28,7 +30,8 @@ class SupportedLocale {
       'language': language,
       'languageCode': languageCode,
       'countryCode': countryCode,
-      'currencySymbol': currencySymbol
+      'currencySymbol': currencySymbol,
+      'flagURL': flagURL ?? '',
     };
   }
 
@@ -40,6 +43,7 @@ class SupportedLocale {
       languageCode: json['languageCode']!,
       countryCode: json['countryCode']!,
       currencySymbol: json['currencySymbol'] ?? '\$',
+      flagURL: json['flagURL'],
     );
   }
 
@@ -53,6 +57,7 @@ class SupportedLocale {
         languageCode: 'pt',
         countryCode: 'AO',
         currencySymbol: 'Kz',
+        flagURL: 'https://flagicons.lipis.dev/flags/4x3/ao.svg',
       ),
       // Brazil
       SupportedLocale(
@@ -62,6 +67,7 @@ class SupportedLocale {
         languageCode: 'pt',
         countryCode: 'BR',
         currencySymbol: 'R\$',
+        flagURL: 'https://flagicons.lipis.dev/flags/4x3/br.svg',
       ),
       // Portugal
       SupportedLocale(
@@ -71,6 +77,7 @@ class SupportedLocale {
         languageCode: 'pt',
         countryCode: 'PT',
         currencySymbol: '€',
+        flagURL: 'https://flagicons.lipis.dev/flags/4x3/pt.svg',
       ),
     ];
   }

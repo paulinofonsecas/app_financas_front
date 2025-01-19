@@ -29,9 +29,8 @@ class ReajustarSaldoDialog extends StatefulWidget {
 
 class _ReajustarSaldoDialogState extends State<ReajustarSaldoDialog> {
   late final TextEditingController _newSaldoController;
-  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    NumberFormat.currency(symbol: 'Kz'),
-  );
+  final CurrencyTextInputFormatter _formatter =
+      CurrencyTextInputFormatter(numberFormat);
 
   @override
   void initState() {

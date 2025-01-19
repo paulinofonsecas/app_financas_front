@@ -51,14 +51,7 @@ class SplashPageController extends GetxController {
   Future? _goToHomePage(SetupConfiguration setupConfig) async {
     Get.replace(setupConfig);
 
-    final Box<bool> box = await Hive.openBox('onBoarding');
-    final primeiraVez = box.get('primeiraVez', defaultValue: true)!;
-
     return Get.off(() => const OnBoardingPage(), transition: Transition.fadeIn);
-    if (!primeiraVez) {
-    } else {
-      return Get.off(() => const AppPage(), transition: Transition.fadeIn);
-    }
   }
 
   void showErrorSnackBar() {

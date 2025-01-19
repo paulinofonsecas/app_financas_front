@@ -1,3 +1,5 @@
+import 'package:app_financas/app/cubit/localization_cubit.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:currency_textfield/currency_textfield.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +22,13 @@ class _AtribuirPlafoundDialogState extends State<AtribuirPlafoundDialog> {
   @override
   void initState() {
     super.initState();
+    final locale = getIt<LocalizationCubit>().state.locale;
 
     controller = CurrencyTextFieldController(
       initDoubleValue: widget.plafound,
       maxValue: widget.maxValue,
       minValue: 0.0,
-      currencySymbol: "Kz",
+      currencySymbol: locale.currencySymbol,
       decimalSymbol: ",",
       thousandSymbol: ".",
       currencyOnLeft: false,

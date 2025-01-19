@@ -1,6 +1,7 @@
 import 'package:app_financas/domain/entities/objectivo.dart';
 import 'package:app_financas/presentation/cubit/select_conta_cubit.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/objectivos/bottom_sheets/widgets/add_fundos_body.dart';
 import 'package:app_financas/presentation/modules/objectivos/cubit/adicionar_fundos_cubit.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -42,9 +43,7 @@ class AdicionarFundosSheet extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final formatterState = useState(
-      CurrencyTextInputFormatter(
-        NumberFormat.currency(symbol: 'Kz'),
-      ),
+      CurrencyTextInputFormatter(numberFormat),
     );
     final formKey = useState(GlobalKey<FormState>());
 

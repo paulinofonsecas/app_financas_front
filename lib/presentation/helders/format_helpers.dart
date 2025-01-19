@@ -5,15 +5,10 @@ import 'package:intl/intl.dart';
 NumberFormat get numberFormat {
   final locale = getIt<LocalizationCubit>().state.locale;
 
-  if (locale.countryCode.toLowerCase() == 'ao') {
-    return NumberFormat.currency(
-      symbol: 'Kz',
-      customPattern: 'Kz #,##0.00',
-    );
-  }
-
   return NumberFormat.currency(
     locale: locale.locale.toString(),
+    symbol: locale.currencySymbol,
+    customPattern: '${locale.currencySymbol} #,##0.00',
   );
 }
 

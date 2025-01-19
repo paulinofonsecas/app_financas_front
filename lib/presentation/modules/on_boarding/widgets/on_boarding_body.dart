@@ -1,4 +1,5 @@
 import 'package:app_financas/presentation/modules/on_boarding/cubit/on_boarding_cubit.dart';
+import 'package:app_financas/presentation/modules/select_language/view/select_language_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,7 @@ class OnBoardingBody extends StatelessWidget {
               "Gerencie suas receitas \ne despesas de forma facil e prática.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black.withOpacity(0.74),
+                color: Colors.black.withValues(alpha: 0.74),
               ),
             ),
             const Spacer(flex: 3),
@@ -43,8 +44,8 @@ class OnBoardingBody extends StatelessWidget {
               builder: (context, state) {
                 return FilledButton.icon(
                   onPressed: () {
-                    if (state is OnBoardingLoading) return;
-                    context.read<OnBoardingCubit>().setPrimeiraVez();
+                    Navigator.pushReplacement(
+                        context, SelectLanguagePage.route());
                   },
                   iconAlignment: IconAlignment.end,
                   icon: const Icon(

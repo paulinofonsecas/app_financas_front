@@ -1,3 +1,5 @@
+import 'package:app_financas/app/cubit/localization_cubit.dart';
+import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/create_planejamento/cubit/create_planejamento_cubit.dart';
 import 'package:currency_textfield/currency_textfield.dart';
@@ -13,16 +15,20 @@ class PlafoundStep extends StatefulWidget {
 }
 
 class _PlafoundStepState extends State<PlafoundStep> {
-  var controller = CurrencyTextFieldController(
-    currencySymbol: "Kz",
-    decimalSymbol: ",",
-    thousandSymbol: ".",
-    currencyOnLeft: false,
-  );
+  late CurrencyTextFieldController controller;
 
   @override
   void initState() {
     super.initState();
+    final locale = getIt<LocalizationCubit>().state.locale;
+
+    controller = CurrencyTextFieldController(
+      currencySymbol: locale.currencySymbol,
+      thousandSymbol: ".",
+      decimalSymbol: ",",
+      currencyOnLeft: false,
+    );
+
     controller.addListener(() {
       context
           .read<CreatePlanejamentoCubit>()

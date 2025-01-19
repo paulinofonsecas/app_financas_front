@@ -1,10 +1,10 @@
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/create_objectivo/bloc/create_objectivo_bloc.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class ValorAlvoField extends StatelessWidget {
   const ValorAlvoField({super.key});
@@ -12,9 +12,8 @@ class ValorAlvoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<CreateObjectivoBloc>();
-    final CurrencyTextInputFormatter formatter = CurrencyTextInputFormatter(
-      NumberFormat.currency(symbol: 'Kz'),
-    );
+    final CurrencyTextInputFormatter formatter =
+        CurrencyTextInputFormatter(numberFormat);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

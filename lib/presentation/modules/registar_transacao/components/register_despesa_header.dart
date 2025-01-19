@@ -1,5 +1,6 @@
 import 'package:app_financas/constants.dart';
 import 'package:app_financas/domain/entities/movimento.dart';
+import 'package:app_financas/presentation/helders/format_helpers.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/bloc/registar_transacao_bloc.dart';
 import 'package:app_financas/presentation/modules/registar_transacao/cubit/switch_transacao_cubit.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 import '../cubit/valor_transacao_cubit.dart';
 
@@ -188,9 +188,8 @@ class MoneyTextFormField extends StatefulWidget {
 }
 
 class _MoneyTextFormFieldState extends State<MoneyTextFormField> {
-  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
-    NumberFormat.currency(symbol: 'Kz'),
-  );
+  final CurrencyTextInputFormatter _formatter =
+      CurrencyTextInputFormatter(numberFormat);
 
   @override
   Widget build(BuildContext context) {
