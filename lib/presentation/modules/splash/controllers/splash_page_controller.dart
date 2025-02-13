@@ -4,11 +4,9 @@ import 'package:app_financas/domain/entities/sertup_configuration.dart';
 import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
 import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
-import 'package:app_financas/presentation/modules/app/app_page.dart';
 import 'package:app_financas/presentation/modules/on_boarding/view/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class SplashPageController extends GetxController {
   late ICategoriaUseCases categoriaService;
