@@ -89,18 +89,18 @@ class _CustomFABState extends State<CustomFAB> {
             );
           },
         ),
-        CustomFABItem(
-          title: 'Objectivos',
-          icon: Icons.radar,
-          color: Colors.orange[700]!,
-          onTap: () {},
-        ),
-        CustomFABItem(
-          title: 'Transferências',
-          icon: Icons.radar,
-          color: Colors.blue[700]!,
-          onTap: () {},
-        ),
+        // CustomFABItem(
+        //   title: 'Objectivos',
+        //   icon: Icons.radar,
+        //   color: Colors.orange[700]!,
+        //   onTap: () {},
+        // ),
+        // CustomFABItem(
+        //   title: 'Transferências',
+        //   icon: Icons.radar,
+        //   color: Colors.blue[700]!,
+        //   onTap: () {},
+        // ),
       ],
     );
   }
