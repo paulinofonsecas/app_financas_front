@@ -7,10 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'instituicao_financeira_state.dart';
 
 class InstituicaoFinanceiraCubit extends Cubit<InstituicaoFinanceiraState> {
-  final IBancoUseCases _bancoService;
   InstituicaoFinanceiraCubit(this._bancoService)
-      : super(InstituicaoFinanceiraInitial());
+      : super(InstituicaoFinanceiraSelecionada(Banco(
+          id: 10000,
+          nome: 'Sem banco',
+          acronimo: 'SN',
+        )));
 
+  final IBancoUseCases _bancoService;
   void listBancos() async {
     emit(InstituicaoFinanceiraLoading());
 

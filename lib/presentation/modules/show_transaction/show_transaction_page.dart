@@ -249,15 +249,44 @@ class _ShowTransactionPageState extends State<ShowTransactionPage> {
 
   Widget _buildContaInput() {
     var controller = Get.find<ShowTransactionController>();
-    return InfoWidget(
-      desc: 'Conta',
-      value: controller.getAccountName(controller.movimento.cartaoId),
-      icon: Icon(
-        Icons.wallet,
-        color: Theme.of(context).iconTheme.color,
-        size: 20,
-      ),
-    );
+
+    return FutureBuilder<Object>(
+        future: controller.getAccountName(controller.movimento.cartaoId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const InfoWidget(
+              desc: 'Conta',
+              value: 'Carregando',
+              icon: Icon(
+                Icons.wallet,
+                color: kVerdeForteColor,
+                size: 20,
+              ),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return const InfoWidget(
+              desc: 'Conta',
+              value: 'S/N',
+              icon: Icon(
+                Icons.wallet,
+                color: kVermelhaForteColor,
+                size: 20,
+              ),
+            );
+          }
+
+          return InfoWidget(
+            desc: 'Conta',
+            value: snapshot.data as String,
+            icon: Icon(
+              Icons.wallet,
+              color: Theme.of(context).iconTheme.color,
+              size: 20,
+            ),
+          );
+        });
   }
 
   Widget _buildDataInput() {

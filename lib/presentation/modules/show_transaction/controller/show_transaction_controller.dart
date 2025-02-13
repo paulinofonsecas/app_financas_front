@@ -1,9 +1,10 @@
 import 'package:app_financas/core/error/failure.dart';
 import 'package:app_financas/domain/entities/categoria_movimento.dart';
+import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/domain/entities/sertup_configuration.dart';
 import 'package:app_financas/domain/usecases/i_categoria_usecase.dart';
-
+import 'package:app_financas/domain/usecases/i_conta_usecase.dart';
 import 'package:app_financas/presentation/dependency/dep_injection.dart';
 import 'package:app_financas/presentation/helders/helpers.dart';
 import 'package:dartz/dartz.dart';
@@ -43,11 +44,16 @@ class ShowTransactionController extends GetxController {
     }
   }
 
-  String getAccountName(int cartaoId) {
-    return setupConfiguration.contas
-        .where((element) => element.id == cartaoId)
-        .first
-        .nome;
+  Future<String> getAccountName(int contaId) async {
+    final contaUseCases = getIt<IContaUseCases>();
+    final result = await contaUseCases.getConta(contaId);
+
+    if (result.isLeft()) {
+      return 'S/N';
+    }
+
+    final conta = result.getOrElse(Conta.fake);
+    return conta.nome;
   }
 
   void updateMovimento(value) {
