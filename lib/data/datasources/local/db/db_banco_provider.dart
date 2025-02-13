@@ -1,7 +1,6 @@
 import 'package:app_financas/core/error/failure.dart';
 import 'package:app_financas/data/datasources/interfaces/i_banco_provider.dart';
 import 'package:app_financas/domain/entities/banco.dart';
-
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -46,7 +45,8 @@ class DbBancoProvider implements IBancoProvider {
       Banco(
         id: 10000,
         nome: 'Sem banco',
-        acronimo: 'S/B',
+        acronimo: 'S/N',
+        imgAsset: 'assets/imgs/bancos/bank.png',
       ),
       Banco(
         id: 1,

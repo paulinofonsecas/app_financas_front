@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:app_financas/domain/entities/banco.dart';
 import 'package:app_financas/domain/entities/conta.dart';
 import 'package:app_financas/domain/entities/movimento.dart';
 import 'package:app_financas/domain/entities/tipo_conta.dart';
@@ -11,9 +13,9 @@ import 'package:app_financas/presentation/modules/conta/cubit/mostrar_na_tela_in
 import 'package:app_financas/presentation/modules/conta/cubit/saldo_inicial_text_cubit.dart';
 import 'package:app_financas/presentation/modules/conta/cubit/tipo_conta_cubit.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
 part 'create_conta_event.dart';
 part 'create_conta_state.dart';
@@ -116,7 +118,15 @@ class CreateContaBloc extends Bloc<CreateContaEvent, CreateContaState> {
       context.read<TipoContaCubit>().state as TipoContaChanged;
 
   InstituicaoFinanceiraSelecionada? _getBanco(BuildContext context) {
-    return (context.read<InstituicaoFinanceiraCubit>().state)
-        as InstituicaoFinanceiraSelecionada;
+    try {
+      return (context.read<InstituicaoFinanceiraCubit>().state)
+          as InstituicaoFinanceiraSelecionada;
+    } catch (e) {
+      return InstituicaoFinanceiraSelecionada(Banco(
+        id: 10000,
+        nome: 'Sem banco',
+        acronimo: 'SN',
+      ));
+    }
   }
 }
