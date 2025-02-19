@@ -2,8 +2,11 @@
 <img src="https://github.com/paulinofonsecas/app_financas_front/raw/main/readme/imgs/logo.jpg" alt="Logo of the project" width="64" height="64">
 
 
-## KzGest
-KzGest é um aplicativo de gestão financeira pessoal. O app permite o registro das entradas e saídas com o objetivo de rastrear o modo como você utiliza o seu dinheiro.
+## Poupa+
+Poupa+ é um aplicativo de gestão financeira pessoal. O app permite o registro das entradas e saídas com o objetivo de rastrear o modo como você utiliza o seu dinheiro.
+
+# Baixe agora no Play Store
+https://play.google.com/store/apps/details?id=com.paulinodev.kwanzage
 
 ## Tecnologia 
 
@@ -39,7 +42,7 @@ Aqui estão as tecnologias utilizadas neste projeto.
   flutter run -d chrome
   ```
 ### Rode a versão hospedada na web
-Acesse o seguinte link: [KzGest](https://kzgest.web.app/)
+Acesse o seguinte link: [Poupa+](https://Poupa+.web.app/)
 
 ### Estrutura do Projeto
   #### Arquitetura de Dados
